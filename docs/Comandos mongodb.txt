@@ -1,0 +1,43 @@
+Lista de comandos mongodb
+
+:List all dbs
+#show dbs
+
+:Change db
+use nome-do-database-desejado 
+
+:Create new collections
+db.createCollection('nome-da-collection')
+db.employeeprofile .insert({
+   emp_name: "Pradeep",
+   emp_age:  23,
+   emp_website: "employeeprofile.com"
+})
+
+:Update - Create field in collections already
+db.collection.updateMany({}, {$set: {"fieldName": ""}})
+
+:Show collections in the db
+Entretanto se você informar um nome de um banco que ainda não existe ele irá realizar a alteração, (criando ele na memória) exemplo:
+use nome-do-database-desejado 
+
+e depois criar uma collection dentro dele:
+db.createCollection('myCollection')
+
+e depois perdir para listar os bancos de dados, o mesmo será criado, porque uma collection foi atrelada a ele:
+show dbs
+
+O mongo considera letras maiúsculas e minusculas (camelcase) no momento de criação das collections ou seja se for criada uma coleção chamada myCollection e depois você tentar criar mycollection, será permitido.
+
+:drop collection
+db.nomedacollection.drop()
+
+:drop db
+enter in db (use --dbname)
+execute command  db.dropDatabase()
+
+:get data pretty
+db."dbname".find().pretty()
+
+:start server for boxappDev
+mongod --config M:\Source\boxapp\box.back\src\BoxBack.WebApi\mongod.cfg

@@ -1,0 +1,38 @@
+Passo a passo para configurar servidor web - sigespweb
+
+Instalar todos os runtimes
+aspnetcore-runtime-3.0.3-win-x64
+aspnetcore-runtime-6.0.1-win-x64
+aspnetcore-runtime-2.1.30-win-x64
+
+Instalar sdks
+dotnet-sdk-2.1.202-win-x64
+dotnet-sdk-2.1.300-win-x64
+dotnet-sdk-3.1.113-win-x64
+dotnet-sdk-5.0.400-win-x64
+
+Instalar dotnet hosting
+dotnet-hosting-6.0.1-win
+
+Edite o arquivo
+C:\Windows\System32\inetsrv\config\applicationHost
+
+De
+<section name="handlers" overrideModeDefault="Deny" />
+
+Para
+<section name="handlers" overrideModeDefault="Allow" />
+
+De
+<section name="modules" allowDefinition="MachineToApplication" overrideModeDefault="Deny" />
+
+Para
+
+<section name="modules" allowDefinition="MachineToApplication" overrideModeDefault="Allow" />
+
+Instalar PostgreSQL 12
+Recuperar backup banco
+
+
+
+

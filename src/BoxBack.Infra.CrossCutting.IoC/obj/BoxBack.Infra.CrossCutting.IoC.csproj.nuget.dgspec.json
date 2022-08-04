@@ -1,0 +1,380 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj": {}
+  },
+  "projects": {
+    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj",
+        "projectName": "BoxBack.Application",
+        "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj",
+        "packagesPath": "C:\\Users\\alan.rezende\\.nuget\\packages\\",
+        "outputPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Source\\boxapp\\box.back\\NuGet.Config",
+          "C:\\Users\\alan.rezende\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
+                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
+              },
+              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
+                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[10.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj",
+        "projectName": "BoxBack.Domain",
+        "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj",
+        "packagesPath": "C:\\Users\\alan.rezende\\.nuget\\packages\\",
+        "outputPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Source\\boxapp\\box.back\\NuGet.Config",
+          "C:\\Users\\alan.rezende\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.17.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "Refit.HttpClientFactory": {
+              "target": "Package",
+              "version": "[4.6.16, )"
+            },
+            "System.Linq.Dynamic.Core": {
+              "target": "Package",
+              "version": "[1.2.14, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj",
+        "projectName": "BoxBack.Infra.CrossCutting.Identity",
+        "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj",
+        "packagesPath": "C:\\Users\\alan.rezende\\.nuget\\packages\\",
+        "outputPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Source\\boxapp\\box.back\\NuGet.Config",
+          "C:\\Users\\alan.rezende\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj",
+        "projectName": "BoxBack.Infra.CrossCutting.IoC",
+        "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj",
+        "packagesPath": "C:\\Users\\alan.rezende\\.nuget\\packages\\",
+        "outputPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.IoC\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Source\\boxapp\\box.back\\NuGet.Config",
+          "C:\\Users\\alan.rezende\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj": {
+                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj"
+              },
+              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
+                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
+              },
+              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj": {
+                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj"
+              },
+              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
+                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj",
+        "projectName": "BoxBack.Infra.Data",
+        "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj",
+        "packagesPath": "C:\\Users\\alan.rezende\\.nuget\\packages\\",
+        "outputPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Source\\boxapp\\box.back\\NuGet.Config",
+          "C:\\Users\\alan.rezende\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
+                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
+              },
+              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj": {
+                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.90, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.17.0, )"
+            },
+            "NetDevPack": {
+              "target": "Package",
+              "version": "[5.3.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

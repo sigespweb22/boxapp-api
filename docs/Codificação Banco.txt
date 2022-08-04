@@ -1,0 +1,24 @@
+=CONCATENAR(DECAHEX(ALEATÓRIOENTRE(0;4294967295);8);
+"-";DECAHEX(ALEATÓRIOENTRE(0;42949);4);"-";DECAHEX(ALEATÓRIOENTRE(0;42949);4);
+"-";DECAHEX(ALEATÓRIOENTRE(0;42949);4);"-";DECAHEX(ALEATÓRIOENTRE(0;4294967295);8);
+DECAHEX(ALEATÓRIOENTRE(0;42949);4));"'"::UUID
+
+=CONCATENAR(DECAHEX(ALEATÓRIOENTRE(0;4294967295);8);"-";DECAHEX(ALEATÓRIOENTRE(0;42949);4);"-";DECAHEX(ALEATÓRIOENTRE(0;42949);4);"-";DECAHEX(ALEATÓRIOENTRE(0;42949);4);"-";DECAHEX(ALEATÓRIOENTRE(0;4294967295);8);DECAHEX(ALEATÓRIOENTRE(0;42949);4))
+
+
+
+Salvar TODOS os scripts como ANSI (ou ISO-8859-1 ou window-1252)
+Setar o charset durante a conexão com o banco.
+Definir o header HTTP na resposta da requisição como por exemplo Content-Type: text/html; charset=ISO-8859-1 (ou Content-Type: text/html; charset=windows-1252 )
+
+Padrão para criar database com encoding e lc_collater
+CREATE DATABASE nome_do_banco ENCODING 'LATIN1' LC_COLLATE 'pt_BR.ISO-8859-1' LC_CTYPE 'pt_BR.ISO-8859-1' template template0;
+
+Set new encoding database
+SET CLIENT_ENCODING TO 'UTF8'
+
+Mostrar o encoding do banco
+SHOW CLIENT_ENCODING;
+
+Mudar encoding database
+update pg_database set encoding = pg_char_to_encoding('LATIN1') where datname = 'sigesp-dev'

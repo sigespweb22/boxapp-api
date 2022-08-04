@@ -1,0 +1,14 @@
+Bat para Backup
+SET PGPASSWORD=123456
+@c:
+@cd C:\Program Files\PostgreSQL\12\bin\
+@pg_dump --host 127.0.0.1 --port 5432 --username postgres --format Custom --file C:\Source\sigespweb\backups\Dropbox\sigesp-prod.backup sigesp-prod
+
+Comandos para restauração backup
+SET PGPASSWORD=123456
+pg_restore -h localhost -p 5432 -U postgres -d sigesp-teste C:\Source\sigespweb\backups\Dropbox\sigesp-prod.backup
+
+
+Exemplos
+//pg_restore -h localhost -p 5432 -U postgres -d sigesp-teste -v "C:\Source\sigespweb\backups\Dropbox\sigesp-prod.backup sigesp-prod"
+//pg_restore -h localhost -p 5432 -U postgres -d old_db -v "/usr/local/backup/10.70.0.61.backup"

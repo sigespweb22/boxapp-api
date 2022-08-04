@@ -1,0 +1,17 @@
+M:\Source\boxapp\box.back\src\BoxBack.Application\bin\Debug\netcoreapp3.1\BoxBack.Application.deps.json
+M:\Source\boxapp\box.back\src\BoxBack.Application\bin\Debug\netcoreapp3.1\BoxBack.Application.dll
+M:\Source\boxapp\box.back\src\BoxBack.Application\bin\Debug\netcoreapp3.1\BoxBack.Application.pdb
+M:\Source\boxapp\box.back\src\BoxBack.Application\bin\Debug\netcoreapp3.1\BoxBack.Domain.dll
+M:\Source\boxapp\box.back\src\BoxBack.Application\bin\Debug\netcoreapp3.1\BoxBack.Infra.CrossCutting.Identity.dll
+M:\Source\boxapp\box.back\src\BoxBack.Application\bin\Debug\netcoreapp3.1\BoxBack.Infra.Data.dll
+M:\Source\boxapp\box.back\src\BoxBack.Application\bin\Debug\netcoreapp3.1\BoxBack.Domain.pdb
+M:\Source\boxapp\box.back\src\BoxBack.Application\bin\Debug\netcoreapp3.1\BoxBack.Infra.Data.pdb
+M:\Source\boxapp\box.back\src\BoxBack.Application\bin\Debug\netcoreapp3.1\BoxBack.Infra.CrossCutting.Identity.pdb
+M:\Source\boxapp\box.back\src\BoxBack.Application\obj\Debug\netcoreapp3.1\BoxBack.Application.csproj.AssemblyReference.cache
+M:\Source\boxapp\box.back\src\BoxBack.Application\obj\Debug\netcoreapp3.1\BoxBack.Application.GeneratedMSBuildEditorConfig.editorconfig
+M:\Source\boxapp\box.back\src\BoxBack.Application\obj\Debug\netcoreapp3.1\BoxBack.Application.AssemblyInfoInputs.cache
+M:\Source\boxapp\box.back\src\BoxBack.Application\obj\Debug\netcoreapp3.1\BoxBack.Application.AssemblyInfo.cs
+M:\Source\boxapp\box.back\src\BoxBack.Application\obj\Debug\netcoreapp3.1\BoxBack.Application.csproj.CoreCompileInputs.cache
+M:\Source\boxapp\box.back\src\BoxBack.Application\obj\Debug\netcoreapp3.1\BoxBack.Application.csproj.CopyComplete
+M:\Source\boxapp\box.back\src\BoxBack.Application\obj\Debug\netcoreapp3.1\BoxBack.Application.dll
+M:\Source\boxapp\box.back\src\BoxBack.Application\obj\Debug\netcoreapp3.1\BoxBack.Application.pdb

@@ -1,0 +1,27 @@
+“iss” O domínio da aplicação geradora do token
+“sub” É o assunto do token, mas é muito utilizado para guarda o ID do usuário
+“aud” Define quem pode usar o token
+“exp” Data para expiração do token
+“nbf” Define uma data para qual o token não pode ser aceito antes dela
+“iat” Data de criação do token
+“jti” O id do token
+
+
+JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjU5MzgwMzM3fQ.yGlW5P8wSSBEm6bywO75g1tQ2SElf6NiUtws72Tr0e8
+{
+  "id": 1,
+  "iat": 1659380337
+}
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI4ZTQ0NTg2NS1hMjRkLTQ1NDMtYTZjNi05NDQzZDA0OGNkYjkiLCJuYW1lIjoiYWxhbi5yZXplbmRlQGJveHRlY25vbG9naWEuY29tLmJyIiwicm9sZSI6WyJNQVNURVIiLCJBQ0NPVU5ULVBST0ZJTEVfR0VUIl0sIm5iZiI6MTY1OTM4MDQ4MCwiZXhwIjoxNjU5OTg1MjgwLCJpYXQiOjE2NTkzODA0ODB9.cH3Ti1RjpRCdpnMzI17jrImQrDyiQtGb7i-gTKBId_Q
+{
+  "nameid": "8e445865-a24d-4543-a6c6-9443d048cdb9",
+  "name": "alan.rezende@boxtecnologia.com.br",
+  "role": [
+    "MASTER",
+    "ACCOUNT-PROFILE_GET"
+  ],
+  "nbf": 1659380480,
+  "exp": 1659985280,
+  "iat": 1659380480
+}

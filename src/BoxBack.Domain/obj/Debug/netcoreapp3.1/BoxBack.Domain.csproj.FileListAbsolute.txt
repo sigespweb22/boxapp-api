@@ -1,0 +1,10 @@
+M:\Source\boxapp\box.back\src\BoxBack.Domain\bin\Debug\netcoreapp3.1\BoxBack.Domain.deps.json
+M:\Source\boxapp\box.back\src\BoxBack.Domain\bin\Debug\netcoreapp3.1\BoxBack.Domain.dll
+M:\Source\boxapp\box.back\src\BoxBack.Domain\bin\Debug\netcoreapp3.1\BoxBack.Domain.pdb
+M:\Source\boxapp\box.back\src\BoxBack.Domain\obj\Debug\netcoreapp3.1\BoxBack.Domain.csproj.AssemblyReference.cache
+M:\Source\boxapp\box.back\src\BoxBack.Domain\obj\Debug\netcoreapp3.1\BoxBack.Domain.GeneratedMSBuildEditorConfig.editorconfig
+M:\Source\boxapp\box.back\src\BoxBack.Domain\obj\Debug\netcoreapp3.1\BoxBack.Domain.AssemblyInfoInputs.cache
+M:\Source\boxapp\box.back\src\BoxBack.Domain\obj\Debug\netcoreapp3.1\BoxBack.Domain.AssemblyInfo.cs
+M:\Source\boxapp\box.back\src\BoxBack.Domain\obj\Debug\netcoreapp3.1\BoxBack.Domain.csproj.CoreCompileInputs.cache
+M:\Source\boxapp\box.back\src\BoxBack.Domain\obj\Debug\netcoreapp3.1\BoxBack.Domain.dll
+M:\Source\boxapp\box.back\src\BoxBack.Domain\obj\Debug\netcoreapp3.1\BoxBack.Domain.pdb

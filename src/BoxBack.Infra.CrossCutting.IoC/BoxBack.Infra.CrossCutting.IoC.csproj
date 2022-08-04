@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BoxBack.Application\BoxBack.Application.csproj" />
+    <ProjectReference Include="..\BoxBack.Domain\BoxBack.Domain.csproj" />
+    <ProjectReference Include="..\BoxBack.Infra.Data\BoxBack.Infra.Data.csproj" />
+    <ProjectReference Include="..\BoxBack.Infra.CrossCutting.Identity\BoxBack.Infra.CrossCutting.Identity.csproj" />
+  </ItemGroup>
+
+</Project>

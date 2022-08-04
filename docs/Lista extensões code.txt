@@ -1,0 +1,15 @@
+adrianwilczynski.namespace
+alefragnani.Bookmarks
+Fudge.auto-using
+HookyQR.beautify
+jchannon.csharpextensions
+jorgeserrano.vscode-csharp-snippets
+MS-CEINTL.vscode-language-pack-pt-BR
+ms-dotnettools.csharp
+ms-python.python
+ms-python.vscode-pylance
+ms-toolsai.jupyter
+ms-toolsai.jupyter-keymap
+ms-toolsai.jupyter-renderers
+msjsdiag.debugger-for-chrome
+RamiroBerrelleza.bitbucket-pull-requests
