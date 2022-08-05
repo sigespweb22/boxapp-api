@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)refit\4.6.16\build\netstandard1.4\refit.targets" Condition="Exists('$(NuGetPackageRoot)refit\4.6.16\build\netstandard1.4\refit.targets')" />
-  </ImportGroup>
-</Project>
