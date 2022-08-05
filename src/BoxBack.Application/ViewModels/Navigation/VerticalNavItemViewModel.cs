@@ -15,6 +15,7 @@ namespace BoxBack.Application.ViewModels.Navigation
         public bool ExternalLing { get; set; }
         public bool OpenInNewTab { get; set; }
         public string BadgeColor { get; set; }
+        public string SectionTitle { get; set; }
         public List<Son> Children { get; set; }
     }
 

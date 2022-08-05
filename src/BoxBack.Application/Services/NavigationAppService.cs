@@ -21,13 +21,13 @@ namespace BoxBack.Application.Services
             #region Get and mapper object
             var navigation = new List<VerticalNavItemViewModel>();
             var navigationA = new VerticalNavItemViewModel();
+            var navigationSection = new VerticalNavItemViewModel();
+            var navigationB = new VerticalNavItemViewModel();
+
             navigationA.Children = new List<Son>();
+            navigationB.Children = new List<Son>();
             var oldestSonA = new Son();
             var oldestSonB = new Son();
-            var oldestSonC = new Son();
-            var oldestSonD = new Son();
-            var oldestSonE = new Son();
-            var youngestChildA = new Son();
 
             navigationA = new VerticalNavItemViewModel
             {
@@ -38,53 +38,37 @@ namespace BoxBack.Application.Services
                 Children = new List<Son>()
             };
 
-            // oldestSonA = new Son
-            // {
-            //     Title = "CRM",
-            //     Path = "/dashboards/crm"
-            // };
-            // oldestSonB = new Son
-            // {
-            //     Title = "Analytics",
-            //     Path = "/dashboards/analytics"
-            // };
-            // oldestSonC = new Son
-            // {
-            //     Title = "eCommerce",
-            //     Path = "/dashboards/ecommerce"
-            // };
-    
-            oldestSonD = new Son
+            oldestSonA = new Son
             {
                 Title = "Client",
                 Path = "/dashboards/client",
                 Action = "read",
                 Subject = "dashboard-client-page"
             };
+            navigationA.Children.Add(oldestSonA);
 
-            oldestSonE = new Son
+            navigationB = new VerticalNavItemViewModel
             {
                 Title = "Access Control",
-                Path = "/acl",
-                Action = "read",
-                Subject = "dashboard-acl-page",
+                Icon = "CogOutline",
+                BadgeContent = "",
+                BadgeColor = "primary",
+                Children = new List<Son>()
             };
 
-            // oldestSonD.Children = new List<Son>();
-            // youngestChildA = new Son
-            // {
-            //     Title = "Documentation",
-            //     Path = "/dashboards/client/documentation"
-            // };
-            // oldestSonD.Children.Add(youngestChildA);
-
-            // navigationA.Children.Add(oldestSonA);
-            // navigationA.Children.Add(oldestSonB);
-            // navigationA.Children.Add(oldestSonC);
-            navigationA.Children.Add(oldestSonD);
-            navigationA.Children.Add(oldestSonE);
+            oldestSonB = new Son
+            {
+                Title = "User",
+                Path = "/system/user/list",
+                Action = "read",
+                Subject = "system-user-page"
+            };
+            navigationB.Children.Add(oldestSonB);
 
             await Task.Run(() => navigation.Add(navigationA));
+            navigationSection.SectionTitle = "SYSTEM";
+            await Task.Run(() => navigation.Add(navigationSection));
+            await Task.Run(() => navigation.Add(navigationB));
             #endregion
             
             return navigation.ToList();
