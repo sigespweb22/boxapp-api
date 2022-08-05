@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pO7uckCFqtfMUyeBjQPtdcAbcYlqvBUCMcoh9zY+X4LS4bYyDNtWWh7jghY/G5SANOSjgItZI8a+6PMRP2rQfQ==",
+  "dgSpecHash": "T1QrH+H29tL+xqPwEg3yH/Cz58nRGS8fmYUP6yPcm1ijWu4YdHD400+CZsXwDPy9XZYG4uVpZaOIWskCr00nHQ==",
   "success": true,
-  "projectFilePath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj",
+  "projectFilePath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Application\\BoxBack.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alan.rezende\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\alan.rezende\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.WebApi\\BoxBack.WebApi.csproj": {}
+    "C:\\Source\\git\\boxapp-api\\src\\BoxBack.WebApi\\BoxBack.WebApi.csproj": {}
   },
   "projects": {
-    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj": {
+    "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Application\\BoxBack.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj",
+        "projectUniqueName": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Application\\BoxBack.Application.csproj",
         "projectName": "BoxBack.Application",
-        "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj",
+        "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Application\\BoxBack.Application.csproj",
         "packagesPath": "C:\\Users\\alan.rezende\\.nuget\\packages\\",
-        "outputPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\obj\\",
+        "outputPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Source\\boxapp\\box.back\\NuGet.Config",
+          "C:\\Source\\git\\boxapp-api\\NuGet.Config",
           "C:\\Users\\alan.rezende\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
@@ -27,11 +27,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
-                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
+              "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
+                "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
               },
-              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
-                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj"
+              "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
+                "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj"
               }
             }
           }
@@ -70,17 +70,17 @@
         }
       }
     },
-    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
+    "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj",
+        "projectUniqueName": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj",
         "projectName": "BoxBack.Domain",
-        "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj",
+        "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj",
         "packagesPath": "C:\\Users\\alan.rezende\\.nuget\\packages\\",
-        "outputPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\obj\\",
+        "outputPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Source\\boxapp\\box.back\\NuGet.Config",
+          "C:\\Source\\git\\boxapp-api\\NuGet.Config",
           "C:\\Users\\alan.rezende\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
@@ -145,17 +145,17 @@
         }
       }
     },
-    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj": {
+    "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj",
+        "projectUniqueName": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj",
         "projectName": "BoxBack.Infra.CrossCutting.Identity",
-        "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj",
+        "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj",
         "packagesPath": "C:\\Users\\alan.rezende\\.nuget\\packages\\",
-        "outputPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\obj\\",
+        "outputPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.Identity\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Source\\boxapp\\box.back\\NuGet.Config",
+          "C:\\Source\\git\\boxapp-api\\NuGet.Config",
           "C:\\Users\\alan.rezende\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
@@ -220,17 +220,17 @@
         }
       }
     },
-    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj": {
+    "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj",
+        "projectUniqueName": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj",
         "projectName": "BoxBack.Infra.CrossCutting.IoC",
-        "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj",
+        "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj",
         "packagesPath": "C:\\Users\\alan.rezende\\.nuget\\packages\\",
-        "outputPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.IoC\\obj\\",
+        "outputPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.IoC\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Source\\boxapp\\box.back\\NuGet.Config",
+          "C:\\Source\\git\\boxapp-api\\NuGet.Config",
           "C:\\Users\\alan.rezende\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
@@ -243,17 +243,17 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj": {
-                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj"
+              "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Application\\BoxBack.Application.csproj": {
+                "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Application\\BoxBack.Application.csproj"
               },
-              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
-                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
+              "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
+                "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
               },
-              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj": {
-                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj"
+              "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj": {
+                "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj"
               },
-              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
-                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj"
+              "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
+                "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj"
               }
             }
           }
@@ -286,17 +286,17 @@
         }
       }
     },
-    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
+    "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj",
+        "projectUniqueName": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj",
         "projectName": "BoxBack.Infra.Data",
-        "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj",
+        "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj",
         "packagesPath": "C:\\Users\\alan.rezende\\.nuget\\packages\\",
-        "outputPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\obj\\",
+        "outputPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Source\\boxapp\\box.back\\NuGet.Config",
+          "C:\\Source\\git\\boxapp-api\\NuGet.Config",
           "C:\\Users\\alan.rezende\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
@@ -309,11 +309,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
-                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
+              "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
+                "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
               },
-              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj": {
-                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj"
+              "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj": {
+                "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.Identity\\BoxBack.Infra.CrossCutting.Identity.csproj"
               }
             }
           }
@@ -376,17 +376,17 @@
         }
       }
     },
-    "C:\\Source\\boxapp\\box.back\\src\\BoxBack.WebApi\\BoxBack.WebApi.csproj": {
+    "C:\\Source\\git\\boxapp-api\\src\\BoxBack.WebApi\\BoxBack.WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.WebApi\\BoxBack.WebApi.csproj",
+        "projectUniqueName": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.WebApi\\BoxBack.WebApi.csproj",
         "projectName": "BoxBack.WebApi",
-        "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.WebApi\\BoxBack.WebApi.csproj",
+        "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.WebApi\\BoxBack.WebApi.csproj",
         "packagesPath": "C:\\Users\\alan.rezende\\.nuget\\packages\\",
-        "outputPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.WebApi\\obj\\",
+        "outputPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.WebApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Source\\boxapp\\box.back\\NuGet.Config",
+          "C:\\Source\\git\\boxapp-api\\NuGet.Config",
           "C:\\Users\\alan.rezende\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
@@ -399,14 +399,14 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
-                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
+              "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
+                "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
               },
-              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj": {
-                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj"
+              "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj": {
+                "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj"
               },
-              "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
-                "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj"
+              "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
+                "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj"
               }
             }
           }

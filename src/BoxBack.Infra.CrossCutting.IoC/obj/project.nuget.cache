@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QM1HrRKKB6tlY5KDvCArySkmw6Nj8UuhFUOlEwmqT9xrHr1EqyG+QjbM3Wsax96q/lREzQUoXKuQRacRQiud+w==",
+  "dgSpecHash": "S8Df8+xpUSVzTbFs/zZL3bpdyIKLAgNn2MLQnrJk8sYtloECzIvYPUpx0au8RKnvB1+hO79iZ01WjeUwNTwENg==",
   "success": true,
-  "projectFilePath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj",
+  "projectFilePath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.CrossCutting.IoC\\BoxBack.Infra.CrossCutting.IoC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alan.rezende\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\alan.rezende\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "S9oxIfZnxeiNLKYeCyfwfS/2rLPWmxZ20rKHS48nLNEFWljWQ7bFaReeYK/1/zVe7Z/mvgbwmYN13XSivFSvxQ==",
+  "dgSpecHash": "/KF/5O0Oe83vBeLi/evG/o6+dBV5q0vYlIZMwNi9nTmnq8n/7Lg6gjqJmjOKIa4+8g1qi9M7Vh2u61vkr7fdlA==",
   "success": true,
-  "projectFilePath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.WebApi\\BoxBack.WebApi.csproj",
+  "projectFilePath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.WebApi\\BoxBack.WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alan.rezende\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\alan.rezende\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",

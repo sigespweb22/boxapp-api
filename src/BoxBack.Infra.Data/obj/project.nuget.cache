@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5KBKdx+0e9x07CQ6X1JpzyhxQk5g/G+6/93dXeH4tbqdXCPx4moKaoQdFyiJ4zWIxSNFElzux8KEA4edcb6lyQ==",
+  "dgSpecHash": "duYFALcl/O7aYb/V26YywSP8VdEUG029GCruh/egDqxoMNMmHRkH6RNypQbqxuyD2YqtSRZk0zMPLuMhrhlWug==",
   "success": true,
-  "projectFilePath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj",
+  "projectFilePath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alan.rezende\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",
     "C:\\Users\\alan.rezende\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",

@@ -26,3 +26,17 @@ C:\Source\boxapp\box.back\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6
 C:\Source\boxapp\box.back\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.pdb
 C:\Source\boxapp\box.back\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.genruntimeconfig.cache
 C:\Source\boxapp\box.back\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\ref\BoxBack.Infra.CrossCutting.Identity.dll
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\bin\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.deps.json
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\bin\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.runtimeconfig.json
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\bin\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.dll
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\bin\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.pdb
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.csproj.AssemblyReference.cache
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.AssemblyInfoInputs.cache
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.AssemblyInfo.cs
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.csproj.CoreCompileInputs.cache
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.dll
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\refint\BoxBack.Infra.CrossCutting.Identity.dll
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.pdb
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\BoxBack.Infra.CrossCutting.Identity.genruntimeconfig.cache
+C:\Source\git\boxapp-api\src\BoxBack.Infra.CrossCutting.Identity\obj\Debug\net6.0\ref\BoxBack.Infra.CrossCutting.Identity.dll

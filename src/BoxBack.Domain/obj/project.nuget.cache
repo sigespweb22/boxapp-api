@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7wklhuFO62Oo9bYyhyUfr60/s8Ec20Tt4MdWBLkHNrsxgj0T95Xq7oGIAW/iHZYalIkwzDJmJc7d25VpRxZcaA==",
+  "dgSpecHash": "2EXWDYBIHZoxx5RL1tvoU5faeYhu19emAFe1ioTUlzjdoYHYyQmzDJcpgxf787gW3zBgDL9giBd8iCmAfs0o1g==",
   "success": true,
-  "projectFilePath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj",
+  "projectFilePath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alan.rezende\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\alan.rezende\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.2\\microsoft.aspnetcore.cryptography.internal.3.1.2.nupkg.sha512",

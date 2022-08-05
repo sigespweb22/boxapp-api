@@ -22,3 +22,15 @@ C:\Source\boxapp\box.back\src\BoxBack.Domain\obj\Debug\net6.0\BoxBack.Domain.dll
 C:\Source\boxapp\box.back\src\BoxBack.Domain\obj\Debug\net6.0\refint\BoxBack.Domain.dll
 C:\Source\boxapp\box.back\src\BoxBack.Domain\obj\Debug\net6.0\BoxBack.Domain.pdb
 C:\Source\boxapp\box.back\src\BoxBack.Domain\obj\Debug\net6.0\ref\BoxBack.Domain.dll
+C:\Source\git\boxapp-api\src\BoxBack.Domain\bin\Debug\net6.0\BoxBack.Domain.deps.json
+C:\Source\git\boxapp-api\src\BoxBack.Domain\bin\Debug\net6.0\BoxBack.Domain.dll
+C:\Source\git\boxapp-api\src\BoxBack.Domain\bin\Debug\net6.0\BoxBack.Domain.pdb
+C:\Source\git\boxapp-api\src\BoxBack.Domain\obj\Debug\net6.0\BoxBack.Domain.csproj.AssemblyReference.cache
+C:\Source\git\boxapp-api\src\BoxBack.Domain\obj\Debug\net6.0\BoxBack.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Source\git\boxapp-api\src\BoxBack.Domain\obj\Debug\net6.0\BoxBack.Domain.AssemblyInfoInputs.cache
+C:\Source\git\boxapp-api\src\BoxBack.Domain\obj\Debug\net6.0\BoxBack.Domain.AssemblyInfo.cs
+C:\Source\git\boxapp-api\src\BoxBack.Domain\obj\Debug\net6.0\BoxBack.Domain.csproj.CoreCompileInputs.cache
+C:\Source\git\boxapp-api\src\BoxBack.Domain\obj\Debug\net6.0\BoxBack.Domain.dll
+C:\Source\git\boxapp-api\src\BoxBack.Domain\obj\Debug\net6.0\refint\BoxBack.Domain.dll
+C:\Source\git\boxapp-api\src\BoxBack.Domain\obj\Debug\net6.0\BoxBack.Domain.pdb
+C:\Source\git\boxapp-api\src\BoxBack.Domain\obj\Debug\net6.0\ref\BoxBack.Domain.dll

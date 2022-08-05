@@ -6281,14 +6281,14 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj",
+      "projectUniqueName": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Application\\BoxBack.Application.csproj",
       "projectName": "BoxBack.Application",
-      "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\BoxBack.Application.csproj",
+      "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Application\\BoxBack.Application.csproj",
       "packagesPath": "C:\\Users\\alan.rezende\\.nuget\\packages\\",
-      "outputPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Application\\obj\\",
+      "outputPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Source\\boxapp\\box.back\\NuGet.Config",
+        "C:\\Source\\git\\boxapp-api\\NuGet.Config",
         "C:\\Users\\alan.rezende\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
@@ -6301,11 +6301,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
-              "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
+            "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj": {
+              "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Domain\\BoxBack.Domain.csproj"
             },
-            "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
-              "projectPath": "C:\\Source\\boxapp\\box.back\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj"
+            "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj": {
+              "projectPath": "C:\\Source\\git\\boxapp-api\\src\\BoxBack.Infra.Data\\BoxBack.Infra.Data.csproj"
             }
           }
         }
