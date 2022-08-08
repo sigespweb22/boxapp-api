@@ -50,7 +50,7 @@ namespace BoxBack.Application.Services
             navigationB = new VerticalNavItemViewModel
             {
                 Title = "Access Control",
-                Icon = "CogOutline",
+                Icon = "TrackpadLock",
                 BadgeContent = "",
                 BadgeColor = "primary",
                 Children = new List<Son>()
@@ -61,7 +61,7 @@ namespace BoxBack.Application.Services
                 Title = "User",
                 Path = "/system/user/list",
                 Action = "read",
-                Subject = "system-user-page"
+                Subject = "ac-user-page"
             };
             navigationB.Children.Add(oldestSonB);
 

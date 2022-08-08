@@ -47,9 +47,9 @@ namespace BoxBack.WebApi.EndPoints
         /// <param name=""></param>
         /// <returns>Um json com os itens de menu</returns>
         /// <response code="200">Lista de itens</response>
-
         /// <response code="400">Lista nula</response>
         /// <response code="404">Lista vazia</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [Route("my-menu")]
         [HttpGet]
         public async Task<IActionResult> MyMenuAsync()
