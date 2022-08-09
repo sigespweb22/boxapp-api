@@ -78,12 +78,12 @@ namespace BoxBack.WebApi.EndPoints.User
                     Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                     FullName = "ALAN LEITE DE REZENDE",
                     Company = "Box Tecnologia",
-                    Role = "Admin",
+                    Role = "admin",
                     UserName = "alan.rezende",
                     Country = "Brasil",
                     Contact = "(48) 9.9961-6679",
                     Email = "alan.rezende@boxtecnologia.com.br",
-                    Status = "active",
+                    Status = "ACTIVE",
                     Avatar = "",
                     AvatarColor = "primary"
                 };
