@@ -29,7 +29,7 @@ namespace BoxBack.Application.ViewModels
 
         public List<string> ApplicationUserRoles { get; set; }
         
-
+        public string ContaUsuarioNome { get; set; }
         public virtual ContaUsuarioViewModel ContaUsuarioViewModel { get; set; }
     }
 }
