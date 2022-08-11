@@ -15,7 +15,7 @@ namespace BoxBack.WebApi.Security
 {
     public class GeneratorToken
     {
-        public ApplicationUserViewModel GetToken(ApplicationUser appUser)
+        public string GetToken(ApplicationUser appUser)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Settings.Secret);
@@ -45,29 +45,18 @@ namespace BoxBack.WebApi.Security
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-            // var tokenDescriptor = new SecurityTokenDescriptor
-            // {
-            //     Subject = new ClaimsIdentity(new Claim[]
-            //     {
-            //         new Claim(ClaimTypes.Name, appUser.UserName),
-            //         new Claim("BoxAppApi", appUser.ApplicationUserRoles.Select(x => x.ApplicationRole.NormalizedName).FirstOrDefault())
-            //     }),
-            //     Expires = DateTime.UtcNow.AddDays(7),
-            //     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            // };
-            
-            var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            var userViewModel = new ApplicationUserViewModel();
-            
-            userViewModel.UserName = appUser.UserName;
-            userViewModel.Funcao = appUser.ContaUsuario.Funcao.ToString();
-            userViewModel.Setor = appUser.ContaUsuario.Setor.ToString();
-            userViewModel.Nome = appUser.ContaUsuario.Nome;
-            userViewModel.AccessToken = tokenHandler.WriteToken(token);
-            userViewModel.Password = null;
-
-            return userViewModel;
+            String tokenResult;
+            try
+            {
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                if (token == null)
+                    throw new Exception("Problemas ao obter o token. Tente novamente, persistindo o problema informe a equipe de suporte.");
+                
+                tokenResult = tokenHandler.WriteToken(token);
+            }
+            catch (Exception ex) { throw ex; }
+            return tokenResult;
         }
     }
 }

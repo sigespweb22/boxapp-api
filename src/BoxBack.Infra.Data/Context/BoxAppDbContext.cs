@@ -35,8 +35,6 @@ namespace BoxBack.Infra.Data.Context
             _userResolverService = userResolverService;
         }
 
-        public DbSet<ContaUsuario> ContaUsuarios { get; set; }
-
          protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             // NpgsqlConnection.GlobalTypeMapper.MapEnum<InstrumentoPrisaoTipoEnum>();
@@ -51,7 +49,6 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new ApplicationUserMap());
             modelBuilder.ApplyConfiguration(new ApplicationRoleMap());
             modelBuilder.ApplyConfiguration(new ApplicationUserRoleMap());
-            modelBuilder.ApplyConfiguration(new ContaUsuarioMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

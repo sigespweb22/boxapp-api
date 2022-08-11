@@ -14,12 +14,6 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasColumnName("UserId");
 
             builder
-                .HasOne(c => c.ContaUsuario)
-                .WithOne(d => d.ApplicationUser)
-                .HasForeignKey<ContaUsuario>(c => c.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-            
-            builder
                 .HasMany(c => c.ApplicationUserRoles)
                 .WithOne(d => d.ApplicationUser)
                 .HasForeignKey(c => c.UserId)

@@ -36,21 +36,19 @@ namespace BoxBack.WebApi.EndPoints.User
     {
         private readonly BoxAppDbContext _context;
         private readonly UserManager<ApplicationUser> _manager;
-        private readonly IContaUsuarioAppService _contaUsuarioAppService;
-        private readonly IContaUsuarioRepository _contaUsuarioRepository;
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IMapper _mapper;
         private readonly ValidationResult _validationResult;
 
         public UsersEndpoint(BoxAppDbContext context,
-                             UserManager<ApplicationUser> manager, RoleManager<ApplicationRole> roleManager, IMapper mapper, IContaUsuarioAppService contaUsuarioAppService, IContaUsuarioRepository contaUsuarioRepository, ValidationResult validationResult)
+                             UserManager<ApplicationUser> manager, 
+                             RoleManager<ApplicationRole> roleManager, 
+                             IMapper mapper, ValidationResult validationResult)
         {
             _context = context;
             _manager = manager;
             _roleManager = roleManager;
             _mapper = mapper;
-            _contaUsuarioAppService = contaUsuarioAppService;
-            _contaUsuarioRepository = contaUsuarioRepository;
             _validationResult = validationResult;
         }
 

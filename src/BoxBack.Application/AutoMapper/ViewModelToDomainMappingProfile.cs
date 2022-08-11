@@ -11,7 +11,6 @@ namespace BoxBack.Application.AutoMapper
     {
         public ViewModelToDomainMappingProfile()
         {
-            CreateMap<ContaUsuarioViewModel, ContaUsuario>();
             CreateMap<ApplicationUserViewModel, ApplicationUser>();
         }
     }

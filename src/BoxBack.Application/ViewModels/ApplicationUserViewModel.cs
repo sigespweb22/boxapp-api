@@ -19,8 +19,8 @@ namespace BoxBack.Application.ViewModels
         public bool TwoFactorEnabled { get; set; }
         public string Funcao { get; set; }
         public string Setor { get; set; }
-        public string PerfilFoto { get; set; }
-        public string Nome { get; set; }
+        public string Avatar { get; set; }
+        public string FullName { get; set; }
         public string AccessToken { get; set; }
         public bool RememberMe { get; set; }
 
@@ -28,8 +28,7 @@ namespace BoxBack.Application.ViewModels
         public List<string> Funcoes { get; set; }
 
         public List<string> ApplicationUserRoles { get; set; }
+        public List<string> Role { get; set; }
         
-        public string ContaUsuarioNome { get; set; }
-        public virtual ContaUsuarioViewModel ContaUsuarioViewModel { get; set; }
     }
 }

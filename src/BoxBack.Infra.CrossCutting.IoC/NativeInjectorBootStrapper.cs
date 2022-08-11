@@ -25,13 +25,11 @@ namespace BoxBack.Infra.CrossCutting.IoC
 
             // Infra - Data
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IContaUsuarioRepository, ContaUsuarioRepository>();
 
             // Repo NoSQL
             services.AddTransient<IClienteRepositoryNoSQL, ClienteRepositoryNoSQL>();
 
             // Application
-            services.AddScoped<IContaUsuarioAppService, ContaUsuarioAppService>();
             services.AddScoped<INavigationAppService, NavigationAppService>();
 
             services.AddScoped<UserResolverService>();

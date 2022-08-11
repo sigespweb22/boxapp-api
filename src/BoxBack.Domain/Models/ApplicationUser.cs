@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using BoxBack.Domain.Enums;
 
 namespace BoxBack.Domain.Models
 {
@@ -12,7 +13,10 @@ namespace BoxBack.Domain.Models
         //Construtor vazio para o EF
         public ApplicationUser() { }
 
-        public ContaUsuario ContaUsuario { get; set; }
+        public string FullName { get; set; }
+        public string Avatar { get; set; }
+        public SetorEnum Setor { get; set; }
+        public FuncaoEnum Funcao { get; set; }
 
 
         public virtual ICollection<ApplicationUserClaim> ApplicationUserClaims { get; set; }

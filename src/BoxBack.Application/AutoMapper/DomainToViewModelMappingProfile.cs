@@ -16,14 +16,13 @@ namespace BoxBack.Application.AutoMapper
     {
         public DomainToViewModelMappingProfile()
         {
-            CreateMap<ContaUsuario, ContaUsuarioViewModel>()
-                .ForMember(dst => dst.SetorId, src => src.MapFrom(x => (int) x.Setor))
-                .ForMember(dst => dst.Setor, src => src.MapFrom(x => x.Setor))
-                .ForMember(dst => dst.FuncaoId, src => src.MapFrom(x => (int) x.Funcao))
-                .ForMember(dst => dst.Funcao, src => src.MapFrom(x => x.Funcao));
             CreateMap<ApplicationUser, ApplicationUserViewModel>()
-                .ForMember(dst => dst.UserId, src => src.MapFrom(x => x.Id))
-                .ForMember(dst => dst.ContaUsuarioViewModel, src => src.MapFrom(x => x.ContaUsuario));
+                .ForMember(dst => dst.Id, src => src.MapFrom(x => x.Id))
+                .ForMember(dst => dst.Role, src => src.MapFrom(x => x.ApplicationUserRoles.Select(x => x.ApplicationRole.Name.ToUpper())))
+                .ForMember(dst => dst.Email, src => src.MapFrom(x => x.Email))
+                .ForMember(dst => dst.FullName, src => src.MapFrom(x => x.FullName))
+                .ForMember(dst => dst.UserName, src => src.MapFrom(x => x.UserName))
+                .ForMember(dst => dst.Avatar, src => src.MapFrom(x => x.Avatar));
             CreateMap<Cliente, ClienteViewModel>();
         }
     }
