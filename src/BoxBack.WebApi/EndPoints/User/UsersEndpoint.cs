@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Net;
+using System;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.NetworkInformation;
@@ -26,6 +27,7 @@ using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels.Selects;
 using BoxBack.Infra.Data.Extensions;
 using BoxBack.WebApi.Controllers;
+using BoxBack.Domain.Interfaces;
 
 namespace BoxBack.WebApi.EndPoints.User
 {
@@ -35,6 +37,7 @@ namespace BoxBack.WebApi.EndPoints.User
     public class UsersEndpoint : ApiController
     {
         private readonly BoxAppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _manager;
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IMapper _mapper;
@@ -139,6 +142,30 @@ namespace BoxBack.WebApi.EndPoints.User
                 Params = "",
                 Total = 1
             });
+        }
+
+        /// <summary>
+        /// Cria um usuário
+        /// </summary>
+        /// <param name="ApplicationUserViewMode"></param>
+        /// <returns>True se adicionardo com sucesso</returns>
+        /// <response code="201">Criado com sucesso</response>
+        /// <response code="400">Null data</response>
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Route("create")]
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync([FromBody]ApplicationUserViewModel applicationUserViewMode)
+        {
+            #region Create
+            try
+            {
+                return StatusCode(400, "Problemas ao adicionar um usuário.");
+            }
+            catch (Exception ex) { return StatusCode(500, ex.Message); }
+            #endregion
+            return Ok(true);
         }
 
         public class UserTemp

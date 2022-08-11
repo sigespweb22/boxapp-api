@@ -205,4 +205,4 @@ namespace BoxBack.WebApi.EndPoints
             return Ok(new { userData = userMapped });
         }
     }
-} 
+}

@@ -17,7 +17,11 @@ namespace BoxBack.Domain.Models
         public string Avatar { get; set; }
         public SetorEnum Setor { get; set; }
         public FuncaoEnum Funcao { get; set; }
+        
 
+        // Relationships
+        // public Tenant TenantId { get; set; }
+        // public Tenant Tenant { get; set; }
 
         public virtual ICollection<ApplicationUserClaim> ApplicationUserClaims { get; set; }
         public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
