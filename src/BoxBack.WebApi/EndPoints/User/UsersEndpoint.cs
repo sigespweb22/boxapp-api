@@ -71,76 +71,44 @@ namespace BoxBack.WebApi.EndPoints.User
         [HttpGet]
         public async Task<IActionResult> GetAll(string q)
         {
-            var result = new List<UserTemp>();
+            #region Get data
+            var users = new List<ApplicationUser>();
             try
             {
-                var user1 = new UserTemp()
-                {
-                    Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                    FullName = "ALAN LEITE DE REZENDE",
-                    Company = "Box Tecnologia",
-                    Roles = new string[] {"SUPORTE", "FINANCEIRO"},
-                    UserName = "alan.rezende",
-                    Country = "Brasil",
-                    Contact = "(48) 9.9961-6679",
-                    Email = "alan.rezende@boxtecnologia.com.br",
-                    Status = "ACTIVE",
-                    Avatar = "",
-                    AvatarColor = "primary"
-                };
-
-                var user2 = new UserTemp()
-                {
-                    Id = "43ab3050-cfe7-4f6b-9034-d9d4c317df0e",
-                    FullName = "JOÃO DA SILVA",
-                    Company = "Box Tecnologia",
-                    Roles = new string[] {"MASTER", "ADMIN", "SUPORTE", "USER"},
-                    UserName = "joao.silva",
-                    Country = "Brasil",
-                    Contact = "(48) 9.9961-6679",
-                    Email = "joao.silva@boxtecnologia.com.br",
-                    Status = "PENDING",
-                    Avatar = "",
-                    AvatarColor = "info"
-                };
-
-                var user3 = new UserTemp()
-                {
-                    Id = "a94c13b5-756a-467d-8f18-6b10254c7f3e",
-                    FullName = "LEONARDO CARVALHO MOREIRA",
-                    Company = "Box Tecnologia",
-                    Roles = new string[] {"MASTER", "ADMIN", "SUPORTE", "USER"},
-                    UserName = "leonardo.moreira",
-                    Country = "Brasil",
-                    Contact = "(48) 9.9961-6679",
-                    Email = "leonardo.moreira@boxtecnologia.com.br",
-                    Status = "INACTIVE",
-                    Avatar = "",
-                    AvatarColor = "warning"
-                };
-
-                result.Add(user1);
-                result.Add(user2);
-                result.Add(user3);
-
-                // users = await _manager.Users
-                //                     .AsNoTracking()
-                //                     .Include(x => x.ContaUsuario)
-                //                     .ToListAsync();
-                
+                users = await _manager.Users
+                                        .AsNoTracking()
+                                        .Include(x => x.ApplicationUserRoles)
+                                        .ThenInclude(x => x.ApplicationRole)
+                                        .ToListAsync();
+                if (users == null)
+                    return StatusCode(404, "Not found.");
             }
             catch (Exception ex){ return StatusCode(500, ex.Message); }
-            if (result == null)
-                return StatusCode(404, "Not found.");
-
+            #endregion
+            
+            #region Filter search
             if(!string.IsNullOrEmpty(q))
-                result = result.Where(x => x.FullName.Contains(q.ToUpper())).ToList();
+                users = users.Where(x => x.FullName.Contains(q.ToUpper())).ToList();
+            #endregion
 
+            #region Map
+            IEnumerable<ApplicationUserViewModel> userMap = new List<ApplicationUserViewModel>();
+            try
+            {
+                userMap = _mapper.Map<IEnumerable<ApplicationUserViewModel>>(users);
+                foreach(var tmp in userMap)
+                {
+                    tmp.UserName = tmp.UserName.Substring(0, tmp.UserName.IndexOf("@"));
+                }
+            }
+            catch (Exception ex) { return StatusCode(500, ex); }
+            #endregion
+            
             return Ok(new {
-                AllData = result,
-                Users = result,
-                Params = "",
-                Total = 1
+                AllData = userMap.ToList(),
+                Users = userMap.ToList(),
+                Params = q,
+                Total = userMap.Count()
             });
         }
 
@@ -156,16 +124,44 @@ namespace BoxBack.WebApi.EndPoints.User
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("create")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody]ApplicationUserViewModel applicationUserViewMode)
+        public async Task<IActionResult> CreateAsync([FromBody]ApplicationUserViewModel applicationUserViewModel)
         {
-            #region Create
+            #region Properties resolve
+            // var usnPS = applicationUserViewModel.Email.IndexOf("@");
+            // var userName = applicationUserViewModel.Email.Substring(0, usnPS);
+            #endregion
+
+            #region Map
+            var userMap = new ApplicationUser();
             try
             {
-                return StatusCode(400, "Problemas ao adicionar um usuário.");
+                userMap.Id = Guid.NewGuid().ToString();
+                userMap.UserName = applicationUserViewModel.Email;
+                userMap.NormalizedUserName = applicationUserViewModel.Email.ToUpper();
+                userMap.Email = applicationUserViewModel.Email;
+                userMap.NormalizedEmail = applicationUserViewModel.Email.ToUpper();
+                userMap.TwoFactorEnabled = false;
+                userMap.EmailConfirmed = true;
+                userMap.Avatar = string.Empty;
+                userMap.FullName = applicationUserViewModel.FullName.ToUpper();
             }
             catch (Exception ex) { return StatusCode(500, ex.Message); }
             #endregion
-            return Ok(true);
+
+            var result = await _manager.CreateAsync(userMap);
+            if (result.Succeeded)
+            {
+                await _manager.AddPasswordAsync(userMap, applicationUserViewModel.Password);   
+            }
+            else
+            {
+                return StatusCode(400, result.Errors);
+            }
+
+            return StatusCode(201, new {
+                Data = userMap,
+                Message = "Usuário criado com sucesso." }
+            );
         }
 
         public class UserTemp
