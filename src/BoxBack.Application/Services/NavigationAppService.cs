@@ -59,7 +59,7 @@ namespace BoxBack.Application.Services
             oldestSonB = new Son
             {
                 Title = "User",
-                Path = "/system/user/list",
+                Path = "/system/control-access/user/list",
                 Action = "read",
                 Subject = "ac-user-page"
             };
