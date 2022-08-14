@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using BoxBack.Domain.Enums;
@@ -20,10 +19,12 @@ namespace BoxBack.Domain.Models
         
 
         // Relationships
-        // public Tenant TenantId { get; set; }
-        // public Tenant Tenant { get; set; }
+        [ForeignKey("TenantId")]
+        public Guid TenantId { get; set; }
+        public Tenant Tenant { get; set; }
 
         public virtual ICollection<ApplicationUserClaim> ApplicationUserClaims { get; set; }
         public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
+        public virtual ICollection<ApplicationUserGroup> ApplicationUserGroups { get; set; }
     }
 }

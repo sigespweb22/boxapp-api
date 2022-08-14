@@ -30,7 +30,7 @@ namespace BoxBack.WebApi.Security
                     claims.Add(new Claim(ClaimTypes.Name, appUser.UserName));
                     foreach (var item in appUser.ApplicationUserRoles)
                     {
-                        claims.Add(new Claim(ClaimTypes.Role, item.ApplicationRole.NormalizedName));
+                        claims.Add(new Claim(ClaimTypes.Role, item.ApplicationRole.Name));
                         
                         // Create Claim by app
                         // claims.Add(new Claim("BoxAppApi", item.ApplicationRole.NormalizedName));

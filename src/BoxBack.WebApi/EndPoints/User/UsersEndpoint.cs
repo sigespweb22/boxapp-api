@@ -63,11 +63,11 @@ namespace BoxBack.WebApi.EndPoints.User
         /// <response code="200">Lista de usuários</response>
         /// <response code="400">Lista nula</response>
         /// <response code="404">Lista vazia</response>
-        [Authorize(Roles = "MASTER, USER_LIST")]
+        [Authorize(Roles = "Master, CanUserList, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Route("list")]
+        [Route("list")] 
         [HttpGet]
         public async Task<IActionResult> GetAll(string q)
         {
@@ -119,7 +119,7 @@ namespace BoxBack.WebApi.EndPoints.User
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Null data</response>
-        [AllowAnonymous]
+        [Authorize(Roles = "Master, CanUserList, CanUserCreate")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("create")]

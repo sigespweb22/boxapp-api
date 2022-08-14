@@ -35,7 +35,12 @@ namespace BoxBack.Infra.Data.Context
             _userResolverService = userResolverService;
         }
 
-         protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<ApplicationGroup> ApplicationGroups { get; set; }
+        public DbSet<ApplicationRoleGroup> ApplicationRoleGroups { get; set; }
+        public DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             // NpgsqlConnection.GlobalTypeMapper.MapEnum<InstrumentoPrisaoTipoEnum>();
             // NpgsqlConnection.GlobalTypeMapper.MapComposite<InstrumentoPrisaoTipoEnum>();
@@ -45,10 +50,14 @@ namespace BoxBack.Infra.Data.Context
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new TenantMap());
             modelBuilder.ApplyConfiguration(new ApplicationUserClaimMap());
             modelBuilder.ApplyConfiguration(new ApplicationUserMap());
             modelBuilder.ApplyConfiguration(new ApplicationRoleMap());
             modelBuilder.ApplyConfiguration(new ApplicationUserRoleMap());
+            modelBuilder.ApplyConfiguration(new ApplicationGroupMap());
+            modelBuilder.ApplyConfiguration(new ApplicationRoleGroupMap());
+            modelBuilder.ApplyConfiguration(new ApplicationUserGroupMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
