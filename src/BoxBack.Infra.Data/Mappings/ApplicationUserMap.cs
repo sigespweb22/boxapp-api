@@ -44,8 +44,11 @@ namespace BoxBack.Infra.Data.Mappings
                 {
                     Id = "8e445865-a24d-4543-a6c6-9443d048cdb9", // primary key
                     UserName = "alan.rezende@boxtecnologia.com.br",
-                    FullName = "Alan Leite de Rezende",
-                    Avatar = "ALDR",
+                    Email = "alan.rezende@boxtecnologia.com.br",
+                    NormalizedEmail = "ALAN.REZENDE@BOXTECNOLOGIA.COM.BR",
+                    EmailConfirmed = true,
+                    FullName = "ALAN LEITE DE REZENDE",
+                    Avatar = string.Empty,
                     Setor = 0,
                     Funcao = 0,
                     NormalizedUserName = "ALAN.REZENDE@BOXTECNOLOGIA.COM.BR",
