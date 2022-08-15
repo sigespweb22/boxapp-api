@@ -1,4 +1,4 @@
-# O que é o BoxAppApi - ASP.NET Core - .NET 6.0
+# O que é o BoxAppApi ASP.NET Core - .NET 6.0?
 
 BoxApp Api é um projeto de código fechado escrito em .NET Core 6.0.
 Totalmente escrito para atender o modelo de serviços web RESTful.
