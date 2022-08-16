@@ -31,3 +31,65 @@ public class Program
     }
 }
 #endregion 
+
+#region FileUpload com React
+export class FileUpload extends Component {
+    static displayName = FileUpload.name;
+
+    async handleSubmit(e) {
+        e.preventDefault();
+
+        const url = 'api/Books';
+
+        const formData = new FormData();
+        formData.append('file', this.refs.File.files[0]);
+
+        var book = {
+            title: this.refs.Title.value,
+            author: this.refs.Author.value,
+            language: this.refs.Language.value
+        };
+        formData.append('metadata', JSON.stringify(book));
+
+        post(url, formData);
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>File Upload</h1>
+                <form onSubmit={e => this.handleSubmit(e)}>
+                    <div className="form-group">
+                        <label>Title</label>
+                        <input className="form-control" ref="Title" required />
+                    </div>
+                    <div className="form-group">
+                        <label>Author</label>
+                        <input className="form-control" ref="Author" required />
+                    </div>
+                    <div className="form-group">
+                        <label>Language</label>
+                        <select className="form-control" ref="Language">
+                            <option>English</option>
+                            <option>German</option>
+                            <option>French</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>File</label>
+                        <input type="file" className="form-control-file" ref="File" required />
+                    </div>
+                    <button type="submit" className="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        );
+    }
+}
+ [HttpPost]
+public void PostBook(IFormCollection bookData)
+{
+    var book = JsonConvert.DeserializeObject<Book>(bookData["metadata"]);
+
+    _bookService.AddBookToDb(book, bookData.Files[0]);
+}
+#endregion

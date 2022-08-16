@@ -9,6 +9,20 @@ namespace BoxBack.Domain.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        public ApplicationUser(string fullName,
+                               string avatar,
+                               SetorEnum setor,
+                               FuncaoEnum funcao,
+                               ApplicationUserStatusEnum status) 
+        {
+            FullName = fullName;
+            Avatar = avatar;
+            Setor = setor;
+            Funcao = funcao;
+            Status = status;
+        }
+
+
         //Construtor vazio para o EF
         public ApplicationUser() { }
 
@@ -16,6 +30,7 @@ namespace BoxBack.Domain.Models
         public string Avatar { get; set; }
         public SetorEnum Setor { get; set; }
         public FuncaoEnum Funcao { get; set; }
+        public ApplicationUserStatusEnum Status { get; set; }
         
 
         // Relationships

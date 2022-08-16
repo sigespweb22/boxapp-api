@@ -15,16 +15,18 @@ namespace BoxBack.Application.ViewModels
         public string UserId { get;set; } 
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "E-mail requerido.")]
+        [Required(ErrorMessage = "E-mail é requerido.")]
         public string Email { get; set; }
         
+        [Required(ErrorMessage = "Senha é requerida.")]
         public string Password { get; set; }
         public bool TwoFactorEnabled { get; set; }
         public string Funcao { get; set; }
+
         public string Setor { get; set; }
         public string Avatar { get; set; }
 
-        [Required(ErrorMessage = "Nome completo requerido.")]
+        [Required(ErrorMessage = "Nome completo é requerido.")]
         public string FullName { get; set; }
         public string AccessToken { get; set; }
         public bool RememberMe { get; set; }
@@ -35,6 +37,8 @@ namespace BoxBack.Application.ViewModels
 
         public List<string> ApplicationUserRoles { get; set; }
         public List<string> Role { get; set; }
+
+        [Required, MinLength(1, ErrorMessage = "Grupo usuário é requerido.")]
         public List<string> ApplicationUserGroups { get; set; }
         
     }
