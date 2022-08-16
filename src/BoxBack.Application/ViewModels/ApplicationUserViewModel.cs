@@ -35,7 +35,7 @@ namespace BoxBack.Application.ViewModels
 
         public List<string> ApplicationUserRoles { get; set; }
         public List<string> Role { get; set; }
-        public virtual ICollection<ApplicationUserGroup> ApplicationUserGroups { get; set; }
+        public List<string> ApplicationUserGroups { get; set; }
         
     }
 }

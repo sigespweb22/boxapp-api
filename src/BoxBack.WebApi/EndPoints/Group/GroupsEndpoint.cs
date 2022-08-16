@@ -99,12 +99,7 @@ namespace BoxBack.WebApi.EndPoints.User
             catch (Exception ex) { return StatusCode(500, ex); }
             #endregion
             
-            return Ok(new {
-                AllData = groups,
-                Groups = groups,
-                Params = q,
-                Total = groups.Count()
-            });
+            return Ok(groups);
         }
     }
 }
