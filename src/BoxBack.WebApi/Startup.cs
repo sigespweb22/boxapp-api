@@ -36,6 +36,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using System.Text.Json.Serialization;
 
 namespace BoxBack.WebApi
 {
@@ -148,6 +149,7 @@ namespace BoxBack.WebApi
             {
                 options.JsonSerializerOptions.WriteIndented = true;
                 options.JsonSerializerOptions.Converters.Add(new CustomJsonConverterForTypeExtensions());
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
 
             services.Configure<MongoDbSettings>(options =>

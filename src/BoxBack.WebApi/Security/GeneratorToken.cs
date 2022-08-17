@@ -55,7 +55,7 @@ namespace BoxBack.WebApi.Security
                 
                 tokenResult = tokenHandler.WriteToken(token);
             }
-            catch (Exception ex) { throw ex; }
+            catch { throw; }
             return tokenResult;
         }
     }

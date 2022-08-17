@@ -27,7 +27,6 @@ using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels.Selects;
 using BoxBack.Infra.Data.Extensions;
 using BoxBack.WebApi.Controllers;
-using BoxBack.Domain.Interfaces;
 
 namespace BoxBack.WebApi.EndPoints.User
 {
@@ -43,11 +42,13 @@ namespace BoxBack.WebApi.EndPoints.User
         private readonly IMapper _mapper;
 
         public UsersEndpoint(BoxAppDbContext context,
+                             IUnitOfWork unitOfWork,
                              UserManager<ApplicationUser> manager, 
                              RoleManager<ApplicationRole> roleManager, 
                              IMapper mapper)
         {
             _context = context;
+            _unitOfWork = unitOfWork;
             _manager = manager;
             _roleManager = roleManager;
             _mapper = mapper;
@@ -77,6 +78,9 @@ namespace BoxBack.WebApi.EndPoints.User
                                         .AsNoTracking()
                                         .Include(x => x.ApplicationUserRoles)
                                         .ThenInclude(x => x.ApplicationRole)
+                                        .Include(x => x.ApplicationUserGroups)
+                                        .ThenInclude(x => x.ApplicationGroup)
+                                        .OrderBy(x => x.UserName)
                                         .ToListAsync();
                 if (users == null)
                     return StatusCode(404, "Not found.");
@@ -124,11 +128,6 @@ namespace BoxBack.WebApi.EndPoints.User
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody]ApplicationUserViewModel applicationUserViewModel)
         {
-            #region Properties resolve
-            // var usnPS = applicationUserViewModel.Email.IndexOf("@");
-            // var userName = applicationUserViewModel.Email.Substring(0, usnPS);
-            #endregion
-
             #region Map
             var userMap = new ApplicationUser();
             try
@@ -142,6 +141,7 @@ namespace BoxBack.WebApi.EndPoints.User
                 userMap.EmailConfirmed = true;
                 userMap.Avatar = string.Empty;
                 userMap.FullName = applicationUserViewModel.FullName.ToUpper();
+                userMap.Status = ApplicationUserStatusEnum.ACTIVE;
             }
             catch (Exception ex) { return StatusCode(500, ex.Message); }
             #endregion
@@ -156,6 +156,23 @@ namespace BoxBack.WebApi.EndPoints.User
                 return StatusCode(400, result.Errors);
             }
 
+            #region Group resolve and insert data
+            foreach (var uGroup in applicationUserViewModel.ApplicationUserGroups)
+            {
+                Guid groupId = _context.ApplicationGroups
+                                            .Where(x => x.Name == uGroup)
+                                            .Select(x => x.Id)
+                                            .FirstOrDefault();
+
+                if (groupId == Guid.Empty) return StatusCode(400, "Problemas ao adicionar um grupo para o usuário criado. Adicione manualmente um grupo ao usuário criado editando seu registro.");
+
+                var tmp = new ApplicationUserGroup() { UserId = userMap.Id, GroupId = groupId };
+
+                _context.ApplicationUserGroups.Add(tmp);
+                _unitOfWork.Commit();
+            }
+            #endregion
+
             return StatusCode(201, new {
                 Data = userMap,
                 Message = "Usuário criado com sucesso." }
@@ -167,7 +184,7 @@ namespace BoxBack.WebApi.EndPoints.User
             public string Id { get; set; }
             public string FullName { get; set; }
             public string Company { get; set; }
-            public new string[] Roles { get; set; }
+            public string[] Roles { get; set; }
             public string UserName { get; set; }
             public string Country { get; set; }
             public string Contact { get; set; }

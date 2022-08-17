@@ -23,7 +23,7 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.FullName, src => src.MapFrom(x => x.FullName))
                 .ForMember(dst => dst.UserName, src => src.MapFrom(x => x.UserName))
                 .ForMember(dst => dst.Avatar, src => src.MapFrom(x => x.Avatar))
-                .ForMember(dst => dst.Status, src => src.MapFrom(x => x.EmailConfirmed));
+                .ForMember(dst => dst.ApplicationUserGroupsNames, src => src.MapFrom(x => x.ApplicationUserGroups.Select(x => x.ApplicationGroup.Name)));
             CreateMap<Cliente, ClienteViewModel>();
         }
     }

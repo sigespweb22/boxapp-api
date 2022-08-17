@@ -27,7 +27,6 @@ using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels.Selects;
 using BoxBack.Infra.Data.Extensions;
 using BoxBack.WebApi.Controllers;
-using BoxBack.Domain.Interfaces;
 
 namespace BoxBack.WebApi.EndPoints.User
 {
@@ -43,10 +42,12 @@ namespace BoxBack.WebApi.EndPoints.User
         private readonly IMapper _mapper;
 
         public GroupsEndpoint(BoxAppDbContext context,
+                              IUnitOfWork unitOfWork,
                               UserManager<ApplicationUser> manager, 
                               RoleManager<ApplicationRole> roleManager, 
                               IMapper mapper)
         {
+            _unitOfWork = unitOfWork;
             _context = context;
             _manager = manager;
             _roleManager = roleManager;

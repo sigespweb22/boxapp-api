@@ -21,9 +21,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels.Navigation;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 
 namespace BoxBack.WebApi.EndPoints
 {

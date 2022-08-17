@@ -30,7 +30,7 @@ namespace BoxBack.Application.ViewModels
         public string FullName { get; set; }
         public string AccessToken { get; set; }
         public bool RememberMe { get; set; }
-        public bool Status { get; set; }
+        public string Status { get; set; }
 
         public List<string> Setores { get; set; }
         public List<string> Funcoes { get; set; }
@@ -40,6 +40,7 @@ namespace BoxBack.Application.ViewModels
 
         [Required, MinLength(1, ErrorMessage = "Grupo usuário é requerido.")]
         public List<string> ApplicationUserGroups { get; set; }
+        public List<string> ApplicationUserGroupsNames { get; set; }
         
     }
 }

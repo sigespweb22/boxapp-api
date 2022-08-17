@@ -10,8 +10,6 @@ using BoxBack.Application.Interfaces;
 using BoxBack.Infra.CrossCutting.Identity.Services;
 using BoxBack.Application.Helpers;
 using Microsoft.AspNetCore.Http;
-using BoxBack.Application.Interfaces;
-
 
 namespace BoxBack.Infra.CrossCutting.IoC
 {
