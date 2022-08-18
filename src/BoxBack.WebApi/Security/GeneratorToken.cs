@@ -28,13 +28,20 @@ namespace BoxBack.WebApi.Security
                     List<Claim> claims = new List<Claim>();
                     claims.Add(new Claim(ClaimTypes.NameIdentifier, appUser.Id));
                     claims.Add(new Claim(ClaimTypes.Name, appUser.UserName));
-                    foreach (var item in appUser.ApplicationUserRoles)
+                    
+                    try
                     {
-                        claims.Add(new Claim(ClaimTypes.Role, item.ApplicationRole.Name));
-                        
-                        // Create Claim by app
-                        // claims.Add(new Claim("BoxAppApi", item.ApplicationRole.NormalizedName));
+                        foreach (var aUg in appUser.ApplicationUserGroups)
+                        {
+                            foreach (var aRg in aUg.ApplicationGroup.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name))
+                            {
+                                claims.Add(new Claim(ClaimTypes.Role, aRg));
+                            }
+                            // Create Claim by app
+                            // claims.Add(new Claim("BoxAppApi", item.ApplicationRole.NormalizedName));
+                        }    
                     }
+                    catch { throw; }
                     return claims.ToArray();
                 }
             }

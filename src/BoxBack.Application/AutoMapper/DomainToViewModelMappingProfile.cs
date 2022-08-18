@@ -18,7 +18,6 @@ namespace BoxBack.Application.AutoMapper
         {
             CreateMap<ApplicationUser, ApplicationUserViewModel>()
                 .ForMember(dst => dst.Id, src => src.MapFrom(x => x.Id))
-                .ForMember(dst => dst.Role, src => src.MapFrom(x => x.ApplicationUserRoles.Select(x => x.ApplicationRole.Name.ToUpper())))
                 .ForMember(dst => dst.Email, src => src.MapFrom(x => x.Email))
                 .ForMember(dst => dst.FullName, src => src.MapFrom(x => x.FullName))
                 .ForMember(dst => dst.UserName, src => src.MapFrom(x => x.UserName))

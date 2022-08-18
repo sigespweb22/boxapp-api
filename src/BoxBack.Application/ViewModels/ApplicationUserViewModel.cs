@@ -38,6 +38,5 @@ namespace BoxBack.Application.ViewModels
         [Required, MinLength(1, ErrorMessage = "Grupo usuário é requerido.")]
         public List<string> ApplicationUserGroups { get; set; }
         public List<string> ApplicationUserGroupsNames { get; set; }
-        
     }
 }

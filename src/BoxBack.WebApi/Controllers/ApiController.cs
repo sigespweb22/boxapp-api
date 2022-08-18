@@ -62,10 +62,10 @@ namespace BoxBack.WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
+            return BadRequest(new Dictionary<string, string[]>
             {
-                { "Messages", _errors.ToArray() }
-            }));
+                { "errors", _errors.ToArray() }
+            });
         }
 
         protected ActionResult CustomResponse(ModelStateDictionary modelState)

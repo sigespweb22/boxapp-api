@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.Net.Mail;
+using Microsoft.Win32;
+using System.Net;
 using System;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -128,6 +130,11 @@ namespace BoxBack.WebApi.EndPoints.User
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody]ApplicationUserViewModel applicationUserViewModel)
         {
+            #region Validations required
+            if (string.IsNullOrEmpty(applicationUserViewModel.Password))
+                return StatusCode(400, "Senha é requerida.");
+            #endregion
+
             #region Map
             var userMap = new ApplicationUser();
             try
@@ -159,6 +166,18 @@ namespace BoxBack.WebApi.EndPoints.User
             #region Group resolve and insert data
             foreach (var uGroup in applicationUserViewModel.ApplicationUserGroups)
             {
+                /// check to existence the role in group
+                var hasRolesInGroup = _context.ApplicationGroups
+                                                    .Where(x => x.Name == uGroup &&
+                                                           x.ApplicationRoleGroups.Count() > 0)
+                                                    .Any();
+
+                if (!hasRolesInGroup)
+                {
+                    AddError("Grupo de usuário " + uGroup + " não possui nenhuma permissão vinculada a ele." + "\nFaça primeiro este vínculo e depois o atribu a um usuário.");
+                    return CustomResponse();
+                }
+
                 Guid groupId = _context.ApplicationGroups
                                             .Where(x => x.Name == uGroup)
                                             .Select(x => x.Id)
@@ -171,18 +190,6 @@ namespace BoxBack.WebApi.EndPoints.User
                 _context.ApplicationUserGroups.Add(tmp);
                 _unitOfWork.Commit();
             }
-            #endregion
-
-            #region Roles resolve
-            var groupRoleIds = new List<string>();
-            try
-            {
-                var groupRoleIds = await _context
-                                            .ApplicationRoleGroups
-                                            .Where(x => x.ApplicationGroup.Id == )
-
-            }
-            catch { throw; }
             #endregion
 
             return StatusCode(201, new {

@@ -76,19 +76,19 @@ namespace BoxBack.WebApi.EndPoints
                                                             authenticateViewModel.Password,
                                                             authenticateViewModel.RememberMe,
                                                             lockoutOnFailure: true);
+                #region Checks
                 if (!sigIn.Succeeded)
-                    return StatusCode(400, "Usuário ou senha inválidos.");
-
-                if (sigIn.RequiresTwoFactor)
                 {
-                    // return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    AddError("Usuário ou senha inválidos.");
+                    return CustomResponse();
+                } else if (sigIn.IsLockedOut) {
+                    AddError("Usuário bloqueado. Por excesso de tentativas de login sem sucesso. <br/>Aguarde 1 minuto e tente novamente.");
+                    return CustomResponse();
+                } else if (sigIn.RequiresTwoFactor) {
+                    AddError("Dois fatores de proteção é requerido.");
+                    return CustomResponse();
                 }
-
-                if (sigIn.IsLockedOut)
-                {
-                    // _logger.LogWarning("Conta usuário bloqueada.");
-                    // return RedirectToPage("./Lockout");
-                }
+                #endregion
             }
             catch (Exception ex) { return StatusCode(500, ex.Message); }
             #endregion
@@ -99,13 +99,17 @@ namespace BoxBack.WebApi.EndPoints
             {
                 user = await _context
                                     .Users
-                                    .Include(x => x.ApplicationUserRoles)
-                                    .ThenInclude(x => x.ApplicationRole)
                                     .Include(x => x.ApplicationUserGroups)
                                     .ThenInclude(x => x.ApplicationGroup)
+                                    .ThenInclude(x => x.ApplicationRoleGroups)
+                                    .ThenInclude(x => x.ApplicationRole)
                                     .FirstOrDefaultAsync(x => x.Email == authenticateViewModel.Email);
                 if (user == null)
-                    return StatusCode(404, "Usuário não encontrado.");
+                {
+                    AddError("Usuário não encontrado.");
+                    return CustomResponse();
+                }
+                    
             }
             catch (Exception ex) { return StatusCode(500, ex.Message); }
             #endregion
@@ -125,8 +129,14 @@ namespace BoxBack.WebApi.EndPoints
             {
                 token = _generatorToken.GetToken(user);
                 if (string.IsNullOrEmpty(token))
-                    return StatusCode(400, "Problemas ao obter token. Tente novamente, persistindo o problema informe a equipe de suporte.");
-                userMapped.AccessToken = token;
+                {
+                    AddError("Problemas ao obter token. Tente novamente, persistindo o problema informe a equipe de suporte.");
+                    return CustomResponse();
+                } 
+                else
+                {
+                    userMapped.AccessToken = token;
+                }
             }
             catch (Exception ex) { return StatusCode(500, ex.Message); }
             
@@ -186,10 +196,10 @@ namespace BoxBack.WebApi.EndPoints
             {
                 user = await _context
                                     .Users
-                                    .Include(x => x.ApplicationUserRoles)
-                                    .ThenInclude(x => x.ApplicationRole)
-                                    .Include(x => x.ApplicationUserGroups)
-                                    .ThenInclude(x => x.ApplicationGroup)
+                                    .Include(a => a.ApplicationUserGroups)
+                                        .ThenInclude(b => b.ApplicationGroup)
+                                            .ThenInclude(c => c.ApplicationRoleGroups)
+                                                .ThenInclude(d => d.ApplicationRole)
                                     .FirstOrDefaultAsync(x => x.Id == userId);
                 if (user == null)
                     return StatusCode(404, "Nenhum registro encontrado.");
@@ -204,6 +214,20 @@ namespace BoxBack.WebApi.EndPoints
                 userMapped = _mapper.Map<ApplicationUserViewModel>(user);
             }
             catch (Exception ex) { return StatusCode(500, ex.Message ); }
+
+            /// map manually roles
+            userMapped.Role = new List<string>();
+            try
+            {
+                foreach (var tmp in user.ApplicationUserGroups.Select(x => x.ApplicationGroup.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name)))
+                {
+                    foreach (var role in tmp)
+                    {
+                        userMapped.Role.Add(role);
+                    }
+                }    
+            }
+            catch { throw; }
             #endregion
 
             return Ok(new { userData = userMapped });
