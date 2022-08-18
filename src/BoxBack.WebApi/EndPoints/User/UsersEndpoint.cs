@@ -162,7 +162,7 @@ namespace BoxBack.WebApi.EndPoints.User
                 Guid groupId = _context.ApplicationGroups
                                             .Where(x => x.Name == uGroup)
                                             .Select(x => x.Id)
-                                            .FirstOrDefault();
+                                            .FirstOrDefault(); 
 
                 if (groupId == Guid.Empty) return StatusCode(400, "Problemas ao adicionar um grupo para o usuário criado. Adicione manualmente um grupo ao usuário criado editando seu registro.");
 
