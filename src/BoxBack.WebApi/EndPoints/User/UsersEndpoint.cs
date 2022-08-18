@@ -173,6 +173,18 @@ namespace BoxBack.WebApi.EndPoints.User
             }
             #endregion
 
+            #region Roles resolve
+            var groupRoleIds = new List<string>();
+            try
+            {
+                var groupRoleIds = await _context
+                                            .ApplicationRoleGroups
+                                            .Where(x => x.ApplicationGroup.Id == )
+
+            }
+            catch { throw; }
+            #endregion
+
             return StatusCode(201, new {
                 Data = userMap,
                 Message = "Usuário criado com sucesso." }

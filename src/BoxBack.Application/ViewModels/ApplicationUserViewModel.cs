@@ -32,9 +32,6 @@ namespace BoxBack.Application.ViewModels
         public bool RememberMe { get; set; }
         public string Status { get; set; }
 
-        public List<string> Setores { get; set; }
-        public List<string> Funcoes { get; set; }
-
         public List<string> ApplicationUserRoles { get; set; }
         public List<string> Role { get; set; }
 

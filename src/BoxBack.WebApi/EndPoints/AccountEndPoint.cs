@@ -101,6 +101,8 @@ namespace BoxBack.WebApi.EndPoints
                                     .Users
                                     .Include(x => x.ApplicationUserRoles)
                                     .ThenInclude(x => x.ApplicationRole)
+                                    .Include(x => x.ApplicationUserGroups)
+                                    .ThenInclude(x => x.ApplicationGroup)
                                     .FirstOrDefaultAsync(x => x.Email == authenticateViewModel.Email);
                 if (user == null)
                     return StatusCode(404, "Usuário não encontrado.");
@@ -186,6 +188,8 @@ namespace BoxBack.WebApi.EndPoints
                                     .Users
                                     .Include(x => x.ApplicationUserRoles)
                                     .ThenInclude(x => x.ApplicationRole)
+                                    .Include(x => x.ApplicationUserGroups)
+                                    .ThenInclude(x => x.ApplicationGroup)
                                     .FirstOrDefaultAsync(x => x.Id == userId);
                 if (user == null)
                     return StatusCode(404, "Nenhum registro encontrado.");
