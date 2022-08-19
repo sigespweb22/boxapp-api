@@ -29,6 +29,7 @@ using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels.Selects;
 using BoxBack.Infra.Data.Extensions;
 using BoxBack.WebApi.Controllers;
+using BoxBack.Application.ViewModels.Requests;
 
 namespace BoxBack.WebApi.EndPoints.User
 {
@@ -119,11 +120,11 @@ namespace BoxBack.WebApi.EndPoints.User
         /// <summary>
         /// Cria um usuário
         /// </summary>
-        /// <param name="ApplicationUserViewMode"></param>
+        /// <param name="ApplicationUserViewModel"></param>
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Null data</response>
-        [Authorize(Roles = "Master, CanUserList, CanUserCreate")]
+        [Authorize(Roles = "Master, CanUserCreate, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("create")]
@@ -198,19 +199,57 @@ namespace BoxBack.WebApi.EndPoints.User
             );
         }
 
-        public class UserTemp
+        /// <summary>
+        /// Deleta um usuário
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>True se deletado com sucesso</returns>
+        /// <response code="204">Deletado com sucesso</response>
+        /// <response code="400">Null data</response>
+        [Authorize(Roles = "Master, CanUserDelete, CanUserAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Route("delete")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteAsync([FromBody] GenericViewModel genericVM)
         {
-            public string Id { get; set; }
-            public string FullName { get; set; }
-            public string Company { get; set; }
-            public string[] Roles { get; set; }
-            public string UserName { get; set; }
-            public string Country { get; set; }
-            public string Contact { get; set; }
-            public string Email { get; set; }
-            public string Status { get; set; }
-            public string Avatar { get; set; }
-            public string AvatarColor { get; set; }
+            #region Validations required
+            if (string.IsNullOrEmpty(genericVM.Id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse();
+            }
+            #endregion
+    
+            #region Generals validations
+            /// implementar
+            #endregion
+
+            #region Get data
+            var user = new ApplicationUser();
+            try
+            {
+                user = await _manager.FindByIdAsync(genericVM.Id);
+                if (user == null)
+                {
+                    AddError("Usuário não encontrado para deletar.");
+                    return CustomResponse();
+                }
+            }
+            catch { throw; }
+            #endregion
+
+            #region Delete
+            try
+            {
+                await _manager.DeleteAsync(user);
+                _unitOfWork.Commit();
+            }
+            catch { throw; }
+            
+            #endregion
+
+            return CustomResponse(true, "Usuário deletado com sucesso.", user);
         }
     }
 }

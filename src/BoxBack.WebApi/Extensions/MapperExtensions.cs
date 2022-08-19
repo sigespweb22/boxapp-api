@@ -21,5 +21,21 @@ namespace BoxBack.WebApi.Extensions
             return applicationUserRet;
             
         }
+
+        public static List<string> MapFromTwoDepths(IEnumerable<IEnumerable<string>> inputs)
+        {
+            var list = new List<string>();
+            try
+            {
+                foreach (var tmpDeepOne in inputs.ToList())
+                {
+                    foreach (var tmpDeepTwo in tmpDeepOne)
+                    {
+                        list.Add(tmpDeepTwo);
+                    }
+                }    
+            } catch { throw; }
+            return list;
+        }
     }
 }

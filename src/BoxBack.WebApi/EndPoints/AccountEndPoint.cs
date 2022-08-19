@@ -21,6 +21,7 @@ using BoxBack.Application.ViewModels.Requests;
 using BoxBack.Infra.Data.Context;
 using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;
+using BoxBack.WebApi.Extensions;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -171,7 +172,7 @@ namespace BoxBack.WebApi.EndPoints
             }
             catch (Exception ex) { return StatusCode(500, ex.Message ); }
 
-            var pureToken = token;  
+            var pureToken = token;
             var handler = new JwtSecurityTokenHandler();
             var jwtSecurityToken = new JwtSecurityToken();
             try
@@ -212,6 +213,7 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 userMapped = _mapper.Map<ApplicationUserViewModel>(user);
+                userMapped.AccessToken = pureToken;
             }
             catch (Exception ex) { return StatusCode(500, ex.Message ); }
 
@@ -219,13 +221,7 @@ namespace BoxBack.WebApi.EndPoints
             userMapped.Role = new List<string>();
             try
             {
-                foreach (var tmp in user.ApplicationUserGroups.Select(x => x.ApplicationGroup.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name)))
-                {
-                    foreach (var role in tmp)
-                    {
-                        userMapped.Role.Add(role);
-                    }
-                }    
+                userMapped.Role = MapperExtensions.MapFromTwoDepths(user.ApplicationUserGroups.Select(x => x.ApplicationGroup.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name)));
             }
             catch { throw; }
             #endregion

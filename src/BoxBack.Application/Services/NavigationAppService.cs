@@ -60,7 +60,7 @@ namespace BoxBack.Application.Services
             {
                 Title = "User",
                 Path = "/system/control-access/user/list",
-                Action = "read",
+                Action = "list",
                 Subject = "ac-user-page"
             };
             navigationB.Children.Add(oldestSonB);
