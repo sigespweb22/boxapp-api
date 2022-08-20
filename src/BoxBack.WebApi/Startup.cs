@@ -1,6 +1,8 @@
 ﻿using System.CodeDom.Compiler;
 using System.Runtime.InteropServices;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -142,6 +144,10 @@ namespace BoxBack.WebApi
                         Url = new Uri("https://www.boxtecnologia.com.br/license")
                     }
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.AddControllers()

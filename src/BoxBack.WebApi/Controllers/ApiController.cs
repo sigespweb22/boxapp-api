@@ -15,60 +15,22 @@ namespace BoxBack.WebApi.Controllers
         private readonly ICollection<string> _errors = new List<string>();
         private readonly ICollection<object> _objects = new List<object>();
 
-        protected ActionResult CustomResponse(bool isValid, string message, List<object> objList)
-        {
-            if (isValid)
-            {
-                return Ok(new {
-                    Success = isValid, 
-                    Message = message,
-                    Data = objList
-                });
-            } 
-            else
-            {
-                return BadRequest(new {
-                    Success = isValid, 
-                    Message = message,
-                    Data = objList
-                });
-            }
-        }
-
-        protected ActionResult CustomResponse(bool isValid, string message, object objList)
-        {
-            if (isValid)
-            {
-                return Ok(new {
-                    Success = isValid, 
-                    Message = message,
-                    Data = objList
-                });
-            } 
-            else
-            {
-                return BadRequest(new {
-                    Success = isValid, 
-                    Message = message,
-                    Data = objList
-                });
-            }
-        }
-
-        protected ActionResult CustomResponse(object result = null)
+        protected ActionResult CustomResponse(int? statusCode, object result = null)
         {
             if (IsOperationValid())
             {
-                return Ok(result);
+                statusCode = statusCode == 0 ? 200 : statusCode;
+                return StatusCode((int)statusCode, result);
             }
 
-            return BadRequest(new Dictionary<string, string[]>
+            statusCode = statusCode == 0 ? 500 : statusCode;
+            return StatusCode((int) statusCode, new Dictionary<string, string[]>
             {
                 { "errors", _errors.ToArray() }
             });
         }
 
-        protected ActionResult CustomResponse(ModelStateDictionary modelState)
+        protected ActionResult CustomResponse(int statusCode, ModelStateDictionary modelState)
         {
             var errors = modelState.Values.SelectMany(e => e.Errors);
             foreach (var error in errors)
@@ -76,10 +38,10 @@ namespace BoxBack.WebApi.Controllers
                 AddError(error.ErrorMessage);
             }
 
-            return CustomResponse();
+            return CustomResponse(statusCode);
         }
 
-        protected ActionResult CustomResponse(ValidationResult validationResult)
+        protected ActionResult CustomResponse(int statusCode, ValidationResult validationResult)
         {
             foreach (var error in validationResult.ErrorMessages)
             {
@@ -92,8 +54,8 @@ namespace BoxBack.WebApi.Controllers
             }
 
             if (validationResult.Objects.Any())
-                return CustomResponse(validationResult.Objects);
-            return CustomResponse();
+                return CustomResponse(statusCode, validationResult.Objects);
+            return CustomResponse(statusCode);
         }
 
         protected bool IsOperationValid()

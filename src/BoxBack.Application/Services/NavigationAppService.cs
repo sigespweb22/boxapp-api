@@ -26,8 +26,11 @@ namespace BoxBack.Application.Services
 
             navigationA.Children = new List<Son>();
             navigationB.Children = new List<Son>();
-            var oldestSonA = new Son();
+            var oldestDashboardSonA = new Son();
+            var oldestDashboardSonB = new Son();
             var oldestSonB = new Son();
+            var oldestSonC = new Son();
+            var oldestSonD = new Son();
 
             navigationA = new VerticalNavItemViewModel
             {
@@ -38,14 +41,23 @@ namespace BoxBack.Application.Services
                 Children = new List<Son>()
             };
 
-            oldestSonA = new Son
+            oldestDashboardSonA = new Son
+            {
+                Title = "Access Control",
+                Path = "/dashboards/access-control",
+                Action = "list",
+                Subject = "ac-dashboard-access-control-page"
+            };
+            navigationA.Children.Add(oldestDashboardSonA);
+
+            oldestDashboardSonB = new Son
             {
                 Title = "Client",
                 Path = "/dashboards/client",
                 Action = "read",
-                Subject = "dashboard-client-page"
+                Subject = "ac-dashboard-client-page"
             };
-            navigationA.Children.Add(oldestSonA);
+            navigationA.Children.Add(oldestDashboardSonB);
 
             navigationB = new VerticalNavItemViewModel
             {
@@ -58,12 +70,30 @@ namespace BoxBack.Application.Services
 
             oldestSonB = new Son
             {
-                Title = "User",
+                Title = "Users",
                 Path = "/system/control-access/user/list",
                 Action = "list",
                 Subject = "ac-user-page"
             };
             navigationB.Children.Add(oldestSonB);
+
+            oldestSonC = new Son
+            {
+                Title = "Permissions",
+                Path = "/system/control-access/role/list",
+                Action = "list",
+                Subject = "ac-role-page"
+            };
+            navigationB.Children.Add(oldestSonC);
+
+            oldestSonD = new Son
+            {
+                Title = "Groups",
+                Path = "/system/control-access/group/list",
+                Action = "list",
+                Subject = "ac-group-page"
+            };
+            navigationB.Children.Add(oldestSonD);
 
             await Task.Run(() => navigation.Add(navigationA));
             navigationSection.SectionTitle = "SYSTEM";

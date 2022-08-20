@@ -22,8 +22,9 @@ using BoxBack.Infra.Data.Context;
 using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using BoxBack.WebApi.Extensions;
+using BoxBack.Domain.Enums;
 
-namespace BoxBack.WebApi.EndPoints
+namespace BoxBack.WebApi.EndPoints.Account
 {
     [ApiController]
     [ApiVersion("1.0")]
@@ -55,7 +56,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <param name="AuthenticateViewModel"></param>
         /// <returns>Um json com os dados do usuário autenticado</returns>
         /// <response code="200">Dados do usuário autenticado</response>
-        /// <response code="400">Dados de usuários nulls</response>
+        /// <response code="400">Não passou nas validações ou dados de usuário null</response>
         /// <response code="404">Usuário não encontrado</response>
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -72,29 +73,32 @@ namespace BoxBack.WebApi.EndPoints
             var sigIn = new Microsoft.AspNetCore.Identity.SignInResult();
             try
             {
-                sigIn = await _signInManager
+                    sigIn = await _signInManager
                                     .PasswordSignInAsync(authenticateViewModel.Email,
                                                             authenticateViewModel.Password,
                                                             authenticateViewModel.RememberMe,
                                                             lockoutOnFailure: true);
                 #region Checks
-                if (!sigIn.Succeeded)
+                if (sigIn.IsLockedOut)
                 {
-                    AddError("Usuário ou senha inválidos.");
-                    return CustomResponse();
-                } else if (sigIn.IsLockedOut) {
-                    AddError("Usuário bloqueado. Por excesso de tentativas de login sem sucesso. <br/>Aguarde 1 minuto e tente novamente.");
-                    return CustomResponse();
+                    AddError("Usuário bloqueado. \nAguarde 1 minuto e tente novamente. Caso persista, solicite o desbloqueio ao administrador do sistema.");
+                    return CustomResponse(400);
+                } else if (sigIn.IsNotAllowed) {
+                    AddError("Você não tem permissão para entrar no BoxApp.");
+                    return CustomResponse(400);
                 } else if (sigIn.RequiresTwoFactor) {
-                    AddError("Dois fatores de proteção é requerido.");
-                    return CustomResponse();
+                    AddError("Você ativou a autenticação de dois fatores. Portanto, faça login nesta condição.");
+                    return CustomResponse(400);
+                } else if (!sigIn.Succeeded) {
+                    AddError("Usuário ou senha inválidos.");
+                    return CustomResponse(400);
                 }
                 #endregion
             }
             catch (Exception ex) { return StatusCode(500, ex.Message); }
             #endregion
             
-            #region User resolve
+            #region User resolve and news validations
             var user = new ApplicationUser();
             try
             {
@@ -108,11 +112,18 @@ namespace BoxBack.WebApi.EndPoints
                 if (user == null)
                 {
                     AddError("Usuário não encontrado.");
-                    return CustomResponse();
+                    return CustomResponse(404);
                 }
                     
             }
             catch (Exception ex) { return StatusCode(500, ex.Message); }
+
+            /// check to user inactive
+            if (user.Status == ApplicationUserStatusEnum.INACTIVE)
+            {
+                AddError("Usuário inativo."+ "\nPara fazer login solicite ao administrador a ativação de seu usuário.");
+                return CustomResponse(400);
+            }
             #endregion
 
             #region Map
@@ -132,14 +143,14 @@ namespace BoxBack.WebApi.EndPoints
                 if (string.IsNullOrEmpty(token))
                 {
                     AddError("Problemas ao obter token. Tente novamente, persistindo o problema informe a equipe de suporte.");
-                    return CustomResponse();
+                    return CustomResponse(400);
                 } 
                 else
                 {
                     userMapped.AccessToken = token;
                 }
             }
-            catch (Exception ex) { return StatusCode(500, ex.Message); }
+            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
             
             #endregion
             return Ok(new { userData = userMapped });
@@ -167,10 +178,10 @@ namespace BoxBack.WebApi.EndPoints
             {
                 token = HttpContext.Request.Headers["Authorization"];
                 if (string.IsNullOrEmpty(token))    
-                    return StatusCode(400, "Não foi possível obter o token de authorização. Tente novamente, caso persista acione a equipe de suporte.");
+                    return CustomResponse(400, new { message = "Não foi possível obter o token de authorização. Tente novamente, caso persista acione a equipe de suporte."});
                 token = token.Replace("Bearer ", "");
             }
-            catch (Exception ex) { return StatusCode(500, ex.Message ); }
+            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
 
             var pureToken = token;
             var handler = new JwtSecurityTokenHandler();
@@ -188,7 +199,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 userId = jwtSecurityToken.Payload["nameid"].ToString();
                 if (string.IsNullOrEmpty(userId))
-                    return StatusCode(400, "Não foi possível obter o id do usuário. Tente novamente, caso persista acione a equipe de suporte.");
+                    return CustomResponse(400, new { message = "Não foi possível obter o id do usuário. Tente novamente, caso persista acione a equipe de suporte." });
             }
             catch (Exception ex) { return StatusCode(500, ex.Message ); }
 
@@ -203,7 +214,7 @@ namespace BoxBack.WebApi.EndPoints
                                                 .ThenInclude(d => d.ApplicationRole)
                                     .FirstOrDefaultAsync(x => x.Id == userId);
                 if (user == null)
-                    return StatusCode(404, "Nenhum registro encontrado.");
+                    return CustomResponse(404, new { message = "Nenhum registro encontrado." });
             }
             catch (Exception ex) { return StatusCode(500, ex.Message ); }
             #endregion
@@ -215,7 +226,7 @@ namespace BoxBack.WebApi.EndPoints
                 userMapped = _mapper.Map<ApplicationUserViewModel>(user);
                 userMapped.AccessToken = pureToken;
             }
-            catch (Exception ex) { return StatusCode(500, ex.Message ); }
+            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
 
             /// map manually roles
             userMapped.Role = new List<string>();

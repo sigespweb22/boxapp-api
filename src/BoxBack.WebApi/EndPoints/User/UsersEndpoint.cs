@@ -69,7 +69,8 @@ namespace BoxBack.WebApi.EndPoints.User
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Route("list")] 
+        [Produces("application/json")]
+        [Route("list")]
         [HttpGet]
         public async Task<IActionResult> GetAll(string q)
         {
@@ -86,9 +87,9 @@ namespace BoxBack.WebApi.EndPoints.User
                                         .OrderBy(x => x.UserName)
                                         .ToListAsync();
                 if (users == null)
-                    return StatusCode(404, "Not found.");
+                    return CustomResponse(404, new { message = "Não encontrado." });
             }
-            catch (Exception ex){ return StatusCode(500, ex.Message); }
+            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
             #endregion
             
             #region Filter search
@@ -106,7 +107,7 @@ namespace BoxBack.WebApi.EndPoints.User
                     tmp.UserName = tmp.UserName.Substring(0, tmp.UserName.IndexOf("@"));
                 }
             }
-            catch (Exception ex) { return StatusCode(500, ex); }
+            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
             #endregion
             
             return Ok(new {
@@ -123,17 +124,18 @@ namespace BoxBack.WebApi.EndPoints.User
         /// <param name="ApplicationUserViewModel"></param>
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
-        /// <response code="400">Null data</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
         [Authorize(Roles = "Master, CanUserCreate, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Produces("application/json")]
         [Route("create")]
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody]ApplicationUserViewModel applicationUserViewModel)
         {
             #region Validations required
             if (string.IsNullOrEmpty(applicationUserViewModel.Password))
-                return StatusCode(400, "Senha é requerida.");
+                return CustomResponse(400, new { message = "Senha é requerida." });
             #endregion
 
             #region Map
@@ -149,9 +151,9 @@ namespace BoxBack.WebApi.EndPoints.User
                 userMap.EmailConfirmed = true;
                 userMap.Avatar = string.Empty;
                 userMap.FullName = applicationUserViewModel.FullName.ToUpper();
-                userMap.Status = ApplicationUserStatusEnum.ACTIVE;
+                userMap.Status = ApplicationUserStatusEnum.PENDING;
             }
-            catch (Exception ex) { return StatusCode(500, ex.Message); }
+            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
             #endregion
 
             var result = await _manager.CreateAsync(userMap);
@@ -161,7 +163,7 @@ namespace BoxBack.WebApi.EndPoints.User
             }
             else
             {
-                return StatusCode(400, result.Errors);
+                return CustomResponse(400, new { message = result.Errors });
             }
 
             #region Group resolve and insert data
@@ -175,8 +177,8 @@ namespace BoxBack.WebApi.EndPoints.User
 
                 if (!hasRolesInGroup)
                 {
-                    AddError("Grupo de usuário " + uGroup + " não possui nenhuma permissão vinculada a ele." + "\nFaça primeiro este vínculo e depois o atribu a um usuário.");
-                    return CustomResponse();
+                    var message = "Usuário criado com sucesso. \nPorém grupo de usuário " + uGroup + " não possui nenhuma permissão vinculada a ele. \nPrimeiro faça este vínculo e depois o atribua a um usuário.";
+                    return CustomResponse(201, new { message = message });
                 }
 
                 Guid groupId = _context.ApplicationGroups
@@ -184,7 +186,7 @@ namespace BoxBack.WebApi.EndPoints.User
                                             .Select(x => x.Id)
                                             .FirstOrDefault(); 
 
-                if (groupId == Guid.Empty) return StatusCode(400, "Problemas ao adicionar um grupo para o usuário criado. Adicione manualmente um grupo ao usuário criado editando seu registro.");
+                if (groupId == Guid.Empty) return CustomResponse(400, new { message = "Problemas ao adicionar um grupo para o usuário criado. Adicione manualmente um grupo ao usuário criado editando seu registro."});
 
                 var tmp = new ApplicationUserGroup() { UserId = userMap.Id, GroupId = groupId };
 
@@ -193,10 +195,7 @@ namespace BoxBack.WebApi.EndPoints.User
             }
             #endregion
 
-            return StatusCode(201, new {
-                Data = userMap,
-                Message = "Usuário criado com sucesso." }
-            );
+            return CustomResponse(201);
         }
 
         /// <summary>
@@ -205,19 +204,22 @@ namespace BoxBack.WebApi.EndPoints.User
         /// <param name="id"></param>
         /// <returns>True se deletado com sucesso</returns>
         /// <response code="204">Deletado com sucesso</response>
-        /// <response code="400">Null data</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Not found</response>
+        [Route("delete/{id}")]
         [Authorize(Roles = "Master, CanUserDelete, CanUserAll")]
+        [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Route("delete")]
-        [HttpPost]
-        public async Task<IActionResult> DeleteAsync([FromBody] GenericViewModel genericVM)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Produces("application/json")]
+        public async Task<IActionResult> DeleteAsync(string id)
         {
             #region Validations required
-            if (string.IsNullOrEmpty(genericVM.Id))
+            if (string.IsNullOrEmpty(id))
             {
                 AddError("Id requerido.");
-                return CustomResponse();
+                return CustomResponse(400);
             }
             #endregion
     
@@ -229,14 +231,14 @@ namespace BoxBack.WebApi.EndPoints.User
             var user = new ApplicationUser();
             try
             {
-                user = await _manager.FindByIdAsync(genericVM.Id);
+                user = await _manager.FindByIdAsync(id);
                 if (user == null)
                 {
                     AddError("Usuário não encontrado para deletar.");
-                    return CustomResponse();
+                    return CustomResponse(404);
                 }
             }
-            catch { throw; }
+            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
             #endregion
 
             #region Delete
@@ -245,11 +247,90 @@ namespace BoxBack.WebApi.EndPoints.User
                 await _manager.DeleteAsync(user);
                 _unitOfWork.Commit();
             }
-            catch { throw; }
+            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
             
             #endregion
 
-            return CustomResponse(true, "Usuário deletado com sucesso.", user);
+            return CustomResponse(204);
+        }
+
+        /// <summary>
+        /// Altera o status de um usuário
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>True se a operação foi realizada com sucesso</returns>
+        /// <response code="200">Status alterado com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Not found</response>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /alter-status
+        ///     {
+        ///        "id": "f9c7d5a6-1181-4591-948b-5f97088e20a4"
+        ///     }
+        ///
+        /// </remarks>
+        [Route("alter-status/{id}")]
+        [Authorize(Roles = "Master, CanUserAlterStatus, CanUserAll")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Produces("application/json")]
+        public async Task<IActionResult> AlterStatusAsync(string id)
+        {
+            #region Validations required
+            if (string.IsNullOrEmpty(id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+    
+            #region Get data
+            var user = new ApplicationUser();
+            try
+            {
+                user = await _manager.FindByIdAsync(id);
+                if (user == null)
+                {
+                    AddError("Usuário não encontrado para alterar seu status.");
+                    return CustomResponse(404);
+                }
+            }
+            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            #endregion
+
+            #region Map
+            switch(user.Status)
+            {
+                case ApplicationUserStatusEnum.ACTIVE:
+                    user.Status = ApplicationUserStatusEnum.INACTIVE;
+                    break;
+                case ApplicationUserStatusEnum.INACTIVE:
+                    user.Status = ApplicationUserStatusEnum.ACTIVE;
+                    break;
+                case ApplicationUserStatusEnum.PENDING:
+                    user.Status = ApplicationUserStatusEnum.ACTIVE;
+                    break;
+                default:
+                    user.Status = ApplicationUserStatusEnum.INACTIVE;
+                    break;
+            }
+            #endregion
+
+            #region Alter status
+            try
+            {
+                await _manager.UpdateAsync(user);
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            
+            #endregion
+
+            return CustomResponse(200, new { message = "Status usuário alterado com sucesso." } );
         }
     }
 }

@@ -93,3 +93,7 @@ public void PostBook(IFormCollection bookData)
     _bookService.AddBookToDb(book, bookData.Files[0]);
 }
 #endregion
+
+#region Documentação de API - Swaggerbucks
+https://www.treinaweb.com.br/blog/documentando-uma-asp-net-core-web-api-com-o-swagger
+#endregion
