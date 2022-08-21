@@ -148,10 +148,86 @@ namespace BoxBack.WebApi.EndPoints.Role
             #endregion
             
             #region Check to result
-            if (!result.Succeeded) return CustomResponse(400, result);
+            if (!result.Succeeded)
+            {
+                foreach (var item in result.Errors)
+                {
+                    AddError(item.Description);
+                }
+                return CustomResponse(400);
+            }
             #endregion
 
             return CustomResponse(201);
+        }
+
+        /// <summary>
+        /// Atualiza uma role
+        /// </summary>
+        /// <param name="applicationRoleViewModel"></param>
+        /// <returns>True se atualizada com sucesso</returns>
+        /// <response code="204">Atualizada com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        [Authorize(Roles = "Master, CanRoleUpdate, CanRoleAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Produces("application/json")]
+        [Route("update")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromBody]ApplicationRoleViewModel applicationRoleViewModel)
+        {
+            #region Required validations
+            if (string.IsNullOrEmpty(applicationRoleViewModel.Id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data for update
+            var roleDB = new ApplicationRole();
+            try
+            {
+                roleDB = await _roleManager.FindByIdAsync(applicationRoleViewModel.Id);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (roleDB == null)
+            {
+                AddError("Permissão não encontrada para atualizar.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            #region Map
+            var roleMap = new ApplicationRole();
+            try
+            {
+                roleMap = _mapper.Map<ApplicationRoleViewModel, ApplicationRole>(applicationRoleViewModel, roleDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Update role
+            var result = new Microsoft.AspNetCore.Identity.IdentityResult();
+            try
+            {
+                result = await _roleManager.UpdateAsync(roleMap);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            #region Check to result
+            if (!result.Succeeded)
+            {
+                foreach (var item in result.Errors)
+                {
+                    AddError(item.Description);
+                }
+                return CustomResponse(400);
+            }
+            #endregion
+
+            return CustomResponse(204);
         }
 
         /// <summary>
