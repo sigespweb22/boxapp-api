@@ -37,7 +37,7 @@ namespace BoxBack.WebApi.EndPoints.Client
         /// <summary>
         /// Lista todos os clientes
         /// </summary>
-        /// <param name=""></param>
+        /// <param></param>
         /// <returns>Um json de clientes</returns>
         /// <response code="200">Returns a list itens</response>
         /// <response code="400">If the item is null</response>

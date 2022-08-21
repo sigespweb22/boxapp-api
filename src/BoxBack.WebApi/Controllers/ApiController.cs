@@ -69,6 +69,17 @@ namespace BoxBack.WebApi.Controllers
             _errors.Add(erro);
         }
 
+        protected void  AddErrorToTryCatch(Exception erro)
+        {
+            if (erro.InnerException != null){
+                _errors.Add(erro.InnerException.Message);
+            }
+            else 
+            {
+                _errors.Add(erro.Message);
+            }
+        }
+
         protected void AddObject(object obj)
         {
             _objects.Add(obj);

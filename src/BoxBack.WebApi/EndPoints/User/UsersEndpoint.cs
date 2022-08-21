@@ -60,10 +60,10 @@ namespace BoxBack.WebApi.EndPoints.User
         /// <summary>
         /// Lista todos os usuários
         /// </summary>s
-        /// <param name=""></param>
+        /// <param name="q"></param>
         /// <returns>Um json com os usuários</returns>
         /// <response code="200">Lista de usuários</response>
-        /// <response code="400">Lista nula</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         [Authorize(Roles = "Master, CanUserList, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -72,7 +72,7 @@ namespace BoxBack.WebApi.EndPoints.User
         [Produces("application/json")]
         [Route("list")]
         [HttpGet]
-        public async Task<IActionResult> GetAll(string q)
+        public async Task<IActionResult> ListAsync(string q)
         {
             #region Get data
             var users = new List<ApplicationUser>();
@@ -87,9 +87,12 @@ namespace BoxBack.WebApi.EndPoints.User
                                         .OrderBy(x => x.UserName)
                                         .ToListAsync();
                 if (users == null)
-                    return CustomResponse(404, new { message = "Não encontrado." });
+                {
+                    AddError("Não encontrado.");
+                    return CustomResponse(404);
+                }
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
             #region Filter search
@@ -107,7 +110,7 @@ namespace BoxBack.WebApi.EndPoints.User
                     tmp.UserName = tmp.UserName.Substring(0, tmp.UserName.IndexOf("@"));
                 }
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
             return Ok(new {
@@ -121,7 +124,7 @@ namespace BoxBack.WebApi.EndPoints.User
         /// <summary>
         /// Cria um usuário
         /// </summary>
-        /// <param name="ApplicationUserViewModel"></param>
+        /// <param name="applicationUserViewModel"></param>
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
@@ -135,7 +138,10 @@ namespace BoxBack.WebApi.EndPoints.User
         {
             #region Validations required
             if (string.IsNullOrEmpty(applicationUserViewModel.Password))
-                return CustomResponse(400, new { message = "Senha é requerida." });
+            {
+                AddError("Senha é requerida.");
+                return CustomResponse(400);
+            }
             #endregion
 
             #region Map
@@ -153,7 +159,7 @@ namespace BoxBack.WebApi.EndPoints.User
                 userMap.FullName = applicationUserViewModel.FullName.ToUpper();
                 userMap.Status = ApplicationUserStatusEnum.PENDING;
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             var result = await _manager.CreateAsync(userMap);
@@ -163,13 +169,17 @@ namespace BoxBack.WebApi.EndPoints.User
             }
             else
             {
-                return CustomResponse(400, new { message = result.Errors });
+                foreach (var item in result.Errors.Select(x => x.Description).ToList())
+                {
+                    AddError(item);
+                }
+                return CustomResponse(400);
             }
 
             #region Group resolve and insert data
             foreach (var uGroup in applicationUserViewModel.ApplicationUserGroups)
             {
-                /// check to existence the role in group
+                // check to existence the role in group
                 var hasRolesInGroup = _context.ApplicationGroups
                                                     .Where(x => x.Name == uGroup &&
                                                            x.ApplicationRoleGroups.Count() > 0)
@@ -177,8 +187,7 @@ namespace BoxBack.WebApi.EndPoints.User
 
                 if (!hasRolesInGroup)
                 {
-                    var message = "Usuário criado com sucesso. \nPorém grupo de usuário " + uGroup + " não possui nenhuma permissão vinculada a ele. \nPrimeiro faça este vínculo e depois o atribua a um usuário.";
-                    return CustomResponse(201, new { message = message });
+                    return CustomResponse(201, new { message = "Usuário criado com sucesso. \nPorém grupo de usuário " + uGroup + " não possui nenhuma permissão vinculada a ele. \nPrimeiro faça este vínculo e depois o atribua a um usuário."});
                 }
 
                 Guid groupId = _context.ApplicationGroups
@@ -186,7 +195,11 @@ namespace BoxBack.WebApi.EndPoints.User
                                             .Select(x => x.Id)
                                             .FirstOrDefault(); 
 
-                if (groupId == Guid.Empty) return CustomResponse(400, new { message = "Problemas ao adicionar um grupo para o usuário criado. Adicione manualmente um grupo ao usuário criado editando seu registro."});
+                if (groupId == Guid.Empty)
+                {
+                    AddError("Problemas ao adicionar um grupo para o usuário criado. Adicione manualmente um grupo ao usuário criado editando seu registro.");
+                    return CustomResponse(400);
+                }
 
                 var tmp = new ApplicationUserGroup() { UserId = userMap.Id, GroupId = groupId };
 
@@ -224,7 +237,7 @@ namespace BoxBack.WebApi.EndPoints.User
             #endregion
     
             #region Generals validations
-            /// implementar
+            // implementar
             #endregion
 
             #region Get data
@@ -238,7 +251,7 @@ namespace BoxBack.WebApi.EndPoints.User
                     return CustomResponse(404);
                 }
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Delete
@@ -247,7 +260,7 @@ namespace BoxBack.WebApi.EndPoints.User
                 await _manager.DeleteAsync(user);
                 _unitOfWork.Commit();
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
             #endregion
 
@@ -299,7 +312,7 @@ namespace BoxBack.WebApi.EndPoints.User
                     return CustomResponse(404);
                 }
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Map
@@ -326,7 +339,7 @@ namespace BoxBack.WebApi.EndPoints.User
                 await _manager.UpdateAsync(user);
                 _unitOfWork.Commit();
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
             #endregion
 

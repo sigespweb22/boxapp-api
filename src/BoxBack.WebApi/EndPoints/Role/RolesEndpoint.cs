@@ -57,7 +57,7 @@ namespace BoxBack.WebApi.EndPoints.Role
         /// <summary>
         /// Lista todas as roles
         /// </summary>s
-        /// <param name=""></param>
+        /// <param name="q"></param>
         /// <returns>Um json com as roles</returns>
         /// <response code="200">Lista de roles</response>
         /// <response code="400">Lista nula</response>
@@ -84,10 +84,7 @@ namespace BoxBack.WebApi.EndPoints.Role
                     return CustomResponse(404);
                 }
             }
-            catch (Exception ex) {
-                AddError(ex.Message);
-                return CustomResponse(500);
-            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
             #region Filter search
@@ -101,10 +98,7 @@ namespace BoxBack.WebApi.EndPoints.Role
             {
                 roleMap = _mapper.Map<IEnumerable<ApplicationRoleViewModel>>(roles);
             }
-            catch (Exception ex) {
-                AddError(ex.Message);
-                return CustomResponse(500);
-            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
             var data = new {
                 AllData = roleMap.ToList(),
@@ -119,7 +113,7 @@ namespace BoxBack.WebApi.EndPoints.Role
         /// <summary>
         /// Cria uma role
         /// </summary>
-        /// <param name="ApplicationRoleViewModel"></param>
+        /// <param name="applicationRoleViewModel"></param>
         /// <returns>True se criado com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
@@ -141,7 +135,7 @@ namespace BoxBack.WebApi.EndPoints.Role
                 roleMap.ConcurrencyStamp = Guid.NewGuid().ToString();
                 roleMap.Description = applicationRoleViewModel.Description;
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Create role
@@ -150,7 +144,7 @@ namespace BoxBack.WebApi.EndPoints.Role
             {
                 result = await _roleManager.CreateAsync(roleMap);
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
             #region Check to result
@@ -186,7 +180,7 @@ namespace BoxBack.WebApi.EndPoints.Role
             #endregion
     
             #region Generals validations
-            /// implementar
+            // implementar
             #endregion
 
             #region Get data
@@ -200,7 +194,7 @@ namespace BoxBack.WebApi.EndPoints.Role
                     return CustomResponse(404);
                 }
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Delete
@@ -209,11 +203,65 @@ namespace BoxBack.WebApi.EndPoints.Role
                 await _roleManager.DeleteAsync(role);
                 _unitOfWork.Commit();
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
             #endregion
 
             return CustomResponse(204);
+        }
+
+        /// <summary>
+        /// Lista todas as roles ativas
+        /// </summary>
+        /// <param name="q"></param>
+        /// <returns>Um json com as roles ativas</returns>
+        /// <response code="200">Lista de roles ativas</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Lista vazia - Not found</response>
+        [Route("list-to-select")]
+        [Authorize(Roles = "Master, CanRoleListToSelect, CanRoleAll")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Produces("application/json")]
+        public async Task<IActionResult> ListToSelectAsync(string q)
+        {
+            #region Get data
+            var rolesDB = new List<ApplicationRole>();
+            try
+            {
+                rolesDB = await _roleManager
+                                        .Roles
+                                        .AsNoTracking()
+                                        .ToListAsync();
+                if (rolesDB == null)
+                {
+                    AddError("Não encontrado.");
+                    return CustomResponse(404);
+                }
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            #region Map
+            var roles = new List<Generic2Select2ViewModel>();
+            try
+            {
+                foreach(var role in rolesDB)
+                {
+                    var tmp = new Generic2Select2ViewModel()
+                    {
+                        Id = role.Id.ToString(),
+                        Name = role.Name
+                    };
+                    roles.Add(tmp);
+                }
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            return CustomResponse(200, roles);
         }
     }
 }

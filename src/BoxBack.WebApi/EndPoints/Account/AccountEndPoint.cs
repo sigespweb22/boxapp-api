@@ -53,7 +53,7 @@ namespace BoxBack.WebApi.EndPoints.Account
         /// <summary>
         /// Autentica um usuário e retorna seus dados
         /// </summary>
-        /// <param name="AuthenticateViewModel"></param>
+        /// <param name="authenticateViewModel"></param>
         /// <returns>Um json com os dados do usuário autenticado</returns>
         /// <response code="200">Dados do usuário autenticado</response>
         /// <response code="400">Não passou nas validações ou dados de usuário null</response>
@@ -95,7 +95,7 @@ namespace BoxBack.WebApi.EndPoints.Account
                 }
                 #endregion
             }
-            catch (Exception ex) { return StatusCode(500, ex.Message); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
             #region User resolve and news validations
@@ -116,9 +116,9 @@ namespace BoxBack.WebApi.EndPoints.Account
                 }
                     
             }
-            catch (Exception ex) { return StatusCode(500, ex.Message); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
-            /// check to user inactive
+            // check to user inactive
             if (user.Status == ApplicationUserStatusEnum.INACTIVE)
             {
                 AddError("Usuário inativo."+ "\nPara fazer login solicite ao administrador a ativação de seu usuário.");
@@ -132,7 +132,7 @@ namespace BoxBack.WebApi.EndPoints.Account
             {
                 userMapped = _mapper.Map<ApplicationUserViewModel>(user);
             }
-            catch (Exception ex) { return StatusCode(500, ex.Message ); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Get token
@@ -150,7 +150,7 @@ namespace BoxBack.WebApi.EndPoints.Account
                     userMapped.AccessToken = token;
                 }
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
             #endregion
             return Ok(new { userData = userMapped });
@@ -159,7 +159,7 @@ namespace BoxBack.WebApi.EndPoints.Account
         /// <summary>
         /// Lista os dados de um usuário
         /// </summary>
-        /// <param name=""></param>
+        /// <param></param>
         /// <returns>Um json com os dados de usuário</returns>
         /// <response code="200">Lista de dados de usuário</response>
         /// <response code="400">Lista nula</response>
@@ -177,11 +177,14 @@ namespace BoxBack.WebApi.EndPoints.Account
             try
             {
                 token = HttpContext.Request.Headers["Authorization"];
-                if (string.IsNullOrEmpty(token))    
-                    return CustomResponse(400, new { message = "Não foi possível obter o token de authorização. Tente novamente, caso persista acione a equipe de suporte."});
+                if (string.IsNullOrEmpty(token))
+                {
+                    AddError("Não foi possível obter o token de authorização. Tente novamente, caso persista acione a equipe de suporte.");
+                    return CustomResponse(400);
+                }
                 token = token.Replace("Bearer ", "");
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
             var pureToken = token;
             var handler = new JwtSecurityTokenHandler();
@@ -190,7 +193,7 @@ namespace BoxBack.WebApi.EndPoints.Account
             {
                 jwtSecurityToken = handler.ReadJwtToken(token);
             }
-            catch (Exception ex) { return StatusCode(500, ex.Message ); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Get user data            
@@ -201,7 +204,7 @@ namespace BoxBack.WebApi.EndPoints.Account
                 if (string.IsNullOrEmpty(userId))
                     return CustomResponse(400, new { message = "Não foi possível obter o id do usuário. Tente novamente, caso persista acione a equipe de suporte." });
             }
-            catch (Exception ex) { return StatusCode(500, ex.Message ); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
             var user = new ApplicationUser();
             try
@@ -216,7 +219,7 @@ namespace BoxBack.WebApi.EndPoints.Account
                 if (user == null)
                     return CustomResponse(404, new { message = "Nenhum registro encontrado." });
             }
-            catch (Exception ex) { return StatusCode(500, ex.Message ); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Map
@@ -226,15 +229,15 @@ namespace BoxBack.WebApi.EndPoints.Account
                 userMapped = _mapper.Map<ApplicationUserViewModel>(user);
                 userMapped.AccessToken = pureToken;
             }
-            catch (Exception ex) { return CustomResponse(500, new { message = ex.Message }); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
-            /// map manually roles
+            // map manually roles
             userMapped.Role = new List<string>();
             try
             {
                 userMapped.Role = MapperExtensions.MapFromTwoDepths(user.ApplicationUserGroups.Select(x => x.ApplicationGroup.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name)));
             }
-            catch { throw; }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             return Ok(new { userData = userMapped });

@@ -57,7 +57,7 @@ namespace BoxBack.WebApi
         {           
             services.Configure<CookiePolicyOptions>(options =>
             {
-                /// Este lambda determina se o consentimento do usuário para cookies não essenciais é necessário para uma determinada solicitação.
+                // Este lambda determina se o consentimento do usuário para cookies não essenciais é necessário para uma determinada solicitação.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });

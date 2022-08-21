@@ -40,7 +40,7 @@ namespace BoxBack.WebApi.EndPoints.Navigation
         /// <summary>
         /// Lista as opções de menu do usuário
         /// </summary>
-        /// <param name=""></param>
+        /// <param></param>
         /// <returns>Um json com os itens de menu</returns>
         /// <response code="200">Lista de itens</response>
         /// <response code="400">Lista nula</response>
@@ -56,10 +56,7 @@ namespace BoxBack.WebApi.EndPoints.Navigation
             {  
                 userId = _httpCA.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             }
-            catch (Exception ex) { 
-                AddError(ex.Message);
-                return CustomResponse(500);
-            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             IEnumerable<VerticalNavItemViewModel> result = new List<VerticalNavItemViewModel>();
@@ -67,11 +64,8 @@ namespace BoxBack.WebApi.EndPoints.Navigation
             {
                 result = await _navigationManager.MyMenuAsync(userId);
             }
-            catch (Exception ex) { 
-                AddError(ex.Message);
-                return CustomResponse(500);
-            }
-            return Ok(result);
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            return CustomResponse(200, result);
         }
     }
 }

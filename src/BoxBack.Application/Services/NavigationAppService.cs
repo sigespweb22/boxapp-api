@@ -54,7 +54,7 @@ namespace BoxBack.Application.Services
             {
                 Title = "Client",
                 Path = "/dashboards/client",
-                Action = "read",
+                Action = "list",
                 Subject = "ac-dashboard-client-page"
             };
             navigationA.Children.Add(oldestDashboardSonB);

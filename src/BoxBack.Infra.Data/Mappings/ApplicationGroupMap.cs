@@ -27,6 +27,7 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasMaxLength(50);
             
             builder.Property(c => c.TenantId)
+                .HasDefaultValue(new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"))
                 .IsRequired();
             
             builder
