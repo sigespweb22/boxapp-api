@@ -21,7 +21,8 @@ namespace BoxBack.Application.Services
             #region Get and mapper object
             var navigation = new List<VerticalNavItemViewModel>();
             var navigationA = new VerticalNavItemViewModel();
-            var navigationSection = new VerticalNavItemViewModel();
+            var navigationSectionA = new VerticalNavItemViewModel();
+            var navigationSectionB = new VerticalNavItemViewModel();
             var navigationB = new VerticalNavItemViewModel();
 
             navigationA.Children = new List<Son>();
@@ -95,10 +96,31 @@ namespace BoxBack.Application.Services
             };
             navigationB.Children.Add(oldestSonD);
 
+            var navigationC = new VerticalNavItemViewModel
+            {
+                Title = "Commercial",
+                Icon = "HandshakeOutline",
+                BadgeContent = "",
+                BadgeColor = "primary",
+                Children = new List<Son>()
+            };
+
+            var oldestSonNB1 = new Son
+            {
+                Title = "Client",
+                Path = "/bussiness/commercial/client/list",
+                Action = "list",
+                Subject = "ac-client-page"
+            };
+            navigationC.Children.Add(oldestSonNB1);
+
             await Task.Run(() => navigation.Add(navigationA));
-            navigationSection.SectionTitle = "SYSTEM";
-            await Task.Run(() => navigation.Add(navigationSection));
+            navigationSectionA.SectionTitle = "SYSTEM";
+            await Task.Run(() => navigation.Add(navigationSectionA));
             await Task.Run(() => navigation.Add(navigationB));
+            navigationSectionB.SectionTitle = "BUSSINESS";
+            await Task.Run(() => navigation.Add(navigationSectionB));
+            await Task.Run(() => navigation.Add(navigationC));
             #endregion
             
             return navigation.ToList();

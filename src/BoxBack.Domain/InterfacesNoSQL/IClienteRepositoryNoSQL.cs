@@ -8,8 +8,8 @@ namespace BoxBack.Domain.InterfacesNoSQL
 {
     public interface IClienteRepositoryNoSQL
     {
-        Task<IEnumerable<Cliente>> GetAll();
-        Task AddAsync(Cliente item);
+        Task<IEnumerable<ClienteNoSQL>> GetAll();
+        Task AddAsync(ClienteNoSQL item);
         Task<bool> RemoveAsync(string id);
     }
 }

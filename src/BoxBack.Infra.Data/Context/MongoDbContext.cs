@@ -16,11 +16,11 @@ namespace BoxBack.Infra.Data.Context
                 _database = client.GetDatabase(settings.Value.DatabaseName);
         }
 
-        public IMongoCollection<Cliente> Clientes
+        public IMongoCollection<ClienteNoSQL> Clientes
         {
             get
             {
-                return _database.GetCollection<Cliente>("clientes");
+                return _database.GetCollection<ClienteNoSQL>("clientes");
             }
         }
     }

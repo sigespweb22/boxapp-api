@@ -39,6 +39,7 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<ApplicationGroup> ApplicationGroups { get; set; }
         public DbSet<ApplicationRoleGroup> ApplicationRoleGroups { get; set; }
         public DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
@@ -58,6 +59,7 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new ApplicationGroupMap());
             modelBuilder.ApplyConfiguration(new ApplicationRoleGroupMap());
             modelBuilder.ApplyConfiguration(new ApplicationUserGroupMap());
+            modelBuilder.ApplyConfiguration(new ClienteMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

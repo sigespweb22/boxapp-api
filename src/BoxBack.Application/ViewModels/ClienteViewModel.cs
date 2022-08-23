@@ -1,17 +1,28 @@
+using System.Dynamic;
 using System;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using BoxBack.Domain.Enums;
+using BoxBack.Domain.Models;
+using BoxBack.Application.ViewModels;
+
 
 namespace BoxBack.Application.ViewModels
 {
     public class ClienteViewModel
     {
-        [BsonId]
-        public ObjectId InternalId { get; set; }
-        public string Id { get; set; }                          
-        public string Body { get; set; } = string.Empty;
-        [BsonDateTimeOptions]
-        public DateTime UpdatedOn { get; set; } = DateTime.Now;
-        public int UserId { get; set; } = 0;
+        public Guid? Id { get; set; }
+
+        [Required(ErrorMessage = "Nome fantasia é requerido.")]
+        public string NomeFantasia { get; set; }
+
+        [Required(ErrorMessage = "Razão social é requerida.")]
+        public string RazaoSocial { get; set; }
+
+        [Required(ErrorMessage = "Cnpj é requerido.")]
+        public string Cnpj { get; set; }
+
+        public string Status { get; set; }
     }
 }

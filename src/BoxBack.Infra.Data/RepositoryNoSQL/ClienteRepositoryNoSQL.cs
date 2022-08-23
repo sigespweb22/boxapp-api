@@ -33,9 +33,9 @@ namespace BoxBack.Infra.Data.RepositoryNoSQL
             _contextNoSQL = new MongoDbContext(settings);
         }
 
-        public async Task<IEnumerable<Cliente>> GetAll()
+        public async Task<IEnumerable<ClienteNoSQL>> GetAll()
         {
-            IEnumerable<Cliente> result = new List<Cliente>();
+            IEnumerable<ClienteNoSQL> result = new List<ClienteNoSQL>();
             try
             {
                 result = await _contextNoSQL.Clientes
@@ -44,7 +44,7 @@ namespace BoxBack.Infra.Data.RepositoryNoSQL
             catch { throw; }
             return result;
         }
-        public async Task AddAsync(Cliente item)
+        public async Task AddAsync(ClienteNoSQL item)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace BoxBack.Infra.Data.RepositoryNoSQL
             {
                 DeleteResult actionResult 
                 = await _contextNoSQL.Clientes.DeleteOneAsync(
-                    Builders<Cliente>.Filter.Eq("Id", id));
+                    Builders<ClienteNoSQL>.Filter.Eq("Id", id));
 
                 return actionResult.IsAcknowledged 
                                 && actionResult.DeletedCount > 0;

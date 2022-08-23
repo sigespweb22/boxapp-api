@@ -40,5 +40,6 @@ namespace BoxBack.Domain.Models
         // Relationships
         public ICollection<ApplicationUser> ApplicationUsers { get; set; }
         public ICollection<ApplicationGroup> ApplicationGroups { get; set; }
+        public ICollection<Cliente> Clientes { get; set; }
     }
 }

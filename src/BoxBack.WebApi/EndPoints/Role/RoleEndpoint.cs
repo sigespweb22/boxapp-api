@@ -36,14 +36,14 @@ namespace BoxBack.WebApi.EndPoints.Role
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/roles")]
-    public class RolesEndpoint : ApiController
+    public class RoleEndpoint : ApiController
     {
         private readonly BoxAppDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IMapper _mapper;
 
-        public RolesEndpoint(BoxAppDbContext context,
+        public RoleEndpoint(BoxAppDbContext context,
                              IUnitOfWork unitOfWork,
                              RoleManager<ApplicationRole> roleManager, 
                              IMapper mapper)

@@ -34,7 +34,7 @@ namespace BoxBack.WebApi.EndPoints.User
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/groups")]
-    public class GroupsEndpoint : ApiController
+    public class GroupEndpoint : ApiController
     {
         private readonly BoxAppDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
@@ -42,7 +42,7 @@ namespace BoxBack.WebApi.EndPoints.User
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IMapper _mapper;
 
-        public GroupsEndpoint(BoxAppDbContext context,
+        public GroupEndpoint(BoxAppDbContext context,
                               IUnitOfWork unitOfWork,
                               UserManager<ApplicationUser> manager, 
                               RoleManager<ApplicationRole> roleManager, 

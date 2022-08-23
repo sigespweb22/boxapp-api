@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace BoxBack.Domain.ModelsNoSQL
 {
-    public class Cliente
+    public class ClienteNoSQL
     {
         [BsonId]
         public ObjectId InternalId { get; set; }

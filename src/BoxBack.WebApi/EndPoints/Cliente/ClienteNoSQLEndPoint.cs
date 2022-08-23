@@ -22,12 +22,12 @@ namespace BoxBack.WebApi.EndPoints.Client
 {
     [Produces("application/json")]
     [Route("api/v1/clientes")]
-    public class ClienteEndPoint : ApiController
+    public class ClienteNoSQLEndPoint : ApiController
     {
         private readonly IClienteRepositoryNoSQL _clienteRepositoryNoSQL;
         private readonly IMapper _mapper;
 
-        public ClienteEndPoint(IClienteRepositoryNoSQL clienteRepositoryNoSQL,
+        public ClienteNoSQLEndPoint(IClienteRepositoryNoSQL clienteRepositoryNoSQL,
                                 IMapper mapper)
         {
             _clienteRepositoryNoSQL = clienteRepositoryNoSQL;
@@ -70,7 +70,7 @@ namespace BoxBack.WebApi.EndPoints.Client
         /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "MASTER, CLIENTE_ADD")]
-        public async Task Post([FromBody] Cliente cliente)
+        public async Task Post([FromBody] ClienteNoSQL cliente)
         {
             await _clienteRepositoryNoSQL.AddAsync(cliente);
         }

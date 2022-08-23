@@ -15,6 +15,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ApplicationRoleViewModel, ApplicationRole>();
             CreateMap<ApplicationGroupViewModel, ApplicationGroup>();
             CreateMap<ApplicationRoleViewModel, ApplicationRole>();
+            CreateMap<ClienteViewModel, Cliente>();
         }
     }
 }

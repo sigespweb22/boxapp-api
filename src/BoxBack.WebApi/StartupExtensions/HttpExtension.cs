@@ -26,6 +26,14 @@ namespace BoxBack.WebApi.StartupExtensions
                 })
                 .AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(5, _ => TimeSpan.FromMilliseconds(500)))
                 .AddTypedClient(c => Refit.RestService.For<IGeoNamesEstadosServices>(c));
+            
+            services
+                .AddHttpClient("CNPJA", c =>
+                {
+                    c.BaseAddress = new Uri(configuration.GetValue<string>("HttpClients:CNPJA"));
+                })
+                .AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(5, _ => TimeSpan.FromMilliseconds(500)))
+                .AddTypedClient(c => Refit.RestService.For<ICNPJAServices>(c));
 
             return services;
         }
