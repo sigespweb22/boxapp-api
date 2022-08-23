@@ -24,7 +24,7 @@ using System.IdentityModel.Tokens.Jwt;
 using BoxBack.WebApi.Extensions;
 using BoxBack.Domain.Enums;
 
-namespace BoxBack.WebApi.EndPoints.Account
+namespace BoxBack.WebApi.EndPoints
 {
     [ApiController]
     [ApiVersion("1.0")]

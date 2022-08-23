@@ -54,5 +54,7 @@ namespace BoxBack.Domain.Models
         [ForeignKey("TenantId")]
         public Guid TenantId { get; set; }
         public Tenant Tenant { get; set; }
+
+        public ICollection<ClienteAtivo> Ativos { get; set; }
     }
 }

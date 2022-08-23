@@ -41,5 +41,6 @@ namespace BoxBack.Domain.Models
         public ICollection<ApplicationUser> ApplicationUsers { get; set; }
         public ICollection<ApplicationGroup> ApplicationGroups { get; set; }
         public ICollection<Cliente> Clientes { get; set; }
+        public ICollection<Ativo> Ativos { get; set; }
     }
 }

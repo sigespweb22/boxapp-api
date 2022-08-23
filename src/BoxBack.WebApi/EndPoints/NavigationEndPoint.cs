@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels.Navigation;
 
-namespace BoxBack.WebApi.EndPoints.Navigation
+namespace BoxBack.WebApi.EndPoints
 {
     [ApiController]
     [ApiVersion("1.0")]

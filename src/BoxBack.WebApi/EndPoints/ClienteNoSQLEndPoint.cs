@@ -18,7 +18,7 @@ using AutoMapper.QueryableExtensions;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace BoxBack.WebApi.EndPoints.Client
+namespace BoxBack.WebApi.EndPoints
 {
     [Produces("application/json")]
     [Route("api/v1/clientes")]

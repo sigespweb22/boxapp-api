@@ -40,6 +40,8 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<ApplicationRoleGroup> ApplicationRoleGroups { get; set; }
         public DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Ativo> Ativos { get; set; }
+        public DbSet<ClienteAtivo> ClientesAtivos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
@@ -60,6 +62,8 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new ApplicationRoleGroupMap());
             modelBuilder.ApplyConfiguration(new ApplicationUserGroupMap());
             modelBuilder.ApplyConfiguration(new ClienteMap());
+            modelBuilder.ApplyConfiguration(new AtivoMap());
+            modelBuilder.ApplyConfiguration(new ClienteAtivoMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

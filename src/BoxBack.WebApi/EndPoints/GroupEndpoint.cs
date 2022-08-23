@@ -29,7 +29,7 @@ using BoxBack.Infra.Data.Extensions;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Application.Helpers;
 
-namespace BoxBack.WebApi.EndPoints.User
+namespace BoxBack.WebApi.EndPoints
 {
     [ApiController]
     [ApiVersion("1.0")]

@@ -5,15 +5,15 @@ namespace BoxBack.Domain.Enums
     public enum AtivoUnidadeMedidaEnum
     {
         [Display(Name = "Computador")]
-        CPU = 0,
+        CPU = 1,
         
         [Display(Name = "Hora")]
-        HR = 1,
+        HR = 2,
 
         [Display(Name = "Giga bytes")]
-        GB = 2,
+        GB = 3,
 
         [Display(Name = "vCPU")]
-        vCPU = 3
+        vCPU = 4
     }
 }

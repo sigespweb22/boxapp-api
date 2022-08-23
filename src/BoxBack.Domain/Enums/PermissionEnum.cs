@@ -39,16 +39,26 @@ namespace BoxBack.Domain.Enums
         CanDashboardACList = 21,
         //End - Dashboard
 
-        //Begin - Cliente
-        CanClienteAll = 22,
-        CanClienteList = 23,
-        CanClienteRead = 24,
-        CanClienteUpdate = 25,
-        CanClienteCreate = 26,
-        CanClienteDelete = 27,
-        CanClienteAlterStatus = 28,
-        CanClienteTPAll = 29,
-        CanClienteTPListOne = 30
-        //End - Cliente
+        //Begin - Client
+        CanClientAll = 22,
+        CanClientList = 23,
+        CanClientRead = 24,
+        CanClientUpdate = 25,
+        CanClientCreate = 26,
+        CanClientDelete = 27,
+        CanClientAlterStatus = 28,
+        CanClientTPAll = 29,
+        CanClientTPListOne = 30,
+        //End - Client
+
+        //Begin - Asset
+        CanAssetAll = 31,
+        CanAssetList = 32,
+        CanAssetRead = 33,
+        CanAssetUpdate = 34,
+        CanAssetCreate = 35,
+        CanAssetDelete = 36,
+        CanAssetAlterStatus = 37,
+        //End - Asset
     }
 }

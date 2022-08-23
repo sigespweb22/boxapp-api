@@ -31,7 +31,7 @@ using BoxBack.Infra.Data.Extensions;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Application.ViewModels.Requests;
 
-namespace BoxBack.WebApi.EndPoints.Role
+namespace BoxBack.WebApi.EndPoints
 {
     [ApiController]
     [ApiVersion("1.0")]

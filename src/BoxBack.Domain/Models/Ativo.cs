@@ -11,10 +11,19 @@ namespace BoxBack.Domain.Models
     {        
         public Ativo(string nome, string referencia, string codigoUnico,
                        ClienteAtivoTipoEnum tipo, decimal valorCusto, decimal valorVenda, 
-                       AtivoUnidadeMedidaEnum unidadeMedida, 
+                       AtivoUnidadeMedidaEnum unidadeMedida, ClienteAtivoTipoServicoTipoEnum clienteAtivoTipoServicoTipo,
                        string caracteristica, string observacao)
         {
-            
+            Nome = nome;
+            Referencia = referencia;
+            CodigoUnico = codigoUnico;
+            Tipo = tipo;
+            ValorCusto = valorCusto;
+            ValorVenda = valorVenda;
+            UnidadeMedida = unidadeMedida;
+            ClienteAtivoTipoServicoTipo = clienteAtivoTipoServicoTipo;
+            Caracteristica = caracteristica;
+            Observacao = observacao;
         }
 
         // Constructor empty for EF
@@ -27,6 +36,7 @@ namespace BoxBack.Domain.Models
         public decimal ValorCusto { get; set; }
         public decimal ValorVenda { get; set; }
         public AtivoUnidadeMedidaEnum UnidadeMedida { get; set; }
+        public ClienteAtivoTipoServicoTipoEnum ClienteAtivoTipoServicoTipo { get; set; }
         public string Caracteristica { get; set; }
         public string Observacao { get; set; }
 
@@ -35,5 +45,7 @@ namespace BoxBack.Domain.Models
         [ForeignKey("TenantId")]
         public Guid TenantId { get; set; }
         public Tenant Tenant { get; set; }
+
+        public ICollection<ClienteAtivo> Clientes { get; set; }
     }
 }

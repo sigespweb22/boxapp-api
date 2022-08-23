@@ -114,6 +114,15 @@ namespace BoxBack.Application.Services
             };
             navigationC.Children.Add(oldestSonNB1);
 
+            var oldestSonNB2 = new Son
+            {
+                Title = "Assets",
+                Path = "/bussiness/commercial/asset/list",
+                Action = "list",
+                Subject = "ac-asset-page"
+            };
+            navigationC.Children.Add(oldestSonNB2);
+
             await Task.Run(() => navigation.Add(navigationA));
             navigationSectionA.SectionTitle = "SYSTEM";
             await Task.Run(() => navigation.Add(navigationSectionA));
