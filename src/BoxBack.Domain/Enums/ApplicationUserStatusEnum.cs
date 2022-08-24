@@ -5,12 +5,12 @@ namespace BoxBack.Domain.Enums
     public enum ApplicationUserStatusEnum
     {
         [Display(Name = "Pending")]
-        PENDING = 0,
+        PENDING = 1,
 
         [Display(Name = "Active")]
-        ACTIVE = 1,
+        ACTIVE = 2,
 
         [Display(Name = "Inactive")]
-        INACTIVE = 2
+        INACTIVE = 3
     }
 }

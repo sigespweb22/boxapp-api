@@ -4,9 +4,6 @@ namespace BoxBack.Domain.Enums
 {
     public enum SetorEnum
     {
-        [Display(Name = "Não informado")]
-        NAO_INFORMADO = 0,
-        
         [Display(Name = "Jurídico")]
         JURIDICO = 1,
 

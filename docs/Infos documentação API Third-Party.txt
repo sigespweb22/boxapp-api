@@ -1,0 +1,6 @@
+API consulta CNPJA
+URL Documentação: https://docs.cnpja.com/api/quickstart/
+Usuário: alan.rezende@boxtecnologia.com.br
+Senha: alr20207413*
+
+EndPoints API: https://api.cnpja.com

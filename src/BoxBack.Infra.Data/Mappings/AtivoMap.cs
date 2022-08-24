@@ -22,13 +22,25 @@ namespace BoxBack.Infra.Data.Mappings
                 .IsRequired()
                 .HasMaxLength(255);
             
+            builder
+                .HasIndex(c => c.Nome)
+                .IsUnique();
+            
             builder.Property(c => c.Referencia)
                 .IsRequired(false)
                 .HasMaxLength(255);
             
+            builder
+                .HasIndex(c => c.Referencia)
+                .IsUnique();
+            
             builder.Property(c => c.CodigoUnico)
                 .IsRequired(false)
                 .HasMaxLength(255);
+            
+            builder
+                .HasIndex(c => c.CodigoUnico)
+                .IsUnique();
             
             builder.Property(c => c.ValorCusto)
                 .HasDefaultValue(0)

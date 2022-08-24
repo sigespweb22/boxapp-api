@@ -5,9 +5,9 @@ namespace BoxBack.Domain.Enums
     public enum ClienteAtivoTipoEnum
     {
         [Display(Name = "Serviço")]
-        SERVICO = 0,
+        SERVICO = 1,
         
         [Display(Name = "Produto")]
-        PRODUTO = 1
+        PRODUTO = 2
     }
 }

@@ -71,14 +71,14 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> ListAsync(string q)
         {
             #region Get data
-            var clientes = new List<Cliente>();
+            var ativos = new List<Ativo>();
             try
             {
-                clientes = await _context.Clientes
+                ativos = await _context.Ativos
                                             .AsNoTracking()
-                                            .OrderBy(x => x.UpdatedAt)
+                                            .OrderByDescending(x => x.UpdatedAt)
                                             .ToListAsync();
-                if (clientes == null)
+                if (ativos == null)
                 {
                     AddError("Não encontrado.");
                     return CustomResponse(404);
@@ -89,46 +89,46 @@ namespace BoxBack.WebApi.EndPoints
             
             #region Filter search
             if(!string.IsNullOrEmpty(q))
-                clientes = clientes.Where(x => x.NomeFantasia.Contains(q.ToUpper())).ToList();
+                ativos = ativos.Where(x => x.Nome.Contains(q)).ToList();
             #endregion
 
             #region Map
-            IEnumerable<ClienteViewModel> clienteMapped = new List<ClienteViewModel>();
+            IEnumerable<AtivoViewModel> ativosMapped = new List<AtivoViewModel>();
             try
             {
-                clienteMapped = _mapper.Map<IEnumerable<ClienteViewModel>>(clientes);
+                ativosMapped = _mapper.Map<IEnumerable<AtivoViewModel>>(ativos);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
             return Ok(new {
-                AllData = clienteMapped.ToList(),
-                Users = clienteMapped.ToList(),
+                AllData = ativosMapped.ToList(),
+                Assets = ativosMapped.ToList(),
                 Params = q,
-                Total = clienteMapped.Count()
+                Total = ativosMapped.Count()
             });
         }
 
         /// <summary>
-        /// Cria um cliente
+        /// Cria um ativo
         /// </summary>
-        /// <param name="clienteViewModel"></param>
+        /// <param name="ativoViewModel"></param>
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
-        [Authorize(Roles = "Master, CanClienteCreate, CanClienteAll")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [Authorize(Roles = "Master, CanAssetCreate, CanAssetAll")]
+        [ProducesResponseType(StatusCodes.Status201Created)] 
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Produces("application/json")]
         [Route("create")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody]ClienteViewModel clienteViewModel)
+        public async Task<IActionResult> CreateAsync([FromBody]AtivoViewModel ativoViewModel)
         {
             #region Map
-            var clienteMapped = new Cliente();
+            var ativoMapped = new Ativo();
             try
             {
-                clienteMapped = _mapper.Map<Cliente>(clienteViewModel);
+                ativoMapped = _mapper.Map<Ativo>(ativoViewModel);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -136,7 +136,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Persistance and commit
             try
             {
-                await _context.Clientes.AddAsync(clienteMapped);
+                await _context.Ativos.AddAsync(ativoMapped);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
@@ -146,7 +146,7 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Deleta um cliente
+        /// Deleta um ativo
         /// </summary>
         /// <param name="id"></param>
         /// <returns>True se deletado com sucesso</returns>
@@ -154,7 +154,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Not found</response>
         [Route("delete/{id}")]
-        [Authorize(Roles = "Master, CanClienteDelete, CanClienteAll")]
+        [Authorize(Roles = "Master, CanAssetDelete, CanAssetAll")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -175,13 +175,13 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Get data
-            var cliente = new Cliente();
+            var ativo = new Ativo();
             try
             {
-                cliente = await _context.Clientes.FindAsync(id);
-                if (cliente == null)
+                ativo = await _context.Ativos.FindAsync(id);
+                if (ativo == null)
                 {
-                    AddError("Cliente não encontrado para deletar.");
+                    AddError("Ativo não encontrado para deletar.");
                     return CustomResponse(404);
                 }
             }
@@ -191,7 +191,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Delete
             try
             {
-                _context.Clientes.Remove(cliente);
+                _context.Ativos.Remove(ativo);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
@@ -202,7 +202,7 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Altera o status de um cliente
+        /// Altera o status de um ativo
         /// </summary>
         /// <param name="id"></param>
         /// <returns>True se a operação foi realizada com sucesso</returns>
@@ -219,7 +219,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanClienteAlterStatus, CanClienteAll")]
+        [Authorize(Roles = "Master, CanAssetAlterStatus, CanAssetAll")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -236,13 +236,13 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
     
             #region Get data
-            var cliente = new Cliente();
+            var ativo = new Ativo();
             try
             {
-                cliente = await _context.Clientes.FindAsync(id);
-                if (cliente == null)
+                ativo = await _context.Ativos.FindAsync(id);
+                if (ativo == null)
                 {
-                    AddError("Cliente não encontrado para alterar seu status.");
+                    AddError("Ativo não encontrado para alterar seu status.");
                     return CustomResponse(404);
                 }
             }
@@ -250,13 +250,13 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Map
-            switch(cliente.IsDeleted)
+            switch(ativo.IsDeleted)
             {
                 case true:
-                    cliente.IsDeleted = false;
+                    ativo.IsDeleted = false;
                     break;
                 case false:
-                    cliente.IsDeleted = true;
+                    ativo.IsDeleted = true;
                     break;
             }
             #endregion
@@ -264,14 +264,14 @@ namespace BoxBack.WebApi.EndPoints
             #region Alter status
             try
             {
-                _context.Clientes.Update(cliente);
+                _context.Ativos.Update(ativo);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
             #endregion
 
-            return CustomResponse(200, new { message = "Status cliente alterado com sucesso." } );
+            return CustomResponse(200, new { message = "Status ativo alterado com sucesso." } );
         }
     }
 }

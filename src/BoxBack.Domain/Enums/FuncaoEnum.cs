@@ -4,10 +4,10 @@ namespace BoxBack.Domain.Enums
 {
     public enum FuncaoEnum
     {
-        [Display(Name = "Não informado")]
-        NAO_INFORMADO = 0,
-        
         [Display(Name = "Engenheiro de Software")]
-        ENGENHEIRO_SOFTWARE = 1
+        ENGENHEIRO_SOFTWARE = 1,
+
+        [Display(Name = "Arquiteto de Software")]
+        ARQUITETO_SOFTWARE = 1
     }
 }
