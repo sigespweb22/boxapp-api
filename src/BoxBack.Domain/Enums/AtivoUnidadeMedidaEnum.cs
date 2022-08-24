@@ -4,6 +4,9 @@ namespace BoxBack.Domain.Enums
 {
     public enum AtivoUnidadeMedidaEnum
     {
+        [Display(Name = "Nenhum")]
+        NENHUM = 0,
+        
         [Display(Name = "Computador")]
         CPU = 1,
         

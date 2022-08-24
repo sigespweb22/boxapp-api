@@ -4,6 +4,9 @@ namespace BoxBack.Domain.Enums
 {
     public enum ApplicationUserStatusEnum
     {
+        [Display(Name = "Nenhum")]
+        NENHUM = 0,
+        
         [Display(Name = "Pending")]
         PENDING = 1,
 
