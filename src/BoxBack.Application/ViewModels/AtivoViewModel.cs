@@ -18,7 +18,10 @@ namespace BoxBack.Application.ViewModels
         public string Nome { get; set; }
         public string Referencia { get; set; }
         public string CodigoUnico { get; set; }
+
+        [Required(ErrorMessage = "Tipo é requerido.")]
         public string Tipo { get; set; }
+
         public decimal? ValorCusto { get; set; }
         public decimal? ValorVenda { get; set; }
         public string UnidadeMedida { get; set; }
