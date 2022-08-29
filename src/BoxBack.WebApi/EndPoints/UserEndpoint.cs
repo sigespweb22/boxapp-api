@@ -350,24 +350,5 @@ namespace BoxBack.WebApi.EndPoints
 
             return CustomResponse(200, new { message = "Status usuário alterado com sucesso." } );
         }
-
-        [AllowAnonymous]
-        [Route("consulta-estabelecimento")]
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Produces("application/json")]
-        public async Task<IActionResult> ConsultaEstabelecimento()
-        {
-            var empresa = new CNPJaEmpresaModelService();
-            try
-            {
-                empresa = await _cnpjaServices.ConsultaEstabelecimento("23831562000182");
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            
-            return CustomResponse(200, empresa);
-        }
     }
 }

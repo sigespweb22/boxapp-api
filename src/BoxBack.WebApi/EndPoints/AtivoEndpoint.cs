@@ -66,7 +66,7 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Produces("application/json")]
-        [Route("list")]
+        [Route("list")] 
         [HttpGet]
         public async Task<IActionResult> ListAsync(string q)
         {
@@ -143,6 +143,74 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             return CustomResponse(201);
+        }
+
+        /// <summary>
+        /// Atualiza um ativo
+        /// </summary>
+        /// <param name="ativoViewModel"></param>
+        /// <returns>True se atualizada com sucesso</returns>
+        /// <response code="204">Atualizada com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        [Authorize(Roles = "Master, CanAssetUpdate, CanAssetAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Produces("application/json")]
+        [Route("update")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromBody]AtivoViewModel ativoViewModel)
+        {
+            #region Required validations
+            if (ativoViewModel.Id == null ||
+                ativoViewModel.Id == Guid.Empty)
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data for update
+            var ativoDB = new Ativo();
+            try
+            {
+                ativoDB = await _context
+                                    .Ativos
+                                    .FindAsync(ativoViewModel.Id);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (ativoDB == null)
+            {
+                AddError("Ativo não encontrada para atualizar.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            #region Map
+            var ativoMap = new Ativo();
+            try
+            {
+                ativoMap = _mapper.Map<AtivoViewModel, Ativo>(ativoViewModel, ativoDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Update ativo
+            try
+            {
+                _context.Update(ativoMap);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            #region Check to result
+            try
+            {
+                await _unitOfWork.CommitAsync(); 
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            return CustomResponse(204);
         }
 
         /// <summary>
