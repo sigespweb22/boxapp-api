@@ -1,4 +1,5 @@
-﻿using System.Net.Mail;
+﻿using System.Security.AccessControl;
+using System.Net.Mail;
 using Microsoft.Win32;
 using System.Net;
 using System;
@@ -50,7 +51,7 @@ namespace BoxBack.WebApi.EndPoints
         public ClienteEndpoint(BoxAppDbContext context,
                                IUnitOfWork unitOfWork,
                                UserManager<ApplicationUser> manager, 
-                               RoleManager<ApplicationRole> roleManager, 
+                               RoleManager<ApplicationRole> roleManager,
                                IMapper mapper,
                                ICNPJAServices cnpjaServices)
         {
@@ -142,6 +143,22 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
+            #region Validations
+            bool alreadySameCNPJ;
+            try
+            {
+                alreadySameCNPJ = await _context
+                                            .Clientes
+                                            .AnyAsync(x => x.CNPJ == clienteViewModel.CNPJ);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (alreadySameCNPJ)
+            {
+                AddError("Já existe um cliente cadastrado com o mesmo CNPJ informado.");
+                return CustomResponse(400);
+            }
+            #endregion
+
             #region Persistance and commit
             try
             {
@@ -152,6 +169,74 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             return CustomResponse(201);
+        }
+
+        /// <summary>
+        /// Atualiza um cliente
+        /// </summary>
+        /// <param name="clienteViewModel"></param>
+        /// <returns>True se atualizada com sucesso</returns>
+        /// <response code="204">Atualizada com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        [Authorize(Roles = "Master, CanClientUpdate, CanClientAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Produces("application/json")]
+        [Route("update")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromBody]ClienteViewModel clienteViewModel)
+        {
+            #region Required validations
+            if (clienteViewModel.Id == null ||
+                clienteViewModel.Id == Guid.Empty)
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data for update
+            var clienteDB = new Cliente();
+            try
+            {
+                clienteDB = await _context
+                                    .Clientes
+                                    .FindAsync(clienteViewModel.Id);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (clienteDB == null)
+            {
+                AddError("Cliente não encontrada para atualizar.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            #region Map
+            var clienteMap = new Cliente();
+            try
+            {
+                clienteMap = _mapper.Map<ClienteViewModel, Cliente>(clienteViewModel, clienteDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Update cliente
+            try
+            {
+                _context.Update(clienteMap);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            #region Check to result
+            try
+            {
+                await _unitOfWork.CommitAsync(); 
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            return CustomResponse(204);
         }
 
         /// <summary>

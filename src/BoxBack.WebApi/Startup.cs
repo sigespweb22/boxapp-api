@@ -148,6 +148,8 @@ namespace BoxBack.WebApi
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
+
+                AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             });
 
             services.AddControllers()
