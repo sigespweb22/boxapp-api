@@ -26,7 +26,7 @@ namespace BoxBack.Application.ViewModels
         public string InscricaoEstadual { get; set; }
 
         [Required(ErrorMessage = "\nCNPJ é requerido.")]
-        [StringLength(18, MinimumLength = 18, ErrorMessage = "\nCNPJ deve possuir 14 caracteres.")]
+        [StringLength(18, MinimumLength = 14, ErrorMessage = "\nCNPJ deve possuir 14 caracteres.")]
         public string CNPJ { get; set; }
         public string TelefonePrincipal { get; set; }
         public string EmailPrincipal { get; set; }

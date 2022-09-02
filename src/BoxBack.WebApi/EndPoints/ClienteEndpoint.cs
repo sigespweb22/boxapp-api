@@ -408,7 +408,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 empresa = await _cnpjaServices.ConsultaEstabelecimento(cnpj);
             }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            catch (Exception Content) { AddErrorToTryCatch(Content); return CustomResponse(500); }
             #endregion
             
             return CustomResponse(200, empresa);
