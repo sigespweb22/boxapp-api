@@ -88,5 +88,25 @@ namespace BoxBack.WebApi.Helpers
                 
             return null;
         }
+
+        public static string CnpjClean(string cnpj)
+        {
+            String result = string.Empty;
+            if (string.IsNullOrEmpty(cnpj))
+                return result;
+            
+            try
+            {
+                result = cnpj.Replace(".", string.Empty).Replace("-", string.Empty).Replace("/", string.Empty);
+            }
+            catch { throw; }
+            return result;
+        }
+
+        public static bool CnpjIsValid(string cnpj)
+        {
+            Regex cnpjPatter = new Regex(@"[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2}");
+            return cnpjPatter.IsMatch(cnpj);
+        }
     }
 }

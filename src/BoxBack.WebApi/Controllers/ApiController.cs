@@ -74,7 +74,7 @@ namespace BoxBack.WebApi.Controllers
             if (erro.InnerException != null){
                 _errors.Add(erro.InnerException.Message);
             }
-            else 
+            else
             {
                 _errors.Add(erro.Message);
             }

@@ -28,11 +28,11 @@ using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.Enums;
 using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels.Selects;
-using BoxBack.Infra.Data.Extensions;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Application.ViewModels.Requests;
 using BoxBack.Domain.Services;
 using BoxBack.Domain.ModelsServices;
+using BoxBack.WebApi.Helpers;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -407,8 +407,13 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 empresa = await _cnpjaServices.ConsultaEstabelecimento(cnpj);
+                if (empresa == null)
+                {
+                    AddError("Empresa não encontrada com o CNPJ informado.");
+                    return CustomResponse(404, empresa);
+                }
             }
-            catch (Exception Content) { AddErrorToTryCatch(Content); return CustomResponse(500); }
+            catch (Exception Content) { AddErrorToTryCatch(Content); return CustomResponse(400); }
             #endregion
             
             return CustomResponse(200, empresa);
