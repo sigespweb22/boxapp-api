@@ -34,6 +34,14 @@ namespace BoxBack.WebApi.StartupExtensions
                 })
                 .AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(5, _ => TimeSpan.FromMilliseconds(500)))
                 .AddTypedClient(c => Refit.RestService.For<ICNPJAServices>(c));
+            
+            services
+                .AddHttpClient("BOMCONTROLE", c =>
+                {
+                    c.BaseAddress = new Uri(configuration.GetValue<string>("HttpClients:BOMCONTROLE"));
+                })
+                .AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(5, _ => TimeSpan.FromMilliseconds(500)))
+                .AddTypedClient(c => Refit.RestService.For<IBCServices>(c));
 
             return services;
         }

@@ -42,6 +42,7 @@ namespace BoxBack.WebApi.EndPoints
     public class ClienteEndpoint : ApiController
     {
         private readonly ICNPJAServices _cnpjaServices;
+        private readonly IBCServices _bcServices;
         private readonly BoxAppDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _manager;
@@ -53,7 +54,8 @@ namespace BoxBack.WebApi.EndPoints
                                UserManager<ApplicationUser> manager, 
                                RoleManager<ApplicationRole> roleManager,
                                IMapper mapper,
-                               ICNPJAServices cnpjaServices)
+                               ICNPJAServices cnpjaServices,
+                               IBCServices bcServices)
         {
             _context = context;
             _unitOfWork = unitOfWork;
@@ -61,6 +63,7 @@ namespace BoxBack.WebApi.EndPoints
             _roleManager = roleManager;
             _mapper = mapper;
             _cnpjaServices = cnpjaServices;
+            _bcServices = bcServices;
         }
 
         /// <summary>
@@ -86,7 +89,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 clientes = await _context.Clientes
                                             .AsNoTracking()
-                                            .OrderBy(x => x.UpdatedAt)
+                                            .OrderByDescending(x => x.UpdatedAt)
                                             .ToListAsync();
                 if (clientes == null)
                 {
@@ -368,14 +371,16 @@ namespace BoxBack.WebApi.EndPoints
             return CustomResponse(200, new { message = "Status cliente alterado com sucesso." } );
         }
 
+        #region Third Party
+
         /// <summary>
-        /// Lista os dados de um cliente específico a partir de uma api de terceiro
+        /// Lista os dados do CNPJ de uma empresa a partir de uma api de terceiro
         /// </summary>s
         /// <param name="cnpj"></param>
-        /// <returns>Um json com os dados do cliente</returns>
-        /// <response code="200">Dados do cliente</response>
+        /// <returns>Um json com os dados da empresa</returns>
+        /// <response code="200">Dados da empresa</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
-        /// <response code="404">Cliente não encontrado</response>
+        /// <response code="404">CNPJ não encontrado</response>
         /// <remarks>
         /// Sample request:
         ///
@@ -386,7 +391,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("tp/{cnpj}")]
-        [Authorize(Roles = "Master, CanClientTPListOne, CanClientTPAll")]
+        [Authorize(Roles = "Master, CanCnpjTPListOne, CanCnpjTPAll")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -418,5 +423,6 @@ namespace BoxBack.WebApi.EndPoints
             
             return CustomResponse(200, empresa);
         }
+        #endregion
     }
 }
