@@ -49,6 +49,5 @@ Totalmente escrito para atender o modelo de serviços web RESTful.
   * Grupos de Usuários
  
 *Lançamento v1.1.0 em 01/09/2022
-
-Clientes
-Ativos (Produtos e Serviços)
+  * Clientes
+  * Ativos (Produtos e Serviços)
