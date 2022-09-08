@@ -40,6 +40,6 @@ namespace BoxBack.Domain.Models
         public Guid TenantId { get; set; }
         public Tenant Tenant { get; set; }
 
-        public ICollection<FornecedorServico> Servicos { get; set; }
+        public ICollection<FornecedorSolucao> FornecedorSolucoes { get; set; }
     }
 }

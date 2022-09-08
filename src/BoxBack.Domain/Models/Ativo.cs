@@ -10,16 +10,14 @@ namespace BoxBack.Domain.Models
     public class Ativo : EntityAudit
     {        
         public Ativo(string nome, string referencia, string codigoUnico,
-                       ServicoProdutoEnum tipo, decimal valorCusto, decimal valorVenda, 
-                       AtivoUnidadeMedidaEnum unidadeMedida, ClienteAtivoServicoTipoEnum clienteAtivoTipoServicoTipo,
+                       ServicoProdutoEnum tipo, AtivoUnidadeMedidaEnum unidadeMedida,
+                       ClienteAtivoServicoTipoEnum clienteAtivoTipoServicoTipo,
                        string caracteristica, string observacao)
         {
             Nome = nome;
             Referencia = referencia;
             CodigoUnico = codigoUnico;
             Tipo = tipo;
-            ValorCusto = valorCusto;
-            ValorVenda = valorVenda;
             UnidadeMedida = unidadeMedida;
             ClienteAtivoTipoServicoTipo = clienteAtivoTipoServicoTipo;
             Caracteristica = caracteristica;
@@ -33,8 +31,6 @@ namespace BoxBack.Domain.Models
         public string Referencia { get; set; }
         public string CodigoUnico { get; set; }
         public ServicoProdutoEnum Tipo { get; set; }
-        public decimal ValorCusto { get; set; }
-        public decimal ValorVenda { get; set; }
         public AtivoUnidadeMedidaEnum UnidadeMedida { get; set; }
         public ClienteAtivoServicoTipoEnum ClienteAtivoTipoServicoTipo { get; set; }
         public string Caracteristica { get; set; }

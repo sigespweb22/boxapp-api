@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BoxBack.Infra.Data.Mappings
 {
-    public class FornecedorServicoMap : IEntityTypeConfiguration<FornecedorServico>
+    public class FornecedorSolucaoMap : IEntityTypeConfiguration<FornecedorSolucao>
     {
-        public void Configure(EntityTypeBuilder<FornecedorServico> builder)
+        public void Configure(EntityTypeBuilder<FornecedorSolucao> builder)
         {
-            builder.ToTable("FornecedoresServicos");
+            builder.ToTable("FornecedorSolucoes");
 
             builder.HasKey(c => c.Id);
 
@@ -34,8 +34,14 @@ namespace BoxBack.Infra.Data.Mappings
                 .IsRequired();
             
             builder
+                .HasOne(c => c.Tenant)
+                .WithMany(c => c.FornecedorSolucoes)
+                .HasForeignKey(c => c.TenantId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
                 .HasOne(c => c.Fornecedor)
-                .WithMany(c => c.Servicos)
+                .WithMany(c => c.FornecedorSolucoes)
                 .HasForeignKey(c => c.FornecedorId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
