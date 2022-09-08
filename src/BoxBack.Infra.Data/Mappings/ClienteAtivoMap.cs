@@ -14,6 +14,22 @@ namespace BoxBack.Infra.Data.Mappings
 
             builder.HasKey(c => new { c.ClienteId, c.AtivoId });
 
+            builder.Property(c => c.ValorCusto)
+                .HasDefaultValue(0)
+                .HasColumnType("decimal(7,3)");
+            
+            builder.Property(c => c.ValorVenda)
+                .HasDefaultValue(0)
+                .HasColumnType("decimal(7,3)");
+
+            builder.Property(c => c.Caracteristica)
+                .IsRequired(false)
+                .HasMaxLength(1500);
+
+            builder.Property(c => c.Observacao)
+                .IsRequired(false)
+                .HasMaxLength(255);
+
             builder
                 .HasOne(c => c.Cliente)
                 .WithMany(c => c.Ativos)

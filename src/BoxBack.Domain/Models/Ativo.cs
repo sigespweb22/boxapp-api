@@ -11,7 +11,7 @@ namespace BoxBack.Domain.Models
     {        
         public Ativo(string nome, string referencia, string codigoUnico,
                        ServicoProdutoEnum tipo, AtivoUnidadeMedidaEnum unidadeMedida,
-                       ClienteAtivoServicoTipoEnum clienteAtivoTipoServicoTipo,
+                       ClienteAtivoServicoTipoEnum ativoTipoServicoTipo,
                        string caracteristica, string observacao)
         {
             Nome = nome;
@@ -19,7 +19,7 @@ namespace BoxBack.Domain.Models
             CodigoUnico = codigoUnico;
             Tipo = tipo;
             UnidadeMedida = unidadeMedida;
-            ClienteAtivoTipoServicoTipo = clienteAtivoTipoServicoTipo;
+            AtivoTipoServicoTipo = ativoTipoServicoTipo;
             Caracteristica = caracteristica;
             Observacao = observacao;
         }
@@ -32,7 +32,7 @@ namespace BoxBack.Domain.Models
         public string CodigoUnico { get; set; }
         public ServicoProdutoEnum Tipo { get; set; }
         public AtivoUnidadeMedidaEnum UnidadeMedida { get; set; }
-        public ClienteAtivoServicoTipoEnum ClienteAtivoTipoServicoTipo { get; set; }
+        public ClienteAtivoServicoTipoEnum AtivoTipoServicoTipo { get; set; }
         public string Caracteristica { get; set; }
         public string Observacao { get; set; }
 
