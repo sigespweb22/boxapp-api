@@ -42,14 +42,6 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasIndex(c => c.CodigoUnico)
                 .IsUnique();
             
-            builder.Property(c => c.ValorCusto)
-                .HasDefaultValue(0)
-                .HasColumnType("decimal(7,3)");
-            
-            builder.Property(c => c.ValorVenda)
-                .HasDefaultValue(0)
-                .HasColumnType("decimal(7,3)");
-            
             builder.Property(c => c.Caracteristica)
                 .IsRequired(false)
                 .HasMaxLength(1500);
