@@ -43,7 +43,7 @@ Totalmente escrito para atender o modelo de serviços web RESTful.
 ## Novidades:
 
 *Lançamento v1.0 em 15/08/2022
-  * Account - Authenticação/Autorização/Navegação
+  * Account - Autenticação/Autorização/Navegação
   * Usuários
   * Permissões
   * Grupos de Usuários
