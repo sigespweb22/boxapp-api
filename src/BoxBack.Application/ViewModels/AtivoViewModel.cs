@@ -14,12 +14,12 @@ namespace BoxBack.Application.ViewModels
     {
         public Guid? Id { get; set; }
 
-        [Required(ErrorMessage = "Nome é requerido.")]
+        [Required(ErrorMessage = "\nNome é requerido.")]
         public string Nome { get; set; }
         public string Referencia { get; set; }
         public string CodigoUnico { get; set; }
 
-        [Required(ErrorMessage = "Tipo é requerido.")]
+        [Required(ErrorMessage = "\nTipo é requerido.")]
         public string Tipo { get; set; }
 
         public decimal? ValorCusto { get; set; }

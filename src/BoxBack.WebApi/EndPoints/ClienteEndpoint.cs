@@ -1,17 +1,6 @@
-﻿using System.Security.AccessControl;
-using System.Net.Mail;
-using Microsoft.Win32;
-using System.Net;
-using System;
+﻿using System;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Net.NetworkInformation;
-using System.Xml.Linq;
-using System.Net.Sockets;
 using Microsoft.AspNetCore.Authorization;
-using System.ComponentModel.DataAnnotations;
-using System.Net.Mime;
-using System.Reflection.Metadata;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -23,7 +12,6 @@ using BoxBack.WebApi.Extensions;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.Enums;
 using BoxBack.Application.Interfaces;
@@ -137,6 +125,14 @@ namespace BoxBack.WebApi.EndPoints
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody]ClienteViewModel clienteViewModel)
         {
+            #region Validations required
+            if (string.IsNullOrEmpty(clienteViewModel.CNPJ))
+            {
+                AddError("Cnpj é requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
             #region Map
             var clienteMapped = new Cliente();
             try

@@ -14,13 +14,13 @@ namespace BoxBack.Application.ViewModels
 
         public string Id { get;set; } 
 
-        [Required(ErrorMessage = "Nome é requerido.")]
+        [Required(ErrorMessage = "\nNome é requerido.")]
         public string Name { get;set; }
 
         public string NormalizedName { get;set; }
         public string ConcurrencyStamp { get;set; }
 
-        [Required(ErrorMessage = "Descrição é requerida.")]
+        [Required(ErrorMessage = "\nDescrição é requerida.")]
         public string Description { get; set; }
     }
 }

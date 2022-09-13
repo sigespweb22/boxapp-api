@@ -13,11 +13,11 @@ namespace BoxBack.Application.ViewModels
     {
         public string Id { get;set; }
 
-        [Required(ErrorMessage = "Nome do grupo é requerido.")]
+        [Required(ErrorMessage = "\nNome do grupo é requerido.")]
         public string Name { get;set; } 
         public string Status { get; set; }
 
-        [Required, MinLength(1, ErrorMessage = "Ao menos uma permissão é requerida.")]
+        [Required, MinLength(1, ErrorMessage = "\nAo menos uma permissão é requerida.")]
         public List<string> ApplicationRoleGroups { get; set; }
         
         public List<string> ApplicationRoleGroupsNames { get; set; }
