@@ -83,12 +83,26 @@ namespace BoxBack.WebApi
                 loggingBuilder.AddDebug();
             });
 
+            
+
             // Add service and create Policy with options 
-            services.AddCors(options => { options.AddPolicy("CorsPolicy", 
-                                                  builder => builder.AllowAnyOrigin()
-                                                        .AllowAnyMethod() 
-                                                        .AllowAnyHeader()); 
-                                  }); 
+            services.AddCors(options => {
+                options.AddDefaultPolicy(
+                    options => 
+                    { 
+                        options.WithOrigins("http://localhost:3000",
+                                            "http://localhost:80",
+                                            "http://localhost:80/",
+                                            "http://localhost",
+                                            "http://177.93.105.56",
+                                            "http://177.93.105.56/",
+                                            "http://177.93.105.56:80/",
+                                            "http://177.93.105.56:80")
+                                                    .AllowAnyMethod() 
+                                                    .AllowAnyHeader();
+                    });
+            });
+
             services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -213,7 +227,7 @@ namespace BoxBack.WebApi
             // ----- Auth -----
             app.UseCustomizedAuth();
 
-            app.UseCors("CorsPolicy");
+            app.UseCors();
             app.UseSession();
 
             app.UseEndpoints(endpoints =>

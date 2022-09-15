@@ -1,15 +1,7 @@
-﻿using System.Net.Mail;
-using Microsoft.Win32;
-using System.Net;
-using System;
+﻿using System;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Net.NetworkInformation;
-using System.Xml.Linq;
-using System.Net.Sockets;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Mime;
 using System.Reflection.Metadata;
 using System.Collections.Generic;
 using System.Threading.Tasks;
