@@ -7,20 +7,15 @@ using BoxBack.Domain.Enums;
 using BoxBack.Domain.Models;
 using BoxBack.Application.ViewModels;
 
+
 namespace BoxBack.Application.ViewModels
 {
-    public class ApplicationRoleViewModel
+    public class PipelineViewModel
     {
-
-        public string Id { get;set; } 
+        public Guid? Id { get; set; }
 
         [Required(ErrorMessage = "\nNome é requerido.")]
-        public string Name { get;set; }
-
-        public string NormalizedName { get;set; }
-        public string ConcurrencyStamp { get;set; }
-
-        [Required(ErrorMessage = "\nDescrição é requerida.")]
-        public string Description { get; set; }
+        [StringLength(255, MinimumLength = 3, ErrorMessage = "\nNome deve possuir entre 3 e 255 caracteres.")]
+        public string Nome { get; set; }
     }
 }

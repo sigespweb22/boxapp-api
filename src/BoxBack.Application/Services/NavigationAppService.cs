@@ -24,6 +24,8 @@ namespace BoxBack.Application.Services
             var navigationSectionA = new VerticalNavItemViewModel();
             var navigationSectionB = new VerticalNavItemViewModel();
             var navigationB = new VerticalNavItemViewModel();
+            
+            var navigationSectionC = new VerticalNavItemViewModel();
 
             navigationA.Children = new List<Son>();
             navigationB.Children = new List<Son>();
@@ -123,13 +125,35 @@ namespace BoxBack.Application.Services
             };
             navigationC.Children.Add(oldestSonNB2);
 
+            var navigationD = new VerticalNavItemViewModel
+            {
+                Title = "Processos",
+                Icon = "LanguageRubyOnRails",
+                BadgeContent = "",
+                BadgeColor = "primary",
+                Children = new List<Son>()
+            };
+
+            var oldestSonNB3 = new Son
+            {
+                Title = "Pipelines",
+                Path = "/bussiness/processos/pipelines/list",
+                Action = "list",
+                Subject = "ac-projetos-pipelines-page"
+            };
+            navigationD.Children.Add(oldestSonNB3);
+
             await Task.Run(() => navigation.Add(navigationA));
+            
             navigationSectionA.SectionTitle = "SYSTEM";
             await Task.Run(() => navigation.Add(navigationSectionA));
             await Task.Run(() => navigation.Add(navigationB));
+            
             navigationSectionB.SectionTitle = "BUSSINESS";
             await Task.Run(() => navigation.Add(navigationSectionB));
             await Task.Run(() => navigation.Add(navigationC));
+
+            await Task.Run(() => navigation.Add(navigationD));
             #endregion
             
             return navigation.ToList();

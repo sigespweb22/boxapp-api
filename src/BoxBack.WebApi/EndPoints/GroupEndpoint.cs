@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.NetworkInformation;
