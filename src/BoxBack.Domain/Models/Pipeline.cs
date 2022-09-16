@@ -17,6 +17,9 @@ namespace BoxBack.Domain.Models
         public Pipeline() {}
 
         public string Nome { get; set; }
+        public string Etapa { get; set; }
+        public int Sequencia { get; set; }
+
 
         // Relationships
         [ForeignKey("TenantId")]

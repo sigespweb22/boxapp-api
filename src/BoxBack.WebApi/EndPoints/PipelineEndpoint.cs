@@ -66,10 +66,10 @@ namespace BoxBack.WebApi.EndPoints
             var pipelines = new List<Pipeline>();
             try
             {
-                pipelines = await _context.Users
-                                            .AsNoTracking()
-                                            .OrderBy(x => x.Nome)
-                                            .ToListAsync();
+                pipelines = await _context
+                                        .Pipelines
+                                        .OrderBy(x => x.Nome)
+                                        .ToListAsync();
                 if (pipelines.Count() <= 0)
                 {
                     AddError("Não encontrado.");
@@ -81,12 +81,12 @@ namespace BoxBack.WebApi.EndPoints
             
             #region Filter search
             if(!string.IsNullOrEmpty(q))
-                pipelines = pipelines.Where(x => x.nome.Contains(q.ToUpper())).ToList();
+                pipelines = pipelines.Where(x => x.Nome.Contains(q.ToUpper())).ToList();
             #endregion
 
             return Ok(new {
                 AllData = pipelines.ToList(),
-                Users = pipelines.ToList(),
+                Pipelines = pipelines.ToList(),
                 Params = q,
                 Total = pipelines.Count()
             });
@@ -119,7 +119,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Insert data
             try
             {
-                _context.Pipelines.Add(pipelineMap);
+                await _context.Pipelines.AddAsync(pipelineMap);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
@@ -159,7 +159,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 pipeline = await _context
                                     .Pipelines
-                                    .FindByIdAsync(id);
+                                    .FindAsync(id);
                 if (pipeline == null)
                 {
                     AddError("Pipeline não encontrado para deletar.");
@@ -172,7 +172,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Delete
             try
             {
-                await _context.Pipelines.Remove(pipeline);
+                _context.Pipelines.Remove(pipeline);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
