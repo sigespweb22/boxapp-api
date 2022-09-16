@@ -32,6 +32,7 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
             CreateMap<Ativo, AtivoViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
+            CreateMap<Pipeline, PipelineViewModel>();
         }
     }
 }

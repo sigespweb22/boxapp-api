@@ -44,6 +44,7 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<ClienteAtivo> ClientesAtivos { get; set; }
         public DbSet<Fornecedor> Fornecedores { get; set; }
         public DbSet<FornecedorSolucao> FornecedorSolucoes { get; set; }
+        public DbSet<Pipeline> Pipelines { get; set; }
         
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -69,6 +70,7 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new ClienteAtivoMap());
             modelBuilder.ApplyConfiguration(new FornecedorMap());
             modelBuilder.ApplyConfiguration(new FornecedorSolucaoMap());
+            modelBuilder.ApplyConfiguration(new PipelineMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
