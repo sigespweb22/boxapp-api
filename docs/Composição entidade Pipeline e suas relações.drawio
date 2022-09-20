@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-09-20T18:42:03.993Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="NpUZvdigyIBgBrxdjMPK" version="20.3.2" type="github">
+<mxfile host="app.diagrams.net" modified="2022-09-20T18:42:53.198Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="tid1mm2Rhx7hHKdDQ30x" version="20.3.2" type="github">
   <diagram id="mCMY_9giOVvZCnvrB829" name="Página-1">
     <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -82,10 +82,10 @@
         <mxCell id="3iS6mL4pUrMgzN117d-z-22" value="+ Nome: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="3iS6mL4pUrMgzN117d-z-21">
           <mxGeometry y="26" width="250" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="3iS6mL4pUrMgzN117d-z-23" value="+ field: type" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="3iS6mL4pUrMgzN117d-z-21">
+        <mxCell id="3iS6mL4pUrMgzN117d-z-23" value="+ ApplicationUser: ApplicationUser" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="3iS6mL4pUrMgzN117d-z-21">
           <mxGeometry y="52" width="250" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="3iS6mL4pUrMgzN117d-z-24" value="+ PipelineEtapa: PipelineEtapa" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="3iS6mL4pUrMgzN117d-z-21">
+        <mxCell id="3iS6mL4pUrMgzN117d-z-24" value="+ UserId: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="3iS6mL4pUrMgzN117d-z-21">
           <mxGeometry y="78" width="250" height="26" as="geometry" />
         </mxCell>
         <mxCell id="3iS6mL4pUrMgzN117d-z-25" value="+ PipelineEtapaId: PipelineEtapaId" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="3iS6mL4pUrMgzN117d-z-21">
