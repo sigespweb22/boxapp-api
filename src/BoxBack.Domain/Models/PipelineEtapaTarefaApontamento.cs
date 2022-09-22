@@ -6,10 +6,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BoxBack.Domain.Models
 {
-    public class PipelineEtapa : EntityAudit
+    public class PipelineEtapaTarefaApontamento : EntityAudit
     {        
-        public PipelineEtapa(string nome, string descricao, int posicao,
-                             int alertaEstagnacao)
+        public PipelineEtapaTarefaApontamento(string titulo, string descricao,
+                                              int posicao,
+                                              int alertaEstagnacao)
         {
             Nome = nome;
             Descricao = descricao;
@@ -18,12 +19,14 @@ namespace BoxBack.Domain.Models
         }
 
         // Constructor empty for EF
-        public PipelineEtapa() {}
+        public PipelineEtapaTarefaApontamento() {}
 
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public int Posicao { get; set; }
         public int AlertaEstagnacao { get; set; }
+        public DateTime DataConclusao { get; set; }
+        public TarefaTipoEnum Tipo { get; set; }
 
 
         // Relationships
@@ -33,6 +36,6 @@ namespace BoxBack.Domain.Models
 
         [ForeignKey("PipelineId")]
         public Guid PipelineId { get; set; }
-        public Pipeline Pipeline { get; set; }
+        public PipelineEnvolvido Pipeline { get; set; }
     }
 }

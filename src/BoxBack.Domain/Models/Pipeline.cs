@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System.Numerics;
 using System.Security.Cryptography;
 using System;
@@ -23,5 +24,9 @@ namespace BoxBack.Domain.Models
         [ForeignKey("TenantId")]
         public Guid TenantId { get; set; }
         public Tenant Tenant { get; set; }
+
+
+        public ICollection<PipelineEtapa> Etapas { get; set; }
+        public ICollection<PipelineEnvolvido> Envolvidos { get; set; }
     }
 }

@@ -3,13 +3,14 @@ using System.Security.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using BoxBack.Domain.Enums;
 
 namespace BoxBack.Domain.Models
 {
-    public class PipelineEtapa : EntityAudit
+    public class PipelineEtapaTarefa : EntityAudit
     {        
-        public PipelineEtapa(string nome, string descricao, int posicao,
-                             int alertaEstagnacao)
+        public PipelineEtapaTarefa(string nome, string descricao, int posicao,
+                                   int alertaEstagnacao)
         {
             Nome = nome;
             Descricao = descricao;
@@ -18,12 +19,14 @@ namespace BoxBack.Domain.Models
         }
 
         // Constructor empty for EF
-        public PipelineEtapa() {}
+        public PipelineEtapaTarefa() {}
 
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public int Posicao { get; set; }
         public int AlertaEstagnacao { get; set; }
+        public DateTime DataConclusao { get; set; }
+        public TarefaTipoEnum Tipo { get; set; }
 
 
         // Relationships
@@ -33,6 +36,6 @@ namespace BoxBack.Domain.Models
 
         [ForeignKey("PipelineId")]
         public Guid PipelineId { get; set; }
-        public Pipeline Pipeline { get; set; }
+        public PipelineEnvolvido Pipeline { get; set; }
     }
 }
