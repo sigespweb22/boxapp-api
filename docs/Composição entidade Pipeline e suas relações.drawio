@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-09-22T19:11:42.357Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="PtvLX9ocrqu7P5RnCTr6" version="20.3.6" type="github">
+<mxfile host="app.diagrams.net" modified="2022-09-22T19:16:16.359Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="rM0Nue63xqRN1eibJTxP" version="20.3.6" type="github">
   <diagram id="mCMY_9giOVvZCnvrB829" name="Página-1">
-    <mxGraphModel dx="1497" dy="883" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="81" dy="48" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -74,22 +74,22 @@
           <mxGeometry y="182" width="360" height="26" as="geometry" />
         </mxCell>
         <mxCell id="cCK26V0O97NR6bV3gjjq-8" value="PipelineEtapaTarefaAssinante" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#d5e8d4;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="400" y="47" width="350" height="156" as="geometry" />
+          <mxGeometry x="400" y="47" width="360" height="156" as="geometry" />
         </mxCell>
         <mxCell id="cCK26V0O97NR6bV3gjjq-9" value="+ Tipo: EnvolvidoTipoEnum" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="cCK26V0O97NR6bV3gjjq-8">
-          <mxGeometry y="26" width="350" height="26" as="geometry" />
+          <mxGeometry y="26" width="360" height="26" as="geometry" />
         </mxCell>
         <mxCell id="cCK26V0O97NR6bV3gjjq-10" value="+ UserId: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="cCK26V0O97NR6bV3gjjq-8">
-          <mxGeometry y="52" width="350" height="26" as="geometry" />
+          <mxGeometry y="52" width="360" height="26" as="geometry" />
         </mxCell>
         <mxCell id="cCK26V0O97NR6bV3gjjq-11" value="+ ApplicationUser: ApplicationUser" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="cCK26V0O97NR6bV3gjjq-8">
-          <mxGeometry y="78" width="350" height="26" as="geometry" />
+          <mxGeometry y="78" width="360" height="26" as="geometry" />
         </mxCell>
         <mxCell id="cCK26V0O97NR6bV3gjjq-12" value="+ PipelineEtapaTarefaId: Guid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="cCK26V0O97NR6bV3gjjq-8">
-          <mxGeometry y="104" width="350" height="26" as="geometry" />
+          <mxGeometry y="104" width="360" height="26" as="geometry" />
         </mxCell>
         <mxCell id="cCK26V0O97NR6bV3gjjq-13" value="+ PipelineEtapaTarefa: PipelineEtapaTarefa" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="cCK26V0O97NR6bV3gjjq-8">
-          <mxGeometry y="130" width="350" height="26" as="geometry" />
+          <mxGeometry y="130" width="360" height="26" as="geometry" />
         </mxCell>
         <mxCell id="cCK26V0O97NR6bV3gjjq-15" value="PipelineEtapaTarefaAnexo" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#d5e8d4;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="760" y="730" width="400" height="156" as="geometry" />
@@ -136,9 +136,9 @@
             <mxPoint x="340" y="440" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="cCK26V0O97NR6bV3gjjq-32" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.517;exitY=0.972;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="cCK26V0O97NR6bV3gjjq-13" target="OwOinGCJCFfBMkcLL602-11">
+        <mxCell id="cCK26V0O97NR6bV3gjjq-32" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1.015;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="cCK26V0O97NR6bV3gjjq-13" target="OwOinGCJCFfBMkcLL602-11">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="280" y="660" as="sourcePoint" />
+            <mxPoint x="580" y="210" as="sourcePoint" />
             <mxPoint x="560" y="370" as="targetPoint" />
           </mxGeometry>
         </mxCell>
