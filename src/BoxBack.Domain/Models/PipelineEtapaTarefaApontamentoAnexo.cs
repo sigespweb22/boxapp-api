@@ -14,7 +14,6 @@ namespace BoxBack.Domain.Models
             Anexo = anexo;
         }
 
-
         // Constructor empty for EF
         public PipelineEtapaTarefaApontamentoAnexo() {}
 
@@ -25,4 +24,4 @@ namespace BoxBack.Domain.Models
         public Guid PipelineEtapaTarefaApontamentoId { get; set; }
         public PipelineEtapaTarefaApontamento PipelineEtapaTarefaApontamento { get; set; }
     }
-} 
+}
