@@ -6,15 +6,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using BoxBack.Domain.Enums;
 namespace BoxBack.Domain.Models
 {
-    public class PipelineAssinante : EntityAudit
+    public class PipelineEtapaTarefaAssinante : EntityAudit
     {        
-        public PipelineAssinante(AssinaturaTipoEnum tipo)
+        public PipelineEtapaTarefaAssinante(AssinaturaTipoEnum tipo)
         {
             Tipo = tipo;
         }
 
         // Constructor empty for EF
-        public PipelineAssinante() {}
+        public PipelineEtapaTarefaAssinante() {}
 
         public AssinaturaTipoEnum Tipo { get; set; }
 
@@ -23,8 +23,8 @@ namespace BoxBack.Domain.Models
         public Guid UserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
-        [ForeignKey("PipelineId")]
-        public Guid PipelineId { get; set; }
-        public Pipeline Pipeline { get; set; }
+        [ForeignKey("PipelineEtapaTarefaId")]
+        public Guid PipelineEtapaTarefaId { get; set; }
+        public PipelineEtapaTarefa PipelineEtapaTarefa { get; set; }
     }
 }

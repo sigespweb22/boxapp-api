@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BoxBack.Domain.Enums
 {
-    public enum EnvolvidoTipoEnum
+    public enum AssinaturaTipoEnum
     {
         [Display(Name = "Responsável")]
         RESPONSAVEL = 1,

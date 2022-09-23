@@ -9,13 +9,15 @@ namespace BoxBack.Domain.Models
 {
     public class PipelineEtapaTarefa : EntityAudit
     {        
-        public PipelineEtapaTarefa(string nome, string descricao, int posicao,
-                                   int alertaEstagnacao)
+        public PipelineEtapaTarefa(string nome, string descricao,
+                                   int posicao, DateTime dataConclusao,
+                                   TarefaTipoEnum tipo)
         {
             Nome = nome;
             Descricao = descricao;
             Posicao = posicao;
-            AlertaEstagnacao = alertaEstagnacao;
+            DataConclusao = dataConclusao;
+            Tipo = tipo;
         }
 
         // Constructor empty for EF
@@ -24,18 +26,18 @@ namespace BoxBack.Domain.Models
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public int Posicao { get; set; }
-        public int AlertaEstagnacao { get; set; }
         public DateTime DataConclusao { get; set; }
         public TarefaTipoEnum Tipo { get; set; }
 
-
+ 
         // Relationships
-        [ForeignKey("TenantId")]
-        public Guid TenantId { get; set; }
-        public Tenant Tenant { get; set; }
+        [ForeignKey("PipelineEtapaId")]
+        public Guid PipelineEtapaId { get; set; }
+        public PipelineEtapa PipelineEtapa { get; set; }
 
-        [ForeignKey("PipelineId")]
-        public Guid PipelineId { get; set; }
-        public PipelineEnvolvido Pipeline { get; set; }
+        public ICollection<PipelineEtapaTarefaAssinante> Assinantes { get; set; }
+        public ICollection<PipelineEtapaTarefaApontamento> Apontamentos { get; set; }
+        public ICollection<PipelineEtapaTarefaAnexo> Anexos { get; set; }
+        public ICollection<PipelineEtapaTarefaTag> Tags { get; set; }
     }
 }

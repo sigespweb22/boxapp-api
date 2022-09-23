@@ -27,12 +27,10 @@ namespace BoxBack.Domain.Models
 
 
         // Relationships
-        [ForeignKey("TenantId")]
-        public Guid TenantId { get; set; }
-        public Tenant Tenant { get; set; }
-
         [ForeignKey("PipelineId")]
         public Guid PipelineId { get; set; }
         public Pipeline Pipeline { get; set; }
+
+        public ICollection<PipelineEtapaTarefa> Tarefas { get; set; }
     }
 }
