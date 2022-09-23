@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-09-23T16:28:06.166Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="FuvlzzyhJmdBr_pAwtC9" version="20.3.6" type="github">
+<mxfile host="app.diagrams.net" modified="2022-09-23T19:29:45.442Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="dFlBsQuHt2OpXN7rvKyQ" version="20.3.6" type="github">
   <diagram id="mCMY_9giOVvZCnvrB829" name="Página-1">
     <mxGraphModel dx="1673" dy="987" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -273,6 +273,9 @@
         </mxCell>
         <mxCell id="H3xtkwW3zXFm_be-r_Wi-52" value="+ PipelineEtapaTarefaApontamento: PipelineEtapaTarefaApontamento" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="H3xtkwW3zXFm_be-r_Wi-48">
           <mxGeometry y="104" width="390" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="H3xtkwW3zXFm_be-r_Wi-55" value="Text" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="140" width="40" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
