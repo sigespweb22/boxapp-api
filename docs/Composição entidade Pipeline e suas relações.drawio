@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-09-23T13:20:28.187Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="_Ws68NKto1KDmup6dJ-I" version="20.3.6" type="github">
+<mxfile host="app.diagrams.net" modified="2022-09-23T13:21:16.782Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" etag="MwmxkKDQRovuyzqAp5PP" version="20.3.6" type="github">
   <diagram id="mCMY_9giOVvZCnvrB829" name="Página-1">
-    <mxGraphModel dx="343" dy="202" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1673" dy="987" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -197,7 +197,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="H3xtkwW3zXFm_be-r_Wi-22" value="PipelineEtapaTarefaTag" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#d5e8d4;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="830" y="320" width="390" height="104" as="geometry" />
+          <mxGeometry x="830" y="320" width="390" height="130" as="geometry" />
         </mxCell>
         <mxCell id="H3xtkwW3zXFm_be-r_Wi-23" value="+ TarefaTagId: Guid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="H3xtkwW3zXFm_be-r_Wi-22">
           <mxGeometry y="26" width="390" height="26" as="geometry" />
@@ -207,6 +207,9 @@
         </mxCell>
         <mxCell id="H3xtkwW3zXFm_be-r_Wi-25" value="+ PipelineEtapaTarefaId: Guid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="H3xtkwW3zXFm_be-r_Wi-22">
           <mxGeometry y="78" width="390" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="H3xtkwW3zXFm_be-r_Wi-36" value="+ PipelineEtapaTarefa: PipelineEtapaTarefa" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="H3xtkwW3zXFm_be-r_Wi-22">
+          <mxGeometry y="104" width="390" height="26" as="geometry" />
         </mxCell>
         <mxCell id="H3xtkwW3zXFm_be-r_Wi-28" value="TarefaTag" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#d5e8d4;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="1280" y="320" width="390" height="104" as="geometry" />
@@ -224,6 +227,12 @@
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="769.6399999999999" y="506.23" as="sourcePoint" />
             <mxPoint x="850" y="621" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3xtkwW3zXFm_be-r_Wi-37" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="H3xtkwW3zXFm_be-r_Wi-24" target="H3xtkwW3zXFm_be-r_Wi-30">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="770" y="505.4760000000001" as="sourcePoint" />
+            <mxPoint x="839.6100000000001" y="383.222" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
