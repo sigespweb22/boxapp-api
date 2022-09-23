@@ -30,7 +30,7 @@ namespace BoxBack.Domain.Models
         [ForeignKey("PipelineId")]
         public Guid PipelineId { get; set; }
         public Pipeline Pipeline { get; set; }
-
+        
         public ICollection<PipelineEtapaTarefa> Tarefas { get; set; }
     }
 }

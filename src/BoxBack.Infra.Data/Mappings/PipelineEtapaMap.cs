@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BoxBack.Infra.Data.Mappings
 {
-    public class PipelineMap : IEntityTypeConfiguration<Pipeline>
+    public class PipelineEtapaMap : IEntityTypeConfiguration<PipelineEtapa>
     {
-        public void Configure(EntityTypeBuilder<Pipeline> builder)
+        public void Configure(EntityTypeBuilder<PipelineEtapa> builder)
         {
-            builder.ToTable("Pipelines");
+            builder.ToTable("PipelineEtapas");
 
             builder.HasKey(c => c.Id);
 
@@ -22,21 +22,27 @@ namespace BoxBack.Infra.Data.Mappings
             builder.Property(c => c.Nome)
                 .IsRequired()
                 .HasMaxLength(255);
-
-            //Relationships
             
-            builder.Property(c => c.TenantId)
-                .HasDefaultValue(new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"))
+            builder.Property(c => c.Descricao)
+                .IsRequired()
+                .HasMaxLength(1500);
+            
+            builder.Property(c => c.Posicao)
                 .IsRequired();
             
+            builder.Property(c => c.AlertaEstagnacao)
+                .IsRequired(false);
+
+            //Relationships
             builder
-                .HasOne(c => c.PipelineEtapa)
+                .HasOne(c => c.Pipeline)
                 .WithMany(c => c.Etapas)
+                .ForeignKey(c => c.PipelineId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
+
             builder
-                .HasOne(c => c.PipelineAssinante)
-                .WithMany(c => c.Assinantes)
+                .WithMany(c => c.Tarefas)
+                .HasOne(c => c.PipelineEtapa)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }

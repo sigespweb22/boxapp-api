@@ -8,14 +8,16 @@ namespace BoxBack.Domain.Models
 {
     public class PipelineAssinante : EntityAudit
     {        
-        public PipelineAssinante(AssinaturaTipoEnum tipo)
+        public PipelineAssinante(string fullName, AssinaturaTipoEnum tipo)
         {
+            FullName = fullName;
             Tipo = tipo;
         }
 
         // Constructor empty for EF
         public PipelineAssinante() {}
 
+        public string FullName { get; set; }
         public AssinaturaTipoEnum Tipo { get; set; }
 
         // Relationships

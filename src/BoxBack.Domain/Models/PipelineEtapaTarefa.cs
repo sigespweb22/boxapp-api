@@ -9,11 +9,11 @@ namespace BoxBack.Domain.Models
 {
     public class PipelineEtapaTarefa : EntityAudit
     {        
-        public PipelineEtapaTarefa(string nome, string descricao,
+        public PipelineEtapaTarefa(string titulo, string descricao,
                                    int posicao, DateTime dataConclusao,
                                    TarefaTipoEnum tipo)
         {
-            Nome = nome;
+            Titulo = titulo;
             Descricao = descricao;
             Posicao = posicao;
             DataConclusao = dataConclusao;
@@ -23,7 +23,7 @@ namespace BoxBack.Domain.Models
         // Constructor empty for EF
         public PipelineEtapaTarefa() {}
 
-        public string Nome { get; set; }
+        public string Titulo { get; set; }
         public string Descricao { get; set; }
         public int Posicao { get; set; }
         public DateTime DataConclusao { get; set; }

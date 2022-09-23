@@ -8,7 +8,15 @@ using BoxBack.Domain.Enums;
 namespace BoxBack.Domain.Models
 {
     public class PipelineEtapaTarefaTag : EntityAudit
-    {        
+    {   
+        public PipelineEtapaTarefaTag(string Nome) 
+        {
+            Nome = nome;
+        }
+
+
+        public string Nome { get; set; }
+
         // Constructor empty for EF
         public PipelineEtapaTarefaTag() {}
 

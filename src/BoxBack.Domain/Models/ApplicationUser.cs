@@ -41,6 +41,6 @@ namespace BoxBack.Domain.Models
         public virtual ICollection<ApplicationUserClaim> ApplicationUserClaims { get; set; }
         public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
         public virtual ICollection<ApplicationUserGroup> ApplicationUserGroups { get; set; }
-        public virtual ICollection<Pipeline> Pipelines { get; set; }
+        public virtual ICollection<PipelineAssinante> Assinantes { get; set; }
     }
 }
