@@ -8,19 +8,21 @@ namespace BoxBack.Domain.Models
 {
     public class PipelineEtapaTarefaAssinante : EntityAudit
     {        
-        public PipelineEtapaTarefaAssinante(AssinaturaTipoEnum tipo)
+        public PipelineEtapaTarefaAssinante(string fullName, AssinaturaTipoEnum tipo)
         {
+            FullName = fullName;
             Tipo = tipo;
         }
 
         // Constructor empty for EF
         public PipelineEtapaTarefaAssinante() {}
 
+        public string FullName { get; set; }
         public AssinaturaTipoEnum Tipo { get; set; }
 
         // Relationships
         [ForeignKey("UserId")]
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
         [ForeignKey("PipelineEtapaTarefaId")]

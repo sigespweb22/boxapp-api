@@ -9,11 +9,10 @@ namespace BoxBack.Domain.Models
 {
     public class PipelineEtapaTarefaTag : EntityAudit
     {   
-        public PipelineEtapaTarefaTag(string Nome) 
+        public PipelineEtapaTarefaTag(string nome) 
         {
             Nome = nome;
         }
-
 
         public string Nome { get; set; }
 
@@ -21,12 +20,13 @@ namespace BoxBack.Domain.Models
         public PipelineEtapaTarefaTag() {}
 
         // Relationships
-        [ForeignKey("TarefaTagId")]
-        public Guid TarefaTagId { get; set; }
-        public TarefaTag TarefaTag { get; set; }
-
         [ForeignKey("PipelineEtapaTarefaId")]
         public Guid PipelineEtapaTarefaId { get; set; }
         public PipelineEtapaTarefa PipelineEtapaTarefa { get; set; }
+        
+
+        [ForeignKey("TarefaTagId")]
+        public Guid TarefaTagId { get; set; }
+        public TarefaTag TarefaTag { get; set; }
     }
 }

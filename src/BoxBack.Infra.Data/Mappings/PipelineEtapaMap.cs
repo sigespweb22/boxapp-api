@@ -31,19 +31,20 @@ namespace BoxBack.Infra.Data.Mappings
                 .IsRequired();
             
             builder.Property(c => c.AlertaEstagnacao)
-                .IsRequired(false);
+                .HasDefaultValue(0)
+                .IsRequired();
 
             //Relationships
             builder
                 .HasOne(c => c.Pipeline)
                 .WithMany(c => c.Etapas)
-                .ForeignKey(c => c.PipelineId)
+                .HasForeignKey(c => c.PipelineId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
-                .WithMany(c => c.Tarefas)
-                .HasOne(c => c.PipelineEtapa)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasIndex(c => c.PipelineId)
+                .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
+                .IsUnique(false);
         }
     }
 }

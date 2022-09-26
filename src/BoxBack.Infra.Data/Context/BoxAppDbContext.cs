@@ -45,6 +45,15 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<Fornecedor> Fornecedores { get; set; }
         public DbSet<FornecedorSolucao> FornecedorSolucoes { get; set; }
         public DbSet<Pipeline> Pipelines { get; set; }
+        public DbSet<PipelineEtapa> PipelineEtapas { get; set; }
+        public DbSet<PipelineAssinante> PipelineAssinantes { get; set; }
+        public DbSet<PipelineEtapaTarefa> PipelineEtapaTarefas { get; set; }
+        public DbSet<PipelineEtapaTarefaApontamento> PipelineEtapaTarefaApontamentos { get; set; }
+        public DbSet<PipelineEtapaTarefaAssinante> PipelineEtapaTarefaAssinantes { get; set; }
+        public DbSet<PipelineEtapaTarefaTag> PipelineEtapaTarefaTags { get; set; }
+        public DbSet<PipelineEtapaTarefaAnexo> PipelineEtapaTarefaAnexos { get; set; }
+        public DbSet<PipelineEtapaTarefaApontamentoAnexo> PipelineEtapaTarefaApontamentoAnexos { get; set; }
+        public DbSet<TarefaTag> TarefaTags { get; set; }
         
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -71,6 +80,15 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new FornecedorMap());
             modelBuilder.ApplyConfiguration(new FornecedorSolucaoMap());
             modelBuilder.ApplyConfiguration(new PipelineMap());
+            modelBuilder.ApplyConfiguration(new PipelineEtapaMap());
+            modelBuilder.ApplyConfiguration(new PipelineAssinanteMap());
+            modelBuilder.ApplyConfiguration(new PipelineEtapaTarefaMap());
+            modelBuilder.ApplyConfiguration(new PipelineEtapaTarefaApontamentoMap());
+            modelBuilder.ApplyConfiguration(new PipelineEtapaTarefaAssinanteMap());
+            modelBuilder.ApplyConfiguration(new PipelineEtapaTarefaTagMap());
+            modelBuilder.ApplyConfiguration(new PipelineEtapaTarefaAnexoMap());
+            modelBuilder.ApplyConfiguration(new PipelineEtapaTarefaApontamentoAnexoMap());
+            modelBuilder.ApplyConfiguration(new TarefaTagMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

@@ -7,43 +7,48 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BoxBack.Infra.Data.Mappings
 {
-    public class PipelineEtapaTarefaTagMap : IEntityTypeConfiguration<PipelineEtapaTarefaTag>
+    public class PipelineEtapaTarefaAssinanteMap : IEntityTypeConfiguration<PipelineEtapaTarefaAssinante>
     {
-        public void Configure(EntityTypeBuilder<PipelineEtapaTarefaTag> builder)
+        public void Configure(EntityTypeBuilder<PipelineEtapaTarefaAssinante> builder)
         {
-            builder.ToTable("PipelineEtapaTarefaTags");
+            builder.ToTable("PipelineEtapaTarefaAssinantes");
 
-           builder.HasKey(c => new { c.TarefaTagId, c.PipelineEtapaTarefaId });
+            builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Id)
                 .HasColumnName("Id")
                 .ValueGeneratedOnAdd();
 
-            builder.Property(c => c.Nome)
+            builder.Property(c => c.FullName)
                 .IsRequired()
                 .HasMaxLength(255);
             
             //Relationships
-            
             builder
-                .HasOne(c => c.PipelineEtapaTarefa)
-                .WithMany(c => c.EtapaTarefaTags)
-                .HasForeignKey(c => c.PipelineEtapaTarefaId)
+                .HasOne(c => c.ApplicationUser)
+                .WithMany(c => c.TarefaAssinantes)
+                .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
-                .HasOne(c => c.TarefaTag)
-                .WithMany(c => c.TarefaTags)
-                .HasForeignKey(c => c.TarefaTagId)
+                .HasOne(c => c.PipelineEtapaTarefa)
+                .WithMany(c => c.TarefaAssinantes)
+                .HasForeignKey(c => c.UserId)
+                .HasForeignKey(c => c.PipelineEtapaTarefaId)
                 .OnDelete(DeleteBehavior.NoAction);
             
             builder
-                .HasIndex(c => c.PipelineEtapaTarefaId)
+                .HasOne(c => c.ApplicationUser)
+                .WithMany(c => c.TarefaAssinantes)
+                .OnDelete(DeleteBehavior.NoAction);
+            
+            builder
+                .HasIndex(c => c.UserId)
                 .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
                 .IsUnique(false);
             
             builder
-                .HasIndex(c => c.TarefaTagId)
+                .HasIndex(c => c.PipelineEtapaTarefaId)
                 .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
                 .IsUnique(false);
         }

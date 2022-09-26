@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using BoxBack.Domain.Enums;
+using BoxBack.Domain.Models;
+
 namespace BoxBack.Domain.Models
 {
     public class PipelineAssinante : EntityAudit
@@ -22,7 +24,7 @@ namespace BoxBack.Domain.Models
 
         // Relationships
         [ForeignKey("UserId")]
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
         [ForeignKey("PipelineId")]

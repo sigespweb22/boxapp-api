@@ -27,14 +27,29 @@ namespace BoxBack.Infra.Data.Mappings
             builder
                 .HasOne(c => c.ApplicationUser)
                 .WithMany(c => c.Assinantes)
-                .ForeignKey(c => c.UserId)
+                .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasOne(c => c.Pipeline)
                 .WithMany(c => c.Assinantes)
-                .ForeignKey(c => c.PipelineId)
+                .HasForeignKey(c => c.PipelineId)
                 .OnDelete(DeleteBehavior.NoAction);
+            
+            builder
+                .HasOne(c => c.ApplicationUser)
+                .WithMany(c => c.Assinantes)
+                .OnDelete(DeleteBehavior.NoAction);
+        
+            builder
+                .HasIndex(c => c.UserId)
+                .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
+                .IsUnique(false);
+            
+            builder
+                .HasIndex(c => c.PipelineId)
+                .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
+                .IsUnique(false);
         }
     }
 }

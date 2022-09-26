@@ -33,34 +33,13 @@ namespace BoxBack.Infra.Data.Mappings
             builder
                 .HasOne(c => c.PipelineEtapa)
                 .WithMany(c => c.Tarefas)
-                .ForeignKey(c => c.PipelineEtapaId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .HasOne(c => c.Pipeline)
-                .WithMany(c => c.Assinantes)
-                .ForeignKey(c => c.PipelineId)
+                .HasForeignKey(c => c.PipelineEtapaId)
                 .OnDelete(DeleteBehavior.NoAction);
             
             builder
-                .HasOne(c => c.PipelineEtapaTarefa)
-                .WithMany(c => c.Assinantes)
-                .OnDelete(DeleteBehavior.NoAction);
-            
-            builder
-                .HasOne(c => c.PipelineEtapaTarefaApontamento)
-                .WithMany(c => c.Apontamentos)
-                .OnDelete(DeleteBehavior.NoAction);
-            
-            builder
-                .HasOne(c => c.PipelineEtapaTarefaAnexo)
-                .WithMany(c => c.Anexos)
-                .OnDelete(DeleteBehavior.NoAction);
-            
-            builder
-                .HasOne(c => c.PipelineEtapaTarefaTag)
-                .WithMany(c => c.Tags)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasIndex(c => c.PipelineEtapaId)
+                .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
+                .IsUnique(false);
         }
     }
 }

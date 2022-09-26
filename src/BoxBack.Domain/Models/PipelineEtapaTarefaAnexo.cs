@@ -24,10 +24,5 @@ namespace BoxBack.Domain.Models
         [ForeignKey("PipelineEtapaTarefaId")]
         public Guid PipelineEtapaTarefaId { get; set; }
         public PipelineEtapaTarefa PipelineEtapaTarefa { get; set; }
-        
-
-        [ForeignKey("PipelineEtapaTarefaApontamentoId")]
-        public Guid? PipelineEtapaTarefaApontamentoId { get; set; }
-        public PipelineEtapaTarefaApontamento PipelineEtapaTarefaApontamento { get; set; }
     }
 }

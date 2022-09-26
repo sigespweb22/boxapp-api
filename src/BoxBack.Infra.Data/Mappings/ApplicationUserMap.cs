@@ -1,3 +1,4 @@
+using System.Dynamic;
 using System;
 using BoxBack.Domain.Models;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,18 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasOne(c => c.Tenant)
                 .WithMany(c => c.ApplicationUsers)
                 .HasForeignKey(c => c.TenantId)
+                .OnDelete(DeleteBehavior.NoAction);
+            
+            builder
+                .HasMany(c => c.Assinantes)
+                .WithOne(c => c.ApplicationUser)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+            
+            builder
+                .HasMany(c => c.TarefaAssinantes)
+                .WithOne(c => c.ApplicationUser)
+                .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
             
             builder
