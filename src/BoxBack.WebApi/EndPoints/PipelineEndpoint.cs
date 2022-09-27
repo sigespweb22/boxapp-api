@@ -84,11 +84,20 @@ namespace BoxBack.WebApi.EndPoints
                 pipelines = pipelines.Where(x => x.Nome.Contains(q.ToUpper())).ToList();
             #endregion
 
+            #region Map
+            IEnumerable<PipelineViewModel> pipelineMap = new List<PipelineViewModel>();
+            try
+            {
+                pipelineMap = _mapper.Map<IEnumerable<PipelineViewModel>>(pipelines);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
             return Ok(new {
-                AllData = pipelines.ToList(),
-                Pipelines = pipelines.ToList(),
+                AllData = pipelineMap.ToList(),
+                Pipelines = pipelineMap.ToList(),
                 Params = q,
-                Total = pipelines.Count()
+                Total = pipelineMap.Count()
             });
         }
 
