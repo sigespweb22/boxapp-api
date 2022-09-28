@@ -17,5 +17,10 @@ namespace BoxBack.Application.ViewModels
         [Required(ErrorMessage = "\nNome é requerido.")]
         [StringLength(255, MinimumLength = 3, ErrorMessage = "\nNome deve possuir entre 3 e 255 caracteres.")]
         public string Nome { get; set; }
+        public int TotalTarefas { get; set; }
+        public int TotalTarefasConcluidas { get; set; }
+        public int TotalAssinantes { get; set; }
+        public List<string> Avatars { get; set; }
+
     }
 }

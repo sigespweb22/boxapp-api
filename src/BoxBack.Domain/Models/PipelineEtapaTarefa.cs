@@ -28,6 +28,7 @@ namespace BoxBack.Domain.Models
         public int Posicao { get; set; }
         public DateTime DataConclusao { get; set; }
         public TarefaTipoEnum Tipo { get; set; }
+        public TarefaStatusEnum Status { get; set; }
 
  
         // Relationships

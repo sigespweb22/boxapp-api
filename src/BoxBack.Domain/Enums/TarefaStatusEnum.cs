@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BoxBack.Domain.Enums
 {
-    public enum TarefaEtapaEnum
+    public enum TarefaStatusEnum
     {
         [Display(Name = "Pendente")]
         PENDENTE = 0,
