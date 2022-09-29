@@ -21,6 +21,6 @@ namespace BoxBack.Application.ViewModels
         public int TotalTarefasConcluidas { get; set; }
         public int TotalAssinantes { get; set; }
         public List<string> Avatars { get; set; }
-
+        public List<string> Assinantes { get; set; }
     }
 }

@@ -119,6 +119,56 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
+        /// Lista todos os usuários ativos
+        /// </summary>s
+        /// <param name="q"></param>
+        /// <returns>Um json com os usuários ativos</returns>
+        /// <response code="200">Lista de usuários ativos</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Lista vazia</response>
+        [Authorize(Roles = "Master, CanUserListToSelect, CanUserAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Route("list-to-select")] 
+        [HttpGet]
+        public async Task<IActionResult> ListToSelectAsync(string q)
+        {
+            #region Get data
+            var users = new List<Generic2Select2ViewModel>();
+            var usersDB = new List<ApplicationUser>();
+            try
+            {
+                usersDB = await _manager.Users.ToListAsync();
+                if (usersDB == null)
+                {
+                    AddError("Não encontrado");
+                    return CustomResponse(404);
+                }
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            #region Map
+            try
+            {
+                foreach(var user in usersDB)
+                {
+                    var tmp = new Generic2Select2ViewModel()
+                    {
+                        Id = user.Id.ToString(),
+                        Name = user.FullName
+                    };
+                    users.Add(tmp);
+                }
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            return Ok(users);
+        }
+
+        /// <summary>
         /// Cria um usuário
         /// </summary>
         /// <param name="applicationUserViewModel"></param>
