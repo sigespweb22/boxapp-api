@@ -43,12 +43,10 @@ namespace BoxBack.Infra.Data.Mappings
         
             builder
                 .HasIndex(c => c.UserId)
-                .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
                 .IsUnique(false);
             
             builder
                 .HasIndex(c => c.PipelineId)
-                .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
                 .IsUnique(false);
         }
     }

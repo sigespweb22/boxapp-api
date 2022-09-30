@@ -69,10 +69,9 @@ namespace BoxBack.WebApi.EndPoints
                 pipelines = await _context
                                         .Pipelines
                                         .Include(x => x.Assinantes)
+                                        .ThenInclude(x => x.ApplicationUser)
                                         .Include(x => x.Etapas)
                                         .ThenInclude(x => x.Tarefas)
-                                        .ThenInclude(x => x.TarefaAssinantes)
-                                        .ThenInclude(x => x.ApplicationUser)
                                         .OrderBy(x => x.Nome)
                                         .ToListAsync();
                 if (pipelines.Count() <= 0)
