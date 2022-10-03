@@ -72,7 +72,7 @@ namespace BoxBack.WebApi.EndPoints
                                         .ThenInclude(x => x.ApplicationUser)
                                         .Include(x => x.Etapas)
                                         .ThenInclude(x => x.Tarefas)
-                                        .OrderBy(x => x.Nome)
+                                        .OrderBy(x => x.Posicao)
                                         .ToListAsync();
                 if (pipelines.Count() <= 0)
                 {

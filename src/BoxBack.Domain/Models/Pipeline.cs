@@ -19,6 +19,7 @@ namespace BoxBack.Domain.Models
         public Pipeline() {}
 
         public string Nome { get; set; }
+        public int Posicao { get; set; }
 
 
         // Relationships
