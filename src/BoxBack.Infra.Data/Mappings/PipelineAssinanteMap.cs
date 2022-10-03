@@ -47,6 +47,7 @@ namespace BoxBack.Infra.Data.Mappings
             
             builder
                 .HasIndex(c => c.PipelineId)
+                // .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
                 .IsUnique(false);
         }
     }

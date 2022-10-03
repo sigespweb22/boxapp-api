@@ -68,7 +68,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 pipelines = await _context
                                         .Pipelines
-                                        .Include(x => x.Assinantes)
+                                        .Include(x => x.Assinantes.Where(x => x.IsDeleted == false))
                                         .ThenInclude(x => x.ApplicationUser)
                                         .Include(x => x.Etapas)
                                         .ThenInclude(x => x.Tarefas)
@@ -139,6 +139,79 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             return CustomResponse(201);
+        }
+
+        /// <summary>
+        /// Atualiza um pipeline
+        /// </summary>
+        /// <param name="pipelineViewModel"></param>
+        /// <returns>True se atualizada com sucesso</returns>
+        /// <response code="204">Atualizada com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        [Authorize(Roles = "Master, CanPipelineUpdate, CanPipelineAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Produces("application/json")]
+        [Route("update")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromBody]PipelineViewModel pipelineViewModel)
+        {
+            #region Required validations
+            if (pipelineViewModel.Id == null ||
+                pipelineViewModel.Id == Guid.Empty)
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data for update
+            var pipelineDB = new Pipeline();
+            try
+            {
+                pipelineDB = await _context
+                                    .Pipelines
+                                    .Include(x => x.Assinantes)
+                                    .FirstOrDefaultAsync(x => x.Id == pipelineViewModel.Id);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (pipelineDB == null)
+            {
+                AddError("Pipeline não encontrada para atualizar.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            #region Assinantes remove
+            _context.PipelineAssinantes.RemoveRange(pipelineDB.Assinantes);
+            #endregion
+
+            #region Map
+            var pipelineMap = new Pipeline();
+            try
+            {
+                pipelineMap = _mapper.Map<PipelineViewModel, Pipeline>(pipelineViewModel, pipelineDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Update pipeline
+            try
+            {
+                _context.Pipelines.Update(pipelineMap);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            #region Check to result
+            try
+            {
+                await _unitOfWork.CommitAsync(); 
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            return CustomResponse(204);
         }
 
         /// <summary>
