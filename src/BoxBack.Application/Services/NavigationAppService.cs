@@ -139,7 +139,7 @@ namespace BoxBack.Application.Services
                 Title = "Pipelines",
                 Path = "/bussiness/processos/pipelines/list",
                 Action = "list",
-                Subject = "ac-projetos-pipelines-page"
+                Subject = "ac-pipeline-page"
             };
             navigationD.Children.Add(oldestSonNB3);
 
