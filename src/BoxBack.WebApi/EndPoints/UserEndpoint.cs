@@ -263,6 +263,93 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
+        /// Atualiza um usuário
+        /// </summary>
+        /// <param name="applicationUserViewModel"></param>
+        /// <returns>True se atualizada com sucesso</returns>
+        /// <response code="204">Atualizada com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        [Authorize(Roles = "Master, CanUserUpdate, CanUserAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Produces("application/json")]
+        [Route("update")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromBody]ApplicationUserViewModel applicationUserViewModel)
+        {
+            #region Required validations
+            if (string.IsNullOrEmpty(applicationUserViewModel.Id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data for update
+            var userDB = new ApplicationUser();
+            try
+            {
+                userDB = await _context
+                                    .ApplicationUsers
+                                    .Include(x => x.ApplicationUserGroups)
+                                    .FindByIdAsync(x => x.Id == applicationUserViewModel.Id);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (userDB == null)
+            {
+                AddError("Usuário não encontrada para atualizar.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+
+
+            #region Grupos remove
+            _context.ApplicationUserGroups.RemoveRange(userDB.ApplicationUserGroups);
+            #endregion
+
+            #region Map
+            var userMap = new ApplicationUser();
+            try
+            {
+                userMap = _mapper.Map<ApplicationUserViewModel, ApplicationUser>(applicationUserViewModel, userMap);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Update pipeline
+            try
+            {
+                _manager.Users.UpdateAsync(userMap);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Check to update password
+            if (!string.IsNullOrEmpty(applicationUserViewModel.Password))
+            {
+                var code = await _manager.GenerateEmailConfirmationTokenAsync(applicationUserViewModel.UserName);
+                var changePassword = await _manager.ResetPasswordAsync(applicationUserViewModel.UserName, code, applicationUserViewModel.Password);
+                if (!changePassword.Succeeded)
+                {
+                    AddError(changePassword.message);
+                    return CustomResponse(400);
+                }
+            }
+            #endregion
+            
+            #region Commit
+            try
+            {
+                await _unitOfWork.CommitAsync(); 
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            return CustomResponse(204);
+        }
+
+        /// <summary>
         /// Deleta um usuário
         /// </summary>
         /// <param name="id"></param>
