@@ -209,6 +209,10 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
+            #region Set fixeds values
+            applicationUserViewModel.Avatar = "5.png";
+            #endregion
+
             var result = await _manager.CreateAsync(userMap);
             if (result.Succeeded)
             {
