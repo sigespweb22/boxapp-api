@@ -292,7 +292,7 @@ namespace BoxBack.WebApi.EndPoints
                 userDB = await _context
                                     .ApplicationUsers
                                     .Include(x => x.ApplicationUserGroups)
-                                    .FindByIdAsync(x => x.Id == applicationUserViewModel.Id);
+                                    .FirstOrDefaultAsync(x => x.Id == applicationUserViewModel.Id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             if (userDB == null)
@@ -301,8 +301,6 @@ namespace BoxBack.WebApi.EndPoints
                 return CustomResponse(404);
             }
             #endregion
-
-
 
             #region Grupos remove
             _context.ApplicationUserGroups.RemoveRange(userDB.ApplicationUserGroups);
@@ -320,7 +318,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Update pipeline
             try
             {
-                _manager.Users.UpdateAsync(userMap);
+                _context.ApplicationUsers.Update(userMap);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -328,11 +326,11 @@ namespace BoxBack.WebApi.EndPoints
             #region Check to update password
             if (!string.IsNullOrEmpty(applicationUserViewModel.Password))
             {
-                var code = await _manager.GenerateEmailConfirmationTokenAsync(applicationUserViewModel.UserName);
-                var changePassword = await _manager.ResetPasswordAsync(applicationUserViewModel.UserName, code, applicationUserViewModel.Password);
+                var code = await _manager.GenerateEmailConfirmationTokenAsync(userDB);
+                var changePassword = await _manager.ResetPasswordAsync(userDB, code, applicationUserViewModel.Password);
                 if (!changePassword.Succeeded)
                 {
-                    AddError(changePassword.message);
+                    AddError("Problemas ao tentar trocar a sua senha. Tente novamente, persistindo o problema contate o suporte.");
                     return CustomResponse(400);
                 }
             }

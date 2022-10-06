@@ -12,13 +12,12 @@ namespace BoxBack.Application.ViewModels
     public class ApplicationUserViewModel
     {
         public string Id { get;set; } 
-        public string UserId { get;set; } 
+        public string UserId { get;set; }
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "\nE-mail é requerido.")]
         public string Email { get; set; }
         
-        [Required(ErrorMessage = "\nSenha é requerida.")]
         public string Password { get; set; }
         public bool TwoFactorEnabled { get; set; }
         public string Funcao { get; set; }
