@@ -129,7 +129,6 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> ListToSelectAsync(string q)
         {
             #region Get data
-            var groups = new List<Generic2Select2ViewModel>();
             var groupsDB = new List<ApplicationGroup>();
             try
             {
@@ -146,22 +145,15 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
             
             #region Map
+            IEnumerable<ApplicationGroupSelect2ViewModel> groupsMap = new List<ApplicationGroupSelect2ViewModel>();
             try
             {
-                foreach(var group in groupsDB)
-                {
-                    var tmp = new Generic2Select2ViewModel()
-                    {
-                        Id = group.Id.ToString(),
-                        Name = group.Name
-                    };
-                    groups.Add(tmp);
-                }
+                groupsMap = _mapper.Map<IEnumerable<ApplicationGroupSelect2ViewModel>>(groupsDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
-            return Ok(groups);
+            return Ok(groupsMap);
         }
 
         /// <summary>

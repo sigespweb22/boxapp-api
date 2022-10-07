@@ -11,9 +11,11 @@ namespace BoxBack.Application.ViewModels
 {
     public class ApplicationUserViewModel
     {
-        public string Id { get;set; } 
+        public string Id { get;set; }
         public string UserId { get;set; }
         public string UserName { get; set; }
+        public string NormalizedUserName { get; set; }
+        public string NormalizedEmail { get; set; }
 
         [Required(ErrorMessage = "\nE-mail é requerido.")]
         public string Email { get; set; }
@@ -31,6 +33,7 @@ namespace BoxBack.Application.ViewModels
         public bool RememberMe { get; set; }
         public string Status { get; set; }
         public bool EmailConfirmed { get; set; }
+        public bool LockoutEnabled { get; set; }
 
         public List<string> ApplicationUserRoles { get; set; }
         public List<string> Role { get; set; }

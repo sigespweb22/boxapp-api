@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Reflection.Metadata.Ecma335;
 using System.Linq;
@@ -10,6 +11,7 @@ using BoxBack.Application.Extensions;
 using BoxBack.Domain.Enums;
 using System.Collections.Generic;
 using BoxBack.Domain.Models.DataTable;
+using BoxBack.Application.ViewModels.Selects;
 
 namespace BoxBack.Application.AutoMapper
 {
@@ -20,7 +22,6 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ApplicationUserGroup, ApplicationUserGroupViewModel>()
                 .ForMember(dst => dst.Name, src => src.MapFrom(x => x.ApplicationGroup.Name));
             CreateMap<ApplicationUser, ApplicationUserViewModel>()
-                .ForMember(dst => dst.Id, src => src.MapFrom(x => x.Id))
                 .ForMember(dst => dst.Email, src => src.MapFrom(x => x.Email))
                 .ForMember(dst => dst.FullName, src => src.MapFrom(x => x.FullName))
                 .ForMember(dst => dst.UserName, src => src.MapFrom(x => x.UserName))
@@ -42,6 +43,9 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.TotalAssinantes, src => src.MapFrom(x => x.Assinantes.Count()))
                 .ForMember(dst => dst.TotalTarefasConcluidas, src => src.MapFrom(x => x.Etapas.Select(x => x.Tarefas.Where(x => x.Status == TarefaStatusEnum.CONCLUIDA)).Count()))
                 .ForMember(dst => dst.Avatars, src => src.MapFrom(x => x.Assinantes.Select(x => x.ApplicationUser.Avatar)));
+            CreateMap<ApplicationGroup, ApplicationGroupSelect2ViewModel>()
+                .ForMember(dst => dst.Name, src => src.MapFrom(x => x.Name))
+                .ForMember(dst => dst.GroupId, src => src.MapFrom(x => x.Id));
         }
     }
 }

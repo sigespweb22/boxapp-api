@@ -1,4 +1,5 @@
-﻿using System.Net.Mime;
+﻿using System.Runtime.InteropServices;
+using System.Net.Mime;
 using System.Text.RegularExpressions;
 using System;
 using System.Linq;
@@ -195,6 +196,8 @@ namespace BoxBack.WebApi.EndPoints
 
             #region Map
             var userMap = new ApplicationUser();
+            applicationUserViewModel.Id = Guid.NewGuid().ToString();
+            applicationUserViewModel.UserId = applicationUserViewModel.Id;
             try
             {
                 userMap = _mapper.Map<ApplicationUser>(applicationUserViewModel);
@@ -202,23 +205,23 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            #region Set fixeds values
-            applicationUserViewModel.TwoFactorEnabled = false;
-            applicationUserViewModel.EmailConfirmed = true;
-            applicationUserViewModel.Avatar = "5.png";
-            applicationUserViewModel.Status = ApplicationUserStatusEnum.PENDING.ToString();
+            #region Map set fixeds values
+            userMap.LockoutEnabled = true;
+            userMap.TwoFactorEnabled = false;
+            userMap.EmailConfirmed = true;
+            userMap.Avatar = "5.png";
+            userMap.Status = ApplicationUserStatusEnum.PENDING;
             #endregion
 
             #region Data add and password
             try
             {
-                _context.ApplicationUsers.Add(userMap);
+                await _manager.CreateAsync(userMap);
                 await _manager.AddPasswordAsync(userMap, applicationUserViewModel.Password);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-<<<<<<< HEAD
             #region Group resolve and insert data
             // foreach (var uGroup in applicationUserViewModel.ApplicationUserGroups)
             // {
@@ -255,8 +258,6 @@ namespace BoxBack.WebApi.EndPoints
              _unitOfWork.Commit();
             #endregion
 
-=======
->>>>>>> d308e5b4ca0f9a5295a5d64c4a10dbd7663126dd
             return CustomResponse(201);
         }
 

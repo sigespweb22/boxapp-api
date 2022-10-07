@@ -120,6 +120,13 @@ namespace BoxBack.WebApi.EndPoints
                 AddError("Usuário inativo."+ "\nPara fazer login solicite ao administrador a ativação de seu usuário.");
                 return CustomResponse(400);
             }
+
+            // check to user pending active
+            if (user.Status == ApplicationUserStatusEnum.PENDING)
+            {
+                AddError("Usuário pendente de ativação."+ "\nPara fazer login solicite ao administrador a ativação de seu usuário.");
+                return CustomResponse(400);
+            }
             #endregion
 
             #region Map
