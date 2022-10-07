@@ -30,6 +30,7 @@ namespace BoxBack.Application.ViewModels
         public string AccessToken { get; set; }
         public bool RememberMe { get; set; }
         public string Status { get; set; }
+        public bool EmailConfirmed { get; set; }
 
         public List<string> ApplicationUserRoles { get; set; }
         public List<string> Role { get; set; }

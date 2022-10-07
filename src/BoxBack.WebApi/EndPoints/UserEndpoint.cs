@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Net.Mime;
+using System.Text.RegularExpressions;
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
@@ -196,68 +197,61 @@ namespace BoxBack.WebApi.EndPoints
             var userMap = new ApplicationUser();
             try
             {
-                userMap.Id = Guid.NewGuid().ToString();
-                userMap.UserName = applicationUserViewModel.Email;
-                userMap.NormalizedUserName = applicationUserViewModel.Email.ToUpper();
-                userMap.Email = applicationUserViewModel.Email;
-                userMap.NormalizedEmail = applicationUserViewModel.Email.ToUpper();
-                userMap.TwoFactorEnabled = false;
-                userMap.EmailConfirmed = true;
-                userMap.Avatar = string.Empty;
-                userMap.FullName = applicationUserViewModel.FullName.ToUpper();
-                userMap.Status = ApplicationUserStatusEnum.PENDING;
+                userMap = _mapper.Map<ApplicationUser>(applicationUserViewModel);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Set fixeds values
+            applicationUserViewModel.TwoFactorEnabled = false;
+            applicationUserViewModel.EmailConfirmed = true;
             applicationUserViewModel.Avatar = "5.png";
+            applicationUserViewModel.Status = ApplicationUserStatusEnum.PENDING.ToString();
             #endregion
 
-            var result = await _manager.CreateAsync(userMap);
-            if (result.Succeeded)
+            #region Data add and password
+            try
             {
-                await _manager.AddPasswordAsync(userMap, applicationUserViewModel.Password);   
+                _context.ApplicationUsers.Add(userMap);
+                await _manager.AddPasswordAsync(userMap, applicationUserViewModel.Password);
             }
-            else
-            {
-                foreach (var item in result.Errors.Select(x => x.Description).ToList())
-                {
-                    AddError(item);
-                }
-                return CustomResponse(400);
-            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
 
             #region Group resolve and insert data
-            foreach (var uGroup in applicationUserViewModel.ApplicationUserGroups)
-            {
-                // check to existence the role in group
-                var hasRolesInGroup = _context.ApplicationGroups
-                                                    .Where(x => x.Name == uGroup &&
-                                                           x.ApplicationRoleGroups.Count() > 0)
-                                                    .Any();
+            // foreach (var uGroup in applicationUserViewModel.ApplicationUserGroups)
+            // {
+            //     // check to existence the role in group
+            //     var hasRolesInGroup = _context.ApplicationGroups
+            //                                         .Where(x => x.Name == uGroup &&
+            //                                                x.ApplicationRoleGroups.Count() > 0)
+            //                                         .Any();
 
-                if (!hasRolesInGroup)
-                {
-                    return CustomResponse(201, new { message = "Usuário criado com sucesso. \nPorém grupo de usuário " + uGroup + " não possui nenhuma permissão vinculada a ele. \nPrimeiro faça este vínculo e depois o atribua a um usuário."});
-                }
+            //     if (!hasRolesInGroup)
+            //     {
+            //         return CustomResponse(201, new { message = "Usuário criado com sucesso. \nPorém grupo de usuário " + uGroup + " não possui nenhuma permissão vinculada a ele. \nPrimeiro faça este vínculo e depois o atribua a um usuário."});
+            //     }
 
-                Guid groupId = _context.ApplicationGroups
-                                            .Where(x => x.Name == uGroup)
-                                            .Select(x => x.Id)
-                                            .FirstOrDefault(); 
+            //     Guid groupId = _context.ApplicationGroups
+            //                                 .Where(x => x.Name == uGroup)
+            //                                 .Select(x => x.Id)
+            //                                 .FirstOrDefault(); 
 
-                if (groupId == Guid.Empty)
-                {
-                    AddError("Problemas ao adicionar um grupo para o usuário criado. Adicione manualmente um grupo ao usuário criado editando seu registro.");
-                    return CustomResponse(400);
-                }
+            //     if (groupId == Guid.Empty)
+            //     {
+            //         AddError("Problemas ao adicionar um grupo para o usuário criado. Adicione manualmente um grupo ao usuário criado editando seu registro.");
+            //         return CustomResponse(400);
+            //     }
 
-                var tmp = new ApplicationUserGroup() { UserId = userMap.Id, GroupId = groupId };
+            //     var tmp = new ApplicationUserGroup() { UserId = userMap.Id, GroupId = groupId };
 
-                _context.ApplicationUserGroups.Add(tmp);
-                _unitOfWork.Commit();
-            }
+            //     _context.ApplicationUserGroups.Add(tmp);
+            //     _unitOfWork.Commit();
+            // }
+            #endregion
+
+            #region Commit
+             _unitOfWork.Commit();
             #endregion
 
             return CustomResponse(201);
