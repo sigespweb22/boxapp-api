@@ -11,7 +11,8 @@ namespace BoxBack.Application.AutoMapper
     {
         public ViewModelToDomainMappingProfile()
         {
-            CreateMap<ApplicationUserViewModel, ApplicationUser>();
+            CreateMap<ApplicationUserViewModel, ApplicationUser>()
+                .ForMember(dst => dst.ApplicationUserGroups, src => src.MapFrom(x => x.ApplicationUserGroups));
             CreateMap<ApplicationRoleViewModel, ApplicationRole>();
             CreateMap<ApplicationGroupViewModel, ApplicationGroup>();
             CreateMap<ApplicationRoleViewModel, ApplicationRole>();

@@ -218,6 +218,7 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
+<<<<<<< HEAD
             #region Group resolve and insert data
             // foreach (var uGroup in applicationUserViewModel.ApplicationUserGroups)
             // {
@@ -254,6 +255,8 @@ namespace BoxBack.WebApi.EndPoints
              _unitOfWork.Commit();
             #endregion
 
+=======
+>>>>>>> d308e5b4ca0f9a5295a5d64c4a10dbd7663126dd
             return CustomResponse(201);
         }
 
@@ -301,33 +304,8 @@ namespace BoxBack.WebApi.EndPoints
             _context.ApplicationUserGroups.RemoveRange(userDB.ApplicationUserGroups);
             #endregion
 
-            #region Map User manually | Mudar isso pelo amooooor
+            #region Map User manually
             var userMap = new ApplicationUser();
-            userMap.ApplicationUserGroups = new List<ApplicationUserGroup>();
-
-            // Map UserGroup manually
-            try
-            {
-                foreach (var grupo in applicationUserViewModel.ApplicationUserGroups)
-                {
-                    ApplicationUserGroup userGroup = await _context
-                                                            .ApplicationUserGroups
-                                                            .Include(x => x.ApplicationGroup)
-                                                            .FirstOrDefaultAsync(x => x.ApplicationGroup.Name == grupo);
-                    
-                    if (userGroup != null)
-                    {
-                        var temp = new ApplicationUserGroup()
-                        {
-                            UserId = userGroup.UserId,
-                            GroupId = userGroup.GroupId
-                        };
-                        _context.ApplicationUserGroups.Add(temp);
-                    }
-                }
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            
             // Map User
             try
             {
