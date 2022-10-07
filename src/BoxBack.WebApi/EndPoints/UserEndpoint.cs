@@ -228,38 +228,6 @@ namespace BoxBack.WebApi.EndPoints
                 return CustomResponse(400);
             }
 
-            #region Group resolve and insert data
-            foreach (var uGroup in applicationUserViewModel.ApplicationUserGroups)
-            {
-                // check to existence the role in group
-                var hasRolesInGroup = _context.ApplicationGroups
-                                                    .Where(x => x.Name == uGroup &&
-                                                           x.ApplicationRoleGroups.Count() > 0)
-                                                    .Any();
-
-                if (!hasRolesInGroup)
-                {
-                    return CustomResponse(201, new { message = "Usuário criado com sucesso. \nPorém grupo de usuário " + uGroup + " não possui nenhuma permissão vinculada a ele. \nPrimeiro faça este vínculo e depois o atribua a um usuário."});
-                }
-
-                Guid groupId = _context.ApplicationGroups
-                                            .Where(x => x.Name == uGroup)
-                                            .Select(x => x.Id)
-                                            .FirstOrDefault(); 
-
-                if (groupId == Guid.Empty)
-                {
-                    AddError("Problemas ao adicionar um grupo para o usuário criado. Adicione manualmente um grupo ao usuário criado editando seu registro.");
-                    return CustomResponse(400);
-                }
-
-                var tmp = new ApplicationUserGroup() { UserId = userMap.Id, GroupId = groupId };
-
-                _context.ApplicationUserGroups.Add(tmp);
-                _unitOfWork.Commit();
-            }
-            #endregion
-
             return CustomResponse(201);
         }
 
@@ -307,33 +275,8 @@ namespace BoxBack.WebApi.EndPoints
             _context.ApplicationUserGroups.RemoveRange(userDB.ApplicationUserGroups);
             #endregion
 
-            #region Map User manually | Mudar isso pelo amooooor
+            #region Map User manually
             var userMap = new ApplicationUser();
-            userMap.ApplicationUserGroups = new List<ApplicationUserGroup>();
-
-            // Map UserGroup manually
-            try
-            {
-                foreach (var grupo in applicationUserViewModel.ApplicationUserGroups)
-                {
-                    ApplicationUserGroup userGroup = await _context
-                                                            .ApplicationUserGroups
-                                                            .Include(x => x.ApplicationGroup)
-                                                            .FirstOrDefaultAsync(x => x.ApplicationGroup.Name == grupo);
-                    
-                    if (userGroup != null)
-                    {
-                        var temp = new ApplicationUserGroup()
-                        {
-                            UserId = userGroup.UserId,
-                            GroupId = userGroup.GroupId
-                        };
-                        _context.ApplicationUserGroups.Add(temp);
-                    }
-                }
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            
             // Map User
             try
             {

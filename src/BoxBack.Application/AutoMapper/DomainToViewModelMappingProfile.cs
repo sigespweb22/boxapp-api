@@ -17,14 +17,15 @@ namespace BoxBack.Application.AutoMapper
     {
         public DomainToViewModelMappingProfile()
         {
+            CreateMap<ApplicationUserGroup, ApplicationUserGroupViewModel>()
+                .ForMember(dst => dst.Name, src => src.MapFrom(x => x.ApplicationGroup.Name));
             CreateMap<ApplicationUser, ApplicationUserViewModel>()
                 .ForMember(dst => dst.Id, src => src.MapFrom(x => x.Id))
                 .ForMember(dst => dst.Email, src => src.MapFrom(x => x.Email))
                 .ForMember(dst => dst.FullName, src => src.MapFrom(x => x.FullName))
                 .ForMember(dst => dst.UserName, src => src.MapFrom(x => x.UserName))
                 .ForMember(dst => dst.Avatar, src => src.MapFrom(x => x.Avatar))
-                .ForMember(dst => dst.ApplicationUserGroups, src => src.MapFrom(x => x.ApplicationUserGroups.Select(x => x.ApplicationGroup.Name)))
-                .ForMember(dst => dst.ApplicationUserGroupsNames, src => src.MapFrom(x => x.ApplicationUserGroups.Select(x => x.ApplicationGroup.Name)));
+                .ForMember(dst => dst.ApplicationUserGroups, src => src.MapFrom(x => x.ApplicationUserGroups));
             CreateMap<ApplicationRole, ApplicationRoleViewModel>();
             CreateMap<ApplicationGroup, ApplicationGroupViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"))
