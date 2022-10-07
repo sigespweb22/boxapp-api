@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Text.RegularExpressions;
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
@@ -302,12 +303,38 @@ namespace BoxBack.WebApi.EndPoints
             }
             #endregion
 
-            #region Grupos remove
+            #region Grupos remove manually | Mudar isso pelo amooooor
             _context.ApplicationUserGroups.RemoveRange(userDB.ApplicationUserGroups);
             #endregion
 
-            #region Map
+            #region Map User manually | Mudar isso pelo amooooor
             var userMap = new ApplicationUser();
+            userMap.ApplicationUserGroups = new List<ApplicationUserGroup>();
+
+            // Map UserGroup manually
+            try
+            {
+                foreach (var grupo in applicationUserViewModel.ApplicationUserGroups)
+                {
+                    ApplicationUserGroup userGroup = await _context
+                                                            .ApplicationUserGroups
+                                                            .Include(x => x.ApplicationGroup)
+                                                            .FirstOrDefaultAsync(x => x.ApplicationGroup.Name == grupo);
+                    
+                    if (userGroup != null)
+                    {
+                        var temp = new ApplicationUserGroup()
+                        {
+                            UserId = userGroup.UserId,
+                            GroupId = userGroup.GroupId
+                        };
+                        _context.ApplicationUserGroups.Add(temp);
+                    }
+                }
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            // Map User
             try
             {
                 userMap = _mapper.Map<ApplicationUserViewModel, ApplicationUser>(applicationUserViewModel, userMap);
