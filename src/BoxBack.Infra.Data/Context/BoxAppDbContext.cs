@@ -1,7 +1,5 @@
 ﻿using System.Data;
-using System.Data.SqlTypes;
 using System;
-using System.Security.Claims;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -13,11 +11,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using BoxBack.Infra.CrossCutting.Identity.Services;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using BoxBack.Domain.Enums;
-using Npgsql;
-using BoxBack.Infra.Data.Extensions;
-using BoxBack.Domain.Interfaces;
 
 namespace BoxBack.Infra.Data.Context
 {
@@ -36,7 +29,6 @@ namespace BoxBack.Infra.Data.Context
         }
 
         public DbSet<Tenant> Tenants { get; set; }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<ApplicationGroup> ApplicationGroups { get; set; }
         public DbSet<ApplicationRoleGroup> ApplicationRoleGroups { get; set; }
         public DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Dynamic;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,6 @@ namespace BoxBack.Application.ViewModels
         public string Password { get; set; }
         public bool TwoFactorEnabled { get; set; }
         public string Funcao { get; set; }
-
         public string Setor { get; set; }
         public string Avatar { get; set; }
 
@@ -34,6 +34,7 @@ namespace BoxBack.Application.ViewModels
         public string Status { get; set; }
         public bool EmailConfirmed { get; set; }
         public bool LockoutEnabled { get; set; }
+        public DateTimeOffset? LockoutEnd { get; set; }
 
         public List<string> ApplicationUserRoles { get; set; }
         public List<string> Role { get; set; }

@@ -1,11 +1,6 @@
-﻿using System.Runtime.InteropServices;
-using System.Net.Mime;
-using System.Text.RegularExpressions;
-using System;
+﻿using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -13,20 +8,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BoxBack.Infra.Data.Context;
-using BoxBack.WebApi.Extensions;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.Enums;
-using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels.Selects;
-using BoxBack.Infra.Data.Extensions;
 using BoxBack.WebApi.Controllers;
-using BoxBack.Application.ViewModels.Requests;
 using BoxBack.Domain.Services;
-using BoxBack.Domain.ModelsServices;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -97,7 +86,7 @@ namespace BoxBack.WebApi.EndPoints
             
             #region Filter search
             if(!string.IsNullOrEmpty(q))
-                users = users.Where(x => x.FullName.Contains(q.ToUpper())).ToList();
+                users = users.Where(x => x.FullName.Contains(q)).ToList();
             #endregion
 
             #region Map
@@ -222,38 +211,6 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            #region Group resolve and insert data
-            // foreach (var uGroup in applicationUserViewModel.ApplicationUserGroups)
-            // {
-            //     // check to existence the role in group
-            //     var hasRolesInGroup = _context.ApplicationGroups
-            //                                         .Where(x => x.Name == uGroup &&
-            //                                                x.ApplicationRoleGroups.Count() > 0)
-            //                                         .Any();
-
-            //     if (!hasRolesInGroup)
-            //     {
-            //         return CustomResponse(201, new { message = "Usuário criado com sucesso. \nPorém grupo de usuário " + uGroup + " não possui nenhuma permissão vinculada a ele. \nPrimeiro faça este vínculo e depois o atribua a um usuário."});
-            //     }
-
-            //     Guid groupId = _context.ApplicationGroups
-            //                                 .Where(x => x.Name == uGroup)
-            //                                 .Select(x => x.Id)
-            //                                 .FirstOrDefault(); 
-
-            //     if (groupId == Guid.Empty)
-            //     {
-            //         AddError("Problemas ao adicionar um grupo para o usuário criado. Adicione manualmente um grupo ao usuário criado editando seu registro.");
-            //         return CustomResponse(400);
-            //     }
-
-            //     var tmp = new ApplicationUserGroup() { UserId = userMap.Id, GroupId = groupId };
-
-            //     _context.ApplicationUserGroups.Add(tmp);
-            //     _unitOfWork.Commit();
-            // }
-            #endregion
-
             #region Commit
              _unitOfWork.Commit();
             #endregion
@@ -289,9 +246,9 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 userDB = await _context
-                                    .ApplicationUsers
+                                    .Users
                                     .Include(x => x.ApplicationUserGroups)
-                                    .FirstOrDefaultAsync(x => x.Id == applicationUserViewModel.Id);
+                                    .FirstOrDefaultAsync(x => x.Id.Equals(applicationUserViewModel.Id));
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             if (userDB == null)
@@ -299,47 +256,41 @@ namespace BoxBack.WebApi.EndPoints
                 AddError("Usuário não encontrada para atualizar.");
                 return CustomResponse(404);
             }
-            #endregion
+            #endregion 
 
-            #region Grupos remove manually | Mudar isso pelo amooooor
+            #region Grupos remove | Mudar isso pelo amooooor
             _context.ApplicationUserGroups.RemoveRange(userDB.ApplicationUserGroups);
             #endregion
 
-            #region Map User manually
-            var userMap = new ApplicationUser();
+            #region Map User | Mudar isso pelo amoooor
             // Map User
-            try
+            var userMap = new ApplicationUser();
+            try 
             {
-                userMap = _mapper.Map<ApplicationUserViewModel, ApplicationUser>(applicationUserViewModel, userMap);
+                applicationUserViewModel.EmailConfirmed = userDB.EmailConfirmed;
+                applicationUserViewModel.LockoutEnd = userDB.LockoutEnd;
+                applicationUserViewModel.LockoutEnabled = userDB.LockoutEnabled;
+                applicationUserViewModel.Avatar = userDB.Avatar;
+                applicationUserViewModel.Funcao = userDB.Funcao.ToString();
+                applicationUserViewModel.Setor = userDB.Setor.ToString();
+                applicationUserViewModel.Status = userDB.Status.ToString();
+                userMap = _mapper.Map<ApplicationUserViewModel, ApplicationUser>(applicationUserViewModel, userDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            #region Update pipeline
+            #region Update user
             try
             {
-                _context.ApplicationUsers.Update(userMap);
+                _context.Users.Update(userMap);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            #region Check to update password
-            if (!string.IsNullOrEmpty(applicationUserViewModel.Password))
-            {
-                var code = await _manager.GenerateEmailConfirmationTokenAsync(userDB);
-                var changePassword = await _manager.ResetPasswordAsync(userDB, code, applicationUserViewModel.Password);
-                if (!changePassword.Succeeded)
-                {
-                    AddError("Problemas ao tentar trocar a sua senha. Tente novamente, persistindo o problema contate o suporte.");
-                    return CustomResponse(400);
-                }
-            }
-            #endregion
-            
             #region Commit
             try
             {
-                await _unitOfWork.CommitAsync(); 
+                _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
