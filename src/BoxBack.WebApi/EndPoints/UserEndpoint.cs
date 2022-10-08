@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Xml;
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
@@ -108,6 +109,62 @@ namespace BoxBack.WebApi.EndPoints
                 Params = q,
                 Total = userMap.Count()
             });
+        }
+
+        /// <summary>
+        /// Lista um usuário pelo id
+        /// </summary>s
+        /// <param name="id"></param>
+        /// <returns>Um objeto tipado com o usuário</returns>
+        /// <response code="200">O usuário</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Registro não encontrado</response>
+        [Authorize(Roles = "Master, CanUserListOne, CanUserAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Produces("application/json")]
+        [Route("list-one/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> ListOneAsync([FromRoute]string id)
+        {
+            #region Required validations
+            if(string.IsNullOrEmpty(id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data
+            var user = new ApplicationUser();
+            try
+            {
+                user = await _context
+                                .Users
+                                .AsNoTracking()
+                                .Include(x => x.ApplicationUserGroups)
+                                .FirstOrDefaultAsync(x => x.Id.Equals(id));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (user == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
+            #endregion
+            
+            #region Map
+            var userMap = new ApplicationUserViewModel();
+            try
+            {
+                userMap = _mapper.Map<ApplicationUserViewModel>(user);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            return Ok(user);
         }
 
         /// <summary>
