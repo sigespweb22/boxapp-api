@@ -1,13 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Net.NetworkInformation;
-using System.Xml.Linq;
-using System.Net.Sockets;
 using Microsoft.AspNetCore.Authorization;
-using System.ComponentModel.DataAnnotations;
-using System.Net.Mime;
-using System.Reflection.Metadata;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -15,16 +8,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BoxBack.Infra.Data.Context;
-using BoxBack.WebApi.Extensions;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using BoxBack.Domain.Interfaces;
-using BoxBack.Domain.Enums;
-using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels.Selects;
-using BoxBack.Infra.Data.Extensions;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Application.Helpers;
 
@@ -92,7 +80,7 @@ namespace BoxBack.WebApi.EndPoints
             
             #region Filter search
             if(!string.IsNullOrEmpty(q))
-                groups = groups.Where(x => x.Name.Contains(q.ToUpper())).ToList();
+                groups = groups.Where(x => x.Name.Contains(q)).ToList();
             #endregion
 
             #region Map
@@ -116,6 +104,7 @@ namespace BoxBack.WebApi.EndPoints
         /// Lista todos os grupos ativos
         /// </summary>s
         /// <param name="q"></param>
+        /// <param name="isDeleted"></param>
         /// <returns>Um json com os grupos ativos</returns>
         /// <response code="200">Lista de grupos ativos</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
@@ -126,7 +115,7 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Route("list-to-select")] 
         [HttpGet]
-        public async Task<IActionResult> ListToSelectAsync(string q)
+        public async Task<IActionResult> ListToSelectAsync(string q, bool isDeleted = false)
         {
             #region Get data
             var groupsDB = new List<ApplicationGroup>();
@@ -134,6 +123,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 groupsDB = await _context
                                         .ApplicationGroups
+                                        .Where(x => !x.IsDeleted || x.IsDeleted == isDeleted)
                                         .ToListAsync();
                 if (groupsDB == null)
                 {
@@ -166,6 +156,7 @@ namespace BoxBack.WebApi.EndPoints
         [Authorize(Roles = "Master, CanGroupCreate, CanGroupAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("create")]
         [HttpPost]
@@ -175,7 +166,7 @@ namespace BoxBack.WebApi.EndPoints
             bool groupAlready;
             try
             {
-                groupAlready = _context.ApplicationGroups.Any(x => x.Name == applicationGroupViewModel.Name);    
+                groupAlready = await _context.ApplicationGroups.AnyAsync(x => x.Name == applicationGroupViewModel.Name);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
@@ -186,12 +177,11 @@ namespace BoxBack.WebApi.EndPoints
             }
             #endregion
 
-            #region Map and persistance data without commit
+            #region Map
             var groupMap = new ApplicationGroup();
             try
             {
-                groupMap.Id = new Guid();
-                groupMap.Name = applicationGroupViewModel.Name;
+                groupMap = _mapper.Map<ApplicationGroup>(applicationGroupViewModel);
                 groupMap.UniqueKey = KeyGenerate.CreateUniqueKeyBySecret(applicationGroupViewModel.Name);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
@@ -203,42 +193,92 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            #region Roles resolve and data inserts
-            foreach (var roleName in applicationGroupViewModel.ApplicationRoleGroups)
-            {
-                // check to existence the role in group
-                var role = new ApplicationRole();
-                try
-                {
-                    role = await _roleManager.FindByNameAsync(roleName);    
-                }
-                catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-
-                if (role == null)
-                {
-                    AddError("Problemas ao criar um grupo. \nA permissão " + roleName + " não foi encontrada.");
-                    return CustomResponse(400);
-                }
-
-                // map role to group
-                var aRg = new ApplicationRoleGroup();
-                try
-                {
-                    aRg.GroupId = groupMap.Id;
-                    aRg.RoleId = role.Id;
-                }
-                catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-                
-                // persistance role to group
-                _context.ApplicationRoleGroups.Add(aRg);                
-            }
-            #endregion
-
             #region Commit
             _unitOfWork.Commit();
             #endregion
             
             return CustomResponse(201);
+        }
+
+        /// <summary>
+        /// Atualiza um grupo
+        /// </summary>
+        /// <param name="applicationGroupViewModel"></param>
+        /// <returns>True se atualizada com sucesso</returns>
+        /// <response code="204">Atualizada com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        [Authorize(Roles = "Master, CanGroupUpdate, CanGroupAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("update")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromBody]ApplicationGroupViewModel applicationGroupViewModel)
+        {
+            #region Required validations
+            if (string.IsNullOrEmpty(applicationGroupViewModel.Id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data for update
+            var groupDB = new ApplicationGroup();
+            try
+            {
+                groupDB = await _context
+                                    .ApplicationGroups
+                                    .Include(x => x.ApplicationRoleGroups)
+                                    .FirstOrDefaultAsync(x => x.Id.ToString() == applicationGroupViewModel.Id);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (groupDB == null)
+            {
+                AddError("Grupo de permissões não encontrado para atualizar.");
+                return CustomResponse(404);
+            }
+            #endregion 
+
+            #region Grupos remove | Mudar isso pelo amooooor
+            _context.ApplicationRoleGroups.RemoveRange(groupDB.ApplicationRoleGroups);
+            #endregion
+
+            #region Map User | Mudar isso pelo amoooor
+            // Map User
+            var groupMap = new ApplicationGroup();
+            try 
+            {
+                // applicationGroupViewModel.EmailConfirmed = userDB.EmailConfirmed;
+                // applicationUserViewModel.LockoutEnd = userDB.LockoutEnd;
+                // applicationUserViewModel.LockoutEnabled = userDB.LockoutEnabled;
+                // applicationUserViewModel.Avatar = userDB.Avatar;
+                // applicationUserViewModel.Funcao = userDB.Funcao.ToString();
+                // applicationUserViewModel.Setor = userDB.Setor.ToString();
+                // applicationUserViewModel.Status = userDB.Status.ToString();
+                groupMap = _mapper.Map<ApplicationGroupViewModel, ApplicationGroup>(applicationGroupViewModel, groupDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Update user
+            try
+            {
+                _context.ApplicationGroups.Update(groupMap);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Commit
+            try
+            {
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            return CustomResponse(204);
         }
 
         /// <summary>

@@ -1,12 +1,6 @@
-using System.Globalization;
-using System.Dynamic;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using BoxBack.Domain.Enums;
-using BoxBack.Domain.Models;
-using BoxBack.Application.ViewModels;
 
 namespace BoxBack.Application.ViewModels
 {
@@ -39,7 +33,7 @@ namespace BoxBack.Application.ViewModels
         public List<string> ApplicationUserRoles { get; set; }
         public List<string> Role { get; set; }
 
-        [Required, MinLength(1, ErrorMessage = "\nGrupo usuário é requerido.")]
+        [MinLength(1, ErrorMessage = "\nAo menos um grupo é requerido.")]
         public List<ApplicationUserGroupViewModel> ApplicationUserGroups { get; set; } 
         public List<string> ApplicationUserGroupsNames { get; set; }
     }

@@ -1,14 +1,6 @@
-﻿using System.Net;
-using System;
+﻿using System;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Net.NetworkInformation;
-using System.Xml.Linq;
-using System.Net.Sockets;
 using Microsoft.AspNetCore.Authorization;
-using System.ComponentModel.DataAnnotations;
-using System.Net.Mime;
-using System.Reflection.Metadata;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -16,18 +8,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BoxBack.Infra.Data.Context;
-using BoxBack.WebApi.Extensions;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using BoxBack.Domain.Interfaces;
-using BoxBack.Domain.Enums;
-using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels.Selects;
-using BoxBack.Infra.Data.Extensions;
 using BoxBack.WebApi.Controllers;
-using BoxBack.Application.ViewModels.Requests;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -285,33 +271,31 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Lista todas as roles ativas
-        /// </summary>
+        /// Lista todas roles (permissões) ativas
+        /// </summary>s
         /// <param name="q"></param>
-        /// <returns>Um json com as roles ativas</returns>
-        /// <response code="200">Lista de roles ativas</response>
+        /// <returns>Um json com as roles (permissões) ativas</returns>
+        /// <response code="200">Lista de roles (permissões) ativas</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
-        /// <response code="404">Lista vazia - Not found</response>
-        [Route("list-to-select")]
+        /// <response code="404">Lista vazia</response>
         [Authorize(Roles = "Master, CanRoleListToSelect, CanRoleAll")]
-        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Produces("application/json")]
+        [Route("list-to-select")] 
+        [HttpGet]
         public async Task<IActionResult> ListToSelectAsync(string q)
         {
             #region Get data
             var rolesDB = new List<ApplicationRole>();
             try
             {
-                rolesDB = await _roleManager
+                rolesDB = await _context
                                         .Roles
-                                        .AsNoTracking()
                                         .ToListAsync();
                 if (rolesDB == null)
                 {
-                    AddError("Não encontrado.");
+                    AddError("Não encontrado");
                     return CustomResponse(404);
                 }
             }
@@ -319,23 +303,15 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
             
             #region Map
-            var roles = new List<Generic2Select2ViewModel>();
+            IEnumerable<ApplicationRoleSelect2ViewModel> rolesMap = new List<ApplicationRoleSelect2ViewModel>();
             try
             {
-                foreach(var role in rolesDB)
-                {
-                    var tmp = new Generic2Select2ViewModel()
-                    {
-                        Id = role.Id.ToString(),
-                        Name = role.Name
-                    };
-                    roles.Add(tmp);
-                }
+                rolesMap = _mapper.Map<IEnumerable<ApplicationRoleSelect2ViewModel>>(rolesDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
-            return CustomResponse(200, roles);
+            return Ok(rolesMap);
         }
     }
 }

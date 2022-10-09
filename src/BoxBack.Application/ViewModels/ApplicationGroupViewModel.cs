@@ -17,8 +17,8 @@ namespace BoxBack.Application.ViewModels
         public string Name { get;set; } 
         public string Status { get; set; }
 
-        [Required, MinLength(1, ErrorMessage = "\nAo menos uma permissão é requerida.")]
-        public List<string> ApplicationRoleGroups { get; set; }
+        [MinLength(1, ErrorMessage = "\nAo menos uma permissão é requerida.")]
+        public List<ApplicationRoleGroupViewModel> ApplicationRoleGroups { get; set; }
         
         public List<string> ApplicationRoleGroupsNames { get; set; }
     }

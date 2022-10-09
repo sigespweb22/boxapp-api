@@ -46,6 +46,11 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ApplicationGroup, ApplicationGroupSelect2ViewModel>()
                 .ForMember(dst => dst.Name, src => src.MapFrom(x => x.Name))
                 .ForMember(dst => dst.GroupId, src => src.MapFrom(x => x.Id));
+            CreateMap<ApplicationRoleGroup, ApplicationRoleGroupViewModel>()
+                .ForMember(dst => dst.Name, src => src.MapFrom(x => x.ApplicationRole.Name));;
+            CreateMap<ApplicationRole, ApplicationRoleSelect2ViewModel>()
+                .ForMember(dst => dst.Name, src => src.MapFrom(x => x.Name))
+                .ForMember(dst => dst.RoleId, src => src.MapFrom(x => x.Id));
         }
     }
 }

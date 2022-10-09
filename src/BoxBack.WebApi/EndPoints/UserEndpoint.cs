@@ -1,5 +1,4 @@
-﻿using System.Xml;
-using System;
+﻿using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
@@ -227,6 +226,7 @@ namespace BoxBack.WebApi.EndPoints
         [Authorize(Roles = "Master, CanUserCreate, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("create")]
         [HttpPost]
@@ -285,6 +285,7 @@ namespace BoxBack.WebApi.EndPoints
         [Authorize(Roles = "Master, CanUserUpdate, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
