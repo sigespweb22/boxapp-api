@@ -34,7 +34,7 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasOne(c => c.PipelineTarefa)
                 .WithMany(c => c.PipelineTarefaAssinantes)
                 .HasForeignKey(c => c.UserId)
-                .HasForeignKey(c => c.PipelineEtapaTarefaId)
+                .HasForeignKey(c => c.PipelineTarefaId)
                 .OnDelete(DeleteBehavior.NoAction);
             
             builder

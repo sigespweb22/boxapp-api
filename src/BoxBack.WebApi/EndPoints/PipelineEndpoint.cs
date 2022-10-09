@@ -68,10 +68,10 @@ namespace BoxBack.WebApi.EndPoints
             {
                 pipelines = await _context
                                         .Pipelines
-                                        .Include(x => x.Assinantes.Where(x => x.IsDeleted == false))
+                                        .Include(x => x.PipelineAssinantes.Where(x => x.IsDeleted == false))
                                         .ThenInclude(x => x.ApplicationUser)
-                                        .Include(x => x.Etapas)
-                                        .ThenInclude(x => x.Tarefas)
+                                        .Include(x => x.PipelineEtapas)
+                                        .ThenInclude(x => x.PipelineTarefas)
                                         .OrderBy(x => x.Posicao)
                                         .ToListAsync();
                 if (pipelines.Count() <= 0)
@@ -171,7 +171,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 pipelineDB = await _context
                                     .Pipelines
-                                    .Include(x => x.Assinantes)
+                                    .Include(x => x.PipelineAssinantes)
                                     .FirstOrDefaultAsync(x => x.Id == pipelineViewModel.Id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
@@ -183,7 +183,7 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Assinantes remove
-            _context.PipelineAssinantes.RemoveRange(pipelineDB.Assinantes);
+            _context.PipelineAssinantes.RemoveRange(pipelineDB.PipelineAssinantes);
             #endregion
 
             #region Map

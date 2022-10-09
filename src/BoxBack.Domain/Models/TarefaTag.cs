@@ -1,9 +1,6 @@
-using System.Numerics;
-using System.Security.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using BoxBack.Domain.Enums;
 namespace BoxBack.Domain.Models
 {
     public class TarefaTag : EntityAudit

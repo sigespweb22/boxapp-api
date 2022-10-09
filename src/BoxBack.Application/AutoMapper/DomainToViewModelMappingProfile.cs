@@ -39,10 +39,10 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.Name, src => src.MapFrom(x => x.FullName))
                 .ForMember(dst => dst.UserId, src => src.MapFrom(x => x.UserId));
             CreateMap<Pipeline, PipelineViewModel>()
-                .ForMember(dst => dst.TotalTarefas, src => src.MapFrom(x => x.Etapas.Select(x => x.Tarefas).Count()))
-                .ForMember(dst => dst.TotalAssinantes, src => src.MapFrom(x => x.Assinantes.Count()))
-                .ForMember(dst => dst.TotalTarefasConcluidas, src => src.MapFrom(x => x.Etapas.Select(x => x.Tarefas.Where(x => x.Status == TarefaStatusEnum.CONCLUIDA)).Count()))
-                .ForMember(dst => dst.Avatars, src => src.MapFrom(x => x.Assinantes.Select(x => x.ApplicationUser.Avatar)));
+                .ForMember(dst => dst.TotalTarefas, src => src.MapFrom(x => x.PipelineEtapas.Select(x => x.PipelineTarefas).Count()))
+                .ForMember(dst => dst.TotalAssinantes, src => src.MapFrom(x => x.PipelineAssinantes.Count()))
+                .ForMember(dst => dst.TotalTarefasConcluidas, src => src.MapFrom(x => x.PipelineEtapas.Select(x => x.PipelineTarefas.Where(x => x.Status == TarefaStatusEnum.CONCLUIDA)).Count()))
+                .ForMember(dst => dst.Avatars, src => src.MapFrom(x => x.PipelineAssinantes.Select(x => x.ApplicationUser.Avatar)));
             CreateMap<ApplicationGroup, ApplicationGroupSelect2ViewModel>()
                 .ForMember(dst => dst.Name, src => src.MapFrom(x => x.Name))
                 .ForMember(dst => dst.GroupId, src => src.MapFrom(x => x.Id));
