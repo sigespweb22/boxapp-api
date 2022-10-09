@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BoxBack.Infra.Data.Mappings
 {
-    public class PipelineEtapaTarefaMap : IEntityTypeConfiguration<PipelineEtapaTarefa>
+    public class PipelineTarefaMap : IEntityTypeConfiguration<PipelineTarefa>
     {
-        public void Configure(EntityTypeBuilder<PipelineEtapaTarefa> builder)
+        public void Configure(EntityTypeBuilder<PipelineTarefa> builder)
         {
-            builder.ToTable("PipelineEtapaTarefas");
+            builder.ToTable("PipelineTarefas");
 
             builder.HasKey(c => c.Id);
 

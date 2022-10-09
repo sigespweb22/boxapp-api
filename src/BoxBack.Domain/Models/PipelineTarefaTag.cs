@@ -7,9 +7,9 @@ using BoxBack.Domain.Enums;
 
 namespace BoxBack.Domain.Models
 {
-    public class PipelineEtapaTarefaTag : EntityAudit
+    public class PipelineTarefaTag : EntityAudit
     {   
-        public PipelineEtapaTarefaTag(string nome) 
+        public PipelineTarefaTag(string nome) 
         {
             Nome = nome;
         }
@@ -17,12 +17,12 @@ namespace BoxBack.Domain.Models
         public string Nome { get; set; }
 
         // Constructor empty for EF
-        public PipelineEtapaTarefaTag() {}
+        public PipelineTarefaTag() {}
 
         // Relationships
-        [ForeignKey("PipelineEtapaTarefaId")]
-        public Guid PipelineEtapaTarefaId { get; set; }
-        public PipelineEtapaTarefa PipelineEtapaTarefa { get; set; }
+        [ForeignKey("PipelineTarefaId")]
+        public Guid PipelineTarefaId { get; set; }
+        public PipelineTarefa PipelineTarefa { get; set; }
         
 
         [ForeignKey("TarefaTagId")]

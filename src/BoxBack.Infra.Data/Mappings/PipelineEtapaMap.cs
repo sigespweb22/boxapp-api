@@ -37,7 +37,7 @@ namespace BoxBack.Infra.Data.Mappings
             //Relationships
             builder
                 .HasOne(c => c.Pipeline)
-                .WithMany(c => c.Etapas)
+                .WithMany(c => c.PipelineEtapas)
                 .HasForeignKey(c => c.PipelineId)
                 .OnDelete(DeleteBehavior.NoAction);
 

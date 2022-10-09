@@ -32,6 +32,6 @@ namespace BoxBack.Domain.Models
         public Guid PipelineId { get; set; }
         public Pipeline Pipeline { get; set; }
         
-        public ICollection<PipelineEtapaTarefa> Tarefas { get; set; }
+        public ICollection<PipelineTarefa> PipelineTarefas { get; set; }
     }
 }

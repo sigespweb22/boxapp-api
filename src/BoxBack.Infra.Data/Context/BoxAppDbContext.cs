@@ -40,12 +40,12 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<Pipeline> Pipelines { get; set; }
         public DbSet<PipelineEtapa> PipelineEtapas { get; set; }
         public DbSet<PipelineAssinante> PipelineAssinantes { get; set; }
-        public DbSet<PipelineEtapaTarefa> PipelineEtapaTarefas { get; set; }
-        public DbSet<PipelineEtapaTarefaApontamento> PipelineEtapaTarefaApontamentos { get; set; }
-        public DbSet<PipelineEtapaTarefaAssinante> PipelineEtapaTarefaAssinantes { get; set; }
-        public DbSet<PipelineEtapaTarefaTag> PipelineEtapaTarefaTags { get; set; }
-        public DbSet<PipelineEtapaTarefaAnexo> PipelineEtapaTarefaAnexos { get; set; }
-        public DbSet<PipelineEtapaTarefaApontamentoAnexo> PipelineEtapaTarefaApontamentoAnexos { get; set; }
+        public DbSet<PipelineTarefa> PipelineTarefas { get; set; }
+        public DbSet<PipelineTarefaApontamento> PipelineTarefaApontamentos { get; set; }
+        public DbSet<PipelineTarefaAssinante> PipelineTarefaAssinantes { get; set; }
+        public DbSet<PipelineTarefaTag> PipelineTarefaTags { get; set; }
+        public DbSet<PipelineTarefaAnexo> PipelineTarefaAnexos { get; set; }
+        public DbSet<PipelineTarefaApontamentoAnexo> PipelineTarefaApontamentoAnexos { get; set; }
         public DbSet<TarefaTag> TarefaTags { get; set; }
         
 
@@ -75,12 +75,12 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new PipelineMap());
             modelBuilder.ApplyConfiguration(new PipelineEtapaMap());
             modelBuilder.ApplyConfiguration(new PipelineAssinanteMap());
-            modelBuilder.ApplyConfiguration(new PipelineEtapaTarefaMap());
-            modelBuilder.ApplyConfiguration(new PipelineEtapaTarefaApontamentoMap());
-            modelBuilder.ApplyConfiguration(new PipelineEtapaTarefaAssinanteMap());
-            modelBuilder.ApplyConfiguration(new PipelineEtapaTarefaTagMap());
-            modelBuilder.ApplyConfiguration(new PipelineEtapaTarefaAnexoMap());
-            modelBuilder.ApplyConfiguration(new PipelineEtapaTarefaApontamentoAnexoMap());
+            modelBuilder.ApplyConfiguration(new PipelineTarefaMap());
+            modelBuilder.ApplyConfiguration(new PipelineTarefaApontamentoMap());
+            modelBuilder.ApplyConfiguration(new PipelineTarefaAssinanteMap());
+            modelBuilder.ApplyConfiguration(new PipelineTarefaTagMap());
+            modelBuilder.ApplyConfiguration(new PipelineTarefaAnexoMap());
+            modelBuilder.ApplyConfiguration(new PipelineTarefaApontamentoAnexoMap());
             modelBuilder.ApplyConfiguration(new TarefaTagMap());
         }
 

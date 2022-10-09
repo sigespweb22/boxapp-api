@@ -21,7 +21,7 @@ namespace BoxBack.Domain.Models
             UnidadeMedida = unidadeMedida;
             AtivoTipoServicoTipo = ativoTipoServicoTipo;
             Caracteristica = caracteristica;
-            Observacao = observacao;
+            Observacao = observacao; 
         }
 
         // Constructor empty for EF

@@ -34,13 +34,13 @@ namespace BoxBack.Infra.Data.Mappings
                 .OnDelete(DeleteBehavior.NoAction);
             
             builder
-                .HasMany(c => c.Assinantes)
+                .HasMany(c => c.PipelineAssinantes)
                 .WithOne(c => c.ApplicationUser)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
             
             builder
-                .HasMany(c => c.TarefaAssinantes)
+                .HasMany(c => c.PipelineTarefaAssinantes)
                 .WithOne(c => c.ApplicationUser)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.NoAction);

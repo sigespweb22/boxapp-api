@@ -1,5 +1,3 @@
-using System.Numerics;
-using System.Security.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,11 +5,11 @@ using BoxBack.Domain.Enums;
 
 namespace BoxBack.Domain.Models
 {
-    public class PipelineEtapaTarefa : EntityAudit
+    public class PipelineTarefa : EntityAudit
     {        
-        public PipelineEtapaTarefa(string titulo, string descricao,
-                                   int posicao, DateTime dataConclusao,
-                                   TarefaTipoEnum tipo)
+        public PipelineTarefa(string titulo, string descricao,
+                              int posicao, DateTime dataConclusao,
+                              TarefaTipoEnum tipo)
         {
             Titulo = titulo;
             Descricao = descricao;
@@ -21,7 +19,7 @@ namespace BoxBack.Domain.Models
         }
 
         // Constructor empty for EF
-        public PipelineEtapaTarefa() {}
+        public PipelineTarefa() {}
 
         public string Titulo { get; set; }
         public string Descricao { get; set; }
@@ -36,9 +34,9 @@ namespace BoxBack.Domain.Models
         public Guid PipelineEtapaId { get; set; }
         public PipelineEtapa PipelineEtapa { get; set; }
 
-        public ICollection<PipelineEtapaTarefaAssinante> TarefaAssinantes { get; set; }
-        public ICollection<PipelineEtapaTarefaApontamento> Apontamentos { get; set; }
-        public ICollection<PipelineEtapaTarefaAnexo> Anexos { get; set; }
-        public ICollection<PipelineEtapaTarefaTag> EtapaTarefaTags { get; set; }
+        public ICollection<PipelineTarefaAssinante> PipelineTarefaAssinantes { get; set; }
+        public ICollection<PipelineTarefaApontamento> PipelineTarefaApontamentos { get; set; }
+        public ICollection<PipelineTarefaAnexo> PipelineTarefaAnexos { get; set; }
+        public ICollection<PipelineTarefaTag> PipelineTarefaTags { get; set; }
     }
 }

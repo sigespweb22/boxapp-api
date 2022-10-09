@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BoxBack.Infra.Data.Mappings
 {
-    public class PipelineEtapaTarefaApontamentoAnexoMap : IEntityTypeConfiguration<PipelineEtapaTarefaApontamentoAnexo>
+    public class PipelineTarefaApontamentoMap : IEntityTypeConfiguration<PipelineTarefaApontamento>
     {
-        public void Configure(EntityTypeBuilder<PipelineEtapaTarefaApontamentoAnexo> builder)
+        public void Configure(EntityTypeBuilder<PipelineTarefaApontamento> builder)
         {
-            builder.ToTable("PipelineEtapaTarefaApontamentoAnexos");
+            builder.ToTable("PipelineTarefaApontamentos");
 
             builder.HasKey(c => c.Id);
 
@@ -19,18 +19,22 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasColumnName("Id")
                 .ValueGeneratedOnAdd();
 
-            builder.Property(c => c.Anexo)
+            builder.Property(c => c.Titulo)
+                .IsRequired(false)
+                .HasMaxLength(255);
+            
+            builder.Property(c => c.Conteudo)
                 .IsRequired();
             
             //Relationships
             builder
-                .HasOne(c => c.PipelineEtapaTarefaApontamento)
-                .WithMany(c => c.Anexos)
-                .HasForeignKey(c => c.PipelineEtapaTarefaApontamentoId)
+                .HasOne(c => c.PipelineTarefa)
+                .WithMany(c => c.PipelineTarefaApontamentos)
+                .HasForeignKey(c => c.PipelineTarefaId)
                 .OnDelete(DeleteBehavior.NoAction);
-
+            
             builder
-                .HasIndex(c => c.PipelineEtapaTarefaApontamentoId)
+                .HasIndex(c => c.PipelineTarefaId)
                 .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
                 .IsUnique(false);
         }

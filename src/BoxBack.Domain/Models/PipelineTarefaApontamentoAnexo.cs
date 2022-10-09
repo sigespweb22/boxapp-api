@@ -7,22 +7,21 @@ using BoxBack.Domain.Enums;
 
 namespace BoxBack.Domain.Models
 {
-    public class PipelineEtapaTarefaAnexo : EntityAudit
+    public class PipelineTarefaApontamentoAnexo : EntityAudit
     { 
-        public PipelineEtapaTarefaAnexo(string anexo) 
+        public PipelineTarefaApontamentoAnexo(string anexo) 
         {
             Anexo = anexo;
         }
 
-
         // Constructor empty for EF
-        public PipelineEtapaTarefaAnexo() {}
+        public PipelineTarefaApontamentoAnexo() {}
 
         public string Anexo { get; set; }
 
         // Relationships
-        [ForeignKey("PipelineEtapaTarefaId")]
-        public Guid PipelineEtapaTarefaId { get; set; }
-        public PipelineEtapaTarefa PipelineEtapaTarefa { get; set; }
+        [ForeignKey("PipelineTarefaApontamentoId")]
+        public Guid PipelineTarefaApontamentoId { get; set; }
+        public PipelineTarefaApontamento PipelineTarefaApontamento { get; set; }
     }
 }

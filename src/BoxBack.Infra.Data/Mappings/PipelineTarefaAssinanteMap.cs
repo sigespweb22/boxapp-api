@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BoxBack.Infra.Data.Mappings
 {
-    public class PipelineEtapaTarefaAssinanteMap : IEntityTypeConfiguration<PipelineEtapaTarefaAssinante>
+    public class PipelineTarefaAssinanteMap : IEntityTypeConfiguration<PipelineTarefaAssinante>
     {
-        public void Configure(EntityTypeBuilder<PipelineEtapaTarefaAssinante> builder)
+        public void Configure(EntityTypeBuilder<PipelineTarefaAssinante> builder)
         {
-            builder.ToTable("PipelineEtapaTarefaAssinantes");
+            builder.ToTable("PipelineTarefaAssinantes");
 
             builder.HasKey(c => c.Id);
 
@@ -26,20 +26,20 @@ namespace BoxBack.Infra.Data.Mappings
             //Relationships
             builder
                 .HasOne(c => c.ApplicationUser)
-                .WithMany(c => c.TarefaAssinantes)
+                .WithMany(c => c.PipelineTarefaAssinantes)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
-                .HasOne(c => c.PipelineEtapaTarefa)
-                .WithMany(c => c.TarefaAssinantes)
+                .HasOne(c => c.PipelineTarefa)
+                .WithMany(c => c.PipelineTarefaAssinantes)
                 .HasForeignKey(c => c.UserId)
                 .HasForeignKey(c => c.PipelineEtapaTarefaId)
                 .OnDelete(DeleteBehavior.NoAction);
             
             builder
                 .HasOne(c => c.ApplicationUser)
-                .WithMany(c => c.TarefaAssinantes)
+                .WithMany(c => c.PipelineTarefaAssinantes)
                 .OnDelete(DeleteBehavior.NoAction);
             
             builder
@@ -48,7 +48,7 @@ namespace BoxBack.Infra.Data.Mappings
                 .IsUnique(false);
             
             builder
-                .HasIndex(c => c.PipelineEtapaTarefaId)
+                .HasIndex(c => c.PipelineTarefaId)
                 .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
                 .IsUnique(false);
         }

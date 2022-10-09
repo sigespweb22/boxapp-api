@@ -6,26 +6,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BoxBack.Domain.Models
 {
-    public class PipelineEtapaTarefaApontamento : EntityAudit
+    public class PipelineTarefaApontamento : EntityAudit
     {        
-        public PipelineEtapaTarefaApontamento(string titulo, string conteudo)
+        public PipelineTarefaApontamento(string titulo, string conteudo)
         {
             Titulo = titulo;
             Conteudo = conteudo;
         }
 
         // Constructor empty for EF
-        public PipelineEtapaTarefaApontamento() {}
+        public PipelineTarefaApontamento() {}
 
         public string Titulo { get; set; }
         public string Conteudo { get; set; }
 
 
         // Relationships
-        [ForeignKey("PipelineEtapaTarefaId")]
-        public Guid PipelineEtapaTarefaId { get; set; }
-        public PipelineEtapaTarefa PipelineEtapaTarefa { get; set; }
+        [ForeignKey("PipelineTarefaId")]
+        public Guid PipelineTarefaId { get; set; }
+        public PipelineTarefa PipelineTarefa { get; set; }
 
-        public ICollection<PipelineEtapaTarefaApontamentoAnexo> Anexos { get; set; }
+        public ICollection<PipelineTarefaApontamentoAnexo> PipelineTarefaApontamentoAnexos { get; set; }
     }
 }

@@ -24,6 +24,6 @@ namespace BoxBack.Domain.Models
         public Tenant Tenant { get; set; }
 
         
-        public ICollection<PipelineEtapaTarefaTag> TarefaTags { get; set; }
+        public ICollection<PipelineTarefaTag> PipelineTarefaTags { get; set; }
     }
 } 

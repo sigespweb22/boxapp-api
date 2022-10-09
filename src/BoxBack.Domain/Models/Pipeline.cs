@@ -28,7 +28,7 @@ namespace BoxBack.Domain.Models
         public Tenant Tenant { get; set; }
 
 
-        public ICollection<PipelineEtapa> Etapas { get; set; }
-        public ICollection<PipelineAssinante> Assinantes { get; set; }
+        public ICollection<PipelineEtapa> PipelineEtapas { get; set; }
+        public ICollection<PipelineAssinante> PipelineAssinantes { get; set; }
     }
 }
