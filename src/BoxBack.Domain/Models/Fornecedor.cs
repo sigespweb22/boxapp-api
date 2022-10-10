@@ -16,7 +16,7 @@ namespace BoxBack.Domain.Models
             NomeFantasia = nomeFantasia;
             RazaoSocial = razaoSocial;
             InscricaoEstadual = inscricaoEstadual;
-            CNPJ = cnpj;
+            Cnpj = cnpj;
             TelefonePrincipal = telefonePrincipal;
             EmailPrincipal = emailPrincipal;
             CodigoMunicipio = codigoMunicipio;
@@ -35,7 +35,7 @@ namespace BoxBack.Domain.Models
         public string NomeFantasia { get; set; }
         public string RazaoSocial { get; set; }
         public string InscricaoEstadual { get; set; }
-        public string CNPJ { get; set; }
+        public string Cnpj { get; set; }
         public string TelefonePrincipal { get; set; }
         public string EmailPrincipal { get; set; }
         public int? CodigoMunicipio { get; set; }
