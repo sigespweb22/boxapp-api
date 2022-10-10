@@ -43,7 +43,6 @@ namespace BoxBack.Domain.Models
         public ICollection<Cliente> Clientes { get; set; }
         public ICollection<Ativo> Ativos { get; set; }
         public ICollection<Fornecedor> Fornecedores { get; set; }
-        public ICollection<FornecedorSolucao> FornecedorSolucoes { get; set; }
         public ICollection<Pipeline> Pipelines { get; set; }
     }
 }

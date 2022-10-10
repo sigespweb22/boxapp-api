@@ -36,7 +36,6 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<Ativo> Ativos { get; set; }
         public DbSet<ClienteAtivo> ClientesAtivos { get; set; }
         public DbSet<Fornecedor> Fornecedores { get; set; }
-        public DbSet<FornecedorSolucao> FornecedorSolucoes { get; set; }
         public DbSet<Pipeline> Pipelines { get; set; }
         public DbSet<PipelineEtapa> PipelineEtapas { get; set; }
         public DbSet<PipelineAssinante> PipelineAssinantes { get; set; }
@@ -71,7 +70,6 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new AtivoMap());
             modelBuilder.ApplyConfiguration(new ClienteAtivoMap());
             modelBuilder.ApplyConfiguration(new FornecedorMap());
-            modelBuilder.ApplyConfiguration(new FornecedorSolucaoMap());
             modelBuilder.ApplyConfiguration(new PipelineMap());
             modelBuilder.ApplyConfiguration(new PipelineEtapaMap());
             modelBuilder.ApplyConfiguration(new PipelineAssinanteMap());

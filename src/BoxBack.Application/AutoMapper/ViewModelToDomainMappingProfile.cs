@@ -35,6 +35,7 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.FullName, src => src.MapFrom(x => x.Name))
                 .ForMember(dst => dst.UserId, src => src.MapFrom(x => x.UserId));
             CreateMap<PipelineViewModel, Pipeline>();
+            CreateMap<FornecedorViewModel, Fornecedor>();
         }
     }
 }

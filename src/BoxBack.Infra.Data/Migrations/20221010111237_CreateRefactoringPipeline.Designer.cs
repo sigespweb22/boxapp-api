@@ -3,6 +3,7 @@ using System;
 using BoxBack.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BoxBack.Infra.Data.Migrations
 {
     [DbContext(typeof(BoxAppDbContext))]
-    partial class BoxAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221010111237_CreateRefactoringPipeline")]
+    partial class CreateRefactoringPipeline
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,13 +71,13 @@ namespace BoxBack.Infra.Data.Migrations
                         new
                         {
                             Id = new Guid("23e63d9c-283b-496b-b7d8-7dac2ef7a822"),
-                            CreatedAt = new DateTimeOffset(new DateTime(2022, 10, 10, 16, 15, 9, 26, DateTimeKind.Unspecified).AddTicks(5139), new TimeSpan(0, -3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2022, 10, 10, 8, 12, 36, 537, DateTimeKind.Unspecified).AddTicks(3853), new TimeSpan(0, -3, 0, 0, 0)),
                             CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             IsDeleted = false,
                             Name = "Master",
                             TenantId = new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
                             UniqueKey = "ors0eAr4DPkvrwhy5gVnQAqRDnJUO43j9HzbkPyZ/7Q=",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 10, 10, 16, 15, 9, 26, DateTimeKind.Unspecified).AddTicks(5162), new TimeSpan(0, -3, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 10, 10, 8, 12, 36, 537, DateTimeKind.Unspecified).AddTicks(3878), new TimeSpan(0, -3, 0, 0, 0)),
                             UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9"
                         });
                 });
@@ -541,9 +543,6 @@ namespace BoxBack.Infra.Data.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("Id");
 
-                    b.Property<string>("Cep")
-                        .HasColumnType("text");
-
                     b.Property<string>("Cidade")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text")
@@ -553,12 +552,6 @@ namespace BoxBack.Infra.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
-
-                    b.Property<int?>("CodigoMunicipio")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Complemento")
-                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -574,9 +567,6 @@ namespace BoxBack.Infra.Data.Migrations
                         .HasColumnType("text")
                         .HasDefaultValue("4");
 
-                    b.Property<string>("InscricaoEstadual")
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -584,9 +574,6 @@ namespace BoxBack.Infra.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
-
-                    b.Property<string>("Numero")
-                        .HasColumnType("text");
 
                     b.Property<string>("Observacao")
                         .HasMaxLength(255)
@@ -596,9 +583,6 @@ namespace BoxBack.Infra.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
-
-                    b.Property<string>("Rua")
-                        .HasColumnType("text");
 
                     b.Property<string>("TelefonePrincipal")
                         .HasMaxLength(14)
@@ -623,6 +607,58 @@ namespace BoxBack.Infra.Data.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("Fornecedores", (string)null);
+                });
+
+            modelBuilder.Entity("BoxBack.Domain.Models.FornecedorSolucao", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("character varying(1500)");
+
+                    b.Property<Guid>("FornecedorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("TenantId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValue(new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"));
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Valor")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("numeric(7,3)")
+                        .HasDefaultValue(0m);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FornecedorId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("FornecedorSolucoes", (string)null);
                 });
 
             modelBuilder.Entity("BoxBack.Domain.Models.Pipeline", b =>
@@ -1131,13 +1167,13 @@ namespace BoxBack.Infra.Data.Migrations
                             Id = new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
                             ApiKey = new Guid("57d390e7-2b87-47fe-9bc8-0bae3a388499"),
                             Cnpj = "12.368.943/0001-50",
-                            CreatedAt = new DateTimeOffset(new DateTime(2022, 10, 10, 16, 15, 9, 23, DateTimeKind.Unspecified).AddTicks(7181), new TimeSpan(0, -3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2022, 10, 10, 8, 12, 36, 535, DateTimeKind.Unspecified).AddTicks(284), new TimeSpan(0, -3, 0, 0, 0)),
                             CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             EmailPrincipal = "rafale@boxtecnologia.com.br",
                             IsDeleted = false,
                             Nome = "Box Tecnologia Ltda",
                             NomeExibicao = "Box Tecnologia",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 10, 10, 16, 15, 9, 23, DateTimeKind.Unspecified).AddTicks(7210), new TimeSpan(0, -3, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 10, 10, 8, 12, 36, 535, DateTimeKind.Unspecified).AddTicks(315), new TimeSpan(0, -3, 0, 0, 0)),
                             UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9"
                         });
                 });
@@ -1348,6 +1384,25 @@ namespace BoxBack.Infra.Data.Migrations
                     b.Navigation("Tenant");
                 });
 
+            modelBuilder.Entity("BoxBack.Domain.Models.FornecedorSolucao", b =>
+                {
+                    b.HasOne("BoxBack.Domain.Models.Fornecedor", "Fornecedor")
+                        .WithMany("FornecedorSolucoes")
+                        .HasForeignKey("FornecedorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("BoxBack.Domain.Models.Tenant", "Tenant")
+                        .WithMany("FornecedorSolucoes")
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Fornecedor");
+
+                    b.Navigation("Tenant");
+                });
+
             modelBuilder.Entity("BoxBack.Domain.Models.Pipeline", b =>
                 {
                     b.HasOne("BoxBack.Domain.Models.Tenant", "Tenant")
@@ -1544,6 +1599,11 @@ namespace BoxBack.Infra.Data.Migrations
                     b.Navigation("Ativos");
                 });
 
+            modelBuilder.Entity("BoxBack.Domain.Models.Fornecedor", b =>
+                {
+                    b.Navigation("FornecedorSolucoes");
+                });
+
             modelBuilder.Entity("BoxBack.Domain.Models.Pipeline", b =>
                 {
                     b.Navigation("PipelineAssinantes");
@@ -1586,6 +1646,8 @@ namespace BoxBack.Infra.Data.Migrations
                     b.Navigation("Ativos");
 
                     b.Navigation("Clientes");
+
+                    b.Navigation("FornecedorSolucoes");
 
                     b.Navigation("Fornecedores");
 

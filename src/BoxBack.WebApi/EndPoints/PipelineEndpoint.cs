@@ -151,6 +151,7 @@ namespace BoxBack.WebApi.EndPoints
         [Authorize(Roles = "Master, CanPipelineUpdate, CanPipelineAll")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
@@ -177,12 +178,12 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             if (pipelineDB == null)
             {
-                AddError("Pipeline não encontrada para atualizar.");
+                AddError("Pipeline não encontrado para atualizar.");
                 return CustomResponse(404);
             }
             #endregion
 
-            #region Assinantes remove
+            #region Assinantes remove | Mudar isso pelo amooooor
             _context.PipelineAssinantes.RemoveRange(pipelineDB.PipelineAssinantes);
             #endregion
 
