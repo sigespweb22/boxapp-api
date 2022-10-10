@@ -40,6 +40,6 @@ namespace BoxBack.Application.ViewModels
 
         [DisplayName("Assinantes")]
         [MinLength(1, ErrorMessage = "\nAo menos um assinante é requerido.")]
-        public List<PipelineAssinanteViewModel> Assinantes { get; set; }
+        public List<PipelineAssinanteViewModel> PipelineAssinantes { get; set; }
     }
 }
