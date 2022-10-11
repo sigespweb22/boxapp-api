@@ -62,15 +62,15 @@ namespace BoxBack.Domain.Enums
         //End - Asset
 
         //Begin - Fornecedor
-        CanFornecedorAll = 22,
-        CanFornecedorList = 23,
-        CanFornecedorRead = 24,
-        CanFornecedorUpdate = 25,
-        CanFornecedorCreate = 26,
-        CanForncedorDelete = 27,
-        CanClientAlterStatus = 28,
-        CanClientTPAll = 29,
-        CanClientTPListOne = 30,
+        CanFornecedorAll = 38,
+        CanFornecedorList = 39,
+        CanFornecedorRead = 40,
+        CanFornecedorUpdate = 41,
+        CanFornecedorCreate = 42,
+        CanForncedorDelete = 43,
+        CanFornecedorAlterStatus = 44,
+        CanFornecedorTPAll = 45,
+        CanFornecedorTPListOne = 46,
         //End - Fornecedor
     }
 }

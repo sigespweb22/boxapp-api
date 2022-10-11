@@ -27,7 +27,7 @@ namespace BoxBack.Application.ViewModels
 
         [Required(ErrorMessage = "\nCNPJ é requerido.")]
         [StringLength(18, MinimumLength = 14, ErrorMessage = "\nCNPJ deve possuir 14 caracteres.")]
-        public string CNPJ { get; set; }
+        public string Cnpj { get; set; }
         public string TelefonePrincipal { get; set; }
         public string EmailPrincipal { get; set; }
         public string Observacao { get; set; }
@@ -40,5 +40,6 @@ namespace BoxBack.Application.ViewModels
         public string Estado { get; set; }
         public string Cep { get; set; }
         public string Status { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

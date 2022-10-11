@@ -8,8 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using BoxBack.Domain.Models;
-using BoxBack.Domain.Interfaces;
-using BoxBack.Infra.CrossCutting.Identity.Services;
 using BoxBack.WebApi.Security;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Application.ViewModels;
