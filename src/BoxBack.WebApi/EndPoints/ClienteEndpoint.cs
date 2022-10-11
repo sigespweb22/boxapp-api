@@ -216,7 +216,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Update cliente
             try
             {
-                _context.Update(clienteMap);
+                _context.Clientes.Update(clienteMap);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion

@@ -49,31 +49,32 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Lista todos os clientes
+        /// Lista todos os FORNECEDORES
         /// </summary>s
         /// <param name="q"></param>
-        /// <returns>Um json com os clientes</returns>
-        /// <response code="200">Lista de clientes</response>
+        /// <returns>Um json com os FORNECEDORES</returns>
+        /// <response code="200">Lista de FORNECEDORES</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         [Authorize(Roles = "Master, CanFornecedorList, CanFornecedorAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("list")]
         [HttpGet]
         public async Task<IActionResult> ListAsync(string q)
         {
             #region Get data
-            var clientes = new List<Cliente>();
+            var fornecedores = new List<Fornecedor>();
             try
             {
-                clientes = await _context.Clientes
-                                            .AsNoTracking()
-                                            .OrderByDescending(x => x.UpdatedAt)
-                                            .ToListAsync();
-                if (clientes == null)
+                fornecedores = await _context.Fornecedores
+                                                .AsNoTracking()
+                                                .OrderByDescending(x => x.UpdatedAt)
+                                                .ToListAsync();
+                if (fornecedores == null)
                 {
                     AddError("Não encontrado.");
                     return CustomResponse(404);
@@ -84,43 +85,44 @@ namespace BoxBack.WebApi.EndPoints
             
             #region Filter search
             if(!string.IsNullOrEmpty(q))
-                clientes = clientes.Where(x => x.RazaoSocial.Contains(q)).ToList();
+                fornecedores = fornecedores.Where(x => x.RazaoSocial.Contains(q)).ToList();
             #endregion
 
             #region Map
-            IEnumerable<ClienteViewModel> clienteMapped = new List<ClienteViewModel>();
+            IEnumerable<FornecedorViewModel> fornecedoresMapped = new List<FornecedorViewModel>();
             try
             {
-                clienteMapped = _mapper.Map<IEnumerable<ClienteViewModel>>(clientes);
+                fornecedoresMapped = _mapper.Map<IEnumerable<FornecedorViewModel>>(fornecedores);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
             return Ok(new {
-                AllData = clienteMapped.ToList(),
-                Clients = clienteMapped.ToList(),
+                AllData = fornecedoresMapped.ToList(),
+                Clients = fornecedoresMapped.ToList(),
                 Params = q,
-                Total = clienteMapped.Count()
+                Total = fornecedoresMapped.Count()
             });
         }
 
         /// <summary>
-        /// Cria um cliente
+        /// Cria um FORNECEDOR
         /// </summary>
-        /// <param name="clienteViewModel"></param>
+        /// <param name="fornecedorViewModel"></param>
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
-        [Authorize(Roles = "Master, CanClientCreate, CanClientAll")]
+        [Authorize(Roles = "Master, CanFornecedorCreate, CanFornecedorAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("create")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody]ClienteViewModel clienteViewModel)
+        public async Task<IActionResult> CreateAsync([FromBody]FornecedorViewModel fornecedorViewModel)
         {
             #region Validations required
-            if (string.IsNullOrEmpty(clienteViewModel.CNPJ))
+            if (string.IsNullOrEmpty(fornecedorViewModel.Cnpj))
             {
                 AddError("Cnpj é requerido.");
                 return CustomResponse(400);
@@ -128,26 +130,26 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Map
-            var clienteMapped = new Cliente();
+            var fornecedorMapped = new Fornecedor();
             try
             {
-                clienteMapped = _mapper.Map<Cliente>(clienteViewModel);
+                fornecedorMapped = _mapper.Map<Fornecedor>(fornecedorViewModel);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Validations
-            bool alreadySameCNPJ;
+            bool alreadySameCnpj;
             try
             {
-                alreadySameCNPJ = await _context
-                                            .Clientes
-                                            .AnyAsync(x => x.CNPJ == clienteViewModel.CNPJ);
+                alreadySameCnpj = await _context
+                                            .Fornecedores
+                                            .AnyAsync(x => x.Cnpj == fornecedorViewModel.Cnpj);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            if (alreadySameCNPJ)
+            if (alreadySameCnpj)
             {
-                AddError("Já existe um cliente cadastrado com o mesmo CNPJ informado.");
+                AddError("Já existe um fornecedor cadastrado com o mesmo CNPJ informado.");
                 return CustomResponse(400);
             }
             #endregion
@@ -155,7 +157,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Persistance and commit
             try
             {
-                await _context.Clientes.AddAsync(clienteMapped);
+                await _context.Fornecedores.AddAsync(fornecedorMapped);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
@@ -165,23 +167,24 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Atualiza um cliente
+        /// Atualiza um FORNECEDOR
         /// </summary>
-        /// <param name="clienteViewModel"></param>
+        /// <param name="fornecedorViewModel"></param>
         /// <returns>True se atualizada com sucesso</returns>
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
-        [Authorize(Roles = "Master, CanClientUpdate, CanClientAll")]
+        [Authorize(Roles = "Master, CanFornecedorUpdate, CanFornecedorAll")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody]ClienteViewModel clienteViewModel)
+        public async Task<IActionResult> UpdateAsync([FromBody]FornecedorViewModel fornecedorViewModel)
         {
             #region Required validations
-            if (clienteViewModel.Id == null ||
-                clienteViewModel.Id == Guid.Empty)
+            if (fornecedorViewModel.Id == null ||
+                fornecedorViewModel.Id == Guid.Empty)
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);
@@ -189,34 +192,34 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Get data for update
-            var clienteDB = new Cliente();
+            var fornecedorDB = new Fornecedor();
             try
             {
-                clienteDB = await _context
-                                    .Clientes
-                                    .FindAsync(clienteViewModel.Id);
+                fornecedorDB = await _context
+                                        .Fornecedores
+                                        .FindAsync(fornecedorViewModel.Id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            if (clienteDB == null)
+            if (fornecedorDB == null)
             {
-                AddError("Cliente não encontrada para atualizar.");
+                AddError("Fornecedor não encontrada para atualizar.");
                 return CustomResponse(404);
             }
             #endregion
 
             #region Map
-            var clienteMap = new Cliente();
+            var fornecedorMap = new Fornecedor();
             try
             {
-                clienteMap = _mapper.Map<ClienteViewModel, Cliente>(clienteViewModel, clienteDB);
+                fornecedorMap = _mapper.Map<FornecedorViewModel, Fornecedor>(fornecedorViewModel, fornecedorDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            #region Update cliente
+            #region Update Fornecedor
             try
             {
-                _context.Update(clienteMap);
+                _context.Fornecedores.Update(fornecedorMap);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -233,7 +236,7 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Deleta um cliente
+        /// Deleta um FORNECEDOR
         /// </summary>
         /// <param name="id"></param>
         /// <returns>True se deletado com sucesso</returns>
@@ -241,11 +244,12 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Not found</response>
         [Route("delete/{id}")]
-        [Authorize(Roles = "Master, CanClientDelete, CanClientAll")]
+        [Authorize(Roles = "Master, CanFornecedorDelete, CanFornecedorAll")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
@@ -262,13 +266,13 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Get data
-            var cliente = new Cliente();
+            var fornecedor = new Fornecedor();
             try
             {
-                cliente = await _context.Clientes.FindAsync(id);
-                if (cliente == null)
+                fornecedor = await _context.Fornecedores.FindAsync(id);
+                if (fornecedor == null)
                 {
-                    AddError("Cliente não encontrado para deletar.");
+                    AddError("Fornecedores não encontrado para deletar.");
                     return CustomResponse(404);
                 }
             }
@@ -278,7 +282,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Delete
             try
             {
-                _context.Clientes.Remove(cliente);
+                _context.Fornecedores.Remove(fornecedor);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
@@ -289,7 +293,7 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Altera o status de um cliente
+        /// Altera o status de um FORNECEDOR
         /// </summary>
         /// <param name="id"></param>
         /// <returns>True se a operação foi realizada com sucesso</returns>
@@ -306,11 +310,12 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanClientAlterStatus, CanClientAll")]
+        [Authorize(Roles = "Master, CanFornecedorAlterStatus, CanFornecedorAll")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         public async Task<IActionResult> AlterStatusAsync(Guid id)
         {
@@ -323,13 +328,13 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
     
             #region Get data
-            var cliente = new Cliente();
+            var fornecedor = new Fornecedor();
             try
             {
-                cliente = await _context.Clientes.FindAsync(id);
-                if (cliente == null)
+                fornecedor = await _context.Fornecedores.FindAsync(id);
+                if (fornecedor == null)
                 {
-                    AddError("Cliente não encontrado para alterar seu status.");
+                    AddError("Fornecedor não encontrado para alterar seu status.");
                     return CustomResponse(404);
                 }
             }
@@ -337,13 +342,13 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Map
-            switch(cliente.IsDeleted)
+            switch(fornecedor.IsDeleted)
             {
                 case true:
-                    cliente.IsDeleted = false;
+                    fornecedor.IsDeleted = false;
                     break;
                 case false:
-                    cliente.IsDeleted = true;
+                    fornecedor.IsDeleted = true;
                     break;
             }
             #endregion
@@ -351,14 +356,14 @@ namespace BoxBack.WebApi.EndPoints
             #region Alter status
             try
             {
-                _context.Clientes.Update(cliente);
+                _context.Fornecedores.Update(fornecedor);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
             #endregion
 
-            return CustomResponse(200, new { message = "Status cliente alterado com sucesso." } );
+            return CustomResponse(200, new { message = "Status fornecedor alterado com sucesso." } );
         }
 
         #region Third Party
