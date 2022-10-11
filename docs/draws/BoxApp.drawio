@@ -1,10 +1,10 @@
 <mxfile host="65bd71144e">
     <diagram id="ZShh_gid76VzSa8Wm5ik" name="Principal">
-        <mxGraphModel dx="2114" dy="2384" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1616" dy="2098" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="ZavF8V106AgdVAA2BBxn-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" vertex="1" parent="1">
+                <mxCell id="ZavF8V106AgdVAA2BBxn-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" parent="1" vertex="1">
                     <mxGeometry x="790" y="452" width="440" height="378" as="geometry"/>
                 </mxCell>
                 <mxCell id="_6B5lGgmV3izRP4LQL0J-19" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" parent="1" vertex="1">
@@ -254,41 +254,41 @@
                 <mxCell id="SFDWWG2kWYYzSLiMUwht-19" value="Integrações / Sistema de Terceiro (Bom Controle)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontSize=12;fontColor=#0066CC;" parent="1" vertex="1">
                     <mxGeometry x="3" y="884.5" width="287" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="ks1BH8dG9nhiC-ubcMcS-5" style="edgeStyle=none;html=1;" edge="1" parent="1" source="SFDWWG2kWYYzSLiMUwht-23" target="ks1BH8dG9nhiC-ubcMcS-1">
+                <mxCell id="ks1BH8dG9nhiC-ubcMcS-5" style="edgeStyle=none;html=1;" parent="1" source="SFDWWG2kWYYzSLiMUwht-23" target="ks1BH8dG9nhiC-ubcMcS-1" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="SFDWWG2kWYYzSLiMUwht-23" value="SISTEMA&lt;br&gt;E-MAIL" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="948" y="480" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="ZavF8V106AgdVAA2BBxn-2" value="CONFIG 1" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="ZavF8V106AgdVAA2BBxn-2" value="CONFIG 1" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="810" y="690" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="ZavF8V106AgdVAA2BBxn-6" value="Sistema / Multiplas contas de envio de e-mail pela plataforma" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontSize=12;fontColor=#0066CC;" vertex="1" parent="1">
+                <mxCell id="ZavF8V106AgdVAA2BBxn-6" value="Sistema / Multiplas contas de envio de e-mail pela plataforma" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontSize=12;fontColor=#0066CC;" parent="1" vertex="1">
                     <mxGeometry x="770" y="427" width="370" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="ZavF8V106AgdVAA2BBxn-7" value="CONFIG 2" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="ZavF8V106AgdVAA2BBxn-7" value="CONFIG 2" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="950" y="730" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="ZavF8V106AgdVAA2BBxn-8" value="CONFIG 3" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="ZavF8V106AgdVAA2BBxn-8" value="CONFIG 3" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1090" y="690" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="ks1BH8dG9nhiC-ubcMcS-2" style="edgeStyle=none;html=1;" edge="1" parent="1" source="ks1BH8dG9nhiC-ubcMcS-1" target="ZavF8V106AgdVAA2BBxn-2">
+                <mxCell id="ks1BH8dG9nhiC-ubcMcS-2" style="edgeStyle=none;html=1;" parent="1" source="ks1BH8dG9nhiC-ubcMcS-1" target="ZavF8V106AgdVAA2BBxn-2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="ks1BH8dG9nhiC-ubcMcS-3" style="edgeStyle=none;html=1;" edge="1" parent="1" source="ks1BH8dG9nhiC-ubcMcS-1" target="ZavF8V106AgdVAA2BBxn-7">
+                <mxCell id="ks1BH8dG9nhiC-ubcMcS-3" style="edgeStyle=none;html=1;" parent="1" source="ks1BH8dG9nhiC-ubcMcS-1" target="ZavF8V106AgdVAA2BBxn-7" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="ks1BH8dG9nhiC-ubcMcS-4" style="edgeStyle=none;html=1;" edge="1" parent="1" source="ks1BH8dG9nhiC-ubcMcS-1" target="ZavF8V106AgdVAA2BBxn-8">
+                <mxCell id="ks1BH8dG9nhiC-ubcMcS-4" style="edgeStyle=none;html=1;" parent="1" source="ks1BH8dG9nhiC-ubcMcS-1" target="ZavF8V106AgdVAA2BBxn-8" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="ks1BH8dG9nhiC-ubcMcS-1" value="ENVIO - SMTP&amp;nbsp;&lt;br&gt;&lt;font color=&quot;#ff8000&quot;&gt;MÚLTIPLAS CONFIGURAÇÕES QUE PODEM SER UTILIZADAS EM AUTOMAÇÕES E INTEGRAÇÕES DO BOXAPP&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="ks1BH8dG9nhiC-ubcMcS-1" value="ENVIO - SMTP&amp;nbsp;&lt;br&gt;&lt;font color=&quot;#ff8000&quot;&gt;MÚLTIPLAS CONFIGURAÇÕES QUE PODEM SER UTILIZADAS EM AUTOMAÇÕES E INTEGRAÇÕES DO BOXAPP&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="859.5" y="550" width="297" height="80" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
     <diagram id="4N-SirOJTL2Cmik7jO11" name="Modelagem Produtos, Serviços e Fornecedores">
-        <mxGraphModel dx="2498" dy="2605" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1446" dy="2001" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="eXtYlaey4sNEdKM090Xs-0"/>
                 <mxCell id="eXtYlaey4sNEdKM090Xs-1" parent="eXtYlaey4sNEdKM090Xs-0"/>
@@ -350,7 +350,7 @@
                     <mxGeometry y="30" width="200" height="180" as="geometry"/>
                 </mxCell>
                 <mxCell id="X2XOQm4gccJln7k2Dlni-16" value="ClienteProduto" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fontColor=#FF8000;" parent="eXtYlaey4sNEdKM090Xs-1" vertex="1">
-                    <mxGeometry x="728" y="86" width="200" height="145" as="geometry">
+                    <mxGeometry x="728" y="-20" width="200" height="260" as="geometry">
                         <mxRectangle x="110" y="220" width="120" height="30" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
@@ -358,7 +358,7 @@
                     <mxGeometry y="30" width="200" height="115" as="geometry"/>
                 </mxCell>
                 <mxCell id="3lqANwImFpX3Qry8p_WK-13" value="&lt;div&gt;+EntityAudit: EntityAudit&lt;span&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;+ProdutoId: Guid&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+Produto: Produto&lt;span&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ClienteId: Guid&lt;/div&gt;&lt;div&gt;+Cliente: Cliente&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="X2XOQm4gccJln7k2Dlni-16">
-                    <mxGeometry y="145" width="200" as="geometry"/>
+                    <mxGeometry y="145" width="200" height="115" as="geometry"/>
                 </mxCell>
                 <mxCell id="X2XOQm4gccJln7k2Dlni-18" value="ClienteProdutoEspecificacao" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fontColor=#FF8000;" parent="eXtYlaey4sNEdKM090Xs-1" vertex="1">
                     <mxGeometry x="730" y="322" width="200" height="210" as="geometry">
