@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BoxBack.Domain.Enums
 {
-    public enum AtivoUnidadeMedidaEnum
+    public enum ServicoUnidadeMedidaEnum
     {
         [Display(Name = "Nenhum")]
         NENHUM = 0,
@@ -17,6 +17,9 @@ namespace BoxBack.Domain.Enums
         GB = 3,
 
         [Display(Name = "vCPU")]
-        vCPU = 4
+        vCPU = 4,
+
+        [Display(Name = "Contas e-mail")]
+        CONTAS_EMAIL = 5
     }
 }

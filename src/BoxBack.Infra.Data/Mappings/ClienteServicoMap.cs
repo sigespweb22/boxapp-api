@@ -6,41 +6,33 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BoxBack.Infra.Data.Mappings
 {
-    public class ClienteAtivoMap : IEntityTypeConfiguration<ClienteAtivo>
+    public class ClienteServicoMap : IEntityTypeConfiguration<ClienteServico>
     {
-        public void Configure(EntityTypeBuilder<ClienteAtivo> builder)
+        public void Configure(EntityTypeBuilder<ClienteServico> builder)
         {
-            builder.ToTable("ClientesAtivos");
+            builder.ToTable("ClienteServicos");
 
-            builder.HasKey(c => new { c.ClienteId, c.AtivoId });
+            builder.HasKey(c => new { c.ClienteId, c.ServicoId });
 
-            builder.Property(c => c.ValorCusto)
-                .HasDefaultValue(0)
-                .HasColumnType("decimal(7,3)");
-            
             builder.Property(c => c.ValorVenda)
                 .HasDefaultValue(0)
                 .HasColumnType("decimal(7,3)");
 
-            builder.Property(c => c.Caracteristica)
+            builder.Property(c => c.Caracteristicas)
                 .IsRequired(false)
                 .HasMaxLength(1500);
 
-            builder.Property(c => c.Observacao)
-                .IsRequired(false)
-                .HasMaxLength(255);
-
             builder
                 .HasOne(c => c.Cliente)
-                .WithMany(c => c.Ativos)
+                .WithMany(c => c.ClienteServicos)
                 .HasForeignKey(c => c.ClienteId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
             
             builder
-                .HasOne(c => c.Ativo)
-                .WithMany(c => c.Clientes)
-                .HasForeignKey(c => c.AtivoId)
+                .HasOne(c => c.Servico)
+                .WithMany(c => c.ClienteServicos)
+                .HasForeignKey(c => c.ServicoId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
         }

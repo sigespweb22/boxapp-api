@@ -33,7 +33,7 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.ApplicationRoleGroupsNames, src => src.MapFrom(x => x.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name)));
             CreateMap<Cliente, ClienteViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
-            CreateMap<Ativo, AtivoViewModel>()
+            CreateMap<Servico, ServicoViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
             CreateMap<PipelineAssinante, PipelineAssinanteViewModel>()
                 .ForMember(dst => dst.Name, src => src.MapFrom(x => x.FullName))

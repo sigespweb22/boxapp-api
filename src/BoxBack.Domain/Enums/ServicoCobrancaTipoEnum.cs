@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BoxBack.Domain.Enums
 {
-    public enum ClienteAtivoServicoTipoEnum
+    public enum ServicoCobrancaTipoEnum
     {
         [Display(Name = "Nenhum")]
         NENHUM = 0,

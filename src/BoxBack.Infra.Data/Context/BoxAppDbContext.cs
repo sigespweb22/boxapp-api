@@ -33,9 +33,10 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<ApplicationRoleGroup> ApplicationRoleGroups { get; set; }
         public DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Ativo> Ativos { get; set; }
-        public DbSet<ClienteAtivo> ClientesAtivos { get; set; }
+        public DbSet<ClienteServico> ClientesServicos { get; set; }
+        public DbSet<Servico> Servicos { get; set; }
         public DbSet<Fornecedor> Fornecedores { get; set; }
+        public DbSet<FornecedorServico> FornecedorServicos { get; set; }
         public DbSet<Pipeline> Pipelines { get; set; }
         public DbSet<PipelineEtapa> PipelineEtapas { get; set; }
         public DbSet<PipelineAssinante> PipelineAssinantes { get; set; }
@@ -67,9 +68,10 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new ApplicationRoleGroupMap());
             modelBuilder.ApplyConfiguration(new ApplicationUserGroupMap());
             modelBuilder.ApplyConfiguration(new ClienteMap());
-            modelBuilder.ApplyConfiguration(new AtivoMap());
-            modelBuilder.ApplyConfiguration(new ClienteAtivoMap());
+            modelBuilder.ApplyConfiguration(new ClienteServicoMap());
+            modelBuilder.ApplyConfiguration(new ServicoMap());
             modelBuilder.ApplyConfiguration(new FornecedorMap());
+            modelBuilder.ApplyConfiguration(new FornecedorServicoMap());
             modelBuilder.ApplyConfiguration(new PipelineMap());
             modelBuilder.ApplyConfiguration(new PipelineEtapaMap());
             modelBuilder.ApplyConfiguration(new PipelineAssinanteMap());

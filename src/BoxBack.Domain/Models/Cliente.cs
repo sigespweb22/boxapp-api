@@ -1,5 +1,3 @@
-using System.Numerics;
-using System.Security.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -55,6 +53,6 @@ namespace BoxBack.Domain.Models
         public Guid TenantId { get; set; }
         public Tenant Tenant { get; set; }
 
-        public ICollection<ClienteAtivo> Ativos { get; set; }
+        public ICollection<ClienteServico> ClienteServicos { get; set; }
     }
 }

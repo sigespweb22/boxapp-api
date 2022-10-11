@@ -1,11 +1,6 @@
-﻿using System;
-using System.Security.Cryptography;
-using System.Reflection.Metadata.Ecma335;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
-using BoxBack.Application.Extensions;
 
 namespace BoxBack.Application.AutoMapper
 {
@@ -30,7 +25,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ApplicationRoleGroupViewModel, ApplicationRoleGroup>();
             CreateMap<ApplicationRoleViewModel, ApplicationRole>();
             CreateMap<ClienteViewModel, Cliente>();
-            CreateMap<AtivoViewModel, Ativo>();
+            CreateMap<ServicoViewModel, Servico>();
             CreateMap<PipelineAssinanteViewModel, PipelineAssinante>()
                 .ForMember(dst => dst.FullName, src => src.MapFrom(x => x.Name))
                 .ForMember(dst => dst.UserId, src => src.MapFrom(x => x.UserId));
