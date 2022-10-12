@@ -47,7 +47,7 @@ namespace BoxBack.Infra.Data.Mappings
                 .IsRequired();
             
             builder.Property(c => c.FornecedorServicoId)
-                .IsRequired(false);
+                .HasDefaultValue(Guid.Empty);
             
             builder
                 .HasOne(c => c.Tenant)
