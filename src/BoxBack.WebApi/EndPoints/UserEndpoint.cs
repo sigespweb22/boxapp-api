@@ -104,7 +104,7 @@ namespace BoxBack.WebApi.EndPoints
             
             return Ok(new {
                 AllData = userMap.ToList(),
-                Users = userMap.ToList(),
+                Usuarios = userMap.ToList(),
                 Params = q,
                 Total = userMap.Count()
             });

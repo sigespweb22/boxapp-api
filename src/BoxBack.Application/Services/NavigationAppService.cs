@@ -100,9 +100,9 @@ namespace BoxBack.Application.Services
 
             var navigationC = new VerticalNavItemViewModel
             {
-                Title = "Comercial",
-                Icon = "HandshakeOutline",
                 BadgeContent = "",
+                Title = "Comercial",
+                Icon = "Domain",
                 BadgeColor = "primary",
                 Children = new List<Son>()
             };
@@ -141,7 +141,26 @@ namespace BoxBack.Application.Services
                 Action = "list",
                 Subject = "ac-pipeline-page"
             };
+            
             navigationD.Children.Add(oldestSonNB3);
+
+            var navigationE = new VerticalNavItemViewModel
+            {
+                Title = "Parceiros",
+                Icon = "HandshakeOutline",
+                BadgeContent = "",
+                BadgeColor = "primary",
+                Children = new List<Son>()
+            };
+            var oldestSonNB4 = new Son
+            {
+                Title = "Fornecedores",
+                Path = "/negocios/parceiros/fornecedor/list",
+                Action = "list",
+                Subject = "ac-fornecedor-page"
+            };
+            navigationE.Children.Add(oldestSonNB4);
+
 
             await Task.Run(() => navigation.Add(navigationA));
             
@@ -154,6 +173,7 @@ namespace BoxBack.Application.Services
             await Task.Run(() => navigation.Add(navigationC));
 
             await Task.Run(() => navigation.Add(navigationD));
+            await Task.Run(() => navigation.Add(navigationE));
             #endregion
             
             return navigation.ToList();
