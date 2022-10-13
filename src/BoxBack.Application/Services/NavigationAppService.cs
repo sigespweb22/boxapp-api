@@ -46,8 +46,8 @@ namespace BoxBack.Application.Services
 
             oldestDashboardSonA = new Son
             {
-                Title = "Access Control",
-                Path = "/dashboards/access-control",
+                Title = "Controle Acesso",
+                Path = "/dashboards/controle-acesso",
                 Action = "list",
                 Subject = "ac-dashboard-access-control-page"
             };
@@ -55,8 +55,8 @@ namespace BoxBack.Application.Services
 
             oldestDashboardSonB = new Son
             {
-                Title = "Client",
-                Path = "/dashboards/client",
+                Title = "Clientes",
+                Path = "/dashboards/cliente",
                 Action = "list",
                 Subject = "ac-dashboard-client-page"
             };
@@ -64,7 +64,7 @@ namespace BoxBack.Application.Services
 
             navigationB = new VerticalNavItemViewModel
             {
-                Title = "Access Control",
+                Title = "Controle Acesso",
                 Icon = "TrackpadLock",
                 BadgeContent = "",
                 BadgeColor = "primary",
@@ -73,8 +73,8 @@ namespace BoxBack.Application.Services
 
             oldestSonB = new Son
             {
-                Title = "Users",
-                Path = "/system/control-access/user/list",
+                Title = "Usuários",
+                Path = "/sistema/controle-acesso/usuario/list",
                 Action = "list",
                 Subject = "ac-user-page"
             };
@@ -82,8 +82,8 @@ namespace BoxBack.Application.Services
 
             oldestSonC = new Son
             {
-                Title = "Permissions",
-                Path = "/system/control-access/role/list",
+                Title = "Permissões",
+                Path = "/sistema/controle-acesso/role/list",
                 Action = "list",
                 Subject = "ac-role-page"
             };
@@ -91,8 +91,8 @@ namespace BoxBack.Application.Services
 
             oldestSonD = new Son
             {
-                Title = "Groups",
-                Path = "/system/control-access/group/list",
+                Title = "Grupos",
+                Path = "/sistema/controle-acesso/grupo/list",
                 Action = "list",
                 Subject = "ac-group-page"
             };
@@ -100,7 +100,7 @@ namespace BoxBack.Application.Services
 
             var navigationC = new VerticalNavItemViewModel
             {
-                Title = "Commercial",
+                Title = "Comercial",
                 Icon = "HandshakeOutline",
                 BadgeContent = "",
                 BadgeColor = "primary",
@@ -109,8 +109,8 @@ namespace BoxBack.Application.Services
 
             var oldestSonNB1 = new Son
             {
-                Title = "Client",
-                Path = "/bussiness/commercial/client/list",
+                Title = "Clientes",
+                Path = "/negocios/comercial/cliente/list",
                 Action = "list",
                 Subject = "ac-client-page"
             };
@@ -118,10 +118,10 @@ namespace BoxBack.Application.Services
 
             var oldestSonNB2 = new Son
             {
-                Title = "Assets",
-                Path = "/bussiness/commercial/asset/list",
+                Title = "Serviços",
+                Path = "/negocios/comercial/servico/list",
                 Action = "list",
-                Subject = "ac-asset-page"
+                Subject = "ac-servicos-page"
             };
             navigationC.Children.Add(oldestSonNB2);
 
@@ -137,7 +137,7 @@ namespace BoxBack.Application.Services
             var oldestSonNB3 = new Son
             {
                 Title = "Pipelines",
-                Path = "/bussiness/processos/pipelines/list",
+                Path = "/negocios/processos/pipeline/list",
                 Action = "list",
                 Subject = "ac-pipeline-page"
             };

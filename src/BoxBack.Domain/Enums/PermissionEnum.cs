@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace BoxBack.Domain.Enums
 {
     public enum PermissionEnum
@@ -52,13 +50,13 @@ namespace BoxBack.Domain.Enums
         //End - Client
 
         //Begin - Asset
-        CanAssetAll = 31,
-        CanAssetList = 32,
-        CanAssetRead = 33,
-        CanAssetUpdate = 34,
-        CanAssetCreate = 35,
-        CanAssetDelete = 36,
-        CanAssetAlterStatus = 37,
+        CanServicoAll = 31,
+        CanServicoList = 32,
+        CanServicoRead = 33,
+        CanServicoUpdate = 34,
+        CanServicoCreate = 35,
+        CanServicoDelete = 36,
+        CanServicoAlterStatus = 37,
         //End - Asset
 
         //Begin - Fornecedor

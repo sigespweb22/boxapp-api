@@ -1,29 +1,17 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BoxBack.Infra.Data.Context;
-using BoxBack.WebApi.Extensions;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using BoxBack.Domain.Interfaces;
-using BoxBack.Domain.Enums;
-using BoxBack.Application.Interfaces;
-using BoxBack.Application.ViewModels.Selects;
-using BoxBack.Infra.Data.Extensions;
 using BoxBack.WebApi.Controllers;
-using BoxBack.Application.ViewModels.Requests;
-using BoxBack.Domain.Services;
-using BoxBack.Domain.ModelsServices;
 
 namespace BoxBack.WebApi.EndPoints
 {
