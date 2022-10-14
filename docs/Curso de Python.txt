@@ -1,0 +1,39 @@
+3 Grande motivos do porque Python e não C++ por exemplo
+-> Simplicidade;
+-> Maiores empresas do planeta utilizam esta tecnologia (Automação e Aplicativos, Web, Devops - Automatização de tarefas na AWS);
+-> Grande comunidade - Documentação - Muito popular;
+
+Carreira em Python - Engenharia de Software
+-> Automation:
+    -> Selenium;
+    -> PyTest;
+    -> PyUnit;
+
+-> Web developer:
+    - Django;
+    - Flask;
+    - Web2Py;
+
+    ->FronEnd:
+
+    ->BackEnd:
+
+-> Ethical Hacker:
+    -> Scape;
+    -> FlowGrep;
+    -> SubBrute;
+
+-> Game Developer:
+    -> PyGame;
+    -> PyOpenGL;
+    -> Kivy;
+
+-> Data Scientist:
+    -> Pandas;
+    -> Numpy;
+    -> SCI Kit Learn;
+
+
+IDE
+    -> VIM;
+    -> Replit;

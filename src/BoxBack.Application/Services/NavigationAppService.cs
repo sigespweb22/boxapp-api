@@ -49,7 +49,7 @@ namespace BoxBack.Application.Services
                 Title = "Controle Acesso",
                 Path = "/dashboards/controle-acesso",
                 Action = "list",
-                Subject = "ac-dashboard-access-control-page"
+                Subject = "ac-dashboard-controle_acesso-page"
             };
             navigationA.Children.Add(oldestDashboardSonA);
 
@@ -58,7 +58,7 @@ namespace BoxBack.Application.Services
                 Title = "Clientes",
                 Path = "/dashboards/cliente",
                 Action = "list",
-                Subject = "ac-dashboard-client-page"
+                Subject = "ac-dashboard-cliente-page"
             };
             navigationA.Children.Add(oldestDashboardSonB);
 
@@ -94,7 +94,7 @@ namespace BoxBack.Application.Services
                 Title = "Grupos",
                 Path = "/sistema/controle-acesso/grupo/list",
                 Action = "list",
-                Subject = "ac-group-page"
+                Subject = "ac-grupo-page"
             };
             navigationB.Children.Add(oldestSonD);
 
@@ -112,7 +112,7 @@ namespace BoxBack.Application.Services
                 Title = "Clientes",
                 Path = "/negocios/comercial/cliente/list",
                 Action = "list",
-                Subject = "ac-client-page"
+                Subject = "ac-cliente-page"
             };
             navigationC.Children.Add(oldestSonNB1);
 
