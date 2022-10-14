@@ -40,7 +40,7 @@ Totalmente escrito para atender o modelo de serviços web RESTful.
 * Postman
 * Swagger (OpenAPI)
 
-## Novidades:
+## Novidades (Lançamentos Beta):
 
 *Lançamento v1.0 em 15/08/2022
   * Account - Autenticação/Autorização/Navegação
@@ -51,3 +51,6 @@ Totalmente escrito para atender o modelo de serviços web RESTful.
 *Lançamento v1.1.0 em 01/09/2022
   * Clientes
   * Ativos (Produtos e Serviços)
+  
+*Lançamento v1.2.0 em 11/10/2022
+  * Pipelines
