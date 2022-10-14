@@ -52,5 +52,5 @@ Totalmente escrito para atender o modelo de serviços web RESTful.
   * Clientes
   * Ativos (Produtos e Serviços)
   
-*Lançamento v1.1.0 em 11/10/2022
-* Pipelines
+*Lançamento v1.2.0 em 11/10/2022
+  * Pipelines
