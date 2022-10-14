@@ -33,7 +33,7 @@ namespace BoxBack.Application.ViewModels
         public string Observacao { get; set; }
         public string DataFundacao { get; set; }
         private int _codigoMunicipio = 0;
-        public int CodigoMunicio { get { return _codigoMunicipio; }  set { _codigoMunicipio = value; }}
+        public int codigoMunicipio { get { return _codigoMunicipio; }  set { _codigoMunicipio = value; }}
         public string Rua { get; set; }
         public string Numero { get; set; }
         public string Complemento { get; set; }

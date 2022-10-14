@@ -202,7 +202,7 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             if (fornecedorDB == null)
             {
-                AddError("Fornecedor não encontrada para atualizar.");
+                AddError("Fornecedor não encontrado para atualizar.");
                 return CustomResponse(404);
             }
             #endregion

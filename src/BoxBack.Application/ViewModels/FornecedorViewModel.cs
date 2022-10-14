@@ -25,7 +25,7 @@ namespace BoxBack.Application.ViewModels
         public string EmailPrincipal { get; set; }
         public string Observacao { get; set; }
         private int _codigoMunicipio = 0;
-        public int CodigoMunicio { get { return _codigoMunicipio; }  set { _codigoMunicipio = value; }}
+        public int CodigoMunicipio { get { return _codigoMunicipio; }  set { _codigoMunicipio = value; }}
         public string Rua { get; set; }
         public string Numero { get; set; }
         public string Complemento { get; set; }
