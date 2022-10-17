@@ -32,6 +32,8 @@ public class FornecedorServico : EntityAudit
         public Guid FornecedorId { get; set; }
         public Fornecedor Fornecedor { get; set; }
 
-        public ICollection<Servico> Servicos { get; set; }
+        [ForeignKey("ServicoId")]
+        public Guid ServicoId { get; set; }
+        public Servico Servico { get; set; }
     }
 }

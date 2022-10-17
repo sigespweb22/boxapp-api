@@ -1,0 +1,79 @@
+Porque aprender Machine Learning?
+
+-> 1 kg de DNA para armazenar todos os dados do mundo;
+-> Armazenamento de dados em DNA (bacterial dna)
+
+-> Exabyte: Em 2020 o mundo terá 40,000 exabytes, como gerenciar/manipular estes dados?
+Com Machine Learning[...]
+
+------------------------------------
+Terminologia
+
+------------------------------------
+Empresas que estão contratando profissionais de Análise de Dados:
+-> Itaú
+-> IBM
+-> NVIDIA (Deep Learning/Redes neurais)
+
+Profissional de IA nos EUA (Vale do Sílicio) pode ganhar entre 300 e 500 mil dólares ano;
+
+------------------------------------
+Empresas que utilizam e o que fazem com:
+
+Poema gerado por uma inteligência artificial:
+"As águas congeladas que estão mortas estão agora negras como a chuva que congela no céu sem limiter,
+e um tributo congelado de nossos terrores, com a sinistra dama devendo ser livre para choras.
+
+Naza
+    -> Robôs autônomos
+CIA
+    -> Algoritmos para identificação de padrão de terrorismo;
+    
+Amazon e comercio eletrônico em geral
+    -> Sistema de recomendação com base na categoria do produto comprado
+
+Google
+    -> Ranking de busca
+    -> Deep mind - Projeto de robô artista (Pintor)
+    
+Facebook
+    -> Reconhecimento facial - Identifica o rosto e atribui o nome a pessoa;
+    -> Facebook Ads - Sistema de anúncio (personalização de anúncio com base no interesse)
+    -> Facebook Ads - Você passa uma lista de e-mail e ele retornar uma lista de pessoas parecidas, no mesmo perfil social, de consumo, e etc...
+    ->
+
+Netflix e Spotify
+    -> Sistemas de recomendação em uma base de conhecimento
+
+------------------------------------
+Noticias:
+    -> Cyber secutiry: Inteligência artificial ajuda a prevenir malware
+    -> Inteligência artificial pode ajudar a reduzir roubo de eletricidade no Brasil
+    -> Inteligencia artificial tenta descobrir quem traiu Anne Frank
+    -> Google usa inteligência artificial para encontrar vírus na Play Store
+    -> Tesla e AMD estão criando chip de inteligência artificial para carros autônomos
+    -> Microsoft Pix edita iamgens através de inteligência artificial
+    -> Inteligencia Artificial detecta mal de Alzheimer uma década antes de sistomas aparecerem
+    -> Inteligencia Artificial está escrevendo o fim de Game Of Thrones
+    -> Inteligencia Artificial consegue fases de Super Mario
+    -> Robo faz em segundo o que demorava 360 mil horas para um advogado
+    -> Serviço de atendimento ao cliente está passando por uma revolução pela iamgens
+    -> Cantora está compondo um álbum inteiro usando imagens
+    -> As 100 startups que lideram a revolução da iamgens
+    -> Salesforce vai investir 50 milhões em IA
+    -> IA no centro da guerra dos smartphones
+    -> Intel trabalha com Facebook no projeto de chip para IA
+    -> Brainwave novo projeto de IA da Microsoft
+
+------------------------------------
+Competências princípais para área de Análise de Dados:
+-> Keras;
+-> Jupyter;
+-> Rust;
+-> (R);
+-> Scala;
+-> Python;
+-> TensorFlow;
+-> Knime;
+-> Hadoop;
+-> Spark;

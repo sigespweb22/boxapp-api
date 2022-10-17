@@ -7,10 +7,11 @@ namespace BoxBack.Domain.Models
     public class ClienteServico
     {        
         // Constructor empty for EF
-        public ClienteServico(decimal valorVenda,
+        public ClienteServico(string nome, decimal valorVenda,
                               string caracteristicas,
                               ServicoCobrancaTipoEnum cobrancaTipo) 
         {
+            Nome = nome;
             ValorVenda = valorVenda;
             Caracteristicas = caracteristicas;
             CobrancaTipo = cobrancaTipo;
@@ -19,6 +20,7 @@ namespace BoxBack.Domain.Models
         // Constructor empty for EF
         public ClienteServico() {}
 
+        public string Nome  { get; set; }
         public decimal ValorVenda { get; set; }
         public string Caracteristicas { get; set; }
         public ServicoCobrancaTipoEnum CobrancaTipo { get; set; }

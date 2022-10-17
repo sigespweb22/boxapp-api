@@ -39,7 +39,7 @@ namespace BoxBack.Domain.Models
         public string TelefonePrincipal { get; set; }
         public string EmailPrincipal { get; set; }
         public int? CodigoMunicipio { get; set; }
-        public string Rua { get; set; }
+        public string Rua { get; set; } 
         public string Numero { get; set; }
         public string Complemento { get; set; }
         public string Cidade { get; set; }
