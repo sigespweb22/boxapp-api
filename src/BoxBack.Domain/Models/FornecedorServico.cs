@@ -25,15 +25,13 @@ public class FornecedorServico : EntityAudit
         public string Nome  { get; set; }
         public string CodigoServico { get; set; }
         public ServicoUnidadeMedidaEnum UnidadeMedida { get; set; }
-        public string Caracteristicas { get; set; }
+         public string Caracteristicas { get; set; }
 
         // Relationships
         [ForeignKey("FornecedorId")]
         public Guid FornecedorId { get; set; }
         public Fornecedor Fornecedor { get; set; }
 
-        [ForeignKey("ServicoId")]
-        public Guid ServicoId { get; set; }
-        public Servico Servico { get; set; }
+        public ICollection<Servico> Servicos { get; set; }
     }
 }
