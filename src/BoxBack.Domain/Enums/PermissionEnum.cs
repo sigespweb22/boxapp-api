@@ -47,28 +47,29 @@ namespace BoxBack.Domain.Enums
         CanClientAlterStatus = 28,
         CanClientTPAll = 29,
         CanClientTPListOne = 30,
+        CanClientListOne = 31,
         //End - Client
 
         //Begin - Asset
-        CanServicoAll = 31,
-        CanServicoList = 32,
-        CanServicoRead = 33,
-        CanServicoUpdate = 34,
-        CanServicoCreate = 35,
-        CanServicoDelete = 36,
-        CanServicoAlterStatus = 37,
+        CanServicoAll = 32,
+        CanServicoList = 33,
+        CanServicoRead = 34,
+        CanServicoUpdate = 35,
+        CanServicoCreate = 36,
+        CanServicoDelete = 37,
+        CanServicoAlterStatus = 38,
         //End - Asset
 
         //Begin - Fornecedor
-        CanFornecedorAll = 38,
-        CanFornecedorList = 39,
-        CanFornecedorRead = 40,
-        CanFornecedorUpdate = 41,
-        CanFornecedorCreate = 42,
-        CanForncedorDelete = 43,
-        CanFornecedorAlterStatus = 44,
-        CanFornecedorTPAll = 45,
-        CanFornecedorTPListOne = 46,
+        CanFornecedorAll = 39,
+        CanFornecedorList = 40,
+        CanFornecedorRead = 41,
+        CanFornecedorUpdate = 42,
+        CanFornecedorCreate = 43,
+        CanForncedorDelete = 44,
+        CanFornecedorAlterStatus = 45,
+        CanFornecedorTPAll = 46,
+        CanFornecedorTPListOne = 47
         //End - Fornecedor
     }
 }
