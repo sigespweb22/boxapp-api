@@ -361,6 +361,64 @@ namespace BoxBack.WebApi.EndPoints
             return CustomResponse(200, new { message = "Status cliente alterado com sucesso." } );
         }
 
+        /// <summary>
+        /// Retorna um cliente pelo seu Id
+        /// </summary>s
+        /// <param name="id"></param>
+        /// <returns>Um objeto com o cliente solicitado</returns>
+        /// <response code="200">Lista um cliente</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Cliente não encontrado</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanClientListOne, CanClientAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Produces("application/json")]
+        [Route("list-one/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> ListOneAsync([FromRoute]Guid id)
+        {
+            #region Required validations
+            if (id == Guid.Empty)
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data
+            var cliente = new Cliente();
+            try
+            {
+                cliente = await _context.Clientes
+                                            .FindAsync(id);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (cliente == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
+            #endregion
+            
+            #region Map
+            var clienteMapped = new ClienteViewModel();
+            try
+            {
+                clienteMapped = _mapper.Map<ClienteViewModel>(cliente);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            return Ok(new {
+                Data = clienteMapped,
+                Cliente = clienteMapped,
+                Params = id
+            });
+        }
+
         #region Third Party
 
         /// <summary>

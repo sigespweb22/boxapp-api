@@ -8,6 +8,38 @@ Com Machine Learning[...]
 
 ------------------------------------
 Terminologia
+IA: Área da CP que simula a capidade humana de resolver problemas.
+
+ENIAC (Encontro nacional de IA e IC)
+IEEE (Evento de Inteligência Computacional)
+
+Visão computacional
+---
+Linguagem natural: Compreensão de da semântica de uma frase.
+---
+Data miner: Extrair conhecimento de base de dados utilizando métodos de aprendizagem de máquina.
+---
+Lógica fuzzy:
+---
+Redes neurais: É um tipo de aprendizagem de máquina. (Aprendizagem por regras; Cálculos probabilistícos; 
+Árvores de decisão; Aprendizagem baseada em instâncias)
+---
+Robótica:
+---
+Machine Learning: Métodos matemáticos (Algoritmos para treinar Algoritmos);
+---
+Deep Learning (Aprendizado profundo): 
+-> Redes neurais com muitas camadas
+-> Muito mais dados e processadores mais potentes
+
+---
+Big Data: Imenso volume de dados.
+
+---
+Ciência de Dados
+-> Exploração e análise de dados
+-> Ciência da computação + estatistica
+-> Machine Learning
 
 ------------------------------------
 Empresas que estão contratando profissionais de Análise de Dados:
@@ -77,3 +109,97 @@ Competências princípais para área de Análise de Dados:
 -> Knime;
 -> Hadoop;
 -> Spark;
+
+
+------------------------------------
+APRENDIZAGEM DE MÁQUINA SUPERVISIONADA, NÃO SUPERVISIONADA E REFORÇO
+------------------------------------
+
+Aprendizagem de máquina Supervisionada(Vem de previsão - Baseado em um conjunto de atributos se faz uma previsão do que pode acontecer no futuro)
+MÉTODOS PREDITIVOS
+
+-> Classificação - Na classificação nós temos Rótulos enquanto na regressão nós temos números
+    * Nesse modelo sempre envolve uma base de dados histórica
+    
+    Atributos: Previsores, metas (classes)
+     -> Cada tristro pertence a uma classe e possui um conjunto de atributos Previsores.
+     -> Objetiva-se descobrir um relacionemnto entre os atributos previsores eo atributo meta.
+     -> O  valor do atributo meta é conhecido (aprendizagem supervisionada)
+
+
+
+Exemplos de uso
+
+* Marketing direto - Em caso de um produto novo - Análise de interesse do cliente
+* Insatisfação de clientes
+* Filtros de SPAM
+* Separação de notícia
+* Reconhecimento de VOZ
+* Reconhecimento de FACE
+* Previsão de doenças
+    -> Regressão - Faz previsão de valores numéricos baseado nos dados históricos - 
+   Na regressão nós temos números e na regressão nós temos números
+
+Exemplos de uso
+* Gastos propaganda -> valor de venda - De acordo com o investimento quanto irei vender?
+* Temperatura, umidade e pressão do ar faz-se a previsão da velocidade do vento
+* Baseado em fatores externos calcula-se o valor do dólar
+* Baseado no resultado de um exame faz-se a previsão de um paciente sobreviver
+* Cálculo de risco de investimento
+* De acordo com os gastos no cartão de crédito pode-se definir um novo limite no cartão
+* Baseado nos valores anteriores é previsto novos valores a produtos
+
+____________________________________
+Aprendizagem de máquina NÃO Supervisionada
+MÉTODOS DESCRITIVOS
+
+-> Associação - Utiliza-se regras de associação
+    * São utilizadas muito em prateleiras de mercado, exemplo;
+    * Planejar catálogos das lojas e folhetos de promoção;
+    * Controle de evasão em universidades;
+
+-> Agrupamento
+    * Segmentação de mercado
+    * Agrupamento de documentos/Noticias
+    * Agrupamento de produtos similares
+    * Perfis de clientes (Netflix) - Para recomendação de filmes
+    * Análise de redes sociais - 
+
+-> Detecção de desvios - Outliers
+    * Fraude em cartão de crédito - São os outliers quem efetuam o bloqueio por identificar desvio de padrão de uso;
+    * Intrusão de redes;
+    * Uso de energia elétrica, água ou telefone (Aumento fora do padrão pode denotar um problema);
+    * Desempenho de atletas (doping) - Algoritmos de sugerem quais atletas estão fora do seu padrão;
+    * Monitoramento de máquinas em um data center - Caso uma máquina não esteja funcionado corretamente pode diminuir o processamento da rede como um todo;
+
+-> Padrões sequenciais
+    * Utilizado muito pelas lojas de e-commerce (livrarias, equipamentos, computadores): Caso você compre o primeiro exemplar de uma trilogia, o algoritmo sugere os outros títulos
+    * Marketing direcionado para pessoas que tem maiores chances de adquirir um novo produto
+    * Prevensão de doenças;
+    * Navegação em sites - Conduzir usuário em uma navegação de um site;
+
+-> Sumarização
+    * Perfil de pessoas que usam um determinado Serviço
+    * Segmentação de mercado
+
+____________________________________
+Aprendizagem por REFORÇO
+    * Aprender com as interações com o ambiente (aprende com causa e efeito)
+    * Aprender com sua própria experiência;
+    * Robô coletando lixo aprendendo a andar em um ambiente - (Sistema multi-agentes - SMA)
+
+
+
+------------------------------------
+Duas grandes áreas de dados em IA
+
+Duas grandes variáveis:
+
+Numéricas
+    -> Numéricas:
+        -> Contínua: Armazenam números reais (Exe.: .4, 44.3) (Temperatura, altura, peso) - Float
+        -> Discreta: Conjunto de valores finitos (Números inteiros) - Contagem de alguma coisa
+        
+Categoricas (String)
+    -> Nominal: São os dados não mensuráveis e sem ordenação (Exe.: Cor dos olhos, gênero)
+    -> Ordinal: Categorização sob ordenação (Exemplo.: Tamanho P, M, G)
