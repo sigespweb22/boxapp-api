@@ -412,7 +412,11 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
-            return Ok(new { clienteMapped });
+            return Ok(new {
+                Data = clienteMapped,
+                Cliente = clienteMapped,
+                Params = id
+            });
         }
 
         #region Third Party
