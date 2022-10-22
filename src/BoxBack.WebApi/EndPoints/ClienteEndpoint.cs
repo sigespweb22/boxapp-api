@@ -377,10 +377,10 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("list-one/{id}")]
         [HttpGet]
-        public async Task<IActionResult> ListOneAsync([FromRoute]Guid id)
+        public async Task<IActionResult> ListOneAsync([FromRoute]string id)
         {
             #region Required validations
-            if (id == Guid.Empty)
+            if (string.IsNullOrEmpty(id))
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);

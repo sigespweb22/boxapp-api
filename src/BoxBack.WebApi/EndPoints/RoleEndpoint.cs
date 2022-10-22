@@ -61,6 +61,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 roles = await _roleManager.Roles
                                         .AsNoTracking()
+                                        .OrderBy(x => x.Name)
                                         .ToListAsync();
                 if (roles == null)
                 {
