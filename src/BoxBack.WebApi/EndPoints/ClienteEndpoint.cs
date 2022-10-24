@@ -392,7 +392,7 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 cliente = await _context.Clientes
-                                            .FindAsync(id);
+                                            .FindAsync(Guid.Parse(id));
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
