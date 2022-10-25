@@ -67,12 +67,25 @@ namespace BoxBack.WebApi.EndPoints
         {
             #region Get data
             var clientes = new List<Cliente>();
+            Guid id;
             try
             {
-                clientes = await _context.Clientes
+                if (Guid.TryParse(q, out id))
+                {
+                    clientes = await _context.Clientes
+                                                .AsNoTracking()
+                                                .Where(x => x.Id == id)
+                                                .OrderByDescending(x => x.UpdatedAt)
+                                                .ToListAsync();
+                } 
+                else
+                {
+                    clientes = await _context.Clientes
                                             .AsNoTracking()
                                             .OrderByDescending(x => x.UpdatedAt)
                                             .ToListAsync();
+                }
+                
                 if (clientes == null)
                 {
                     AddError("Não encontrado.");
@@ -98,7 +111,7 @@ namespace BoxBack.WebApi.EndPoints
             
             return Ok(new {
                 AllData = clienteMapped.ToList(),
-                Clients = clienteMapped.ToList(),
+                Clientes = clienteMapped.ToList(),
                 Params = q,
                 Total = clienteMapped.Count()
             });
