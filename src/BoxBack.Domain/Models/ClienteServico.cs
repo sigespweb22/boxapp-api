@@ -4,7 +4,7 @@ using BoxBack.Domain.Enums;
 
 namespace BoxBack.Domain.Models
 {
-    public class ClienteServico
+    public class ClienteServico : EntityAudit
     {        
         // Constructor empty for EF
         public ClienteServico(string nome, decimal valorVenda,

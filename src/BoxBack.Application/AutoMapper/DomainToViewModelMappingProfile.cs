@@ -1,16 +1,8 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography;
-using System.Threading;
-using System.Reflection.Metadata.Ecma335;
-using System.Linq;
+﻿using System.Linq;
 using AutoMapper;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
-using BoxBack.Domain.ModelsNoSQL;
-using BoxBack.Application.Extensions;
 using BoxBack.Domain.Enums;
-using System.Collections.Generic;
-using BoxBack.Domain.Models.DataTable;
 using BoxBack.Application.ViewModels.Selects;
 
 namespace BoxBack.Application.AutoMapper
@@ -33,6 +25,7 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.ApplicationRoleGroupsNames, src => src.MapFrom(x => x.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name)));
             CreateMap<Cliente, ClienteViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
+            CreateMap<ClienteServico, ClienteServicoViewModel>();
             CreateMap<Servico, ServicoViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
             CreateMap<PipelineAssinante, PipelineAssinanteViewModel>()

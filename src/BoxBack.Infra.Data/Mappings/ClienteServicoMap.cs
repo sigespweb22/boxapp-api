@@ -12,7 +12,11 @@ namespace BoxBack.Infra.Data.Mappings
         {
             builder.ToTable("ClienteServicos");
 
-            builder.HasKey(c => new { c.ClienteId, c.ServicoId });
+            builder.HasKey(c => c.Id);
+
+            builder.Property(c => c.Id)
+                .HasColumnName("Id")
+                .ValueGeneratedOnAdd();
 
             builder.Property(c => c.ValorVenda)
                 .HasDefaultValue(0)
@@ -34,6 +38,12 @@ namespace BoxBack.Infra.Data.Mappings
                 .WithMany(c => c.ClienteServicos)
                 .HasForeignKey(c => c.ServicoId)
                 .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
+
+            builder.Property(c => c.ClienteId)
+                .IsRequired();
+            
+            builder.Property(c => c.ServicoId)
                 .IsRequired();
         }
     }
