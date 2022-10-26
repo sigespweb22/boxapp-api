@@ -32,6 +32,7 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.UserId, src => src.MapFrom(x => x.UserId));
             CreateMap<PipelineViewModel, Pipeline>();
             CreateMap<FornecedorViewModel, Fornecedor>();
+            CreateMap<FornecedorServicoViewModel, FornecedorServico>();
         }
     }
 }
