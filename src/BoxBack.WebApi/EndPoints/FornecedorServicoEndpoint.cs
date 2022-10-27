@@ -49,12 +49,12 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Lista serviços de um FORNECEDOR
+        /// Lista SERVIÇOS de um fornecedor
         /// </summary>s
         /// <param name="q"></param>
         /// <param name="fornecedorId"></param>
-        /// <returns>Um json com os serviços do FORNECEDOR</returns>
-        /// <response code="200">Lista de serviços de um fornecedor</response>
+        /// <returns>Um json com os SERVIÇOS do fornecedor</returns>
+        /// <response code="200">Lista de SERVIÇOS de um fornecedor</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
@@ -118,14 +118,14 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Cria um serviço para um Fornecedor
+        /// Cria um SERVIÇO para um Fornecedor
         /// </summary>
         /// <param name="fornecedorServicoViewModel"></param>
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanFornecedorCreate, CanFornecedorAll")]
+        [Authorize(Roles = "Master, CanFornecedorServicoCreate, CanFornecedorServicoAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -156,24 +156,25 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Atualiza um FORNECEDOR
+        /// Atualiza um SERVIÇO de fornecedor
         /// </summary>
-        /// <param name="fornecedorViewModel"></param>
+        /// <param name="fornecedorServicoViewModel"></param>
         /// <returns>True se atualizada com sucesso</returns>
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
-        [Authorize(Roles = "Master, CanFornecedorUpdate, CanFornecedorAll")]
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanFornecedorServicoUpdate, CanFornecedorServicoAll")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody]FornecedorViewModel fornecedorViewModel)
+        public async Task<IActionResult> UpdateAsync([FromBody]FornecedorServicoViewModel fornecedorServicoViewModel)
         {
             #region Required validations
-            if (fornecedorViewModel.Id == null ||
-                fornecedorViewModel.Id == Guid.Empty)
+            if (!fornecedorServicoViewModel.Id.HasValue ||
+                fornecedorServicoViewModel.Id.Value == Guid.Empty)
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);
@@ -181,26 +182,26 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Get data for update
-            var fornecedorDB = new Fornecedor();
+            var fornecedorServicoDB = new FornecedorServico();
             try
             {
-                fornecedorDB = await _context
-                                        .Fornecedores
-                                        .FindAsync(fornecedorViewModel.Id);
+                fornecedorServicoDB = await _context
+                                                .FornecedorServicos
+                                                .FindAsync(fornecedorServicoViewModel.Id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            if (fornecedorDB == null)
+            if (fornecedorServicoDB == null)
             {
-                AddError("Fornecedor não encontrado para atualizar.");
+                AddError("Serviço do ornecedor não encontrado para atualizar.");
                 return CustomResponse(404);
             }
             #endregion
 
             #region Map
-            var fornecedorMap = new Fornecedor();
+            var fornecedorServicoMap = new FornecedorServico();
             try
             {
-                fornecedorMap = _mapper.Map<FornecedorViewModel, Fornecedor>(fornecedorViewModel, fornecedorDB);
+                fornecedorServicoMap = _mapper.Map<FornecedorServicoViewModel, FornecedorServico>(fornecedorServicoViewModel, fornecedorServicoDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -208,7 +209,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Update Fornecedor
             try
             {
-                _context.Fornecedores.Update(fornecedorMap);
+                _context.FornecedorServicos.Update(fornecedorServicoMap);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -225,7 +226,7 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Deleta um serviço de um FORNECEDOR
+        /// Deleta um SERVIÇO de um FORNECEDOR
         /// </summary>
         /// <param name="id"></param>
         /// <returns>True se deletado com sucesso</returns>
@@ -283,7 +284,7 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Altera o status de um FORNECEDOR
+        /// Altera o status do SERVIÇO um FORNECEDOR
         /// </summary>
         /// <param name="id"></param>
         /// <returns>True se a operação foi realizada com sucesso</returns>
@@ -300,7 +301,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanFornecedorAlterStatus, CanFornecedorAll")]
+        [Authorize(Roles = "Master, CanFornecedorServicoAlterStatus, CanFornecedorServicoAll")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -318,13 +319,13 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
     
             #region Get data
-            var fornecedor = new Fornecedor();
+            var fornecedorServico = new FornecedorServico();
             try
             {
-                fornecedor = await _context.Fornecedores.FindAsync(id);
-                if (fornecedor == null)
+                fornecedorServico = await _context.FornecedorServicos.FindAsync(id);
+                if (fornecedorServico == null)
                 {
-                    AddError("Fornecedor não encontrado para alterar seu status.");
+                    AddError("Servido do fornecedor não encontrado para alterar seu status.");
                     return CustomResponse(404);
                 }
             }
@@ -332,13 +333,13 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Map
-            switch(fornecedor.IsDeleted)
+            switch(fornecedorServico.IsDeleted)
             {
                 case true:
-                    fornecedor.IsDeleted = false;
+                    fornecedorServico.IsDeleted = false;
                     break;
                 case false:
-                    fornecedor.IsDeleted = true;
+                    fornecedorServico.IsDeleted = true;
                     break;
             }
             #endregion
@@ -346,18 +347,17 @@ namespace BoxBack.WebApi.EndPoints
             #region Alter status
             try
             {
-                _context.Fornecedores.Update(fornecedor);
+                _context.FornecedorServicos.Update(fornecedorServico);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
             #endregion
 
-            return CustomResponse(200, new { message = "Status fornecedor alterado com sucesso." } );
+            return CustomResponse(200, new { message = "Status serviço do fornecedor alterado com sucesso." } );
         }
 
         #region Third Party
-
         /// <summary>
         /// Lista os dados do CNPJ de uma empresa a partir de uma api de terceiro
         /// </summary>s

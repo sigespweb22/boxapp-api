@@ -54,5 +54,10 @@ namespace BoxBack.Domain.Models
         public Tenant Tenant { get; set; }
 
         public ICollection<FornecedorServico> FornecedorServicos { get; set; }
+
+        public static implicit operator Fornecedor(FornecedorServico v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
