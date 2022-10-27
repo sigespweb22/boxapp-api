@@ -15,5 +15,6 @@ namespace BoxBack.Application.ViewModels
         public string Caracteristicas { get; set; }
         public string UnidadeMedida { get; set; }
         public string Status { get; set; }
+        public Guid? FornecedorServicoId { get; set; }
     }
 }

@@ -49,12 +49,12 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Lista de todos os serviços ativos de um cliente
+        /// Lista de todos os SERVIÇOS de um cliente
         /// </summary>s
         /// <param name="q"></param>
         /// <param name="clienteId"></param>
-        /// <returns>Um json com os serviços do cliente</returns>
-        /// <response code="200">Lista de serviços do cliente</response>
+        /// <returns>Um json com os SERVIÇOS do cliente</returns>
+        /// <response code="200">Lista de SERVIÇOS do cliente</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
@@ -116,7 +116,7 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary> 
-        /// Adiciona um serviço para um
+        /// Adiciona um SERVIÇO para um cliente
         /// </summary>
         /// <param name="clienteServicoViewModel"></param>
         /// <returns>True se adicionardo com sucesso</returns>
@@ -155,23 +155,23 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Atualiza um cliente
+        /// Atualiza o SERVIÇO de um cliente
         /// </summary>
-        /// <param name="clienteViewModel"></param>
+        /// <param name="clienteServicoViewModel"></param>
         /// <returns>True se atualizada com sucesso</returns>
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
-        [Authorize(Roles = "Master, CanClientUpdate, CanClientAll")]
+        [Authorize(Roles = "Master, CanClienteServicoUpdate, CanClienteServicoAll")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody]ClienteViewModel clienteViewModel)
+        public async Task<IActionResult> UpdateAsync([FromBody]ClienteServicoViewModel clienteServicoViewModel)
         {
             #region Required validations
-            if (clienteViewModel.Id == null ||
-                clienteViewModel.Id == Guid.Empty)
+            if (!clienteServicoViewModel.Id.HasValue ||
+                clienteServicoViewModel.Id == Guid.Empty)
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);
@@ -179,34 +179,34 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Get data for update
-            var clienteDB = new Cliente();
+            var clienteServicoDB = new ClienteServico();
             try
             {
-                clienteDB = await _context
-                                    .Clientes
-                                    .FindAsync(clienteViewModel.Id);
+                clienteServicoDB = await _context
+                                            .ClientesServicos
+                                            .FindAsync(clienteServicoViewModel.Id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            if (clienteDB == null)
+            if (clienteServicoDB == null)
             {
-                AddError("Cliente não encontrada para atualizar.");
+                AddError("Serviço de cliente não encontrado para atualizar.");
                 return CustomResponse(404);
             }
             #endregion
 
             #region Map
-            var clienteMap = new Cliente();
+            var clienteServicoMap = new ClienteServico();
             try
             {
-                clienteMap = _mapper.Map<ClienteViewModel, Cliente>(clienteViewModel, clienteDB);
+                clienteServicoMap = _mapper.Map<ClienteServicoViewModel, ClienteServico>(clienteServicoViewModel, clienteServicoDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            #region Update cliente
+            #region Update serviço cliente
             try
             {
-                _context.Clientes.Update(clienteMap);
+                _context.ClientesServicos.Update(clienteServicoMap);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -231,7 +231,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Not found</response>
         [Route("delete/{id}")]
-        [Authorize(Roles = "Master, CanClientDelete, CanClientAll")]
+        [Authorize(Roles = "Master, CanClienteServicoDelete, CanClienteServicoAll")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -296,7 +296,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanClientAlterStatus, CanClientAll")]
+        [Authorize(Roles = "Master, CanClienteServicoAlterStatus, CanClienteServicoAll")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -360,7 +360,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Cliente não encontrado</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClientListOne, CanClientAll")]
+        [Authorize(Roles = "Master, CanClienteServicoListOne, CanClienteServicoAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

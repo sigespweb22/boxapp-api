@@ -17,5 +17,8 @@ namespace BoxBack.Application.ViewModels
         public decimal? ValorVenda { get; set; }
         public string Caracteristicas { get; set; }
         public string CobrancaTipo { get; set; }
+
+        public Guid? ClienteId { get; set; }
+        public Guid? ServicoId { get; set; }
     }
 }
