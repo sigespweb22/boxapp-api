@@ -93,7 +93,7 @@ namespace BoxBack.WebApi.EndPoints
             }
             #endregion
             
-            #region Filter search
+            #region Filter search 
             if(!string.IsNullOrEmpty(q))
                 clienteServicos = clienteServicos.Where(x => x.Nome.Contains(q)).ToList();
             #endregion
