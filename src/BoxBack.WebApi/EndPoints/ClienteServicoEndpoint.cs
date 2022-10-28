@@ -109,7 +109,7 @@ namespace BoxBack.WebApi.EndPoints
             
             return Ok(new {
                 AllData = clienteServicoMapped.ToList(),
-                ClientesServicos = clienteServicoMapped.ToList(),
+                ClienteServicos = clienteServicoMapped.ToList(),
                 Params = q,
                 Total = clienteServicoMapped.Count()
             });
