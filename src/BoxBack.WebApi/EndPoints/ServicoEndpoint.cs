@@ -13,6 +13,7 @@ using BoxBack.Domain.Interfaces;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Models;
 using BoxBack.Application.ViewModels;
+using BoxBack.Application.ViewModels.Selects;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -90,6 +91,55 @@ namespace BoxBack.WebApi.EndPoints
                 Params = q,
                 Total = servicosMapped.Count()
             });
+        }
+
+        /// <summary>
+        /// Lista todos os serviços para uma select2
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="isDeleted"></param>
+        /// <returns>Um json com os serviços</returns>
+        /// <response code="200">Lista de serviços</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Lista vazia</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanServicoToSelect, CanServicoAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("list-to-select")] 
+        [HttpGet]
+        public async Task<IActionResult> ListToSelectAsync(string q, bool isDeleted = false)
+        {
+            #region Get data
+            var servicosDB = new List<Servico>();
+            try
+            {
+                servicosDB = await _context
+                                        .Servicos
+                                        .Where(x => !x.IsDeleted || x.IsDeleted == isDeleted)
+                                        .ToListAsync();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            if (servicosDB == null)
+            {
+                AddError("Não encontrado");
+                return CustomResponse(404);
+            }
+            #endregion
+            
+            #region Map
+            IEnumerable<ServicoSelect2ViewModel> servicosMap = new List<ServicoSelect2ViewModel>();
+            try
+            {
+                servicosMap = _mapper.Map<IEnumerable<ServicoSelect2ViewModel>>(servicosDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            return Ok(servicosMap);
         }
 
         /// <summary>
