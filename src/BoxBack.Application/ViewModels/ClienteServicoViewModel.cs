@@ -19,6 +19,7 @@ namespace BoxBack.Application.ViewModels
         public string CobrancaTipo { get; set; }
 
         public string ServicoNome { get; set; }
+        public string Status { get; set; }
 
         public Guid? ClienteId { get; set; }
         public Guid? ServicoId { get; set; }
