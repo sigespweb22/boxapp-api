@@ -25,7 +25,9 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ApplicationRoleGroupViewModel, ApplicationRoleGroup>();
             CreateMap<ApplicationRoleViewModel, ApplicationRole>();
             CreateMap<ClienteViewModel, Cliente>();
-            CreateMap<ClienteServicoViewModel, ClienteServico>();
+            CreateMap<ClienteServicoViewModel, ClienteServico>()
+                .ForMember(dst => dst.ServicoId, src => src.MapFrom(x => x.Servico.Id))
+                .ForMember(dst => dst.Nome, src => src.MapFrom(x => x.Servico.Nome));
             CreateMap<ServicoViewModel, Servico>();
             CreateMap<PipelineAssinanteViewModel, PipelineAssinante>()
                 .ForMember(dst => dst.FullName, src => src.MapFrom(x => x.Name))

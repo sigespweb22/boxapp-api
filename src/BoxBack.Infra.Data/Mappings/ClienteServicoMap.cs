@@ -43,8 +43,14 @@ namespace BoxBack.Infra.Data.Mappings
             builder.Property(c => c.ClienteId)
                 .IsRequired();
             
+            builder.HasIndex(x => x.ClienteId)
+                .IsUnique(false);
+
             builder.Property(c => c.ServicoId)
                 .IsRequired();
+            
+            builder.HasIndex(x => x.ServicoId)
+                .IsUnique(false);
         }
     }
 }
