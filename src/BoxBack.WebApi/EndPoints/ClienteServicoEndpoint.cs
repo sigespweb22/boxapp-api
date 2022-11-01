@@ -153,7 +153,7 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            return CustomResponse(201);
+            return CreatedAtAction(null, new { clienteId = clienteServicoViewModel.ClienteId});
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         [Authorize(Roles = "Master, CanClienteServicoUpdate, CanClienteServicoAll")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Produces("application/json")]
         [Route("update")]
@@ -221,7 +221,7 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            return CustomResponse(204);
+            return CreatedAtAction(null, new { clienteId = clienteServicoViewModel.ClienteId});
         }
 
         /// <summary>
