@@ -15,6 +15,7 @@ using BoxBack.Domain.Interfaces;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Services;
 using BoxBack.Domain.ModelsServices;
+using BoxBack.Application.ViewModels.Selects;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -115,6 +116,55 @@ namespace BoxBack.WebApi.EndPoints
                 Params = q,
                 Total = fornecedorServicosMapped.Count()
             });
+        }
+
+        /// <summary>
+        /// Lista todos os serviços de fornecedores para uma select2
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="isDeleted"></param>
+        /// <returns>Um json com os serviços de fornecedores</returns>
+        /// <response code="200">Lista de serviços de fornecedores</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Lista vazia</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanFornecedorServicoToSelect, CanFornecedorServicoAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("list-to-select")] 
+        [HttpGet]
+        public async Task<IActionResult> ListToSelectAsync(string q, bool isDeleted = false)
+        {
+            #region Get data
+            var fornecedoresServicosDB = new List<FornecedorServico>();
+            try
+            {
+                fornecedoresServicosDB = await _context
+                                                    .FornecedorServicos
+                                                    .Where(x => !x.IsDeleted || x.IsDeleted == isDeleted)
+                                                    .ToListAsync();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            if (fornecedoresServicosDB == null)
+            {
+                AddError("Não encontrado");
+                return CustomResponse(404);
+            }
+            #endregion
+            
+            #region Map
+            IEnumerable<FornecedorServicoSelect2ViewModel> fornecedoresServicosMap = new List<FornecedorServicoSelect2ViewModel>();
+            try
+            {
+                fornecedoresServicosMap = _mapper.Map<IEnumerable<FornecedorServicoSelect2ViewModel>>(fornecedoresServicosDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            return Ok(fornecedoresServicosMap);
         }
 
         /// <summary>

@@ -166,6 +166,8 @@ namespace BoxBack.WebApi.EndPoints
                 servicoMapped = _mapper.Map<Servico>(servicoViewModel);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            servicoMapped.FornecedorServico = null;
             #endregion
 
             #region Persistance and commit
