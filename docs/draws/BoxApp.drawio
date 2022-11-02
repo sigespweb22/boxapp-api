@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="_-IBJEU6sJU1gp7eHrf4" name="Caso de Uso - Fornecedores a Clientes">
-        <mxGraphModel dx="806" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1294" dy="617" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="5Sr-LHToyk-XQfIZRsih-0"/>
                 <mxCell id="5Sr-LHToyk-XQfIZRsih-1" parent="5Sr-LHToyk-XQfIZRsih-0"/>
@@ -121,7 +121,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="ZShh_gid76VzSa8Wm5ik" name="Principal">
-        <mxGraphModel dx="984" dy="1786" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1522" dy="1895" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
