@@ -60,6 +60,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 servicos = await _context.Servicos
                                             .AsNoTracking()
+                                            .Include(x => x.FornecedorServico)
                                             .OrderByDescending(x => x.UpdatedAt)
                                             .ToListAsync();
                 if (servicos == null)
@@ -200,7 +201,7 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> UpdateAsync([FromBody]ServicoViewModel servicoViewModel)
         {
             #region Required validations
-            if (servicoViewModel.Id == null ||
+            if (!servicoViewModel.Id.HasValue ||
                 servicoViewModel.Id == Guid.Empty)
             {
                 AddError("Id requerido.");
@@ -214,12 +215,13 @@ namespace BoxBack.WebApi.EndPoints
             {
                 servicoDB = await _context
                                     .Servicos
-                                    .FindAsync(servicoViewModel.Id);
+                                    .AsNoTracking()
+                                    .FirstOrDefaultAsync(x => x.Id == servicoViewModel.Id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             if (servicoDB == null)
             {
-                AddError("Servicço não encontrada para atualizar.");
+                AddError("Serviço não encontrado para atualizar.");
                 return CustomResponse(404);
             }
             #endregion
@@ -229,11 +231,12 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 servicoMap = _mapper.Map<ServicoViewModel, Servico>(servicoViewModel, servicoDB);
+                servicoMap.FornecedorServico = null;
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            #region Update ativo
+            #region Update
             try
             {
                 _context.Servicos.Update(servicoMap);
@@ -350,13 +353,14 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 servico = await _context.Servicos.FindAsync(id);
-                if (servico == null)
-                {
-                    AddError("Serviços não encontrado para alterar seu status.");
-                    return CustomResponse(404);
-                }
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            if (servico == null)
+            {
+                AddError("Serviços não encontrado para alterar seu status.");
+                return CustomResponse(404);
+            }
             #endregion
 
             #region Map
