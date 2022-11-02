@@ -82,6 +82,7 @@ namespace BoxBack.WebApi.EndPoints
                                                 .AsNoTracking()
                                                 .Include(x => x.Servico)
                                                 .Where(x => x.ClienteId == Guid.Parse(clienteId))
+                                                .OrderByDescending(x => x.UpdatedAt)
                                                 .ToListAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
@@ -163,9 +164,11 @@ namespace BoxBack.WebApi.EndPoints
         /// <returns>True se atualizada com sucesso</returns>
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="500">Erro desconhecido</response>
         [Authorize(Roles = "Master, CanClienteServicoUpdate, CanClienteServicoAll")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
@@ -186,7 +189,8 @@ namespace BoxBack.WebApi.EndPoints
             {
                 clienteServicoDB = await _context
                                             .ClientesServicos
-                                            .FindAsync(clienteServicoViewModel.Id);
+                                            .AsNoTracking()
+                                            .FirstOrDefaultAsync(x => x.Id == clienteServicoViewModel.Id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             if (clienteServicoDB == null)
@@ -201,6 +205,8 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 clienteServicoMap = _mapper.Map<ClienteServicoViewModel, ClienteServico>(clienteServicoViewModel, clienteServicoDB);
+                clienteServicoMap.Cliente = null;
+                clienteServicoMap.Servico = null;
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -221,7 +227,7 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            return CreatedAtAction(null, new { clienteId = clienteServicoViewModel.ClienteId});
+            return CustomResponse(200, new { clienteId = clienteServicoViewModel.ClienteId } );
         }
 
         /// <summary>
@@ -351,7 +357,7 @@ namespace BoxBack.WebApi.EndPoints
             
             #endregion
 
-            return CustomResponse(200, new { message = "Status serviço do cliente alterado com sucesso." } );
+            return CustomResponse(200, new { message = "Status serviço do cliente alterado com sucesso.", clienteId = clienteServico.ClienteId } );
         }
 
         /// <summary>
