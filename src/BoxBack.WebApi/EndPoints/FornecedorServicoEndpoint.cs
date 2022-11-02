@@ -15,7 +15,6 @@ using BoxBack.Domain.Interfaces;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Services;
 using BoxBack.Domain.ModelsServices;
-using BoxBack.Application.ViewModels.Selects;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -33,12 +32,12 @@ namespace BoxBack.WebApi.EndPoints
         private readonly IMapper _mapper;
 
         public FornecedorServicoEndpoint(BoxAppDbContext context,
-                                         IUnitOfWork unitOfWork,
-                                         UserManager<ApplicationUser> manager, 
-                                         RoleManager<ApplicationRole> roleManager,
-                                         IMapper mapper,
-                                         ICNPJAServices cnpjaServices,
-                                         IBCServices bcServices)
+                                      IUnitOfWork unitOfWork,
+                                      UserManager<ApplicationUser> manager, 
+                                      RoleManager<ApplicationRole> roleManager,
+                                      IMapper mapper,
+                                      ICNPJAServices cnpjaServices,
+                                      IBCServices bcServices)
         {
             _context = context;
             _unitOfWork = unitOfWork;
@@ -50,12 +49,12 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Lista SERVIÇOS de um fornecedor
+        /// Lista de todos os SERVIÇOS de um fornecedorServico
         /// </summary>s
         /// <param name="q"></param>
         /// <param name="fornecedorId"></param>
-        /// <returns>Um json com os SERVIÇOS do fornecedor</returns>
-        /// <response code="200">Lista de SERVIÇOS de um fornecedor</response>
+        /// <returns>Um json com os SERVIÇOS do fornecedorServico</returns>
+        /// <response code="200">Lista de SERVIÇOS do fornecedorServico</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
@@ -69,112 +68,62 @@ namespace BoxBack.WebApi.EndPoints
         [HttpGet]
         public async Task<IActionResult> ListAsync(string q, string fornecedorId)
         {
-            #region Required validations
             if (string.IsNullOrEmpty(fornecedorId))
             {
                 AddError("FornecedorId requerido.");
                 return CustomResponse(400);
             }
-            #endregion
 
             #region Get data
-            var fornecedorServicos = new List<FornecedorServico>();
+            var FornecedorServicos = new List<FornecedorServico>();
             try
             {
-                fornecedorServicos = await _context.FornecedorServicos
-                                                    .AsNoTracking()
-                                                    .Where(x => x.FornecedorId == Guid.Parse(fornecedorId))
-                                                    .OrderByDescending(x => x.UpdatedAt)
-                                                    .ToListAsync();
+                FornecedorServicos = await _context.FornecedorServicos
+                                                .AsNoTracking()
+                                                .Where(x => x.FornecedorId == Guid.Parse(fornecedorId))
+                                                .OrderByDescending(x => x.UpdatedAt)
+                                                .ToListAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
-            if (fornecedorServicos == null)
+            if (FornecedorServicos == null)
             {
                 AddError("Não encontrado.");
                 return CustomResponse(404);
             }
             #endregion
             
-            #region Filter search
+            #region Filter search 
             if(!string.IsNullOrEmpty(q))
-                fornecedorServicos = fornecedorServicos.Where(x => x.Nome.Contains(q)).ToList();
+                FornecedorServicos = FornecedorServicos.Where(x => x.Nome.Contains(q)).ToList();
             #endregion
 
             #region Map
-            IEnumerable<FornecedorServicoViewModel> fornecedorServicosMapped = new List<FornecedorServicoViewModel>();
+            IEnumerable<FornecedorServicoViewModel> fornecedorServicoMapped = new List<FornecedorServicoViewModel>();
             try
             {
-                fornecedorServicosMapped = _mapper.Map<IEnumerable<FornecedorServicoViewModel>>(fornecedorServicos);
+                fornecedorServicoMapped = _mapper.Map<IEnumerable<FornecedorServicoViewModel>>(FornecedorServicos);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
             return Ok(new {
-                AllData = fornecedorServicosMapped.ToList(),
-                FornecedorServicos = fornecedorServicosMapped.ToList(),
+                AllData = fornecedorServicoMapped.ToList(),
+                FornecedorServicos = fornecedorServicoMapped.ToList(),
                 Params = q,
-                Total = fornecedorServicosMapped.Count()
+                Total = fornecedorServicoMapped.Count()
             });
         }
 
-        /// <summary>
-        /// Lista todos os serviços de fornecedores para uma select2
+        /// <summary> 
+        /// Adiciona um SERVIÇO para um fornecedorServico
         /// </summary>
-        /// <param name="q"></param>
-        /// <param name="isDeleted"></param>
-        /// <returns>Um json com os serviços de fornecedores</returns>
-        /// <response code="200">Lista de serviços de fornecedores</response>
-        /// <response code="400">Problemas de validação ou dados nulos</response>
-        /// <response code="404">Lista vazia</response>
-        /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanFornecedorServicoToSelect, CanFornecedorServicoAll")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("list-to-select")] 
-        [HttpGet]
-        public async Task<IActionResult> ListToSelectAsync(string q, bool isDeleted = false)
-        {
-            #region Get data
-            var fornecedoresServicosDB = new List<FornecedorServico>();
-            try
-            {
-                fornecedoresServicosDB = await _context
-                                                    .FornecedorServicos
-                                                    .Where(x => !x.IsDeleted || x.IsDeleted == isDeleted)
-                                                    .ToListAsync();
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            
-            if (fornecedoresServicosDB == null)
-            {
-                AddError("Não encontrado");
-                return CustomResponse(404);
-            }
-            #endregion
-            
-            #region Map
-            IEnumerable<FornecedorServicoSelect2ViewModel> fornecedoresServicosMap = new List<FornecedorServicoSelect2ViewModel>();
-            try
-            {
-                fornecedoresServicosMap = _mapper.Map<IEnumerable<FornecedorServicoSelect2ViewModel>>(fornecedoresServicosDB);
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
-            
-            return Ok(fornecedoresServicosMap);
-        }
-
-        /// <summary>
-        /// Cria um SERVIÇO para um Fornecedor
-        /// </summary>
-        /// <param name="fornecedorServicoViewModel"></param>
+        /// <param name="FornecedorServicoViewModel"></param>
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Master, CanFornecedorServicoCreate, CanFornecedorServicoAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -182,15 +131,17 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("create")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody]FornecedorServicoViewModel fornecedorServicoViewModel)
+        public async Task<IActionResult> CreateAsync([FromBody]FornecedorServicoViewModel FornecedorServicoViewModel)
         {
             #region Map
             var fornecedorServicoMapped = new FornecedorServico();
             try
             {
-                fornecedorServicoMapped = _mapper.Map<FornecedorServico>(fornecedorServicoViewModel);
+                fornecedorServicoMapped = _mapper.Map<FornecedorServico>(FornecedorServicoViewModel);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            fornecedorServicoMapped.Fornecedor = null;
             #endregion
 
             #region Persistance and commit
@@ -202,29 +153,29 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            return CustomResponse(201);
+            return CreatedAtAction(null, new { fornecedorId = FornecedorServicoViewModel.FornecedorId});
         }
 
         /// <summary>
-        /// Atualiza um SERVIÇO de fornecedor
+        /// Atualiza o SERVIÇO de um fornecedorServico
         /// </summary>
-        /// <param name="fornecedorServicoViewModel"></param>
+        /// <param name="FornecedorServicoViewModel"></param>
         /// <returns>True se atualizada com sucesso</returns>
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
         [Authorize(Roles = "Master, CanFornecedorServicoUpdate, CanFornecedorServicoAll")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody]FornecedorServicoViewModel fornecedorServicoViewModel)
+        public async Task<IActionResult> UpdateAsync([FromBody]FornecedorServicoViewModel FornecedorServicoViewModel)
         {
             #region Required validations
-            if (!fornecedorServicoViewModel.Id.HasValue ||
-                fornecedorServicoViewModel.Id.Value == Guid.Empty)
+            if (!FornecedorServicoViewModel.Id.HasValue ||
+                FornecedorServicoViewModel.Id == Guid.Empty)
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);
@@ -232,17 +183,18 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Get data for update
-            var fornecedorServicoDB = new FornecedorServico();
+            var FornecedorServicoDB = new FornecedorServico();
             try
             {
-                fornecedorServicoDB = await _context
-                                                .FornecedorServicos
-                                                .FindAsync(fornecedorServicoViewModel.Id);
+                FornecedorServicoDB = await _context
+                                            .FornecedorServicos
+                                            .AsNoTracking()
+                                            .FirstOrDefaultAsync(x => x.Id == FornecedorServicoViewModel.Id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            if (fornecedorServicoDB == null)
+            if (FornecedorServicoDB == null)
             {
-                AddError("Serviço do ornecedor não encontrado para atualizar.");
+                AddError("Serviço de fornecedorServico não encontrado para atualizar.");
                 return CustomResponse(404);
             }
             #endregion
@@ -251,12 +203,13 @@ namespace BoxBack.WebApi.EndPoints
             var fornecedorServicoMap = new FornecedorServico();
             try
             {
-                fornecedorServicoMap = _mapper.Map<FornecedorServicoViewModel, FornecedorServico>(fornecedorServicoViewModel, fornecedorServicoDB);
+                fornecedorServicoMap = _mapper.Map<FornecedorServicoViewModel, FornecedorServico>(FornecedorServicoViewModel, FornecedorServicoDB);
+                fornecedorServicoMap.Fornecedor = null;
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            #region Update Fornecedor
+            #region Update serviço fornecedorServico
             try
             {
                 _context.FornecedorServicos.Update(fornecedorServicoMap);
@@ -272,26 +225,24 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            return CustomResponse(204);
+            return CustomResponse(200, new { fornecedorId = FornecedorServicoViewModel.FornecedorId } );
         }
 
         /// <summary>
-        /// Deleta um SERVIÇO de um FORNECEDOR
+        /// Deleta um fornecedorServico
         /// </summary>
         /// <param name="id"></param>
         /// <returns>True se deletado com sucesso</returns>
         /// <response code="204">Deletado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Not found</response>
-        /// <response code="500">Erro desconhecido</response>
+        [Route("delete/{id}")]
         [Authorize(Roles = "Master, CanFornecedorServicoDelete, CanFornecedorServicoAll")]
+        [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        [Route("delete")]
-        [HttpDelete]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             #region Validations required
@@ -313,7 +264,7 @@ namespace BoxBack.WebApi.EndPoints
                 fornecedorServico = await _context.FornecedorServicos.FindAsync(id);
                 if (fornecedorServico == null)
                 {
-                    AddError("Serviço do fornecedor não encontrado para deletar.");
+                    AddError("FornecedorServico não encontrado para deletar.");
                     return CustomResponse(404);
                 }
             }
@@ -334,7 +285,7 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Altera o status do SERVIÇO um FORNECEDOR
+        /// Altera o status de um fornecedorServico
         /// </summary>
         /// <param name="id"></param>
         /// <returns>True se a operação foi realizada com sucesso</returns>
@@ -356,7 +307,6 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         public async Task<IActionResult> AlterStatusAsync(Guid id)
         {
@@ -369,27 +319,28 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
     
             #region Get data
-            var fornecedorServico = new FornecedorServico();
+            var FornecedorServico = new FornecedorServico();
             try
             {
-                fornecedorServico = await _context.FornecedorServicos.FindAsync(id);
-                if (fornecedorServico == null)
-                {
-                    AddError("Servido do fornecedor não encontrado para alterar seu status.");
-                    return CustomResponse(404);
-                }
+                FornecedorServico = await _context.FornecedorServicos.FindAsync(id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            if (FornecedorServico == null)
+            {
+                AddError("Serviço do fornecedorServico não encontrado para alterar seu status.");
+                return CustomResponse(404);
+            }
             #endregion
 
             #region Map
-            switch(fornecedorServico.IsDeleted)
+            switch(FornecedorServico.IsDeleted)
             {
                 case true:
-                    fornecedorServico.IsDeleted = false;
+                    FornecedorServico.IsDeleted = false;
                     break;
                 case false:
-                    fornecedorServico.IsDeleted = true;
+                    FornecedorServico.IsDeleted = true;
                     break;
             }
             #endregion
@@ -397,17 +348,77 @@ namespace BoxBack.WebApi.EndPoints
             #region Alter status
             try
             {
-                _context.FornecedorServicos.Update(fornecedorServico);
+                _context.FornecedorServicos.Update(FornecedorServico);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
             #endregion
 
-            return CustomResponse(200, new { message = "Status serviço do fornecedor alterado com sucesso." } );
+            return CustomResponse(200, new { message = "Status serviço do fornecedorServico alterado com sucesso.", fornecedorId = FornecedorServico.FornecedorId } );
+        }
+
+        /// <summary>
+        /// Retorna um fornecedorServico pelo seu Id
+        /// </summary>s
+        /// <param name="fornecedorId"></param>
+        /// <returns>Um objeto com o fornecedorServico solicitado</returns>
+        /// <response code="200">Lista um fornecedorServico</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">FornecedorServico não encontrado</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanFornecedorServicoListOne, CanFornecedorServicoAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Produces("application/json")]
+        [Route("list-one/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> ListOneAsync([FromRoute]Guid? fornecedorId)
+        {
+            #region Required validations
+            if (!fornecedorId.HasValue || fornecedorId == Guid.Empty)
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data
+            var fornecedorServico = new FornecedorServico();
+            try
+            {
+                fornecedorServico = await _context.FornecedorServicos
+                                                    .AsNoTracking()
+                                                    .FirstOrDefaultAsync(x => x.FornecedorId.Equals(fornecedorId));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (fornecedorServico == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
+            #endregion
+            
+            #region Map
+            var fornecedorServicoMapped = new ClienteViewModel();
+            try
+            {
+                fornecedorServicoMapped = _mapper.Map<ClienteViewModel>(fornecedorServico);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            return Ok(new {
+                Data = fornecedorServicoMapped,
+                FornecedorServico = fornecedorServicoMapped,
+                Params = fornecedorId
+            });
         }
 
         #region Third Party
+
         /// <summary>
         /// Lista os dados do CNPJ de uma empresa a partir de uma api de terceiro
         /// </summary>s
