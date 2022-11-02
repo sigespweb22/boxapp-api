@@ -106,6 +106,66 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
+        /// Retorna um fornecedor pelo seu Id
+        /// </summary>s
+        /// <param name="id"></param>
+        /// <returns>Um objeto com o fornecedor solicitado</returns>
+        /// <response code="200">Lista um fornecedor</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Fornecedor não encontrado</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanFornecedorListOne, CanFornecedorAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Produces("application/json")]
+        [Route("list-one/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> ListOneAsync([FromRoute]Guid? id)
+        {
+            #region Required validations
+            if (!id.HasValue || id == Guid.Empty)
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data
+            var fornecedor = new Fornecedor();
+            try
+            {
+                fornecedor = await _context.Fornecedores
+                                            .AsNoTracking()
+                                            .FirstOrDefaultAsync(x => x.Id.Equals(id));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (fornecedor == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
+            #endregion
+            
+            #region Map
+            var fornecedorMapped = new FornecedorViewModel();
+            try
+            {
+                fornecedorMapped = _mapper.Map<FornecedorViewModel>(fornecedor);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            return Ok(new {
+                Data = fornecedorMapped,
+                Fornecedor = fornecedorMapped,
+                Params = id
+            });
+        }
+
+        /// <summary>
         /// Cria um FORNECEDOR
         /// </summary>
         /// <param name="fornecedorViewModel"></param>
