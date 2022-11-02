@@ -315,27 +315,28 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
     
             #region Get data
-            var cliente = new Cliente();
+            var clienteServico = new ClienteServico();
             try
             {
-                cliente = await _context.Clientes.FindAsync(id);
-                if (cliente == null)
-                {
-                    AddError("Cliente não encontrado para alterar seu status.");
-                    return CustomResponse(404);
-                }
+                clienteServico = await _context.ClientesServicos.FindAsync(id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            if (clienteServico == null)
+            {
+                AddError("Serviço do cliente não encontrado para alterar seu status.");
+                return CustomResponse(404);
+            }
             #endregion
 
             #region Map
-            switch(cliente.IsDeleted)
+            switch(clienteServico.IsDeleted)
             {
                 case true:
-                    cliente.IsDeleted = false;
+                    clienteServico.IsDeleted = false;
                     break;
                 case false:
-                    cliente.IsDeleted = true;
+                    clienteServico.IsDeleted = true;
                     break;
             }
             #endregion
@@ -343,14 +344,14 @@ namespace BoxBack.WebApi.EndPoints
             #region Alter status
             try
             {
-                _context.Clientes.Update(cliente);
+                _context.ClientesServicos.Update(clienteServico);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
             #endregion
 
-            return CustomResponse(200, new { message = "Status cliente alterado com sucesso." } );
+            return CustomResponse(200, new { message = "Status serviço do cliente alterado com sucesso." } );
         }
 
         /// <summary>
