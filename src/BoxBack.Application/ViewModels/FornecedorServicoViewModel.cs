@@ -11,7 +11,7 @@ namespace BoxBack.Application.ViewModels
         public string CodigoServico { get; set; }
         public string UnidadeMedida { get; set; }
         public string Caracteristicas { get; set; }
-        public bool IsDeleted { get; set; }
+        public string Status { get; set; }
 
         public string FornecedorId { get; set; }
     }

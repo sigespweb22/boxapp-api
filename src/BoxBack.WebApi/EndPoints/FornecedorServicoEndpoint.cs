@@ -194,7 +194,7 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             if (FornecedorServicoDB == null)
             {
-                AddError("Serviço de fornecedorServico não encontrado para atualizar.");
+                AddError("Serviço do fornecedor não encontrado para atualizar.");
                 return CustomResponse(404);
             }
             #endregion
@@ -264,7 +264,7 @@ namespace BoxBack.WebApi.EndPoints
                 fornecedorServico = await _context.FornecedorServicos.FindAsync(id);
                 if (fornecedorServico == null)
                 {
-                    AddError("FornecedorServico não encontrado para deletar.");
+                    AddError("Serviço do fornecedor não encontrado para deletar.");
                     return CustomResponse(404);
                 }
             }
@@ -328,7 +328,7 @@ namespace BoxBack.WebApi.EndPoints
             
             if (FornecedorServico == null)
             {
-                AddError("Serviço do fornecedorServico não encontrado para alterar seu status.");
+                AddError("Serviço do fornecedor não encontrado para alterar seu status.");
                 return CustomResponse(404);
             }
             #endregion
@@ -355,7 +355,7 @@ namespace BoxBack.WebApi.EndPoints
             
             #endregion
 
-            return CustomResponse(200, new { message = "Status serviço do fornecedorServico alterado com sucesso.", fornecedorId = FornecedorServico.FornecedorId } );
+            return CustomResponse(200, new { message = "Status serviço do fornecedor alterado com sucesso.", fornecedorId = FornecedorServico.FornecedorId } );
         }
 
         /// <summary>

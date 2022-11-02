@@ -49,7 +49,8 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.RoleId, src => src.MapFrom(x => x.Id));
             CreateMap<Fornecedor, FornecedorViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
-            CreateMap<FornecedorServico, FornecedorServicoViewModel>();
+            CreateMap<FornecedorServico, FornecedorServicoViewModel>()
+                .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
             CreateMap<FornecedorServico, FornecedorServicoSelect2ViewModel>()
                 .ForMember(dst => dst.Id, src => src.MapFrom(x => x.Id))
                 .ForMember(dst => dst.Nome, src => src.MapFrom(x => x.Nome));
