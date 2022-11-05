@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-11-05T13:34:16.601Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" version="20.5.2" etag="L30ZoV-vvK4t4-L9NJI6" type="github" pages="7">
+<mxfile host="app.diagrams.net" modified="2022-11-05T13:34:30.807Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" version="20.5.2" etag="CxhZzzXznG5cneDU4nOn" type="github" pages="7">
   <diagram id="ZShh_gid76VzSa8Wm5ik" name="Principal">
     <mxGraphModel dx="1422" dy="1931" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -374,7 +374,7 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="trPJKFuPp-jThXHRmgEM-1" value="* Esta tela será no formato de KanBan e irá listar todos os tickets e atividades dentro de tickets onde o usuário logado fora colocado como responsável&lt;br&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="10" y="110" width="620" height="90" as="geometry" />
+          <mxGeometry x="10" y="118" width="620" height="50" as="geometry" />
         </mxCell>
         <mxCell id="dyrSZuuJ-05I6Bd-qZzF-1" value="Fluxo Atividades" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=22;fontColor=#CC6600;fontStyle=1;fontFamily=Open Sans;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOpen%2BSans;" vertex="1" parent="1">
           <mxGeometry width="320" height="40" as="geometry" />
@@ -386,7 +386,7 @@
           <mxGeometry x="10" y="230" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="dyrSZuuJ-05I6Bd-qZzF-5" value="* Dentro do manager da tarefa haverá uma tab que listará todas as atividades daquela tarefa" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="10" y="280" width="620" height="90" as="geometry" />
+          <mxGeometry x="10" y="285" width="620" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
