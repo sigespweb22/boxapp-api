@@ -16,6 +16,8 @@ using BoxBack.Domain.Enums;
 using BoxBack.Application.ViewModels.Selects;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Services;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -619,6 +621,126 @@ namespace BoxBack.WebApi.EndPoints
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            return CustomResponse(204);
+        }
+
+        #endregion
+
+        #region Methods Usuário Segurança
+        /// <summary>
+        /// Atualiza dados de segurança do usuário
+        /// </summary>
+        /// <param name="usuarioSegurancaViewModel"></param>
+        /// <returns>True se atualizada com sucesso</returns>
+        /// <response code="204">Atualizada com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [Authorize(Roles = "Master, CanUserUpdate, CanUserAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("seguranca/update")]
+        [HttpPut]
+        public async Task<IActionResult> SegurancaUpdateAsync([FromBody]UsuarioSegurancaViewModel usuarioSegurancaViewModel)
+        {
+            #region Required validations
+            if (string.IsNullOrEmpty(usuarioSegurancaViewModel.Id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+
+            if (string.IsNullOrEmpty(usuarioSegurancaViewModel.CurrentPassword))
+            {
+                AddError("Senha Atual é requerida.");
+                return CustomResponse(400);
+            }
+
+            if (string.IsNullOrEmpty(usuarioSegurancaViewModel.NewPassword))
+            {
+                AddError("Nova Senha é requerida.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data for update
+            var userDB = new ApplicationUser();
+            try
+            {
+                userDB = await _context
+                                    .Users
+                                    .FirstOrDefaultAsync(x => x.Id.Equals(usuarioSegurancaViewModel.Id));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (userDB == null)
+            {
+                AddError("Usuário não encontrada para atualizar seus dados de segurança.");
+                return CustomResponse(404);
+            }
+            #endregion 
+
+            #region Check senha atual - Check tentando fazer login com a senha e as credenciais do usuários
+            bool checkCurrentPassword;
+            try
+            {
+                checkCurrentPassword = await _manager.CheckPasswordAsync(userDB, usuarioSegurancaViewModel.CurrentPassword);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            if (!checkCurrentPassword)
+            {
+                AddError("Senha Atual inválida!");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Check to password pattern
+            try
+            {
+                Regex passwordRE = new Regex(@"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!$*&@#])[0-9a-zA-Z!$*&@#]{6,}");
+                if (!passwordRE.IsMatch(usuarioSegurancaViewModel.NewPassword))
+                {
+                    AddError("Padrão de senha não corresponde ao esperado. \nVerifique os requisitos de senha.");
+                    return CustomResponse(400);
+                }    
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Get code (Token to reset)
+            String code;
+            try
+            {
+                code = await _manager.GeneratePasswordResetTokenAsync(userDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            if (code == null)
+            {
+                AddError("Problemas ao obter o token de reset de senha. Tente novamente, persistindo o problema informe a equipe técnica do sistema.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Reset password
+            var result = new IdentityResult();
+            try
+            {
+                result = await _manager.ResetPasswordAsync(userDB, code, usuarioSegurancaViewModel.NewPassword);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    AddError(error.Description);
+                }
+                return CustomResponse(400);
+            }
             #endregion
 
             return CustomResponse(204);
