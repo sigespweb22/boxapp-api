@@ -598,6 +598,8 @@ namespace BoxBack.WebApi.EndPoints
             var usuarioContaMap = new ApplicationUser();
             try 
             {
+                usuarioContaViewModel.NormalizedUserName = usuarioContaViewModel.UserName.ToUpper();
+                usuarioContaViewModel.NormalizedEmail = usuarioContaViewModel.Email.ToUpper();
                 usuarioContaMap = _mapper.Map<UsuarioContaViewModel, ApplicationUser>(usuarioContaViewModel, userDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
