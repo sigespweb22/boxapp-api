@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-11-05T13:28:54.100Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" version="20.5.2" etag="UOUjq2Td5BK-16MjG4Ty" type="github" pages="6">
+<mxfile host="app.diagrams.net" modified="2022-11-05T13:30:56.143Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" version="20.5.2" etag="dM4lhNjdC_Q7FkEfJbGg" type="github" pages="7">
   <diagram id="ZShh_gid76VzSa8Wm5ik" name="Principal">
     <mxGraphModel dx="1422" dy="1931" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -364,6 +364,20 @@
         </mxCell>
         <mxCell id="AMthQE_jnrb_zMwVvsrx-22" value="Link público" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Open Sans;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOpen%2BSans;fontSize=15;fontColor=#CC6600;" vertex="1" parent="1">
           <mxGeometry x="400" y="210" width="120" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="5l9_Jz9PK6JdXj0-ksBt" name="Fluxo minhas atividades">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="trPJKFuPp-jThXHRmgEM-1" value="* Haverá uma tela com todas as atividades onde o usuário estiver como responsável&lt;br&gt;*&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="190" width="620" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="dyrSZuuJ-05I6Bd-qZzF-1" value="Fluxo minhas atividades" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=22;fontColor=#CC6600;fontStyle=1;fontFamily=Open Sans;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOpen%2BSans;" vertex="1" parent="1">
+          <mxGeometry width="320" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
