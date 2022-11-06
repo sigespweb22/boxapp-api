@@ -14,6 +14,7 @@ using AutoMapper;
 using BoxBack.Domain.Interfaces;
 using BoxBack.Application.ViewModels.Selects;
 using BoxBack.WebApi.Controllers;
+using BoxBack.Domain.Enums;
 
 namespace BoxBack.WebApi.EndPoints
 {

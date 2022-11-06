@@ -1,7 +1,20 @@
+using System.ComponentModel;
+using BoxBack.Domain.Helpers;
+
 namespace BoxBack.Domain.Enums
 {
+    // Define an extension method in a non-nested static class.
+    public static class Extensions
+    {
+        public static string GetDescription(this PermissionEnum pe)
+        {
+            return EnumHelper.GetDescription(pe);
+        }
+    }
+
     public enum PermissionEnum
     {
+        [Description("Pode total a todas as funcionalidades do sistema.")]
         Master = 0,
 
         //Begin - Dashboard

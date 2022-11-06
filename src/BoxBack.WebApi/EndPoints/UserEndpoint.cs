@@ -242,6 +242,19 @@ namespace BoxBack.WebApi.EndPoints
             }
             #endregion
 
+            #region Check to password pattern
+            try
+            {
+                Regex passwordRE = new Regex(@"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!$*&@#])[0-9a-zA-Z!$*&@#]{6,}");
+                if (!passwordRE.IsMatch(applicationUserViewModel.Password))
+                {
+                    AddError("Padrão de senha não corresponde ao esperado. \nVerifique os requisitos de senha.");
+                    return CustomResponse(400);
+                }    
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
             #region Map
             var userMap = new ApplicationUser();
             applicationUserViewModel.Id = Guid.NewGuid().ToString();
