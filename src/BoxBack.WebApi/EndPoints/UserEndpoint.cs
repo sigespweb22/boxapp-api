@@ -800,7 +800,7 @@ namespace BoxBack.WebApi.EndPoints
 
             if (user == null)
             {
-                AddError("Não encontrado.");
+                AddError("Usuário não encontrado.");
                 return CustomResponse(404);
             }
             #endregion

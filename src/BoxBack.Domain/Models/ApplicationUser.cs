@@ -16,7 +16,7 @@ namespace BoxBack.Domain.Models
                                ApplicationUserStatusEnum status,
                                string bio,
                                DateTimeOffset dataAniversario,
-                               Int32 telefoneCelular, 
+                               Int64 telefoneCelular, 
                                SexoEnum genero) 
         {
             FullName = fullName;
@@ -41,7 +41,7 @@ namespace BoxBack.Domain.Models
         public ApplicationUserStatusEnum Status { get; set; }
         public string Bio { get; set; }
         public DateTimeOffset DataAniversario { get; set; }
-        public Int32 TelefoneCelular { get; set; }
+        public Int64 TelefoneCelular { get; set; }
         public SexoEnum Genero { get; set; }
 
 

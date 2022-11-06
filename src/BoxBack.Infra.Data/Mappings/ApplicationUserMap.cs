@@ -47,6 +47,7 @@ namespace BoxBack.Infra.Data.Mappings
 
             builder
                 .Property(c => c.TelefoneCelular)
+                .HasDefaultValue(99999999999)
                 .HasMaxLength(20);
             
             builder
