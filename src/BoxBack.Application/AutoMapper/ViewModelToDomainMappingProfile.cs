@@ -37,7 +37,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<FornecedorViewModel, Fornecedor>();
             CreateMap<FornecedorServicoViewModel, FornecedorServico>();
             CreateMap<UsuarioContaViewModel, ApplicationUser>();
-            CreateMap<UsuarioInfosViewModel, ApplicationUser>();
+            CreateMap<UsuarioInfoViewModel, ApplicationUser>();
         }
     }
 }

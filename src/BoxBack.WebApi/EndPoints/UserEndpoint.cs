@@ -17,7 +17,6 @@ using BoxBack.Application.ViewModels.Selects;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Services;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -77,13 +76,13 @@ namespace BoxBack.WebApi.EndPoints
                                         .ThenInclude(x => x.ApplicationGroup)
                                         .OrderBy(x => x.UserName)
                                         .ToListAsync();
-                if (users == null)
-                {
-                    AddError("Não encontrado.");
-                    return CustomResponse(404);
-                }
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (users == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
             #endregion
             
             #region Filter search
@@ -807,10 +806,10 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
             
             #region Map
-            var usuarioInfosMap = new UsuarioInfosViewModel();
+            var usuarioInfosMap = new UsuarioInfoViewModel();
             try
             {
-                usuarioInfosMap = _mapper.Map<UsuarioInfosViewModel>(user);
+                usuarioInfosMap = _mapper.Map<UsuarioInfoViewModel>(user);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
