@@ -32,7 +32,7 @@ namespace BoxBack.Infra.Data.Mappings
             builder.HasData(
                 new ApplicationRoleGroup
                 {
-                    RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210", // primary key
+                    RoleId = "b0f96d85-3647-4651-9f78-b7529b577ec0", // primary key
                     GroupId = Guid.Parse("23e63d9c-283b-496b-b7d8-7dac2ef7a822") // primary key
                 }
             );

@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Collections.Generic;
 using System.ComponentModel;
 using BoxBack.Domain.Helpers;
 
@@ -9,6 +11,11 @@ namespace BoxBack.Domain.Enums
         public static string GetDescription(this PermissionEnum pe)
         {
             return EnumHelper.GetDescription(pe);
+        }
+
+        public static List<string> GetNames()
+        {
+            return EnumHelper.GetNames<PermissionEnum>().ToList();
         }
     }
 
