@@ -280,7 +280,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="200">Lista de roles (permissões) ativas</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
-        [Authorize(Roles = "Master, CanRoleListToSelect, CanRoleAll")]
+        [Authorize(Roles = "Master, CanRoleList, CanRoleAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

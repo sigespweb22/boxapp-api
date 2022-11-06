@@ -50,10 +50,12 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="200">Lista de grupos</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
+        /// <response code="500">Erro interno desconhecido</response>
         [Authorize(Roles = "Master, CanUserList, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("list")]
         [HttpGet]
@@ -109,10 +111,12 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="200">Lista de grupos ativos</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
-        [Authorize(Roles = "Master, CanGroupListToSelect, CanGroupAll")]
+        /// <response code="500">Erro interno desconhecido</response>
+        [Authorize(Roles = "Master, CanGroupList, CanGroupAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("list-to-select")] 
         [HttpGet]
         public async Task<IActionResult> ListToSelectAsync(string q, bool isDeleted = false)
@@ -153,9 +157,11 @@ namespace BoxBack.WebApi.EndPoints
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="500">Erro interno desconhecido</response>
         [Authorize(Roles = "Master, CanGroupCreate, CanGroupAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("create")]
@@ -207,9 +213,11 @@ namespace BoxBack.WebApi.EndPoints
         /// <returns>True se atualizada com sucesso</returns>
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="500">Erro interno desconhecido</response>
         [Authorize(Roles = "Master, CanGroupUpdate, CanGroupAll")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("update")]
@@ -298,12 +306,14 @@ namespace BoxBack.WebApi.EndPoints
         ///     }
         ///
         /// </remarks>
+        /// <response code="500">Erro interno desconhecido</response>
         [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanGroupAlterStatus, CanGroupAll")]
+        [Authorize(Roles = "Master, CanGroupUpdate, CanGroupAll")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         public async Task<IActionResult> AlterStatusAsync(string id)
         {
@@ -364,12 +374,14 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="204">Deletado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Not found</response>
+        /// <response code="500">Erro interno desconhecido</response>
         [Route("delete/{id}")]
         [Authorize(Roles = "Master, CanGroupDelete, CanGroupAll")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         public async Task<IActionResult> DeleteAsync(string id)
         {

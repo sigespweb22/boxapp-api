@@ -119,7 +119,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="200">O usuário</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Registro não encontrado</response>
-        [Authorize(Roles = "Master, CanUserListOne, CanUserAll")]
+        [Authorize(Roles = "Master, CanUserRead, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -175,7 +175,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="200">Lista de usuários ativos</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
-        [Authorize(Roles = "Master, CanUserListToSelect, CanUserAll")]
+        [Authorize(Roles = "Master, CanUserList, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -444,7 +444,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanUserAlterStatus, CanUserAll")]
+        [Authorize(Roles = "Master, CanUserUpdate, CanUserAll")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -517,7 +517,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Registro não encontrado</response>
         /// <response code="500">Erro interno desconhecido</response>
-        [Authorize(Roles = "Master, CanUserListOne, CanUserAll")]
+        [Authorize(Roles = "Master, CanUserRead, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -770,7 +770,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Registro não encontrado</response>
         /// <response code="500">Erro interno desconhecido</response>
-        [Authorize(Roles = "Master, CanUserListOne, CanUserAll")]
+        [Authorize(Roles = "Master, CanUserRead, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

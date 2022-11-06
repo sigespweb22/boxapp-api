@@ -104,7 +104,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanServicoToSelect, CanServicoAll")]
+        [Authorize(Roles = "Master, CanServicoList, CanServicoAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -331,7 +331,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanServicoAlterStatus, CanServicoAll")]
+        [Authorize(Roles = "Master, CanServicoUpdate, CanServicoAll")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
