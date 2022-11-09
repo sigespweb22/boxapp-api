@@ -537,6 +537,37 @@ namespace BoxBack.WebApi.EndPoints
             
             return CustomResponse(200, empresa);
         }
+
+        [Route("tp/bc/alter/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> TPBCAlterAsync(string id)
+        {
+            #region Required validations
+            if (string.IsNullOrEmpty(id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data
+            var cliente = new BCClienteModelService();
+            try
+            {
+                var token = "ApiKey Z0EjZPzTOb-8NpoAk4GtAa8xOF7FW8cQDS4OPyGpk90XLOgEysE3zLAD7ClZLMNaynsbTrCaUm1lQiABFUNKY5Gg92GcpUhpHaUUcTkvYNyhbXzYG7zLggKd7MwMR1qwsW16kQFhc94.";
+                
+                cliente = await _bcServices.ClienteObter(id, token);
+                if (cliente == null)
+                {
+                    AddError("Cliente não encontrado com o Id informado.");
+                    return CustomResponse(404, cliente);
+                }
+            }
+            catch (Exception Content) { AddErrorToTryCatch(Content); return CustomResponse(400); }
+            #endregion
+            
+            return CustomResponse(200, cliente);
+        }
         #endregion
     }
 }
