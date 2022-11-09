@@ -1,6 +1,136 @@
 <mxfile host="65bd71144e">
+<<<<<<< HEAD
+    <diagram id="_-IBJEU6sJU1gp7eHrf4" name="Caso de Uso - Fornecedores a Clientes">
+        <mxGraphModel dx="592" dy="153" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+            <root>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-0"/>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-1" parent="5Sr-LHToyk-XQfIZRsih-0"/>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-13" style="edgeStyle=none;html=1;fontColor=#FF8000;" parent="5Sr-LHToyk-XQfIZRsih-1" source="5Sr-LHToyk-XQfIZRsih-2" target="5Sr-LHToyk-XQfIZRsih-10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-2" value="CLIENTE A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="80" y="160" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-14" style="edgeStyle=none;html=1;fontColor=#FF8000;" parent="5Sr-LHToyk-XQfIZRsih-1" source="5Sr-LHToyk-XQfIZRsih-4" target="5Sr-LHToyk-XQfIZRsih-6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-4" value="CLIENTE C" style="rounded=0;whiteSpace=wrap;html=1;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="80" y="250" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-15" style="edgeStyle=none;html=1;fontColor=#FF8000;" parent="5Sr-LHToyk-XQfIZRsih-1" source="5Sr-LHToyk-XQfIZRsih-5" target="5Sr-LHToyk-XQfIZRsih-7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-5" value="CLIENTE C" style="rounded=0;whiteSpace=wrap;html=1;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="80" y="340" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-26" style="edgeStyle=none;html=1;fontColor=#FF6666;" parent="5Sr-LHToyk-XQfIZRsih-1" source="5Sr-LHToyk-XQfIZRsih-6" target="5Sr-LHToyk-XQfIZRsih-21" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-6" value="CLIENTE SERVIÇO&lt;br&gt;&lt;span style=&quot;color: rgb(255 , 102 , 102)&quot;&gt;Especificações do serviço&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="280" y="250" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-29" style="edgeStyle=none;html=1;fontColor=#FF6666;" parent="5Sr-LHToyk-XQfIZRsih-1" source="5Sr-LHToyk-XQfIZRsih-7" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="481.17647058823536" y="442" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-7" value="CLIENTE SERVIÇO&lt;br&gt;&lt;span style=&quot;color: rgb(255 , 128 , 0)&quot;&gt;SERVIDOR EM NUVEM&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="280" y="340" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" style="edgeStyle=none;html=1;fontColor=#3399FF;" parent="5Sr-LHToyk-XQfIZRsih-1" source="5Sr-LHToyk-XQfIZRsih-8" target="28" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-8" value="CLIENTE SERVIÇO&lt;br&gt;&lt;font color=&quot;#ff8000&quot;&gt;SERVIDOR EM NUVEM&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="280" y="430" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-31" style="edgeStyle=none;html=1;fontColor=#FF6666;" parent="5Sr-LHToyk-XQfIZRsih-1" source="5Sr-LHToyk-XQfIZRsih-9" target="28" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-9" value="CLIENTE SERVIÇO&lt;br&gt;&lt;span style=&quot;color: rgb(255 , 128 , 0)&quot;&gt;SERVIDOR EM NUVEM&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="280" y="520" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-25" style="edgeStyle=none;html=1;fontColor=#FF6666;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="5Sr-LHToyk-XQfIZRsih-1" source="5Sr-LHToyk-XQfIZRsih-10" target="5Sr-LHToyk-XQfIZRsih-39" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-10" value="CLIENTE SERVIÇO&lt;br&gt;&lt;font color=&quot;#ff6666&quot;&gt;Especificações do&lt;br&gt;serviço&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="280" y="160" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-16" style="edgeStyle=none;html=1;fontColor=#FF8000;" parent="5Sr-LHToyk-XQfIZRsih-1" source="5Sr-LHToyk-XQfIZRsih-11" target="5Sr-LHToyk-XQfIZRsih-8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-11" value="CLIENTE D" style="rounded=0;whiteSpace=wrap;html=1;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="80" y="430" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-17" style="edgeStyle=none;html=1;fontColor=#FF8000;" parent="5Sr-LHToyk-XQfIZRsih-1" source="5Sr-LHToyk-XQfIZRsih-12" target="5Sr-LHToyk-XQfIZRsih-9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-12" value="CLIENTE E" style="rounded=0;whiteSpace=wrap;html=1;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="80" y="520" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-3" value="FORNECEDOR&lt;br&gt;&lt;font color=&quot;#3399ff&quot;&gt;SKYMAIL&lt;br&gt;ON DEMAND&lt;br&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="860" y="200" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-35" style="edgeStyle=none;html=1;fontColor=#FF0080;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="5Sr-LHToyk-XQfIZRsih-1" source="5Sr-LHToyk-XQfIZRsih-21" target="11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-21" value="SERVIÇO&lt;br&gt;&lt;font color=&quot;#ff6666&quot;&gt;E-MAIL &lt;br&gt;30 contas&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="480" y="250" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-22" value="177.93.105.1&lt;br&gt;177.93.105.20" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FF0080;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="682" y="483" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-32" value="&lt;span style=&quot;text-align: right&quot;&gt;177.93.105.1&lt;/span&gt;" style="text;whiteSpace=wrap;html=1;fontColor=#FF0080;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="327" y="397" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-33" value="&lt;span style=&quot;text-align: right&quot;&gt;177.93.105.2&lt;/span&gt;" style="text;whiteSpace=wrap;html=1;fontColor=#FF0080;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="325" y="486" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-34" value="&lt;span style=&quot;text-align: right&quot;&gt;177.93.105.3&lt;/span&gt;" style="text;whiteSpace=wrap;html=1;fontColor=#FF0080;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="327" y="576" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontColor=#3399FF;" parent="5Sr-LHToyk-XQfIZRsih-1" source="5Sr-LHToyk-XQfIZRsih-39" target="11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5Sr-LHToyk-XQfIZRsih-39" value="SERVIÇO&lt;br&gt;&lt;font color=&quot;#ff6666&quot;&gt;E-MAIL &lt;br&gt;20 contas&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="480" y="160" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" style="edgeStyle=none;html=1;fontColor=#3399FF;" parent="5Sr-LHToyk-XQfIZRsih-1" source="11" target="5Sr-LHToyk-XQfIZRsih-3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="FORNECEDOR SERVIÇO&lt;br&gt;&lt;font color=&quot;#3399ff&quot;&gt;EMAIL&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="680" y="200" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="FORNECEDOR&lt;br&gt;&lt;font color=&quot;#3399ff&quot;&gt;DATA CENTER&lt;br&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="860" y="430" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" style="edgeStyle=none;html=1;fontColor=#3399FF;" parent="5Sr-LHToyk-XQfIZRsih-1" source="25" target="24" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="FORNECEDOR SERVIÇO&amp;nbsp;&lt;br&gt;&amp;nbsp;&lt;font color=&quot;#3399ff&quot;&gt;SERVIDOR EM NUVEM&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="680" y="430" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="50 CONTAS" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FF0080;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="680" y="255" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" style="edgeStyle=none;html=1;fontColor=#3399FF;" parent="5Sr-LHToyk-XQfIZRsih-1" source="28" target="25" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="SERVIÇO&lt;br&gt;&lt;font color=&quot;#ff8000&quot;&gt;SERVIDOR EM NUVEM&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="5Sr-LHToyk-XQfIZRsih-1" vertex="1">
+                    <mxGeometry x="480" y="430" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="ZShh_gid76VzSa8Wm5ik" name="Principal">
+        <mxGraphModel dx="1522" dy="1895" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+=======
     <diagram id="ZShh_gid76VzSa8Wm5ik" name="Ecossistemas BoxApp">
+<<<<<<< HEAD
         <mxGraphModel dx="2607" dy="2298" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+=======
+        <mxGraphModel dx="1374" dy="1959" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+>>>>>>> eaa1bd1e78f130f1c23827fbd4bf107285af8f88
+>>>>>>> 6f84646b712bce10d0279c83405d4995c3b92e7a
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
