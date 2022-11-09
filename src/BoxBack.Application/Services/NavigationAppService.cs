@@ -121,7 +121,7 @@ namespace BoxBack.Application.Services
                 Title = "Serviços",
                 Path = "/negocios/comercial/servico/list",
                 Action = "list",
-                Subject = "ac-servicos-page"
+                Subject = "ac-servico-page"
             };
             navigationC.Children.Add(oldestSonNB2);
 

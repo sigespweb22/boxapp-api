@@ -57,6 +57,9 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<Servico, ServicoSelect2ViewModel>()
                 .ForMember(dst => dst.Id, src => src.MapFrom(x => x.Id))
                 .ForMember(dst => dst.Nome, src => src.MapFrom(x => x.Nome));
+            CreateMap<ApplicationUser, UsuarioContaViewModel>()
+                .ForMember(dst => dst.ApplicationUserGroups, src => src.MapFrom(x => x.ApplicationUserGroups));
+            CreateMap<ApplicationUser, UsuarioInfoViewModel>();
         }
     }
 }

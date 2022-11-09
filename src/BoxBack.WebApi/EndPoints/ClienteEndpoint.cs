@@ -57,7 +57,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="200">Lista de clientes</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
-        [Authorize(Roles = "Master, CanClientList, CanClientAll")]
+        [Authorize(Roles = "Master, CanClienteList, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -128,7 +128,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteToSelect, CanClienteAll")]
+        [Authorize(Roles = "Master, CanClienteList, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -174,7 +174,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
-        [Authorize(Roles = "Master, CanClientCreate, CanClientAll")]
+        [Authorize(Roles = "Master, CanClienteCreate, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Produces("application/json")]
@@ -234,7 +234,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <returns>True se atualizada com sucesso</returns>
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
-        [Authorize(Roles = "Master, CanClientUpdate, CanClientAll")]
+        [Authorize(Roles = "Master, CanClienteUpdate, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Produces("application/json")]
@@ -303,13 +303,14 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="204">Deletado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Not found</response>
-        [Route("delete/{id}")]
-        [Authorize(Roles = "Master, CanClientDelete, CanClientAll")]
-        [HttpDelete]
+        
+        [Authorize(Roles = "Master, CanClienteDelete, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Produces("application/json")]
+        [Route("delete/{id}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             #region Validations required
@@ -368,13 +369,14 @@ namespace BoxBack.WebApi.EndPoints
         ///     }
         ///
         /// </remarks>
-        [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanClientAlterStatus, CanClientAll")]
-        [HttpPut]
+        
+        [Authorize(Roles = "Master, CanClienteAlterStatus, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Produces("application/json")]
+        [Route("alter-status/{id}")]
+        [HttpPut]
         public async Task<IActionResult> AlterStatusAsync(Guid id)
         {
             #region Validations required
@@ -433,7 +435,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Cliente não encontrado</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteListOne, CanClienteAll")]
+        [Authorize(Roles = "Master, CanClienteRead, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -502,13 +504,13 @@ namespace BoxBack.WebApi.EndPoints
         ///     }
         ///
         /// </remarks>
-        [Route("tp/{cnpj}")]
-        [Authorize(Roles = "Master, CanCnpjTPListOne, CanCnpjTPAll")]
-        [HttpGet]
+        [Authorize(Roles = "Master, CanCnpjTPRead, CanCnpjTPAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Produces("application/json")]
+        [Route("tp/{cnpj}")]
+        [HttpGet]
         public async Task<IActionResult> GetByApiThirdPartyByCnpj(string cnpj)
         {
             #region Required validations

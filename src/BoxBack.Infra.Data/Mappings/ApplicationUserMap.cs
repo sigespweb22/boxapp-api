@@ -44,6 +44,11 @@ namespace BoxBack.Infra.Data.Mappings
                 .WithOne(c => c.ApplicationUser)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .Property(c => c.TelefoneCelular)
+                .HasDefaultValue(99999999999)
+                .HasMaxLength(20);
             
             builder
                 .Property(c => c.TenantId)

@@ -1,85 +1,182 @@
+using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel;
+using BoxBack.Domain.Helpers;
+
 namespace BoxBack.Domain.Enums
 {
+    // Define an extension method in a non-nested static class.
+    public static class Extensions
+    {
+        public static string GetDescription(this PermissionEnum pe)
+        {
+            return EnumHelper.GetDescription(pe);
+        }
+
+        public static List<string> GetNames()
+        {
+            return EnumHelper.GetNames<PermissionEnum>().ToList();
+        }
+    }
+
     public enum PermissionEnum
     {
+        #region Master
+        [Description("Pode realizar todas as ações/operações, bem como ter acesso a todos os dados e funcionalidades")]
         Master = 0,
+        #endregion
 
-        //Begin - Dashboard
-        CanDashboardAll = 19,
-        CanDashboardClientList = 20,
-        CanDashboardACList = 21,
-        //End - Dashboard
+        #region Dashboard
+        [Description("Pode realizar todas as ações/operações em todas as dashboards")]
+        CanDashboardAll = 1,
 
-        //Begin - Usuário
-        CanUserAll = 1,
-        CanUserList = 2,
-        CanUserRead = 3,
-        CanUserUpdate = 4,
-        CanUserDelete = 5,
-        CanUserAlterStatus = 6,
-        //End - Usuário
+        [Description("Pode visualizar todas as dashboards do cliente")]
+        CanDashboardClienteAll = 2,
 
-        //Begin - Roles (Permissões)
-        CanRoleAll = 7,
-        CanRoleList = 8,
-        CanRoleRead = 9,
-        CanRoleUpdate = 10,
-        CanRoleCreate = 11,
-        CanRoleDelete = 12,
-        //End - Roles (Permissões)
+        [Description("Pode visualizar todas as dashboards de controle de acesso")]
+        CanDashboardControleAcessoAll = 3,
+        #endregion
 
-        //Begin - Grupo de usuários
-        CanGroupAll = 13,
-        CanGroupList = 14,
-        CanGroupRead = 15,
-        CanGroupUpdate = 16,
-        CanGroupCreate = 17,
-        CanGroupDelete = 18,
-        //End - Grupo de usuários
+        #region Usuário
+        [Description("Pode realizar todas as ações/operações em todos os usuários")]
+        CanUserAll = 1001,
+        [Description("Pode listar os dados de todos os usuários")]
+        CanUserList = 1002,
+        [Description("Pode listar os dados de um usuários")]
+        CanUserRead = 1003,
+        [Description("Pode criar um usuário")]
+        CanUserCreate = 1004,
+        [Description("Pode atualizar os dados de um usuário")]
+        CanUserUpdate = 1005,
+        [Description("Pode deletar um usuário")]
+        CanUserDelete = 1006,
+        #endregion
 
-        //Begin - Cliente
-        CanClienteAll = 22,
-        CanClienteList = 23,
-        CanClienteRead = 24,
-        CanClienteUpdate = 25,
-        CanClienteCreate = 26,
-        CanClienteDelete = 27,
-        CanClienteAlterStatus = 28,
-        CanClienteTPAll = 29,
-        CanClienteTPListOne = 30,
-        CanClienteListOne = 31,
-        //End - Cliente
+        #region Roles (Permissões)
+        [Description("Pode realizar todas as ações/operações em todos as roles/permissões")]
+        CanRoleAll = 2001,
+        [Description("Pode listar os dados de todas as roles/permissões")]
+        CanRoleList = 2002,
+        [Description("Pode listar os dados de uma roles/permissão")]
+        CanRoleRead = 2003,
+        [Description("Pode criar uma role/permissão")]
+        CanRoleCreate = 2004,
+        [Description("Pode atualizar os dados de uma roles/permissão")]
+        CanRoleUpdate = 2005,
+        [Description("Pode deletar uma role/permissão")]
+        CanRoleDelete = 2006,
+        #endregion
 
-         //Begin - Cliente Serviço
-        CanClienteServicoAll = 22,
-        CanClienteServicoList = 23,
-        CanClienteServicoRead = 24,
-        CanClienteServicoUpdate = 25,
-        CanClienteServicoCreate = 26,
-        CanClienteServicoDelete = 27,
-        CanClienteServicoAlterStatus = 28,
-        //End - Cliente Serviço
+        #region Grupo de usuários
+        [Description("Pode realizar todas as ações/operações em todos os grupos")]
+        CanGroupAll = 3001,
+        [Description("Pode listar os dados de todos os grupos")]
+        CanGroupList = 3002,
+        [Description("Pode listar os dado de um grupo")]
+        CanGroupRead = 3003,
+        [Description("Pode criar um grupo")]
+        CanGroupCreate = 3004,
+        [Description("Pode atualizar os dados de um grupo")]
+        CanGroupUpdate = 3005,
+        [Description("Pode deletar um grupo")]
+        CanGroupDelete = 3006,
+        #endregion
 
-        //Begin - Serviço
-        CanServicoAll = 32,
-        CanServicoList = 33,
-        CanServicoRead = 34,
-        CanServicoUpdate = 35,
-        CanServicoCreate = 36,
-        CanServicoDelete = 37,
-        CanServicoAlterStatus = 38,
-        //End - Serviço
+        #region Cliente
+        [Description("Pode realizar todas as ações/operações em todos os clientes")]
+        CanClienteAll = 4001,
+        [Description("Pode listar os dados de todos os clientes")]
+        CanClienteList = 4002,
+        [Description("Pode listar os dado de um cliente")]
+        CanClienteRead = 4003,
+        [Description("Pode criar um cliente")]
+        CanClienteCreate = 4004,
+        [Description("Pode atualizar os dados de um cliente")]
+        CanClienteUpdate = 4005,
+        [Description("Pode deletar um cliente")]
+        CanClienteDelete = 4006,
+        #endregion
 
-        //Begin - Fornecedor
-        CanFornecedorAll = 39,
-        CanFornecedorList = 40,
-        CanFornecedorRead = 41,
-        CanFornecedorUpdate = 42,
-        CanFornecedorCreate = 43,
-        CanForncedorDelete = 44,
-        CanFornecedorAlterStatus = 45,
-        CanFornecedorTPAll = 46,
-        CanFornecedorTPListOne = 47
-        //End - Fornecedor
+        #region TP - CNPJ
+        [Description("Pode realizar todas as ações/operações em todos os Third party CNPJ - Api de terceiro para busca de CNPJ")]
+        CanCnpjTPAll = 5001,
+        [Description("Pode listar os dados de um Third party CNPJ - Api de terceiro para busca de CNPJ")]
+        CanCnpjTPRead = 5002,
+        #endregion
+
+        #region Cliente Serviço
+        [Description("Pode realizar todas as ações/operações em todos os serviços de clientes")]
+        CanClienteServicoAll = 6001,
+        [Description("Pode listar os dados de todos os serviços de clientes")]
+        CanClienteServicoList = 6002,
+        [Description("Pode listar os dado de um serviço de cliente")]
+        CanClienteServicoRead = 6003,
+        [Description("Pode criar um serviço para um cliente")]
+        CanClienteServicoCreate = 6004,
+        [Description("Pode atualizar um serviço de um cliente")]
+        CanClienteServicoUpdate = 6005,
+        [Description("Pode deletar um serviço de um cliente")]
+        CanClienteServicoDelete = 6006,
+        #endregion
+
+        #region Serviço
+        [Description("Pode realizar todas as ações/operações em todos os serviços")]
+        CanServicoAll = 7001,
+        [Description("Pode listar os dados de todos os serviços")]
+        CanServicoList = 7002,
+        [Description("Pode listar os dados de um serviço")]
+        CanServicoRead = 7003,
+        [Description("Pode atualizar um serviço")]
+        CanServicoUpdate = 7004,
+        [Description("Pode criar um serviço")]
+        CanServicoCreate = 7005,
+        [Description("Pode deletar um serviço")]
+        CanServicoDelete = 7006,
+        #endregion
+
+        #region Pipeline
+        [Description("Pode realizar todas as ações/operações em todos os pipelines")]
+        CanPipelineAll = 8001,
+        [Description("Pode listar os dados de todos os pipelines")]
+        CanPipelineList = 8002,
+        [Description("Pode listar os dados de um pipeline")]
+        CanPipelineRead = 8003,
+        [Description("Pode criar um pipeline")]
+        CanPipelineCreate = 8004,
+        [Description("Pode atualizar um pipeline")]
+        CanPipelineUpdate = 8005,
+        [Description("Pode deletar um pipeline")]
+        CanPipelineDelete = 8006,
+        #endregion
+
+        #region Fornecedor
+        [Description("Pode realizar todas as ações/operações em todos os fornecedores")]
+        CanFornecedorAll = 9001,
+        [Description("Pode listar os dados de todos os fornecedores")]
+        CanFornecedorList = 9002,
+        [Description("Pode listar os dados de um fornecedor")]
+        CanFornecedorRead = 9003,
+        [Description("Pode criar um fornecedor")]
+        CanFornecedorCreate = 9004,
+        [Description("Pode atualizar um fornecedor")]
+        CanFornecedorUpdate = 9005,
+        [Description("Pode deletar um fornecedor")]
+        CanForncedorDelete = 9006,
+        #endregion
+
+        #region Fornecedor Serviço
+        [Description("Pode realizar todas as ações/operações em todos os serviços de fornecedores")]
+        CanFornecedorServicoAll = 10001,
+        [Description("Pode listar os dados de todos os serviços de fornecedores")]
+        CanFornecedorServicoList = 10002,
+        [Description("Pode listar os dado de um serviço de fornecedor")]
+        CanFornecedorServicoRead = 10003,
+        [Description("Pode criar um serviço para um fornecedor")]
+        CanFornecedorServicoCreate = 10004,
+        [Description("Pode atualizar um serviço de um fornecedor")]
+        CanFornecedorServicoUpdate = 10005,
+        [Description("Pode deletar um serviço de um fornecedor")]
+        CanFornecedorServicoDelete = 10006
+        #endregion
     }
 }

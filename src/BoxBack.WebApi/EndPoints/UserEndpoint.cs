@@ -16,6 +16,7 @@ using BoxBack.Domain.Enums;
 using BoxBack.Application.ViewModels.Selects;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Services;
+using System.Text.RegularExpressions;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -75,13 +76,13 @@ namespace BoxBack.WebApi.EndPoints
                                         .ThenInclude(x => x.ApplicationGroup)
                                         .OrderBy(x => x.UserName)
                                         .ToListAsync();
-                if (users == null)
-                {
-                    AddError("Não encontrado.");
-                    return CustomResponse(404);
-                }
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (users == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
             #endregion
             
             #region Filter search
@@ -118,7 +119,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="200">O usuário</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Registro não encontrado</response>
-        [Authorize(Roles = "Master, CanUserListOne, CanUserAll")]
+        [Authorize(Roles = "Master, CanUserRead, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -174,7 +175,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="200">Lista de usuários ativos</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
-        [Authorize(Roles = "Master, CanUserListToSelect, CanUserAll")]
+        [Authorize(Roles = "Master, CanUserList, CanUserAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -238,6 +239,19 @@ namespace BoxBack.WebApi.EndPoints
                 AddError("Senha é requerida.");
                 return CustomResponse(400);
             }
+            #endregion
+
+            #region Check to password pattern
+            try
+            {
+                Regex passwordRE = new Regex(@"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!$*&@#])[0-9a-zA-Z!$*&@#]{6,}");
+                if (!passwordRE.IsMatch(applicationUserViewModel.Password))
+                {
+                    AddError("Padrão de senha não corresponde ao esperado. \nVerifique os requisitos de senha.");
+                    return CustomResponse(400);
+                }    
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Map
@@ -430,7 +444,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanUserAlterStatus, CanUserAll")]
+        [Authorize(Roles = "Master, CanUserUpdate, CanUserAll")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -490,5 +504,387 @@ namespace BoxBack.WebApi.EndPoints
 
             return CustomResponse(200, new { message = "Status usuário alterado com sucesso." } );
         }
+
+
+        #region Methods Usuário Conta
+        
+        /// <summary>
+        /// Lista a conta de um usuário
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Um objeto da conta do usuário</returns>
+        /// <response code="200">A conta do usuários</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Registro não encontrado</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [Authorize(Roles = "Master, CanUserRead, CanUserAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Produces("application/json")]
+        [Route("conta/list-one/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> ContaListOneAsync([FromRoute]string id)
+        {
+            #region Required validations
+            if(string.IsNullOrEmpty(id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data
+            var user = new ApplicationUser();
+            try
+            {
+                user = await _context
+                                .Users
+                                .AsNoTracking()
+                                .Include(x => x.ApplicationUserGroups)
+                                .ThenInclude(x => x.ApplicationGroup)
+                                .FirstOrDefaultAsync(x => x.Id.Equals(id));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (user == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
+            #endregion
+            
+            #region Map
+            var usuarioContaMap = new UsuarioContaViewModel();
+            try
+            {
+                usuarioContaMap = _mapper.Map<UsuarioContaViewModel>(user);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            return Ok(usuarioContaMap);
+        }
+
+        /// <summary>
+        /// Atualiza uma conta de usuário
+        /// </summary>
+        /// <param name="usuarioContaViewModel"></param>
+        /// <returns>True se atualizada com sucesso</returns>
+        /// <response code="204">Atualizada com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [Authorize(Roles = "Master, CanUserUpdate, CanUserAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("conta/update")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromBody]UsuarioContaViewModel usuarioContaViewModel)
+        {
+            #region Required validations
+            if (string.IsNullOrEmpty(usuarioContaViewModel.Id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data for update
+            var userDB = new ApplicationUser();
+            try
+            {
+                userDB = await _context
+                                    .Users
+                                    .FirstOrDefaultAsync(x => x.Id.Equals(usuarioContaViewModel.Id));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (userDB == null)
+            {
+                AddError("Usuário não encontrada para atualizar a conta.");
+                return CustomResponse(404);
+            }
+            #endregion 
+
+            #region Map User | Mudar isso pelo amoooor
+            // Map User
+            var usuarioContaMap = new ApplicationUser();
+            try 
+            {
+                usuarioContaViewModel.NormalizedUserName = usuarioContaViewModel.UserName.ToUpper();
+                usuarioContaViewModel.NormalizedEmail = usuarioContaViewModel.Email.ToUpper();
+                usuarioContaMap = _mapper.Map<UsuarioContaViewModel, ApplicationUser>(usuarioContaViewModel, userDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Update user
+            try
+            {
+                _context.Users.Update(usuarioContaMap);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Commit
+            try
+            {
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            return CustomResponse(204);
+        }
+
+        #endregion
+
+        #region Methods Usuário Segurança
+        /// <summary>
+        /// Atualiza dados de segurança do usuário
+        /// </summary>
+        /// <param name="usuarioSegurancaViewModel"></param>
+        /// <returns>True se atualizada com sucesso</returns>
+        /// <response code="204">Atualizada com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [Authorize(Roles = "Master, CanUserUpdate, CanUserAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("seguranca/update")]
+        [HttpPut]
+        public async Task<IActionResult> SegurancaUpdateAsync([FromBody]UsuarioSegurancaViewModel usuarioSegurancaViewModel)
+        {
+            #region Required validations
+            if (string.IsNullOrEmpty(usuarioSegurancaViewModel.Id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+
+            if (string.IsNullOrEmpty(usuarioSegurancaViewModel.CurrentPassword))
+            {
+                AddError("Senha Atual é requerida.");
+                return CustomResponse(400);
+            }
+
+            if (string.IsNullOrEmpty(usuarioSegurancaViewModel.NewPassword))
+            {
+                AddError("Nova Senha é requerida.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data for update
+            var userDB = new ApplicationUser();
+            try
+            {
+                userDB = await _context
+                                    .Users
+                                    .FirstOrDefaultAsync(x => x.Id.Equals(usuarioSegurancaViewModel.Id));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (userDB == null)
+            {
+                AddError("Usuário não encontrada para atualizar seus dados de segurança.");
+                return CustomResponse(404);
+            }
+            #endregion 
+
+            #region Check senha atual - Check tentando fazer login com a senha e as credenciais do usuários
+            bool checkCurrentPassword;
+            try
+            {
+                checkCurrentPassword = await _manager.CheckPasswordAsync(userDB, usuarioSegurancaViewModel.CurrentPassword);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            if (!checkCurrentPassword)
+            {
+                AddError("Senha Atual inválida!");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Check to password pattern
+            try
+            {
+                Regex passwordRE = new Regex(@"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!$*&@#])[0-9a-zA-Z!$*&@#]{6,}");
+                if (!passwordRE.IsMatch(usuarioSegurancaViewModel.NewPassword))
+                {
+                    AddError("Padrão de senha não corresponde ao esperado. \nVerifique os requisitos de senha.");
+                    return CustomResponse(400);
+                }    
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Get code (Token to reset)
+            String code;
+            try
+            {
+                code = await _manager.GeneratePasswordResetTokenAsync(userDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            if (code == null)
+            {
+                AddError("Problemas ao obter o token de reset de senha. Tente novamente, persistindo o problema informe a equipe técnica do sistema.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Reset password
+            var result = new IdentityResult();
+            try
+            {
+                result = await _manager.ResetPasswordAsync(userDB, code, usuarioSegurancaViewModel.NewPassword);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    AddError(error.Description);
+                }
+                return CustomResponse(400);
+            }
+            #endregion
+
+            return CustomResponse(204);
+        }
+        #endregion
+
+        #region Methods Usuário Informações pessoais
+
+        /// <summary>
+        /// Lista as informações pessoais do usuário
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Um objeto com as informações pessoais do usuário</returns>
+        /// <response code="200">As informações pessoais do usuários</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Registro não encontrado</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [Authorize(Roles = "Master, CanUserRead, CanUserAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Produces("application/json")]
+        [Route("info/list-one/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> InfosListOneAsync([FromRoute]string id)
+        {
+            #region Required validations
+            if(string.IsNullOrEmpty(id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data
+            var user = new ApplicationUser();
+            try
+            {
+                user = await _context
+                                .Users
+                                .AsNoTracking()
+                                .FirstOrDefaultAsync(x => x.Id.Equals(id));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (user == null)
+            {
+                AddError("Usuário não encontrado.");
+                return CustomResponse(404);
+            }
+            #endregion
+            
+            #region Map
+            var usuarioInfosMap = new UsuarioInfoViewModel();
+            try
+            {
+                usuarioInfosMap = _mapper.Map<UsuarioInfoViewModel>(user);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            return Ok(usuarioInfosMap);
+        }
+        
+        /// <summary>
+        /// Atualiza informações pessoais do usuário
+        /// </summary>
+        /// <param name="usuarioInfoViewModel"></param>
+        /// <returns>True se atualizada com sucesso</returns>
+        /// <response code="204">Atualizada com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [Authorize(Roles = "Master, CanUserUpdate, CanUserAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("info/update")]
+        [HttpPut]
+        public async Task<IActionResult> InfoUpdateAsync([FromBody]UsuarioInfoViewModel usuarioInfoViewModel)
+        {
+            #region Required validations
+            if (string.IsNullOrEmpty(usuarioInfoViewModel.Id))
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data for update
+            var userDB = new ApplicationUser();
+            try
+            {
+                userDB = await _context
+                                    .Users
+                                    .FirstOrDefaultAsync(x => x.Id.Equals(usuarioInfoViewModel.Id));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (userDB == null)
+            {
+                AddError("Usuário não encontrada para atualizar seus dados pessoais.");
+                return CustomResponse(404);
+            }
+            #endregion 
+
+            #region Map
+            var userMap = new ApplicationUser();
+            try
+            {
+                userMap = _mapper.Map<UsuarioInfoViewModel, ApplicationUser>(usuarioInfoViewModel, userDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Update user
+            try
+            {
+                _context.Users.Update(userMap);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Commit
+            try
+            {
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            return CustomResponse(204);
+        }
+        #endregion
     }
 }

@@ -126,7 +126,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanFornecedorServicoToSelect, CanFornecedorServicoAll")]
+        [Authorize(Roles = "Master, CanFornecedorServicoList, CanFornecedorServicoAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -174,7 +174,6 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Master, CanFornecedorServicoCreate, CanFornecedorServicoAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -287,13 +286,15 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="204">Deletado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Not found</response>
-        [Route("delete/{id}")]
+        /// <response code="500">Erro desconhecido</response>
         [Authorize(Roles = "Master, CanFornecedorServicoDelete, CanFornecedorServicoAll")]
-        [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
+        [Route("delete/{id}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             #region Validations required
@@ -352,13 +353,15 @@ namespace BoxBack.WebApi.EndPoints
         ///     }
         ///
         /// </remarks>
-        [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanFornecedorServicoAlterStatus, CanFornecedorServicoAll")]
-        [HttpPut]
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanFornecedorServicoUpdate, CanFornecedorServicoAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
+        [Route("alter-status/{id}")]
+        [HttpPut]
         public async Task<IActionResult> AlterStatusAsync(Guid id)
         {
             #region Validations required
@@ -418,10 +421,11 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">FornecedorServico não encontrado</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanFornecedorServicoListOne, CanFornecedorServicoAll")]
+        [Authorize(Roles = "Master, CanFornecedorServicoRead, CanFornecedorServicoAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("list-one/{id}")]
         [HttpGet]
@@ -487,13 +491,15 @@ namespace BoxBack.WebApi.EndPoints
         ///     }
         ///
         /// </remarks>
-        [Route("tp/{cnpj}")]
-        [Authorize(Roles = "Master, CanCnpjTPListOne, CanCnpjTPAll")]
-        [HttpGet]
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanCnpjTPRead, CanCnpjTPAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
+        [Route("tp/{cnpj}")]
+        [HttpGet]
         public async Task<IActionResult> GetByApiThirdPartyByCnpj(string cnpj)
         {
             #region Required validations

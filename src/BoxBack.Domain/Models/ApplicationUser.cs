@@ -13,13 +13,21 @@ namespace BoxBack.Domain.Models
                                string avatar,
                                SetorEnum setor,
                                FuncaoEnum funcao,
-                               ApplicationUserStatusEnum status) 
+                               ApplicationUserStatusEnum status,
+                               string bio,
+                               DateTimeOffset dataAniversario,
+                               Int64 telefoneCelular, 
+                               SexoEnum genero) 
         {
             FullName = fullName;
             Avatar = avatar;
             Setor = setor;
             Funcao = funcao;
             Status = status;
+            Bio = bio;
+            DataAniversario = dataAniversario;
+            TelefoneCelular = telefoneCelular;
+            Genero = genero;
         }
 
 
@@ -31,7 +39,11 @@ namespace BoxBack.Domain.Models
         public SetorEnum Setor { get; set; }
         public FuncaoEnum Funcao { get; set; }
         public ApplicationUserStatusEnum Status { get; set; }
-        
+        public string Bio { get; set; }
+        public DateTimeOffset DataAniversario { get; set; }
+        public Int64 TelefoneCelular { get; set; }
+        public SexoEnum Genero { get; set; }
+
 
         // Relationships
         [ForeignKey("TenantId")]

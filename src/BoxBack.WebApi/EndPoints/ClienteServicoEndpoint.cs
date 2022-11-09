@@ -304,7 +304,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanClienteServicoAlterStatus, CanClienteServicoAll")]
+        [Authorize(Roles = "Master, CanClienteServicoUpdate, CanClienteServicoAll")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -369,7 +369,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Cliente não encontrado</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteServicoListOne, CanClienteServicoAll")]
+        [Authorize(Roles = "Master, CanClienteServicoRead, CanClienteServicoAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -438,7 +438,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("tp/{cnpj}")]
-        [Authorize(Roles = "Master, CanCnpjTPListOne, CanCnpjTPAll")]
+        [Authorize(Roles = "Master, CanCnpjTPRead, CanCnpjTPAll")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
