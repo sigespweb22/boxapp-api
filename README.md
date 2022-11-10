@@ -54,3 +54,12 @@ Totalmente escrito para atender o modelo de serviços web RESTful.
   
 *Lançamento v1.2.0 em 11/10/2022
   * Pipelines
+
+*Lançamento v1.3.0 em 03/11/2022
+  * Serviços
+  * Serviços de Clientes
+  * Fornecedores
+  * Serviços de Fornecedores
+  
+*Lançamento v1.4.0 em 14/11/2022  
+  * Perfil de usuários (Conta, Segurança, Informações pessoais)
