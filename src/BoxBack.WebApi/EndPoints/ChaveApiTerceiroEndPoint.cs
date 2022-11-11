@@ -109,7 +109,7 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("list-to-select")] 
+        [Route("list-to-select")]
         [HttpGet]
         public async Task<IActionResult> ListToSelectAsync(string q, bool isDeleted = false)
         {
