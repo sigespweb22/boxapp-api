@@ -47,6 +47,7 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<PipelineTarefaAnexo> PipelineTarefaAnexos { get; set; }
         public DbSet<PipelineTarefaApontamentoAnexo> PipelineTarefaApontamentoAnexos { get; set; }
         public DbSet<TarefaTag> TarefaTags { get; set; }
+        public DbSet<ChaveApiTerceiro> ChavesApiTerceiro { get; set; }
         
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -82,6 +83,7 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new PipelineTarefaAnexoMap());
             modelBuilder.ApplyConfiguration(new PipelineTarefaApontamentoAnexoMap());
             modelBuilder.ApplyConfiguration(new TarefaTagMap());
+            modelBuilder.ApplyConfiguration(new ChaveApiTerceiroMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
