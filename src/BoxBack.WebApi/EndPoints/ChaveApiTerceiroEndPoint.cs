@@ -19,16 +19,16 @@ namespace BoxBack.WebApi.EndPoints
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/servicos")]
-    public class ServicoEndpoint : ApiController
+    [Route("api/v{version:apiVersion}/chaves-api-terceiro")]
+    public class ChaveApiTerceiroEndpoint : ApiController
     {
         private readonly BoxAppDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ServicoEndpoint(BoxAppDbContext context,
-                               IUnitOfWork unitOfWork,
-                               IMapper mapper)
+        public ChaveApiTerceiroEndpoint(BoxAppDbContext context,
+                                        IUnitOfWork unitOfWork,
+                                        IMapper mapper)
         {
             _context = context;
             _unitOfWork = unitOfWork;
@@ -36,15 +36,15 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Lista todos os SERVIÇOS
+        /// Lista todas as CHAVES DE API TERCEIROS
         /// </summary>
         /// <param name="q"></param>
-        /// <returns>Um json com os SERVIÇOS</returns>
-        /// <response code="200">Lista de SERVIÇOS</response>
+        /// <returns>Um json com as CHAVES DE API TERCEIROS</returns>
+        /// <response code="200">Lista de CHAVES DE API TERCEIROS</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanServicoList, CanServicoAll")]
+        [Authorize(Roles = "Master, CanChaveApiTerceiroList, CanChaveApiTerceiroAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -55,56 +55,56 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> ListAsync(string q)
         {
             #region Get data
-            var servicos = new List<Servico>();
+            var chavesApiTerceiro = new List<ChaveApiTerceiro>();
             try
             {
-                servicos = await _context.Servicos
-                                            .AsNoTracking()
-                                            .Include(x => x.FornecedorServico)
-                                            .OrderByDescending(x => x.UpdatedAt)
-                                            .ToListAsync();
-                if (servicos == null)
-                {
-                    AddError("Não encontrado.");
-                    return CustomResponse(404);
-                }
+                chavesApiTerceiro = await _context.ChavesApiTerceiro
+                                                    .AsNoTracking()
+                                                    .OrderByDescending(x => x.UpdatedAt)
+                                                    .ToListAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            if (chavesApiTerceiro == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
             #endregion
             
             #region Filter search
             if(!string.IsNullOrEmpty(q))
-                servicos = servicos.Where(x => x.Nome.Contains(q)).ToList();
+                chavesApiTerceiro = chavesApiTerceiro.Where(x => x.Descricao.Contains(q)).ToList();
             #endregion
 
             #region Map
-            IEnumerable<ServicoViewModel> servicosMapped = new List<ServicoViewModel>();
+            IEnumerable<ChaveApiTerceiroViewModel> chavesApiTerceiroMapped = new List<ChaveApiTerceiroViewModel>();
             try
             {
-                servicosMapped = _mapper.Map<IEnumerable<ServicoViewModel>>(servicos);
+                chavesApiTerceiroMapped = _mapper.Map<IEnumerable<ChaveApiTerceiroViewModel>>(chavesApiTerceiro);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
             return Ok(new {
-                AllData = servicosMapped.ToList(),
-                Servicos = servicosMapped.ToList(),
+                AllData = chavesApiTerceiroMapped.ToList(),
+                Servicos = chavesApiTerceiroMapped.ToList(),
                 Params = q,
-                Total = servicosMapped.Count()
+                Total = chavesApiTerceiroMapped.Count()
             });
         }
 
         /// <summary>
-        /// Lista todos os serviços para uma select2
+        /// Lista todas as CHAVES DE API TERCEIROS para uma select
         /// </summary>
         /// <param name="q"></param>
         /// <param name="isDeleted"></param>
-        /// <returns>Um json com os serviços</returns>
-        /// <response code="200">Lista de serviços</response>
+        /// <returns>Um json com as CHAVES DE API TERCEIROS</returns>
+        /// <response code="200">Lista de CHAVES DE API TERCEIROS</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanServicoList, CanServicoAll")]
+        [Authorize(Roles = "Master, CanChaveApiTerceiroList, CanChaveApiTerceiroAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -114,17 +114,17 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> ListToSelectAsync(string q, bool isDeleted = false)
         {
             #region Get data
-            var servicosDB = new List<Servico>();
+            var chavesApiTerceiroDB = new List<ChaveApiTerceiro>();
             try
             {
-                servicosDB = await _context
-                                        .Servicos
-                                        .Where(x => !x.IsDeleted || x.IsDeleted == isDeleted)
-                                        .ToListAsync();
+                chavesApiTerceiroDB = await _context
+                                                .ChavesApiTerceiro
+                                                .Where(x => !x.IsDeleted || x.IsDeleted == isDeleted)
+                                                .ToListAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
-            if (servicosDB == null)
+            if (chavesApiTerceiroDB == null)
             {
                 AddError("Não encontrado");
                 return CustomResponse(404);
@@ -132,49 +132,47 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
             
             #region Map
-            IEnumerable<ServicoSelect2ViewModel> servicosMap = new List<ServicoSelect2ViewModel>();
+            IEnumerable<ChaveApiTerceiroSelect2ViewModel> chaveApiTerceiroMap = new List<ChaveApiTerceiroSelect2ViewModel>();
             try
             {
-                servicosMap = _mapper.Map<IEnumerable<ServicoSelect2ViewModel>>(servicosDB);
+                chaveApiTerceiroMap = _mapper.Map<IEnumerable<ChaveApiTerceiroSelect2ViewModel>>(chavesApiTerceiroDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
-            return Ok(servicosMap);
+            return Ok(chaveApiTerceiroMap);
         }
 
         /// <summary>
-        /// Cria um SERVIÇOS
+        /// Cria uma CHAVE DE API TERCEIRO
         /// </summary>
-        /// <param name="servicoViewModel"></param>
+        /// <param name="chaveApiTerceiroViewModel"></param>
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanServicoCreate, CanServicoAll")]
+        [Authorize(Roles = "Master, CanChaveApiTerceiroCreate, CanChaveApiTerceiroAll")]
         [ProducesResponseType(StatusCodes.Status201Created)] 
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("create")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody]ServicoViewModel servicoViewModel)
+        public async Task<IActionResult> CreateAsync([FromBody]ChaveApiTerceiroViewModel chaveApiTerceiroViewModel)
         {
             #region Map
-            var servicoMapped = new Servico();
+            var chaveApiTerceiroMapped = new ChaveApiTerceiro();
             try
             {
-                servicoMapped = _mapper.Map<Servico>(servicoViewModel);
+                chaveApiTerceiroMapped = _mapper.Map<ChaveApiTerceiro>(chaveApiTerceiroViewModel);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            
-            servicoMapped.FornecedorServico = null;
             #endregion
 
             #region Persistance and commit
             try
             {
-                await _context.Servicos.AddAsync(servicoMapped);
+                await _context.ChavesApiTerceiro.AddAsync(chaveApiTerceiroMapped);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
@@ -184,25 +182,25 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Atualiza um SERVIÇOS
+        /// Atualiza uma CHAVE DE API TERCEIRO
         /// </summary>
-        /// <param name="servicoViewModel"></param>
+        /// <param name="chaveApiTerceiroViewModel"></param>
         /// <returns>True se atualizada com sucesso</returns>
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanServicoUpdate, CanServicoAll")]
+        [Authorize(Roles = "Master, CanChaveApiTerceiroUpdate, CanChaveApiTerceiroAll")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody]ServicoViewModel servicoViewModel)
+        public async Task<IActionResult> UpdateAsync([FromBody]ChaveApiTerceiroViewModel chaveApiTerceiroViewModel)
         {
             #region Required validations
-            if (!servicoViewModel.Id.HasValue ||
-                servicoViewModel.Id == Guid.Empty)
+            if (!chaveApiTerceiroViewModel.Id.HasValue ||
+                chaveApiTerceiroViewModel.Id == Guid.Empty)
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);
@@ -210,28 +208,27 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Get data for update
-            var servicoDB = new Servico();
+            var chaveApiTerceiroDB = new ChaveApiTerceiro();
             try
             {
-                servicoDB = await _context
-                                    .Servicos
-                                    .AsNoTracking()
-                                    .FirstOrDefaultAsync(x => x.Id == servicoViewModel.Id);
+                chaveApiTerceiroDB = await _context
+                                                .ChavesApiTerceiro
+                                                .AsNoTracking()
+                                                .FirstOrDefaultAsync(x => x.Id == chaveApiTerceiroViewModel.Id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            if (servicoDB == null)
+            if (chaveApiTerceiroDB == null)
             {
-                AddError("Serviço não encontrado para atualizar.");
+                AddError("Chave de api de terceiro não encontrada para atualizar.");
                 return CustomResponse(404);
             }
             #endregion
 
             #region Map
-            var servicoMap = new Servico();
+            var chaveApiTerceiroMap = new ChaveApiTerceiro();
             try
             {
-                servicoMap = _mapper.Map<ServicoViewModel, Servico>(servicoViewModel, servicoDB);
-                servicoMap.FornecedorServico = null;
+                chaveApiTerceiroMap = _mapper.Map<ChaveApiTerceiroViewModel, ChaveApiTerceiro>(chaveApiTerceiroViewModel, chaveApiTerceiroDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -239,7 +236,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Update
             try
             {
-                _context.Servicos.Update(servicoMap);
+                _context.ChavesApiTerceiro.Update(chaveApiTerceiroMap);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -256,64 +253,7 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Deleta um SERVIÇOS
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>True se deletado com sucesso</returns>
-        /// <response code="204">Deletado com sucesso</response>
-        /// <response code="400">Problemas de validação ou dados nulos</response>
-        /// <response code="404">Not found</response>
-        /// <response code="500">Erro desconhecido</response>
-        [Route("delete/{id}")]
-        [Authorize(Roles = "Master, CanServicoDelete, CanServicoAll")]
-        [HttpDelete]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Produces("application/json")]
-        public async Task<IActionResult> DeleteAsync(Guid id)
-        {
-            #region Validations required
-            if (id == Guid.Empty)
-            {
-                AddError("Id requerido.");
-                return CustomResponse(400);
-            }
-            #endregion
-    
-            #region Generals validations
-            // implementar
-            #endregion
-
-            #region Get data
-            var servico = new Servico();
-            try
-            {
-                servico = await _context.Servicos.FindAsync(id);
-                if (servico == null)
-                {
-                    AddError("Serviço não encontrado para deletar.");
-                    return CustomResponse(404);
-                }
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
-
-            #region Delete
-            try
-            {
-                _context.Servicos.Remove(servico);
-                _unitOfWork.Commit();
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            
-            #endregion
-
-            return CustomResponse(204);
-        }
-
-        /// <summary>
-        /// Altera o status de um SERVIÇOS
+        /// Altera o status de uma CHAVE DE API TERCEIRO
         /// </summary>
         /// <param name="id"></param>
         /// <returns>True se a operação foi realizada com sucesso</returns>
@@ -331,7 +271,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanServicoUpdate, CanServicoAll")]
+        [Authorize(Roles = "Master, CanChaveApiTerceiroUpdate, CanChaveApiTerceiroAll")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -349,28 +289,28 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
     
             #region Get data
-            var servico = new Servico();
+            var chaveApiTerceiro = new ChaveApiTerceiro();
             try
             {
-                servico = await _context.Servicos.FindAsync(id);
+                chaveApiTerceiro = await _context.ChavesApiTerceiro.FindAsync(id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
-            if (servico == null)
+            if (chaveApiTerceiro == null)
             {
-                AddError("Serviços não encontrado para alterar seu status.");
+                AddError("Chave de api de terceiro não encontrada para alterar seu status.");
                 return CustomResponse(404);
             }
             #endregion
 
             #region Map
-            switch(servico.IsDeleted)
+            switch(chaveApiTerceiro.IsDeleted)
             {
                 case true:
-                    servico.IsDeleted = false;
+                    chaveApiTerceiro.IsDeleted = false;
                     break;
                 case false:
-                    servico.IsDeleted = true;
+                    chaveApiTerceiro.IsDeleted = true;
                     break;
             }
             #endregion
@@ -378,14 +318,14 @@ namespace BoxBack.WebApi.EndPoints
             #region Alter status
             try
             {
-                _context.Servicos.Update(servico);
+                _context.ChavesApiTerceiro.Update(chaveApiTerceiro);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
             #endregion
 
-            return CustomResponse(200, new { message = "Status serviço alterado com sucesso." } );
+            return CustomResponse(200, new { message = "Status chave de api terceiro alterada com sucesso." } );
         }
     }
 }

@@ -12,7 +12,7 @@ namespace BoxBack.Domain.Models
             ApiTerceiro = apiTerceiro;
             Descricao = descricao;
             Key = key;
-            DataValidate = dataValidade;
+            DataValidade = dataValidade;
         }
 
         // Contructor empty to EFCore
@@ -21,6 +21,6 @@ namespace BoxBack.Domain.Models
         public ApiTerceiroEnum ApiTerceiro { get; set; }
         public string Key { get; set; }
         public string Descricao { get; set; }
-        public DateTimeOffset DataValidate { get; set; }
+        public DateTimeOffset DataValidade { get; set; }
     }
 }

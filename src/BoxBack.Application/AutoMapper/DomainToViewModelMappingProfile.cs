@@ -60,6 +60,8 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ApplicationUser, UsuarioContaViewModel>()
                 .ForMember(dst => dst.ApplicationUserGroups, src => src.MapFrom(x => x.ApplicationUserGroups));
             CreateMap<ApplicationUser, UsuarioInfoViewModel>();
+            CreateMap<ChaveApiTerceiro, ChaveApiTerceiroViewModel>();
+            CreateMap<ChaveApiTerceiro, ChaveApiTerceiroSelect2ViewModel>();
         }
     }
 }
