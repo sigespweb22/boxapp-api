@@ -18,7 +18,7 @@ public class FornecedorServico : EntityAudit
             Caracteristicas = caracteristicas;
         }
 
-        // Constructor empty to EFCore
+        // Constructor empty to EFCore 
         public FornecedorServico() {}
 
 
@@ -31,7 +31,7 @@ public class FornecedorServico : EntityAudit
         [ForeignKey("FornecedorId")]
         public Guid FornecedorId { get; set; }
         public Fornecedor Fornecedor { get; set; }
-
+ 
         public ICollection<Servico> Servicos { get; set; }
     }
-}
+} 

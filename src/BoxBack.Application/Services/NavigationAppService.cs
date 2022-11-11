@@ -24,11 +24,14 @@ namespace BoxBack.Application.Services
             var navigationSectionA = new VerticalNavItemViewModel();
             var navigationSectionB = new VerticalNavItemViewModel();
             var navigationB = new VerticalNavItemViewModel();
+            var navigationF = new VerticalNavItemViewModel();
             
             var navigationSectionC = new VerticalNavItemViewModel();
 
             navigationA.Children = new List<Son>();
             navigationB.Children = new List<Son>();
+            navigationF.Children = new List<Son>();
+
             var oldestDashboardSonA = new Son();
             var oldestDashboardSonB = new Son();
             var oldestSonB = new Son();
@@ -161,12 +164,30 @@ namespace BoxBack.Application.Services
             };
             navigationE.Children.Add(oldestSonNB4);
 
+            navigationF = new VerticalNavItemViewModel
+            {
+                Title = "Configurações",
+                Icon = "CogOutline",
+                BadgeContent = "",
+                BadgeColor = "primary",
+                Children = new List<Son>()
+            };
+
+            var token = new Son
+            {
+                Title = "Chaves Apis",
+                Path = "/sistema/configuracoes/chave-api/list",
+                Action = "list",
+                Subject = "ac-chave_api-page"
+            };
+            navigationF.Children.Add(token);
 
             await Task.Run(() => navigation.Add(navigationA));
             
             navigationSectionA.SectionTitle = "SYSTEM";
             await Task.Run(() => navigation.Add(navigationSectionA));
             await Task.Run(() => navigation.Add(navigationB));
+            await Task.Run(() => navigation.Add(navigationF));
             
             navigationSectionB.SectionTitle = "BUSSINESS";
             await Task.Run(() => navigation.Add(navigationSectionB));
