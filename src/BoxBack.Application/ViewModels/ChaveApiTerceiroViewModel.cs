@@ -12,5 +12,6 @@ namespace BoxBack.Application.ViewModels
         public string Key { get; set; }
         public string Descricao { get; set; }
         public string DataValidade { get; set; }
+        public string Status { get; set; }
     }
 }
