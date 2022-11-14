@@ -128,6 +128,15 @@ namespace BoxBack.Application.Services
             };
             navigationC.Children.Add(oldestSonNB2);
 
+            var oldestSonNB5 = new Son
+            {
+                Title = "Produtos",
+                Path = "/negocios/comercial/produto/list",
+                Action = "list",
+                Subject = "ac-produto-page"
+            };
+            navigationC.Children.Add(oldestSonNB5);
+
             var navigationD = new VerticalNavItemViewModel
             {
                 Title = "Processos",
