@@ -88,7 +88,7 @@ namespace BoxBack.WebApi.EndPoints
             
             return Ok(new {
                 AllData = chavesApiTerceiroMapped.ToList(),
-                ChavesApi = chavesApiTerceiroMapped.ToList(),
+                Servicos = chavesApiTerceiroMapped.ToList(),
                 Params = q,
                 Total = chavesApiTerceiroMapped.Count()
             });
