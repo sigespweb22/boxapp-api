@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Xml.Linq;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,14 +18,14 @@ namespace BoxBack.WebApi.EndPoints
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/servicos")]
-    public class ServicoEndpoint : ApiController
+    [Route("api/v{version:apiVersion}/produtos")]
+    public class ProdutoEndpoint : ApiController
     {
         private readonly BoxAppDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ServicoEndpoint(BoxAppDbContext context,
+        public ProdutoEndpoint(BoxAppDbContext context,
                                IUnitOfWork unitOfWork,
                                IMapper mapper)
         {
@@ -36,15 +35,15 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Lista todos os SERVIÇOS
+        /// Lista todos os PRODUTOS
         /// </summary>
         /// <param name="q"></param>
-        /// <returns>Um json com os SERVIÇOS</returns>
-        /// <response code="200">Lista de SERVIÇOS</response>
+        /// <returns>Um json com os PRODUTOS</returns>
+        /// <response code="200">Lista de PRODUTOS</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanServicoList, CanServicoAll")]
+        [Authorize(Roles = "Master, CanProdutoList, CanProdutoAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -55,15 +54,14 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> ListAsync(string q)
         {
             #region Get data
-            var servicos = new List<Servico>();
+            var produtos = new List<Produto>();
             try
             {
-                servicos = await _context.Servicos
+                produtos = await _context.Produtos
                                             .AsNoTracking()
-                                            .Include(x => x.FornecedorServico)
                                             .OrderByDescending(x => x.UpdatedAt)
                                             .ToListAsync();
-                if (servicos == null)
+                if (produtos == null)
                 {
                     AddError("Não encontrado.");
                     return CustomResponse(404);
@@ -74,37 +72,37 @@ namespace BoxBack.WebApi.EndPoints
             
             #region Filter search
             if(!string.IsNullOrEmpty(q))
-                servicos = servicos.Where(x => x.Nome.Contains(q)).ToList();
+                produtos = produtos.Where(x => x.Nome.Contains(q)).ToList();
             #endregion
 
             #region Map
-            IEnumerable<ServicoViewModel> servicosMapped = new List<ServicoViewModel>();
+            IEnumerable<ProdutoViewModel> produtosMapped = new List<ProdutoViewModel>();
             try
             {
-                servicosMapped = _mapper.Map<IEnumerable<ServicoViewModel>>(servicos);
+                produtosMapped = _mapper.Map<IEnumerable<ProdutoViewModel>>(produtos);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
             return Ok(new {
-                AllData = servicosMapped.ToList(),
-                Servicos = servicosMapped.ToList(),
+                AllData = produtosMapped.ToList(),
+                Produtos = produtosMapped.ToList(),
                 Params = q,
-                Total = servicosMapped.Count()
+                Total = produtosMapped.Count()
             });
         }
 
         /// <summary>
-        /// Lista todos os serviços para uma select2
+        /// Lista todos os PRODUTOS para uma select2
         /// </summary>
         /// <param name="q"></param>
         /// <param name="isDeleted"></param>
-        /// <returns>Um json com os serviços</returns>
-        /// <response code="200">Lista de serviços</response>
+        /// <returns>Um json com os PRODUTOS</returns>
+        /// <response code="200">Lista de PRODUTOS</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanServicoList, CanServicoAll")]
+        [Authorize(Roles = "Master, CanProdutoList, CanProdutoAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -114,17 +112,17 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> ListToSelectAsync(string q, bool isDeleted = false)
         {
             #region Get data
-            var servicosDB = new List<Servico>();
+            var produtosDB = new List<Produto>();
             try
             {
-                servicosDB = await _context
-                                        .Servicos
+                produtosDB = await _context
+                                        .Produtos
                                         .Where(x => !x.IsDeleted || x.IsDeleted == isDeleted)
                                         .ToListAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
-            if (servicosDB == null)
+            if (produtosDB == null)
             {
                 AddError("Não encontrado");
                 return CustomResponse(404);
@@ -132,49 +130,47 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
             
             #region Map
-            IEnumerable<ServicoSelect2ViewModel> servicosMap = new List<ServicoSelect2ViewModel>();
+            IEnumerable<ProdutoSelect2ViewModel> produtosMap = new List<ProdutoSelect2ViewModel>();
             try
             {
-                servicosMap = _mapper.Map<IEnumerable<ServicoSelect2ViewModel>>(servicosDB);
+                produtosMap = _mapper.Map<IEnumerable<ProdutoSelect2ViewModel>>(produtosDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
-            return Ok(servicosMap);
+            return Ok(produtosMap);
         }
 
         /// <summary>
-        /// Cria um SERVIÇOS
+        /// Cria um PRODUTO
         /// </summary>
-        /// <param name="servicoViewModel"></param>
+        /// <param name="produtoViewModel"></param>
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanServicoCreate, CanServicoAll")]
+        [Authorize(Roles = "Master, CanProdutoCreate, CanProdutoAll")]
         [ProducesResponseType(StatusCodes.Status201Created)] 
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("create")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody]ServicoViewModel servicoViewModel)
+        public async Task<IActionResult> CreateAsync([FromBody]ProdutoViewModel produtoViewModel)
         {
             #region Map
-            var servicoMapped = new Servico();
+            var produtoMapped = new Produto();
             try
             {
-                servicoMapped = _mapper.Map<Servico>(servicoViewModel);
+                produtoMapped = _mapper.Map<Produto>(produtoViewModel);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            
-            servicoMapped.FornecedorServico = null;
             #endregion
 
             #region Persistance and commit
             try
             {
-                await _context.Servicos.AddAsync(servicoMapped);
+                await _context.Produtos.AddAsync(produtoMapped);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
@@ -184,25 +180,25 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Atualiza um SERVIÇOS
+        /// Atualiza um PRODUTOS
         /// </summary>
-        /// <param name="servicoViewModel"></param>
+        /// <param name="produtoViewModel"></param>
         /// <returns>True se atualizada com sucesso</returns>
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanServicoUpdate, CanServicoAll")]
+        [Authorize(Roles = "Master, CanProdutoUpdate, CanProdutoAll")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody]ServicoViewModel servicoViewModel)
+        public async Task<IActionResult> UpdateAsync([FromBody]ProdutoViewModel produtoViewModel)
         {
             #region Required validations
-            if (!servicoViewModel.Id.HasValue ||
-                servicoViewModel.Id == Guid.Empty)
+            if (!produtoViewModel.Id.HasValue ||
+                produtoViewModel.Id == Guid.Empty)
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);
@@ -210,29 +206,27 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Get data for update
-            var servicoDB = new Servico();
+            var produtoDB = new Produto();
             try
             {
-                servicoDB = await _context
-                                    .Servicos
-                                    .Include(x => x.FornecedorServico)
+                produtoDB = await _context
+                                    .Produtos
                                     .AsNoTracking()
-                                    .FirstOrDefaultAsync(x => x.Id == servicoViewModel.Id);
+                                    .FirstOrDefaultAsync(x => x.Id == produtoViewModel.Id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            if (servicoDB == null)
+            if (produtoDB == null)
             {
-                AddError("Serviço não encontrado para atualizar.");
+                AddError("Produto não encontrado para atualizar.");
                 return CustomResponse(404);
             }
             #endregion
 
             #region Map
-            var servicoMap = new Servico();
+            var produtoMap = new Produto();
             try
             {
-                servicoMap = _mapper.Map<ServicoViewModel, Servico>(servicoViewModel, servicoDB);
-                servicoMap.FornecedorServico = null;
+                produtoMap = _mapper.Map<ProdutoViewModel, Produto>(produtoViewModel, produtoDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -240,7 +234,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Update
             try
             {
-                _context.Servicos.Update(servicoMap);
+                _context.Produtos.Update(produtoMap);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -257,7 +251,7 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Deleta um SERVIÇOS
+        /// Deleta um PRODUTO
         /// </summary>
         /// <param name="id"></param>
         /// <returns>True se deletado com sucesso</returns>
@@ -266,7 +260,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="404">Not found</response>
         /// <response code="500">Erro desconhecido</response>
         [Route("delete/{id}")]
-        [Authorize(Roles = "Master, CanServicoDelete, CanServicoAll")]
+        [Authorize(Roles = "Master, CanProdutoDelete, CanProdutoAll")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -287,23 +281,23 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Get data
-            var servico = new Servico();
+            var produto = new Produto();
             try
             {
-                servico = await _context.Servicos.FindAsync(id);
-                if (servico == null)
-                {
-                    AddError("Serviço não encontrado para deletar.");
-                    return CustomResponse(404);
-                }
+                produto = await _context.Produtos.FindAsync(id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (produto == null)
+            {
+                AddError("Produto não encontrado para deletar.");
+                return CustomResponse(404);
+            }
             #endregion
 
             #region Delete
             try
             {
-                _context.Servicos.Remove(servico);
+                _context.Produtos.Remove(produto);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
@@ -314,7 +308,7 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Altera o status de um SERVIÇOS
+        /// Altera o status de um PRODUTO
         /// </summary>
         /// <param name="id"></param>
         /// <returns>True se a operação foi realizada com sucesso</returns>
@@ -332,7 +326,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanServicoUpdate, CanServicoAll")]
+        [Authorize(Roles = "Master, CanProdutoUpdate, CanProdutoAll")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -350,28 +344,28 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
     
             #region Get data
-            var servico = new Servico();
+            var produto = new Produto();
             try
             {
-                servico = await _context.Servicos.FindAsync(id);
+                produto = await _context.Produtos.FindAsync(id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
-            if (servico == null)
+            if (produto == null)
             {
-                AddError("Serviços não encontrado para alterar seu status.");
+                AddError("Produto não encontrado para alterar seu status.");
                 return CustomResponse(404);
             }
             #endregion
 
             #region Map
-            switch(servico.IsDeleted)
+            switch(produto.IsDeleted)
             {
                 case true:
-                    servico.IsDeleted = false;
+                    produto.IsDeleted = false;
                     break;
                 case false:
-                    servico.IsDeleted = true;
+                    produto.IsDeleted = true;
                     break;
             }
             #endregion
@@ -379,14 +373,14 @@ namespace BoxBack.WebApi.EndPoints
             #region Alter status
             try
             {
-                _context.Servicos.Update(servico);
+                _context.Produtos.Update(produto);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
             #endregion
 
-            return CustomResponse(200, new { message = "Status serviço alterado com sucesso." } );
+            return CustomResponse(200, new { message = "Status produto alterado com sucesso." } );
         }
     }
 }
