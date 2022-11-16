@@ -97,7 +97,8 @@ namespace BoxBack.WebApi
                                             "http://177.93.105.56",
                                             "http://177.93.105.56/",
                                             "http://177.93.105.56:80/",
-                                            "http://177.93.105.56:80")
+                                            "http://177.93.105.56:80",
+                                            "http://177.93.105.56:5000")
                                                     .AllowAnyMethod() 
                                                     .AllowAnyHeader();
                     });
