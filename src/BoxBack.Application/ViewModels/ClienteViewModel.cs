@@ -41,5 +41,9 @@ namespace BoxBack.Application.ViewModels
         public string Estado { get; set; }
         public string Cep { get; set; }
         public string Status { get; set; }
+        public string CreatedAt { get; set; }
+        public string UpdatedAt { get; set; }
+
+        public ICollection<ClienteContratoViewModel> Contratos { get; set; }
     }
 }

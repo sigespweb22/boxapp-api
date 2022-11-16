@@ -24,7 +24,8 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ApplicationGroupViewModel, ApplicationGroup>();
             CreateMap<ApplicationRoleGroupViewModel, ApplicationRoleGroup>();
             CreateMap<ApplicationRoleViewModel, ApplicationRole>();
-            CreateMap<ClienteViewModel, Cliente>();
+            CreateMap<ClienteViewModel, Cliente>()
+                .ForMember(dst => dst.ClienteContratos, src => src.MapFrom(x => x.Contratos));
             CreateMap<ClienteServicoViewModel, ClienteServico>()
                 .ForMember(dst => dst.ServicoId, src => src.MapFrom(x => x.Servico.Id))
                 .ForMember(dst => dst.Nome, src => src.MapFrom(x => x.Servico.Nome));
@@ -39,6 +40,9 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<UsuarioContaViewModel, ApplicationUser>();
             CreateMap<UsuarioInfoViewModel, ApplicationUser>();
             CreateMap<ChaveApiTerceiroViewModel, ChaveApiTerceiro>();
+            CreateMap<ClienteContratoViewModel, ClienteContrato>();
+            CreateMap<ClientePadraoIntegracaoViewModel, Cliente>();
+            CreateMap<ClienteContratoPadraoIntegracaoViewModel, ClienteContrato>();
         }
     }
 }

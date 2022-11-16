@@ -31,8 +31,12 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasMaxLength(255);
             
             builder.Property(c => c.CNPJ)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(20);
+            
+            builder.Property(c => c.Cpf)
+                .IsRequired(false)
+                .HasMaxLength(14);
             
             builder
                 .HasIndex(c => c.CNPJ)
@@ -84,6 +88,11 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasMany(c => c.ClienteServicos)
                 .WithOne(c => c.Cliente)
                 .OnDelete(DeleteBehavior.NoAction);
+            
+            builder
+               .HasMany(c => c.ClienteContratos)
+               .WithOne(c => c.Cliente)
+               .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

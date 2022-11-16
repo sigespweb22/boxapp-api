@@ -24,7 +24,8 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"))
                 .ForMember(dst => dst.ApplicationRoleGroupsNames, src => src.MapFrom(x => x.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name)));
             CreateMap<Cliente, ClienteViewModel>()
-                .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
+                .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"))
+                .ForMember(dst => dst.Contratos, src => src.MapFrom(x => x.ClienteContratos));
             CreateMap<ClienteServico, ClienteServicoViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"))
                 .ForMember(dst => dst.ServicoId, src => src.MapFrom(x => x.Servico.Id))
@@ -63,6 +64,10 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ChaveApiTerceiro, ChaveApiTerceiroViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
             CreateMap<ChaveApiTerceiro, ChaveApiTerceiroSelect2ViewModel>();
+            CreateMap<ClienteContrato, ClienteContratoViewModel>();
+            CreateMap<Cliente, ClientePadraoIntegracaoViewModel>()
+                .ForMember(dst => dst.Contratos, src => src.MapFrom(x => x.ClienteContratos));
+            CreateMap<ClienteContrato, ClienteContratoPadraoIntegracaoViewModel>();
         }
     }
 }

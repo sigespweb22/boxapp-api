@@ -83,6 +83,7 @@ namespace BoxBack.WebApi.EndPoints
                 {
                     clientes = await _context.Clientes
                                             .AsNoTracking()
+                                            .Include(x => x.ClienteContratos)
                                             .OrderByDescending(x => x.UpdatedAt)
                                             .ToListAsync();
                 }

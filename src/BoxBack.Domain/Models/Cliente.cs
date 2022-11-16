@@ -9,7 +9,8 @@ namespace BoxBack.Domain.Models
         public Cliente(string nomeFantasia, string razaoSocial, string inscricaoEstadual,
                        string cnpj, string telefonePrincipal, string emailPrincipal, string observacao,
                        DateTimeOffset dataFundacao, int codigoMunicipio, string rua, string numero, string complemento,
-                       string cidade, string estado, string cep)
+                       string cidade, string estado, string cep,
+                       string cpf)
         {
             NomeFantasia = nomeFantasia;
             RazaoSocial = razaoSocial;
@@ -26,6 +27,7 @@ namespace BoxBack.Domain.Models
             Cidade = cidade;
             Estado = estado;
             Cep = cep;
+            Cpf = cpf;
         }
 
         // Constructor empty for EF
@@ -46,6 +48,7 @@ namespace BoxBack.Domain.Models
         public string Cidade { get; set; }
         public string Estado { get; set; }
         public string Cep { get; set; }
+        public string Cpf { get; set; }
 
 
         // Relationships
@@ -54,5 +57,6 @@ namespace BoxBack.Domain.Models
         public Tenant Tenant { get; set; }
 
         public ICollection<ClienteServico> ClienteServicos { get; set; }
+        public ICollection<ClienteContrato> ClienteContratos { get; set; }
     }
 }
