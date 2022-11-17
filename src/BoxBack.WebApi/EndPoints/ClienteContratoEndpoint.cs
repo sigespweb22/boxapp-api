@@ -38,7 +38,7 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Lista todos os clientes com todos os seus contratos
+        /// Lista todos os clientes e seus contratos - Apenas clientes que possuem ao menos um contrato
         /// </summary>s
         /// <param name="q"></param>
         /// <returns>Um json com os clientes e seus contratos</returns>
@@ -91,6 +91,10 @@ namespace BoxBack.WebApi.EndPoints
             #region Filter search
             if(!string.IsNullOrEmpty(q))
                 clientes = clientes.Where(x => x.RazaoSocial.Contains(q)).ToList();
+            #endregion
+
+            #region Filter cliente sem contrato
+            clientes = clientes.Where(x => x.ClienteContratos.Count() > 0).ToList();
             #endregion
 
             #region Map
