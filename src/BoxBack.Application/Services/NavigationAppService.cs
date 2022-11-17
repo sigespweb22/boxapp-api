@@ -65,6 +65,15 @@ namespace BoxBack.Application.Services
             };
             navigationA.Children.Add(oldestDashboardSonB);
 
+            var comercial = new Son
+            {
+                Title = "Comercial",
+                Path = "/dashboards/comercial",
+                Action = "list",
+                Subject = "ac-dashboard-comercial-page"
+            };
+            navigationA.Children.Add(comercial);
+
             navigationB = new VerticalNavItemViewModel
             {
                 Title = "Controle Acesso",
