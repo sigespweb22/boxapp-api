@@ -39,7 +39,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista todos os clientes e seus contratos - Apenas clientes que possuem ao menos um contrato
-        /// </summary>s
+        /// </summary>
         /// <param name="q"></param>
         /// <returns>Um json com os clientes e seus contratos</returns>
         /// <response code="200">Lista de clientes com seus contratos</response>

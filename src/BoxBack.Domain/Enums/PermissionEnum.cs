@@ -83,7 +83,7 @@ namespace BoxBack.Domain.Enums
         #endregion
 
         #region Cliente
-        [Description("Pode realizar todas as ações/operações em todos os clientes")]
+        [Description("Pode visualizar todos os indicadores da dashboard comercial")]
         CanClienteAll = 4001,
         [Description("Pode listar os dados de todos os clientes")]
         CanClienteList = 4002,
@@ -176,7 +176,14 @@ namespace BoxBack.Domain.Enums
         [Description("Pode atualizar um serviço de um fornecedor")]
         CanFornecedorServicoUpdate = 10005,
         [Description("Pode deletar um serviço de um fornecedor")]
-        CanFornecedorServicoDelete = 10006
+        CanFornecedorServicoDelete = 10006,
+        #endregion
+
+        #region Dashboard Comercial
+        [Description("Pode realizar todas as ações/operações em todos os serviços de fornecedores")]
+        CanDashboardComercialAll = 12001,
+        [Description("Pode listar o indicador de clientes ativos com contratos")]
+        CanDashboardComercialClienteContratoList = 12002
         #endregion
     }
 }

@@ -41,7 +41,7 @@ namespace BoxBack.Application.Services
             navigationA = new VerticalNavItemViewModel
             {
                 Title = "Dashboards",
-                Icon = "HomeOutline",
+                Icon = "HomeAnalytics",
                 BadgeContent = "novo",
                 BadgeColor = "primary",
                 Children = new List<Son>()
