@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AutoMapper;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
@@ -46,6 +47,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ClientePadraoIntegracaoViewModel, Cliente>();
             CreateMap<ClienteContratoPadraoIntegracaoViewModel, ClienteContrato>();
             CreateMap<BCClienteModelService, Cliente>()
+               .ForMember(dst => dst.Id,  src => src.MapFrom(x => Guid.NewGuid()))
                .ForMember(dst => dst.NomeFantasia,  src =>
                                                     src.MapFrom(x => x.PessoaFisica == null ? x.PessoaJuridica.NomeFantasia : x.PessoaFisica.Nome))
                .ForMember(dst => dst.RazaoSocial,  src =>

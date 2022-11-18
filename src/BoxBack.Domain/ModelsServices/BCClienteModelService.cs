@@ -36,7 +36,7 @@ namespace BoxBack.Domain.ModelsServices
         public string Documento {get; set; }
         public string Nome { get; set; }
         public string Sexo { get; set;}
-        public DateTime DataNascimento { get; set; }
+        public string DataNascimento { get; set; }
     }
 
     public class PessoaJuridica

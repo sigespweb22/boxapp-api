@@ -43,6 +43,6 @@ namespace BoxBack.Domain.Services
         /// <response code="500">Erro interno desconhecido</response>
         [Get("/Cliente/Pesquisar?pesquisa=")]
         [Headers("Content-Type: application/json")]
-        Task<IEnumerable<BCClienteModelService>> ClientePesquisar([Header("Authorization")] string apiKey);
+        Task<IList<BCClienteModelService>> ClientePesquisar([Header("Authorization")] string apiKey);
     }
 }
