@@ -1,6 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
+using BoxBack.Domain.ModelsServices;
 
 namespace BoxBack.Application.AutoMapper
 {
@@ -43,6 +45,23 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ClienteContratoViewModel, ClienteContrato>();
             CreateMap<ClientePadraoIntegracaoViewModel, Cliente>();
             CreateMap<ClienteContratoPadraoIntegracaoViewModel, ClienteContrato>();
+            CreateMap<BCClienteModelService, Cliente>()
+               .ForMember(dst => dst.NomeFantasia,  src =>
+                                                    src.MapFrom(x => x.PessoaFisica == null ? x.PessoaJuridica.NomeFantasia : x.PessoaFisica.Nome))
+               .ForMember(dst => dst.RazaoSocial,  src =>
+                                                   src.MapFrom(x => x.PessoaFisica == null ? x.PessoaJuridica.RazaoSocial : x.PessoaFisica.Nome))
+               .ForMember(dst => dst.InscricaoEstadual,  src => 
+                                                         src.MapFrom(x => x.PessoaJuridica.InscricaoEstadual == null ? null : x.PessoaJuridica.InscricaoEstadual))
+               .ForMember(dst => dst.CNPJ,  src => src.MapFrom(x => x.PessoaJuridica.Documento == null ? null : x.PessoaJuridica.Documento))
+               .ForMember(dst => dst.TelefonePrincipal,  src => src.MapFrom(x => x.Contatos.Count() <= 0 ? null : x.Contatos.Select(x => x.Telefone).FirstOrDefault()))
+               .ForMember(dst => dst.EmailPrincipal, src => src.MapFrom(x => x.Contatos.Count() <= 0 ? null : x.Contatos.Select(x => x.Email).FirstOrDefault()))
+               .ForMember(dst => dst.Rua, src => src.MapFrom(x => x.Endereco == null ? null : x.Endereco.Logradouro))
+               .ForMember(dst => dst.Numero, src => src.MapFrom(x => x.Endereco == null ? null : x.Endereco.Numero == null ? null : x.Endereco.Numero))
+               .ForMember(dst => dst.Complemento, src => src.MapFrom(x => x.Endereco == null ? null : x.Endereco.Logradouro == null ? null : x.Endereco.Complemento))
+               .ForMember(dst => dst.Cidade, src => src.MapFrom(x => x.Endereco == null ? null : x.Endereco.Cidade == null ? null : x.Endereco.Cidade))
+               .ForMember(dst => dst.Estado, src => src.MapFrom(x => x.Endereco == null ? null : x.Endereco.Uf == null ? null : x.Endereco.Uf))
+               .ForMember(dst => dst.Cep, src => src.MapFrom(x => x.Endereco == null ? null : x.Endereco.Cep == null ? null : x.Endereco.Cep))
+               .ForMember(dst => dst.Cpf, src => src.MapFrom(x => x.PessoaJuridica == null ? x.PessoaFisica.Documento == null ? null : x.PessoaFisica.Documento : null));
         }
     }
 }

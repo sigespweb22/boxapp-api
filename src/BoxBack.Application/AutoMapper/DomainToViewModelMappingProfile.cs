@@ -4,6 +4,7 @@ using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
 using BoxBack.Domain.Enums;
 using BoxBack.Application.ViewModels.Selects;
+using BoxBack.Domain.ModelsServices;
 
 namespace BoxBack.Application.AutoMapper
 {

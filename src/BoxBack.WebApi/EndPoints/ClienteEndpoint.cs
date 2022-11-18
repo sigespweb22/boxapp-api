@@ -487,7 +487,6 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         #region Third Party
-
         /// <summary>
         /// Lista os dados do CNPJ de uma empresa a partir de uma api de terceiro
         /// </summary>s
@@ -533,7 +532,7 @@ namespace BoxBack.WebApi.EndPoints
                     return CustomResponse(404, empresa);
                 }
             }
-            catch (Exception Content) { AddErrorToTryCatch(Content); return CustomResponse(400); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(400); }
             #endregion
             
             return CustomResponse(200, empresa);
@@ -564,10 +563,111 @@ namespace BoxBack.WebApi.EndPoints
                     return CustomResponse(404, cliente);
                 }
             }
-            catch (Exception Content) { AddErrorToTryCatch(Content); return CustomResponse(400); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(400); }
             #endregion
             
             return CustomResponse(200, cliente);
+        }
+        
+        /// <summary>
+        /// Obtém todos os clientes do BOM CONTROLE e mantém a base de clientes do BoxApp idêntica (Este método não atualiza os dados dos clientes, apenas mantém os mesmos clientes em ambos os sistemas)
+        /// </summary>
+        /// <param></param>
+        /// <returns>Um objeto com o total de clientes sincronizados</returns>
+        /// <response code="200">Objeto com o total de clientes sincronizados</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Nenhum cliente encontrado</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanClienteCreate, CanClienteAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("sincronizar-third-party")]
+        [HttpGet]
+        public async Task<IActionResult> SincronizarTPAsync()
+        {
+            #region Token resolve
+            // TODO: Implementar busca do token diretamente da tabela chave api terceiro
+            var token = "ApiKey Z0EjZPzTOb-8NpoAk4GtAa8xOF7FW8cQDS4OPyGpk90XLOgEysE3zLAD7ClZLMNaynsbTrCaUm1lQiABFUNKY5Gg92GcpUhpHaUUcTkvYNyhbXzYG7zLggKd7MwMR1qwsW16kQFhc94."
+            #endregion
+
+            #region Get data Bom Controle (TP)
+            IEnumerable<BCClienteModelService> clientesThirdParty = new List<BCClienteModelService>();
+            try
+            {
+                clientesThirdParty = await _bcServices.ClientePesquisar(token);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (clientesThirdParty == null || clientesThirdParty.Count() <= 0)
+            {
+                AddError("Nenhum registro encontrado na api de terceiro");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            #region Get data BoxApp
+            IEnumerable<Cliente> clientesBoxApp = new List<Cliente>();
+            try
+            {
+                clientesBoxApp = await _context
+                                            .Clientes
+                                            .ToListAsync();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (clientesBoxApp == null || clientesBoxApp.Count() <= 0)
+            {
+                AddError("Nenhum registro encontrado.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Sincronization
+            Int64 totalSincronizado = 0;
+            foreach (var clienteTP in clientesThirdParty)
+            {
+                bool clienteThirdPartyAlreadyInBoxApp = false;
+                if (clienteTP.PessoaFisica == null)
+                {
+                    clienteThirdPartyAlreadyInBoxApp = clientesBoxApp.Any(x => x.CNPJ == clienteTP.PessoaJuridica.Documento);
+                } else {
+                    clienteThirdPartyAlreadyInBoxApp = clientesBoxApp.Any(x => x.Cpf == clienteTP.PessoaFisica.Documento);
+                }
+
+                // Cliente não existe no BoxApp e está ativo no bom controle, portanto, deve ser cadastrado no BoxApp
+                if (!clienteThirdPartyAlreadyInBoxApp && clienteTP.Bloqueado == false)
+                {
+                    var cliente = new Cliente();
+                    try
+                    {
+                        cliente = _mapper.Map<Cliente>(clienteTP);    
+                    }
+                    catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+                    
+                    try
+                    {
+                        await _context.Clientes.AddAsync(cliente);
+                        totalSincronizado++;
+                    }
+                    catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+                }
+            }
+            #endregion
+
+            #region Commit
+            try
+            {
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Return
+            return CustomResponse(200, new {totalSincronizado});
+            #endregion
         }
         #endregion
     }
