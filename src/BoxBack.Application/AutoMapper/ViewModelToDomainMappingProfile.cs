@@ -66,6 +66,12 @@ namespace BoxBack.Application.AutoMapper
                .ForMember(dst => dst.Estado, src => src.MapFrom(x => x.Endereco == null ? null : x.Endereco.Uf == null ? null : x.Endereco.Uf))
                .ForMember(dst => dst.Cep, src => src.MapFrom(x => x.Endereco == null ? null : x.Endereco.Cep == null ? null : x.Endereco.Cep))
                .ForMember(dst => dst.Cpf, src => src.MapFrom(x => x.PessoaJuridica == null ? x.PessoaFisica.Documento == null ? null : x.PessoaFisica.Documento : null));
+            CreateMap<BCContratoModelService, ClienteContrato>()
+                .ForMember(dst => dst.ClienteId, src => src.MapFrom(x => Guid.Empty))
+                .ForMember(dst => dst.BomControleContratoId, src => src.MapFrom(x => x.Id))
+                .ForMember(dst => dst.ValorContrato, src => src.MapFrom(x => x.Valor))
+                .ForMember(dst => dst.ValorContrato, src => src.MapFrom(x => x.Valor))
+                .ForMember(dst => dst.Periodicidade, src => src.MapFrom(x => x.Periodicidade));
         }
     }
 }

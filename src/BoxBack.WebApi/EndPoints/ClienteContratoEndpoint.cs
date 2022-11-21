@@ -4,18 +4,15 @@ using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BoxBack.Infra.Data.Context;
-using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
 using AutoMapper;
 using BoxBack.Domain.Interfaces;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Services;
 using BoxBack.Domain.ModelsServices;
-using BoxBack.Application.ViewModels.Selects;
 using BoxBack.Domain.Enums;
 
 namespace BoxBack.WebApi.EndPoints
@@ -77,7 +74,7 @@ namespace BoxBack.WebApi.EndPoints
 
             // TODO: Implementar busca do token diretamente da tabela chave api terceiro
             #region Token resolve
-            var token = "ApiKey Z0EjZPzTOb-8NpoAk4GtAa8xOF7FW8cQDS4OPyGpk90XLOgEysE3zLAD7ClZLMNaynsbTrCaUm1lQiABFUNKY5Gg92GcpUhpHaUUcTkvYNyhbXzYG7zLggKd7MwMR1qwsW16kQFhc94.";
+            var token = "ApiKey Z0EjZPzTOb_AOeUDlulXwdnhg9JMHSUQbKek2rFejjXyG9pyoA2hMY35uD1B6bzjynsbTrCaUm347KMoDwiTPkaCND-m5EQwHaUUcTkvYNyhbXzYG7zLggKd7MwMR1qwsW16kQFhc94.";
             #endregion
 
             #region Get contratos
@@ -120,6 +117,8 @@ namespace BoxBack.WebApi.EndPoints
                             try
                             {
                                 contratoMapped = _mapper.Map<ClienteContrato>(clienteContratoThirdParty);
+                                contratoMapped.ClienteId = cliente.Id;
+                                
                                 await _context.ClienteContratos.AddAsync(contratoMapped);
                                 totalSincronizado++;
                             }

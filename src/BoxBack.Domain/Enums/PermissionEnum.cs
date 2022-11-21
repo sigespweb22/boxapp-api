@@ -183,7 +183,22 @@ namespace BoxBack.Domain.Enums
         [Description("Pode realizar todas as ações/operações em todos os serviços de fornecedores")]
         CanDashboardComercialAll = 12001,
         [Description("Pode listar o indicador de clientes ativos com contratos")]
-        CanDashboardComercialClienteContratoList = 12002
+        CanDashboardComercialClienteContratoList = 12002,
+        #endregion
+
+        #region Cliente Serviço
+        [Description("Pode realizar todas as ações/operações em todos os contratos de clientes")]
+        CanClienteContratoAll = 13001,
+        [Description("Pode listar os dados de todos os contratos de clientes")]
+        CanClienteContratoList = 13002,
+        [Description("Pode listar os dado de um contrato de cliente")]
+        CanClienteContratoRead = 13003,
+        [Description("Pode criar um contrato para um cliente")]
+        CanClienteContratoCreate = 13004,
+        [Description("Pode atualizar um contrato de um cliente")]
+        CanClienteContratoUpdate = 13005,
+        [Description("Pode deletar um contrato de um cliente")]
+        CanClienteContratoDelete = 13006
         #endregion
     }
 }
