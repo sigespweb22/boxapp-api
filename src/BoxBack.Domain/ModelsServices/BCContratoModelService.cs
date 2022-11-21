@@ -3,7 +3,7 @@ using BoxBack.Domain.Enums;
 
 namespace BoxBack.Domain.ModelsServices
 {
-    public class BCClienteModelService
+    public class BCContratoModelService
     {
         public Int64 Id { get; set; }
         public Int64 IdVenda { get; set; }

@@ -44,5 +44,19 @@ namespace BoxBack.Domain.Services
         [Get("/Cliente/Pesquisar?pesquisa=")]
         [Headers("Content-Type: application/json")]
         Task<IList<BCClienteModelService>> ClientePesquisar([Header("Authorization")] string apiKey);
+
+        /// <summary>
+        /// Obtém todos os contratos de um cliente
+        /// </summary>
+        /// <param></param>
+        /// <param name="cnpj"></param>
+        /// <param name="apiKey"></param>
+        /// <returns>Retorna um json array com todos os contratos de um cliente.</returns>
+        /// <response code="200">Retorna sucesso com um array de objetos com os contratos de um cliente.</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [Get("/VendaContrato/Pesquisar?pesquisa=")]
+        [Headers("Content-Type: application/json")]
+        Task<IList<BCContratoModelService>> VendaContratoPesquisar(string cnpj, [Header("Authorization")] string apiKey);
     }
 }

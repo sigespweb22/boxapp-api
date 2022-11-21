@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 namespace BoxBack.Domain.ModelsServices
 {
-    public class BCContratoModelService
+    public class BCClienteModelService
     {
         public int Id { get; set; }
         public string TipoPessoa { get; set; }

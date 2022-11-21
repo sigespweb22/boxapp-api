@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using BoxBack.Domain.Enums;
 
 namespace BoxBack.Domain.Models
 {
@@ -49,6 +50,7 @@ namespace BoxBack.Domain.Models
         public string Estado { get; set; }
         public string Cep { get; set; }
         public string Cpf { get; set; }
+        public TipoPessoaEnum? TipoPessoa { get; set; }
 
 
         // Relationships
