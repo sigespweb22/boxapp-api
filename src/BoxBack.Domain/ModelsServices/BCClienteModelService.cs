@@ -1,12 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Refit;
-using BoxBack.Domain.Models.Services;
-
 namespace BoxBack.Domain.ModelsServices
 {
-    public class BCClienteModelService
+    public class BCContratoModelService
     {
         public int Id { get; set; }
         public string TipoPessoa { get; set; }
