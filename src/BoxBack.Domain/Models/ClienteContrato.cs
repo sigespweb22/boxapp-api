@@ -25,5 +25,8 @@ namespace BoxBack.Domain.Models
         [ForeignKey("ClienteId")]
         public Guid ClienteId { get; set; }
         public Cliente Cliente { get; set; }
+
+        // Id do registro do contrato no sistema de terceiro - Atualmente o Bom Controle
+        // public Int64 ThirdPatyId { get; set; }
     }
 }
