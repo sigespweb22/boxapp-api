@@ -187,18 +187,63 @@ namespace BoxBack.Domain.Enums
         [Description("Pode listar os dados de um produtos")]
         CanProdutoRead = 11003,
         [Description("Pode criar um produtos")]
-        CanProdutoCreate = 11001,
+        CanProdutoCreate = 11004,
         [Description("Pode atualizar um produtos")]
-        CanProdutoUpdate = 11001,
+        CanProdutoUpdate = 11005,
         [Description("Pode deletar um produtos")]
-        CanProdutoDelete = 11001,
+        CanProdutoDelete = 11006,
+        #endregion
+
+        #region Cliente Contrato
+        [Description("Pode realizar todas as ações/operações em todos os contratos de clientes")]
+        CanClienteContratoAll = 12001,
+        [Description("Pode listar os dados de todos os contratos de clientes")]
+        CanClienteContratoList = 12002,
+        [Description("Pode listar os dados de um contrato de cliente")]
+        CanClienteContratoRead = 12003,
+        [Description("Pode criar um contrato de cliente")]
+        CanClienteContratoCreate = 12004,
+        [Description("Pode atualizar um contrato de cliente")]
+        CanClienteContratoUpdate = 12005,
+        [Description("Pode deletar um contrato de cliente")]
+        CanClienteContratoDelete = 12006,
+        #endregion
+
+        #region Cliente Produto
+        [Description("Pode realizar todas as ações/operações em todos os produtos de clientes")]
+        CanClienteProdutoAll = 13001,
+        [Description("Pode listar os dados de todos os produtos de clientes")]
+        CanClienteProdutoList = 13002,
+        [Description("Pode listar os dados de um produto de cliente")]
+        CanClienteProdutoRead = 13003,
+        [Description("Pode criar um produto de cliente")]
+        CanClienteProdutoCreate = 13004,
+        [Description("Pode atualizar um produto de cliente")]
+        CanClienteProdutoUpdate = 13005,
+        [Description("Pode deletar um produto de cliente")]
+        CanClienteProdutoDelete = 13006,
+        #endregion
+
+        #region Fornecedor Produto
+        [Description("Pode realizar todas as ações/operações em todos os produtos de fornecedores")]
+        CanFornecedorProdutoAll = 14001,
+        [Description("Pode listar os dados de todos os produtos de fornecedores")]
+        CanFornecedorProdutoList = 14002,
+        [Description("Pode listar os dados de um produto de fornecedor")]
+        CanFornecedorProdutoRead = 14003,
+        [Description("Pode criar um produto de fornecedor")]
+        CanFornecedorProdutoCreate = 14004,
+        [Description("Pode atualizar um produto de fornecedor")]
+        CanFornecedorProdutoUpdate = 14005,
+        [Description("Pode deletar um produto de fornecedor")]
+        CanFornecedorProdutoDelete = 14006,
         #endregion
 
         #region Dashboard Comercial
         [Description("Pode realizar todas as ações/operações em todos os serviços de fornecedores")]
-        CanDashboardComercialAll = 12001,
+        CanDashboardComercialAll = 15001,
         [Description("Pode listar o indicador de clientes ativos com contratos")]
-        CanDashboardComercialClienteContratoList = 12002
+        CanDashboardComercialClienteContratoList = 15002
         #endregion
     }
 }
