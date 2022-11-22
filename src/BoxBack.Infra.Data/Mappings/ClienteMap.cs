@@ -36,7 +36,7 @@ namespace BoxBack.Infra.Data.Mappings
             
             builder.Property(c => c.Cpf)
                 .IsRequired(false)
-                .HasMaxLength(14);
+                .HasMaxLength(20);
             
             builder
                 .HasIndex(c => c.CNPJ)
@@ -44,7 +44,7 @@ namespace BoxBack.Infra.Data.Mappings
             
             builder.Property(c => c.TelefonePrincipal)
                 .IsRequired(false)
-                .HasMaxLength(14);
+                .HasMaxLength(20);
             
             builder.Property(c => c.Observacao)
                 .IsRequired(false)

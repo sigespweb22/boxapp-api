@@ -17,6 +17,7 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasForeignKey(c => c.RoleId)
                 .IsRequired();
 
+            //Initial seed
             builder.HasData(
                 new ApplicationRole()
                 {

@@ -49,7 +49,7 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<TarefaTag> TarefaTags { get; set; }
         public DbSet<ChaveApiTerceiro> ChavesApiTerceiro { get; set; }
         public DbSet<ClienteContrato> ClienteContratos { get; set; }
-
+        public DbSet<Produto> Produtos { get; set; }
         
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -87,6 +87,7 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new TarefaTagMap());
             modelBuilder.ApplyConfiguration(new ChaveApiTerceiroMap());
             modelBuilder.ApplyConfiguration(new ClienteContratoMap());
+            modelBuilder.ApplyConfiguration(new ProdutoMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

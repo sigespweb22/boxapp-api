@@ -1,9 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Refit;
-using BoxBack.Domain.Models.Services;
-
 namespace BoxBack.Domain.ModelsServices
 {
     public class BCClienteModelService
@@ -11,7 +6,7 @@ namespace BoxBack.Domain.ModelsServices
         public int Id { get; set; }
         public string TipoPessoa { get; set; }
         public string PaisOrigem { get; set; }
-        public string PessoaFisica { get; set; }
+        public PessoaFisica PessoaFisica { get; set; }
         public PessoaJuridica PessoaJuridica { get; set; }
         public bool Bloqueado { get; set; }
         public Endereco Endereco { get; set; }
@@ -29,6 +24,14 @@ namespace BoxBack.Domain.ModelsServices
         public string Cep { get; set; }
         public string Cidade { get; set; }
         public string Uf { get; set; }
+    }
+
+    public class PessoaFisica
+    {
+        public string Documento {get; set; }
+        public string Nome { get; set; }
+        public string Sexo { get; set;}
+        public string DataNascimento { get; set; }
     }
 
     public class PessoaJuridica
@@ -55,4 +58,6 @@ namespace BoxBack.Domain.ModelsServices
         public bool Padrao { get; set; }
         public bool Cobranca { get; set; }
     }
+
+    
 }

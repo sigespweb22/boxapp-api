@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Refit;
 using BoxBack.Domain.ModelsServices;
+using System.Collections.Generic;
 
 namespace BoxBack.Domain.Services
 {
@@ -30,5 +31,32 @@ namespace BoxBack.Domain.Services
         [Get("/Cliente/Obter/{id}")]
         [Headers("Content-Type: application/json")]
         Task<BCClienteModelService> ClienteObter(string id, [Header("Authorization")] string apiKey);
+
+        /// <summary>
+        /// Obtém todos os clientes
+        /// </summary>
+        /// <param></param>
+        /// <param name="apiKey"></param>
+        /// <returns>Retorna um json array com todos os clientes.</returns>
+        /// <response code="200">Retorna sucesso com um objeto com os clientes.</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [Get("/Cliente/Pesquisar?pesquisa=")]
+        [Headers("Content-Type: application/json")]
+        Task<IList<BCClienteModelService>> ClientePesquisar([Header("Authorization")] string apiKey);
+
+        /// <summary>
+        /// Obtém todos os contratos de um cliente
+        /// </summary>
+        /// <param></param>
+        /// <param name="pesquisa"></param>
+        /// <param name="apiKey"></param>
+        /// <returns>Retorna um json array com todos os contratos de um cliente.</returns>
+        /// <response code="200">Retorna sucesso com um array de objetos com os contratos de um cliente.</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [Get("/VendaContrato/Pesquisar")]
+        [Headers("Content-Type: application/json")]
+        Task<IList<BCContratoModelService>> VendaContratoPesquisar(string pesquisa, [Header("Authorization")] string apiKey);
     }
 }

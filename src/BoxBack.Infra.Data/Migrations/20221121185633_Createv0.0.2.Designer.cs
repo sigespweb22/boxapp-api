@@ -3,6 +3,7 @@ using System;
 using BoxBack.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BoxBack.Infra.Data.Migrations
 {
     [DbContext(typeof(BoxAppDbContext))]
-    partial class BoxAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221121185633_Createv0.0.2")]
+    partial class Createv002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,13 +71,13 @@ namespace BoxBack.Infra.Data.Migrations
                         new
                         {
                             Id = new Guid("23e63d9c-283b-496b-b7d8-7dac2ef7a822"),
-                            CreatedAt = new DateTimeOffset(new DateTime(2022, 11, 11, 14, 22, 17, 534, DateTimeKind.Unspecified).AddTicks(6969), new TimeSpan(0, -3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2022, 11, 21, 15, 56, 32, 590, DateTimeKind.Unspecified).AddTicks(7578), new TimeSpan(0, -3, 0, 0, 0)),
                             CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             IsDeleted = false,
                             Name = "Master",
                             TenantId = new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
                             UniqueKey = "ors0eAr4DPkvrwhy5gVnQAqRDnJUO43j9HzbkPyZ/7Q=",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 11, 11, 14, 22, 17, 534, DateTimeKind.Unspecified).AddTicks(6987), new TimeSpan(0, -3, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 11, 21, 15, 56, 32, 590, DateTimeKind.Unspecified).AddTicks(7595), new TimeSpan(0, -3, 0, 0, 0)),
                             UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9"
                         });
                 });
@@ -119,472 +121,472 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "5b6da409-c339-4582-8c17-a200b5db8c5f",
-                            ConcurrencyStamp = "17b5f7cb-7cb8-472c-b314-f5f4e75a5730",
+                            Id = "55e95904-c92f-4238-a98b-3c4bedb868f5",
+                            ConcurrencyStamp = "01ef4d76-d08c-4dfb-8390-abe6d91a98d4",
                             Description = "Pode realizar todas as ações/operações em todas as dashboards",
                             Name = "CanDashboardAll",
                             NormalizedName = "CANDASHBOARDALL"
                         },
                         new
                         {
-                            Id = "9cffdc88-8c8e-4f9d-883e-4eed2fd2e97a",
-                            ConcurrencyStamp = "43061300-4710-4f2b-93de-1a7c9bf24f73",
+                            Id = "eb2fb5fb-b0da-4923-82dd-af4167e4dff6",
+                            ConcurrencyStamp = "92578730-2ef7-4c98-9dfa-04745c563299",
                             Description = "Pode visualizar todas as dashboards do cliente",
                             Name = "CanDashboardClienteAll",
                             NormalizedName = "CANDASHBOARDCLIENTEALL"
                         },
                         new
                         {
-                            Id = "77be8c4d-d0c3-4ed1-a635-20c8439cf94a",
-                            ConcurrencyStamp = "d49915f6-cf60-4213-a5f1-fc8cb8e4d593",
+                            Id = "2e1e9adb-5881-4936-9f71-0189634d6ff7",
+                            ConcurrencyStamp = "c9ce58bc-88d6-4569-a4f1-0a774b5d34a5",
                             Description = "Pode visualizar todas as dashboards de controle de acesso",
                             Name = "CanDashboardControleAcessoAll",
                             NormalizedName = "CANDASHBOARDCONTROLEACESSOALL"
                         },
                         new
                         {
-                            Id = "c14b2391-eec5-4ede-98a1-25af7bd49dcc",
-                            ConcurrencyStamp = "5faedb82-c8c0-434c-8785-3d2e1abbc77f",
+                            Id = "303d6890-d537-4590-9f56-c6bde3446d56",
+                            ConcurrencyStamp = "f89f9e48-e3ed-4408-babe-858cea32de2d",
                             Description = "Pode realizar todas as ações/operações em todos os usuários",
                             Name = "CanUserAll",
                             NormalizedName = "CANUSERALL"
                         },
                         new
                         {
-                            Id = "91a05f03-1b78-4696-90c7-0d0d3ba21203",
-                            ConcurrencyStamp = "08a0b009-8a75-42ec-8544-ce335130b3fc",
+                            Id = "6d9f1e60-f618-4823-be44-1a313c886524",
+                            ConcurrencyStamp = "20fec0f6-5375-4c09-8d0c-f89238fa955a",
                             Description = "Pode listar os dados de todos os usuários",
                             Name = "CanUserList",
                             NormalizedName = "CANUSERLIST"
                         },
                         new
                         {
-                            Id = "45540476-904b-44ae-aadf-d78791f12bcf",
-                            ConcurrencyStamp = "15a3eecd-8c5b-4aaf-a0a6-e4c99020d01c",
+                            Id = "ed758336-b3a8-474e-a549-d461bde5c386",
+                            ConcurrencyStamp = "66f7c45d-4d6d-427c-9b04-3cc82813195f",
                             Description = "Pode listar os dados de um usuários",
                             Name = "CanUserRead",
                             NormalizedName = "CANUSERREAD"
                         },
                         new
                         {
-                            Id = "8791215c-4806-4375-897c-a0446fcca550",
-                            ConcurrencyStamp = "18ed4a36-a0c4-499e-bd9d-5b5ea2475a97",
+                            Id = "1945fb8b-8858-4a12-8688-b5f8602a85fc",
+                            ConcurrencyStamp = "f875b320-1f13-49ee-ae44-061f5653ce5a",
                             Description = "Pode criar um usuário",
                             Name = "CanUserCreate",
                             NormalizedName = "CANUSERCREATE"
                         },
                         new
                         {
-                            Id = "be48eadc-450b-4313-bedf-eac941c5c4f2",
-                            ConcurrencyStamp = "23393240-75d6-4421-ad3e-05fd6bbe55de",
+                            Id = "5cbd8f83-3b8b-4114-a508-8f8cc3fb42aa",
+                            ConcurrencyStamp = "b401f446-f842-4aab-b81d-29193797ea1c",
                             Description = "Pode atualizar os dados de um usuário",
                             Name = "CanUserUpdate",
                             NormalizedName = "CANUSERUPDATE"
                         },
                         new
                         {
-                            Id = "80639525-48d4-4167-8856-95cf5b62dfd3",
-                            ConcurrencyStamp = "f49a3151-8b3e-4433-aa0e-92f3c44d829b",
+                            Id = "0a41df82-b98f-4c59-a723-d92103253f67",
+                            ConcurrencyStamp = "8211b1d4-8e49-4189-942e-4b724c3a0303",
                             Description = "Pode deletar um usuário",
                             Name = "CanUserDelete",
                             NormalizedName = "CANUSERDELETE"
                         },
                         new
                         {
-                            Id = "a8521e91-fd6d-45cf-9f69-ebbd079849a3",
-                            ConcurrencyStamp = "3e85f2af-05de-4947-bec0-15ecb4a7523d",
+                            Id = "6df9cf3c-c012-4248-9704-66a04cfeccfb",
+                            ConcurrencyStamp = "e944516e-6910-48c4-9162-b8d5ffa71c93",
                             Description = "Pode realizar todas as ações/operações em todos as roles/permissões",
                             Name = "CanRoleAll",
                             NormalizedName = "CANROLEALL"
                         },
                         new
                         {
-                            Id = "163025db-49cc-4e5b-9680-0d364f5984f6",
-                            ConcurrencyStamp = "b4511592-01fe-4a06-b338-af04a6fd325a",
+                            Id = "dec0a4c8-2fe9-4286-8e27-988e27e347c4",
+                            ConcurrencyStamp = "18ac0261-aab5-4a9d-a8e4-7a78de169899",
                             Description = "Pode listar os dados de todas as roles/permissões",
                             Name = "CanRoleList",
                             NormalizedName = "CANROLELIST"
                         },
                         new
                         {
-                            Id = "a361447b-fdd7-444b-a7ea-a07b68657c04",
-                            ConcurrencyStamp = "a03686b8-c811-43af-9505-5cb33fa51e21",
+                            Id = "4a61594a-29bd-44ce-b607-f41cc25f3a81",
+                            ConcurrencyStamp = "e1ed3d70-76d8-43dc-bc65-da2a402cf502",
                             Description = "Pode listar os dados de uma roles/permissão",
                             Name = "CanRoleRead",
                             NormalizedName = "CANROLEREAD"
                         },
                         new
                         {
-                            Id = "72d6fec1-b2c5-4a1f-84fb-84b410e48a11",
-                            ConcurrencyStamp = "c26b5928-a8d2-4074-8a6c-7df41a0223ad",
+                            Id = "7d5ae0a4-781f-4da9-be0b-0f430db58ca5",
+                            ConcurrencyStamp = "755c0289-84e4-487b-8765-763d5a447999",
                             Description = "Pode criar uma role/permissão",
                             Name = "CanRoleCreate",
                             NormalizedName = "CANROLECREATE"
                         },
                         new
                         {
-                            Id = "4472ebcc-5e78-4e56-82dc-3edfc7353d45",
-                            ConcurrencyStamp = "f68fce03-a27a-41b9-abd8-2974d8721f03",
+                            Id = "f9e4aa82-fe6d-45a7-b9f1-c4f39462c1f9",
+                            ConcurrencyStamp = "9b977ace-2ab6-44c5-8c40-68ad330ec03c",
                             Description = "Pode atualizar os dados de uma roles/permissão",
                             Name = "CanRoleUpdate",
                             NormalizedName = "CANROLEUPDATE"
                         },
                         new
                         {
-                            Id = "c4140648-6881-4813-9a5d-f5ed0ce6a4f1",
-                            ConcurrencyStamp = "a8391305-05cc-4505-9781-53864a9ab7f0",
+                            Id = "55a6f1bf-fcc7-492c-83e5-49f600470fb6",
+                            ConcurrencyStamp = "9dc72eb2-19a3-401b-bda7-bcc1939bd1a1",
                             Description = "Pode deletar uma role/permissão",
                             Name = "CanRoleDelete",
                             NormalizedName = "CANROLEDELETE"
                         },
                         new
                         {
-                            Id = "78383167-998c-41fe-8c32-5a8ef921f9c6",
-                            ConcurrencyStamp = "eff6ae48-4169-463c-a708-bc5dd9589878",
+                            Id = "671f85e7-2f5d-4611-9311-cb743918a385",
+                            ConcurrencyStamp = "56d1aa18-e4a7-4eca-9397-fa2c24df23d9",
                             Description = "Pode realizar todas as ações/operações em todos os grupos",
                             Name = "CanGroupAll",
                             NormalizedName = "CANGROUPALL"
                         },
                         new
                         {
-                            Id = "7bc94dc8-8d16-4c69-ac4a-e896bf261426",
-                            ConcurrencyStamp = "59df9cd5-0c09-44ff-bee5-0363f4a894a3",
+                            Id = "ec7f14cc-3da4-4bca-b6d9-93cbb26cba55",
+                            ConcurrencyStamp = "097dff70-1744-418f-8c06-ef304e504f0c",
                             Description = "Pode listar os dados de todos os grupos",
                             Name = "CanGroupList",
                             NormalizedName = "CANGROUPLIST"
                         },
                         new
                         {
-                            Id = "62536791-8a94-481a-a690-dd6b8e00ff12",
-                            ConcurrencyStamp = "db33b591-f1a3-41be-8dd4-26d964732032",
+                            Id = "4716e0ac-f4ba-4269-b41a-f271df387ebf",
+                            ConcurrencyStamp = "b8ec3d32-419f-4cec-b9e0-94dda553679e",
                             Description = "Pode listar os dado de um grupo",
                             Name = "CanGroupRead",
                             NormalizedName = "CANGROUPREAD"
                         },
                         new
                         {
-                            Id = "236c9719-1644-4d2e-9340-c196dc3c4379",
-                            ConcurrencyStamp = "1485aac5-a8f8-4549-ba08-11b18ba40d46",
+                            Id = "40880c0f-94fa-42c8-8ef7-0552264a8e82",
+                            ConcurrencyStamp = "51e18f20-9aad-4e89-baa5-60bb6ceae09e",
                             Description = "Pode criar um grupo",
                             Name = "CanGroupCreate",
                             NormalizedName = "CANGROUPCREATE"
                         },
                         new
                         {
-                            Id = "7783df39-9906-45dd-9143-b70d5b204fae",
-                            ConcurrencyStamp = "d0960413-c57d-4739-951c-5189dc49a191",
+                            Id = "b12e19c8-070e-4355-a036-f31e645d81dc",
+                            ConcurrencyStamp = "201d7bf0-75b7-48d5-a577-27c6df7ca0ce",
                             Description = "Pode atualizar os dados de um grupo",
                             Name = "CanGroupUpdate",
                             NormalizedName = "CANGROUPUPDATE"
                         },
                         new
                         {
-                            Id = "8b86affd-1462-463c-a730-2068d6675acf",
-                            ConcurrencyStamp = "270cb255-79d9-45a0-9b69-ad0e636421e1",
+                            Id = "a4db37aa-3dbe-4606-9c1a-e7fd4596810a",
+                            ConcurrencyStamp = "3ec12f81-501f-4073-93d8-fa374ccf6f6e",
                             Description = "Pode deletar um grupo",
                             Name = "CanGroupDelete",
                             NormalizedName = "CANGROUPDELETE"
                         },
                         new
                         {
-                            Id = "ef0b2965-e171-4256-a35e-bfd1e4d5abca",
-                            ConcurrencyStamp = "fdbed86b-8c85-4e6f-9b19-846843f22539",
-                            Description = "Pode realizar todas as ações/operações em todos os clientes",
+                            Id = "8dcae0a8-5a4c-45e9-bc2f-f6bce3e5571c",
+                            ConcurrencyStamp = "8f1749ab-a171-47ec-a124-c55b88a29662",
+                            Description = "Pode visualizar todos os indicadores da dashboard comercial",
                             Name = "CanClienteAll",
                             NormalizedName = "CANCLIENTEALL"
                         },
                         new
                         {
-                            Id = "7eb04f3a-b65d-45ab-8e6b-03d1b9f86957",
-                            ConcurrencyStamp = "5404004e-e990-4004-bea0-6c8f9e498432",
+                            Id = "a686c18d-0560-4428-a34d-3f91aa7dcc69",
+                            ConcurrencyStamp = "bb778fbf-4ddc-4fd7-881e-9dfb86715dd9",
                             Description = "Pode listar os dados de todos os clientes",
                             Name = "CanClienteList",
                             NormalizedName = "CANCLIENTELIST"
                         },
                         new
                         {
-                            Id = "039c841e-00fe-49cc-9ba0-4222f091b171",
-                            ConcurrencyStamp = "bc9fb542-8ca8-44e6-8af1-09247aadd26f",
+                            Id = "428bb036-cea7-4876-aefc-a72f4f7c76c8",
+                            ConcurrencyStamp = "942a7c10-b223-4eca-a3dc-9fd81442663f",
                             Description = "Pode listar os dado de um cliente",
                             Name = "CanClienteRead",
                             NormalizedName = "CANCLIENTEREAD"
                         },
                         new
                         {
-                            Id = "f555098b-4d71-405d-b0bf-69fef6480a70",
-                            ConcurrencyStamp = "3ac4d5b7-4004-4f47-8d07-27d22ef96a2d",
+                            Id = "e4a1a602-bfe6-4624-8cdf-8643e81d1947",
+                            ConcurrencyStamp = "92728b74-3ee9-4112-9377-6923a942d4ad",
                             Description = "Pode criar um cliente",
                             Name = "CanClienteCreate",
                             NormalizedName = "CANCLIENTECREATE"
                         },
                         new
                         {
-                            Id = "abebcfdb-4656-4250-9a7c-4ebe8657eb34",
-                            ConcurrencyStamp = "95601122-db16-45c4-93b9-3a50f18d32e7",
+                            Id = "74fbbca7-68b1-47fc-862f-971e9cd1f8e7",
+                            ConcurrencyStamp = "36c39460-57a6-4755-a50f-072686e75558",
                             Description = "Pode atualizar os dados de um cliente",
                             Name = "CanClienteUpdate",
                             NormalizedName = "CANCLIENTEUPDATE"
                         },
                         new
                         {
-                            Id = "dbf729f7-3ba4-48f6-8bf3-40ffd4774213",
-                            ConcurrencyStamp = "a9c223a0-eefa-4536-ab92-0e0fdb69a737",
+                            Id = "49917951-6418-4562-a21c-e5f3063bb21b",
+                            ConcurrencyStamp = "39614585-e55a-4a6b-a184-2be6c5905d02",
                             Description = "Pode deletar um cliente",
                             Name = "CanClienteDelete",
                             NormalizedName = "CANCLIENTEDELETE"
                         },
                         new
                         {
-                            Id = "3bb938b0-03e6-4ce2-bfe0-86e8cec26ecf",
-                            ConcurrencyStamp = "ff267b82-5e29-4c38-b4d5-8c0b97c7e858",
+                            Id = "7741e18d-7584-4457-86a9-9c26f956c9f8",
+                            ConcurrencyStamp = "aedfd198-92e9-4fee-89c6-6cf80333dd27",
                             Description = "Pode realizar todas as ações/operações em todos os Third party CNPJ - Api de terceiro para busca de CNPJ",
                             Name = "CanCnpjTPAll",
                             NormalizedName = "CANCNPJTPALL"
                         },
                         new
                         {
-                            Id = "a6770261-9da6-4c7a-accf-47335cfe5ada",
-                            ConcurrencyStamp = "cc7842f9-f0a3-42b5-984a-65524bb94bad",
+                            Id = "ec46d183-02a8-403d-b159-4fbd1b392a4b",
+                            ConcurrencyStamp = "6b789680-ce56-4e67-8dca-02a80dad530d",
                             Description = "Pode listar os dados de um Third party CNPJ - Api de terceiro para busca de CNPJ",
                             Name = "CanCnpjTPRead",
                             NormalizedName = "CANCNPJTPREAD"
                         },
                         new
                         {
-                            Id = "f8f1ede5-917e-4cd6-a464-fe7669f853e7",
-                            ConcurrencyStamp = "d55c1cd3-a77b-4c75-a897-1aa61f252526",
+                            Id = "80af3ab9-9006-43e4-9e7c-8733de3818d1",
+                            ConcurrencyStamp = "6a3d73fa-a678-42f1-a1a7-2ca49191ebf5",
                             Description = "Pode realizar todas as ações/operações em todos os serviços de clientes",
                             Name = "CanClienteServicoAll",
                             NormalizedName = "CANCLIENTESERVICOALL"
                         },
                         new
                         {
-                            Id = "b3fb6250-b814-4c44-860b-633f27e95179",
-                            ConcurrencyStamp = "a4b817fe-be61-4271-b8d3-21ffaa439cad",
+                            Id = "f8360af5-2c30-428d-a743-6c2ee21b7388",
+                            ConcurrencyStamp = "877bffa4-be8b-47a3-b1de-396481a31ccf",
                             Description = "Pode listar os dados de todos os serviços de clientes",
                             Name = "CanClienteServicoList",
                             NormalizedName = "CANCLIENTESERVICOLIST"
                         },
                         new
                         {
-                            Id = "3a7d8d32-cbd1-4d24-bdf3-e11aef243bbe",
-                            ConcurrencyStamp = "55ef6149-3032-49e9-b84b-41a1b2b55cd4",
+                            Id = "8b827dd7-ce99-4809-9a1d-c62dced1bbda",
+                            ConcurrencyStamp = "5eab0a34-61e3-4d16-b380-b87fd1b65386",
                             Description = "Pode listar os dado de um serviço de cliente",
                             Name = "CanClienteServicoRead",
                             NormalizedName = "CANCLIENTESERVICOREAD"
                         },
                         new
                         {
-                            Id = "ff869ef2-b552-4012-8c5c-5bfafa88238e",
-                            ConcurrencyStamp = "03921e6a-13a0-4535-b560-7b3371195178",
+                            Id = "83e5a72f-0785-4659-92d2-8a1fda5be79a",
+                            ConcurrencyStamp = "694ff6ed-3543-49fe-b810-a0338176d364",
                             Description = "Pode criar um serviço para um cliente",
                             Name = "CanClienteServicoCreate",
                             NormalizedName = "CANCLIENTESERVICOCREATE"
                         },
                         new
                         {
-                            Id = "a0ce9867-dfcc-4401-bbc7-3cfa350901cf",
-                            ConcurrencyStamp = "fd3aae4e-0cea-4478-a3d2-6ebc930a25d4",
+                            Id = "4689a787-e8fc-46a2-b807-b374d41f0160",
+                            ConcurrencyStamp = "b06157f4-39a2-4aac-a6af-98733d8aafc6",
                             Description = "Pode atualizar um serviço de um cliente",
                             Name = "CanClienteServicoUpdate",
                             NormalizedName = "CANCLIENTESERVICOUPDATE"
                         },
                         new
                         {
-                            Id = "4b023d81-3965-49d8-a15b-949e89c5483d",
-                            ConcurrencyStamp = "3c4d8e28-9c77-474f-9418-74a3326202b1",
+                            Id = "1a444e9c-4b14-4f14-8dcb-859d58a022ec",
+                            ConcurrencyStamp = "73a1f4f0-dcfb-4975-963f-3bd7ab9dbc99",
                             Description = "Pode deletar um serviço de um cliente",
                             Name = "CanClienteServicoDelete",
                             NormalizedName = "CANCLIENTESERVICODELETE"
                         },
                         new
                         {
-                            Id = "7e776049-f156-4325-824e-05dd509f995a",
-                            ConcurrencyStamp = "fa031410-c7bd-491c-a77f-eba095516c82",
+                            Id = "3adc774e-3331-4332-8f62-02a19c006f47",
+                            ConcurrencyStamp = "58ee7c01-f27c-471c-b224-a856565e925b",
                             Description = "Pode realizar todas as ações/operações em todos os serviços",
                             Name = "CanServicoAll",
                             NormalizedName = "CANSERVICOALL"
                         },
                         new
                         {
-                            Id = "7fff650a-5e6a-4fb4-a96d-82f21f315a4b",
-                            ConcurrencyStamp = "b5c9878f-f36c-4cb2-8cf0-bead5cb6a86e",
+                            Id = "2d89e101-d5d3-485a-8f83-fa8d73a38801",
+                            ConcurrencyStamp = "cf7367f4-ffc1-466e-b55c-21e450838d21",
                             Description = "Pode listar os dados de todos os serviços",
                             Name = "CanServicoList",
                             NormalizedName = "CANSERVICOLIST"
                         },
                         new
                         {
-                            Id = "81c70a99-07f0-47d9-a02b-8857342510cd",
-                            ConcurrencyStamp = "b0d1078d-6788-4e2f-9055-e04cd5b57782",
+                            Id = "db0bc61f-fa76-4db4-ad59-9c4316818206",
+                            ConcurrencyStamp = "4745d12f-f6f7-442f-aa9f-44a35870cc98",
                             Description = "Pode listar os dados de um serviço",
                             Name = "CanServicoRead",
                             NormalizedName = "CANSERVICOREAD"
                         },
                         new
                         {
-                            Id = "130c779d-8bdb-4f0c-bcdc-a66c41cc4581",
-                            ConcurrencyStamp = "908bacc0-91c1-4889-9929-1005a7315ede",
+                            Id = "8d3d860e-3f55-47b3-b8d0-96b15dc8b55f",
+                            ConcurrencyStamp = "52c14578-2b68-4cdf-9ac3-f9299ad15b21",
                             Description = "Pode atualizar um serviço",
                             Name = "CanServicoUpdate",
                             NormalizedName = "CANSERVICOUPDATE"
                         },
                         new
                         {
-                            Id = "8336dc9b-00b7-4c1f-8556-7b69ce0fba02",
-                            ConcurrencyStamp = "cdae902e-f493-4a76-9535-0d86af5cd57b",
+                            Id = "feee8f60-271e-403e-ad3e-0fa2362cbcb3",
+                            ConcurrencyStamp = "1d61ce4b-9a78-48d6-937d-61d354681789",
                             Description = "Pode criar um serviço",
                             Name = "CanServicoCreate",
                             NormalizedName = "CANSERVICOCREATE"
                         },
                         new
                         {
-                            Id = "93914a96-9323-4d06-9927-733687ea81cb",
-                            ConcurrencyStamp = "c76260bc-2f0c-417b-bb91-083523f4c478",
+                            Id = "5a05fd7a-8d64-406c-a880-5addffd3a02d",
+                            ConcurrencyStamp = "0fce7906-6b2a-4513-b460-ca6ebf412e23",
                             Description = "Pode deletar um serviço",
                             Name = "CanServicoDelete",
                             NormalizedName = "CANSERVICODELETE"
                         },
                         new
                         {
-                            Id = "33a6edd4-152d-431b-a032-3e10bec4fbae",
-                            ConcurrencyStamp = "a40298b6-9b9c-45dd-b0de-c28d476d7b34",
+                            Id = "d7607109-ebe5-4cd5-8f16-123782f2741f",
+                            ConcurrencyStamp = "f9ce2bdf-c723-4cf1-8a63-6560b5a5ba0f",
                             Description = "Pode realizar todas as ações/operações em todos os pipelines",
                             Name = "CanPipelineAll",
                             NormalizedName = "CANPIPELINEALL"
                         },
                         new
                         {
-                            Id = "6c9ec31f-4f74-446d-bf33-3f9035261794",
-                            ConcurrencyStamp = "8d4078bb-cc8e-49d6-9ae4-501fec2710c5",
+                            Id = "9c020918-cc7e-436f-b275-2a247ce42fd3",
+                            ConcurrencyStamp = "a82c45f6-e548-4336-a75a-ec57e43446f5",
                             Description = "Pode listar os dados de todos os pipelines",
                             Name = "CanPipelineList",
                             NormalizedName = "CANPIPELINELIST"
                         },
                         new
                         {
-                            Id = "1f83c60d-65cd-485c-8874-3772e5e3d075",
-                            ConcurrencyStamp = "df7314be-d7d0-4c4f-9a60-7e711dfc61f6",
+                            Id = "4feb942a-d34b-4825-9100-5f7113a49596",
+                            ConcurrencyStamp = "6c040a0f-3ae2-464a-b408-832aa937ce43",
                             Description = "Pode listar os dados de um pipeline",
                             Name = "CanPipelineRead",
                             NormalizedName = "CANPIPELINEREAD"
                         },
                         new
                         {
-                            Id = "dfd77edd-4d6e-43ab-b8e8-2ceccd067054",
-                            ConcurrencyStamp = "6038cd4d-74a2-417a-b8a4-172de8a94b69",
+                            Id = "e1555a66-bbe9-4721-b222-a8f6b525c168",
+                            ConcurrencyStamp = "89c23b73-e502-4057-a854-a1e49f9394dc",
                             Description = "Pode criar um pipeline",
                             Name = "CanPipelineCreate",
                             NormalizedName = "CANPIPELINECREATE"
                         },
                         new
                         {
-                            Id = "23c1634a-c901-4b5b-a03b-385abae10829",
-                            ConcurrencyStamp = "fc3c06a5-716f-42ab-b4b5-525b46833e83",
+                            Id = "bfe9c28e-52bc-4d00-8f59-58481d0869fd",
+                            ConcurrencyStamp = "e438a665-0435-4763-9bc7-3cac1fac682d",
                             Description = "Pode atualizar um pipeline",
                             Name = "CanPipelineUpdate",
                             NormalizedName = "CANPIPELINEUPDATE"
                         },
                         new
                         {
-                            Id = "43bad2de-4706-4064-87fb-3f02c09ab7c2",
-                            ConcurrencyStamp = "57a3c4f9-d972-4b7c-9e8e-c028a9cea95f",
+                            Id = "cc6f93c2-694b-489f-b7a6-71868de3341a",
+                            ConcurrencyStamp = "bf22a061-de02-41d8-9eb2-d394873c7d0b",
                             Description = "Pode deletar um pipeline",
                             Name = "CanPipelineDelete",
                             NormalizedName = "CANPIPELINEDELETE"
                         },
                         new
                         {
-                            Id = "2b10dcfa-aa62-4f4e-9123-0c4de1843d5e",
-                            ConcurrencyStamp = "98362336-9e73-473b-85af-74cb1b1849fd",
+                            Id = "84cf3732-e674-4761-abe6-a679751f072d",
+                            ConcurrencyStamp = "eec88cf9-0f80-4962-bf5e-f0a54156bec0",
                             Description = "Pode realizar todas as ações/operações em todos os fornecedores",
                             Name = "CanFornecedorAll",
                             NormalizedName = "CANFORNECEDORALL"
                         },
                         new
                         {
-                            Id = "bb5eea08-bc47-49c5-b085-0ae24c0ad91d",
-                            ConcurrencyStamp = "4a5ecd3e-dd4c-4bf6-8d76-a4917f6dd0aa",
+                            Id = "24ebfb30-dd07-4168-a458-bd37f7aa28f6",
+                            ConcurrencyStamp = "f7d554dd-3685-4859-9090-6b6818a1761c",
                             Description = "Pode listar os dados de todos os fornecedores",
                             Name = "CanFornecedorList",
                             NormalizedName = "CANFORNECEDORLIST"
                         },
                         new
                         {
-                            Id = "50fa392e-5131-40cc-8fdb-bd90ea111781",
-                            ConcurrencyStamp = "1cdc2335-1c26-4520-b223-747af0c25ce7",
+                            Id = "751927b3-2142-4ddb-bad7-016b9adc9e28",
+                            ConcurrencyStamp = "d20cba34-a6c6-4b26-ac44-b13110683898",
                             Description = "Pode listar os dados de um fornecedor",
                             Name = "CanFornecedorRead",
                             NormalizedName = "CANFORNECEDORREAD"
                         },
                         new
                         {
-                            Id = "71719dfb-082d-4ae6-8ef3-3f6623fec12a",
-                            ConcurrencyStamp = "67fb985d-d46e-4c5d-ab5b-847e5da8bf0c",
+                            Id = "133a367a-d6ea-4e07-9183-50916857b6b2",
+                            ConcurrencyStamp = "9d06d9c4-c5ae-406a-b22f-d918972427c5",
                             Description = "Pode criar um fornecedor",
                             Name = "CanFornecedorCreate",
                             NormalizedName = "CANFORNECEDORCREATE"
                         },
                         new
                         {
-                            Id = "e2a901c6-3ac2-457c-9dc4-e42650e38136",
-                            ConcurrencyStamp = "b860f6c8-b0fb-4edb-9a98-9c28612f6d67",
+                            Id = "8290a2ba-51be-475a-b24c-8bbf8333b82d",
+                            ConcurrencyStamp = "30857fe0-2008-4b17-bff0-fef330d109e8",
                             Description = "Pode atualizar um fornecedor",
                             Name = "CanFornecedorUpdate",
                             NormalizedName = "CANFORNECEDORUPDATE"
                         },
                         new
                         {
-                            Id = "150d5404-7ea6-474b-9530-adc63d436ded",
-                            ConcurrencyStamp = "f03e5c1c-6fd2-42e5-8e02-771ca526a80e",
+                            Id = "c6a74c0b-6b0c-4e67-b494-b9a047247bc5",
+                            ConcurrencyStamp = "a27c6d0f-555a-49eb-b6bd-369a13db0c74",
                             Description = "Pode deletar um fornecedor",
                             Name = "CanForncedorDelete",
                             NormalizedName = "CANFORNCEDORDELETE"
                         },
                         new
                         {
-                            Id = "049ddd80-97bc-4e91-8ce2-5d8db7bce35c",
-                            ConcurrencyStamp = "c926d12e-7abf-4bd0-9553-f6f95dff56ec",
+                            Id = "05b4aba3-24de-4501-abf4-ce5e9c82ac43",
+                            ConcurrencyStamp = "aefa35f2-e784-4a3d-a13b-5d50091b1e88",
                             Description = "Pode realizar todas as ações/operações em todos os serviços de fornecedores",
                             Name = "CanFornecedorServicoAll",
                             NormalizedName = "CANFORNECEDORSERVICOALL"
                         },
                         new
                         {
-                            Id = "fb823256-f186-452b-9888-a866071f612c",
-                            ConcurrencyStamp = "4e9af76f-4346-4720-959b-970ab7237d49",
+                            Id = "b8e43cdb-2aef-413e-b9f0-8202ebae5fa7",
+                            ConcurrencyStamp = "4ccf4d1c-73af-4817-be19-06c87471815d",
                             Description = "Pode listar os dados de todos os serviços de fornecedores",
                             Name = "CanFornecedorServicoList",
                             NormalizedName = "CANFORNECEDORSERVICOLIST"
                         },
                         new
                         {
-                            Id = "dae21064-4dc0-44cf-9747-e6a880913c98",
-                            ConcurrencyStamp = "383fb156-2e68-4ee8-adcc-3c729921dcd0",
+                            Id = "512517e9-150e-47aa-a5f0-0e053e6518bf",
+                            ConcurrencyStamp = "20e4803f-5603-43ab-9e20-a334d4913904",
                             Description = "Pode listar os dado de um serviço de fornecedor",
                             Name = "CanFornecedorServicoRead",
                             NormalizedName = "CANFORNECEDORSERVICOREAD"
                         },
                         new
                         {
-                            Id = "1e81372e-28de-4dd4-9df4-0dfb275bdf44",
-                            ConcurrencyStamp = "25903889-f623-48ff-839f-a7484005f926",
+                            Id = "68a425d4-70c2-41b8-9631-5d68e5ec6616",
+                            ConcurrencyStamp = "fda2cf80-c912-41a8-821f-6414e89f0fac",
                             Description = "Pode criar um serviço para um fornecedor",
                             Name = "CanFornecedorServicoCreate",
                             NormalizedName = "CANFORNECEDORSERVICOCREATE"
                         },
                         new
                         {
-                            Id = "1cec03df-8e4f-4ec5-b324-92a541e7517a",
-                            ConcurrencyStamp = "248e8d7a-6692-418e-b89d-f9f42dc60903",
+                            Id = "90be2688-5b80-42bc-b841-d13b5f4938bf",
+                            ConcurrencyStamp = "492bd5c4-b886-47bc-be5b-aaf3cfb43903",
                             Description = "Pode atualizar um serviço de um fornecedor",
                             Name = "CanFornecedorServicoUpdate",
                             NormalizedName = "CANFORNECEDORSERVICOUPDATE"
                         },
                         new
                         {
-                            Id = "c90e35a5-800f-4777-996c-40322c52debb",
-                            ConcurrencyStamp = "7c602754-c465-419e-b926-3daa4504bea2",
+                            Id = "6569ba3a-de97-4fc8-a461-e0d6df28bc73",
+                            ConcurrencyStamp = "9406209c-16b6-4b9e-a7b4-5a1c39a80e0f",
                             Description = "Pode deletar um serviço de um fornecedor",
                             Name = "CanFornecedorServicoDelete",
                             NormalizedName = "CANFORNECEDORSERVICODELETE"
@@ -922,7 +924,7 @@ namespace BoxBack.Infra.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e71fe0a2-80b5-46bb-9891-07c5cb74bdf0"),
+                            Id = new Guid("e12ad5bc-1768-439a-8b4c-439f7d747230"),
                             ApiTerceiro = 0,
                             CreatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             DataValidade = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
@@ -1671,68 +1673,6 @@ namespace BoxBack.Infra.Data.Migrations
                     b.ToTable("PipelineTarefaTags", (string)null);
                 });
 
-            modelBuilder.Entity("BoxBack.Domain.Models.Produto", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("Id");
-
-                    b.Property<string>("Caracteristicas")
-                        .HasMaxLength(1500)
-                        .HasColumnType("character varying(1500)");
-
-                    b.Property<string>("CodigoUnico")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Descricao")
-                        .HasMaxLength(1500)
-                        .HasColumnType("character varying(1500)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<Guid>("TenantId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValue(new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"));
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("ValorCusto")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(7,3)")
-                        .HasDefaultValue(0m);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CodigoUnico")
-                        .IsUnique();
-
-                    b.HasIndex("Nome")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("Produtos", (string)null);
-                });
-
             modelBuilder.Entity("BoxBack.Domain.Models.Servico", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1909,13 +1849,13 @@ namespace BoxBack.Infra.Data.Migrations
                             Id = new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
                             ApiKey = new Guid("57d390e7-2b87-47fe-9bc8-0bae3a388499"),
                             Cnpj = "12.368.943/0001-50",
-                            CreatedAt = new DateTimeOffset(new DateTime(2022, 11, 11, 14, 22, 17, 531, DateTimeKind.Unspecified).AddTicks(9893), new TimeSpan(0, -3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2022, 11, 21, 15, 56, 32, 587, DateTimeKind.Unspecified).AddTicks(1138), new TimeSpan(0, -3, 0, 0, 0)),
                             CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             EmailPrincipal = "rafale@boxtecnologia.com.br",
                             IsDeleted = false,
                             Nome = "Box Tecnologia Ltda",
                             NomeExibicao = "Box Tecnologia",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 11, 11, 14, 22, 17, 531, DateTimeKind.Unspecified).AddTicks(9921), new TimeSpan(0, -3, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 11, 21, 15, 56, 32, 587, DateTimeKind.Unspecified).AddTicks(1163), new TimeSpan(0, -3, 0, 0, 0)),
                             UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9"
                         });
                 });
@@ -2256,17 +2196,6 @@ namespace BoxBack.Infra.Data.Migrations
                     b.Navigation("PipelineTarefa");
 
                     b.Navigation("TarefaTag");
-                });
-
-            modelBuilder.Entity("BoxBack.Domain.Models.Produto", b =>
-                {
-                    b.HasOne("BoxBack.Domain.Models.Tenant", "Tenant")
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Tenant");
                 });
 
             modelBuilder.Entity("BoxBack.Domain.Models.Servico", b =>

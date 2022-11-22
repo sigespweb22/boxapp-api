@@ -88,7 +88,6 @@ namespace BoxBack.WebApi.Helpers
                 
             return null;
         }
-
         public static string CnpjClean(string cnpj)
         {
             String result = string.Empty;
@@ -102,7 +101,6 @@ namespace BoxBack.WebApi.Helpers
             catch { throw; }
             return result;
         }
-
         public static bool CnpjIsValid(string cnpj)
         {
             Regex cnpjPatter = new Regex(@"[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2}");
