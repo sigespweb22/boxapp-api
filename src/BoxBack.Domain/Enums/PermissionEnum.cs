@@ -179,6 +179,21 @@ namespace BoxBack.Domain.Enums
         CanFornecedorServicoDelete = 10006,
         #endregion
 
+        #region Produto
+        [Description("Pode realizar todas as ações/operações em todos os produtos")]
+        CanProdutoAll = 11001,
+        [Description("Pode listar os dados de todos os produtos")]
+        CanProdutoList = 11002,
+        [Description("Pode listar os dados de um produtos")]
+        CanProdutoRead = 11003,
+        [Description("Pode criar um produtos")]
+        CanProdutoCreate = 11001,
+        [Description("Pode atualizar um produtos")]
+        CanProdutoUpdate = 11001,
+        [Description("Pode deletar um produtos")]
+        CanProdutoDelete = 11001,
+        #endregion
+
         #region Dashboard Comercial
         [Description("Pode realizar todas as ações/operações em todos os serviços de fornecedores")]
         CanDashboardComercialAll = 12001,
