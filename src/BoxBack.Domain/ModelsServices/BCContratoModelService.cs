@@ -5,7 +5,7 @@ namespace BoxBack.Domain.ModelsServices
 {
     public class BCContratoModelService
     {
-        public Int64 Id { get; set; }
+        public Int64? Id { get; set; }
         public Int64 IdVenda { get; set; }
         public string Inicio { get; set; }
         public string Termino { get; set; }

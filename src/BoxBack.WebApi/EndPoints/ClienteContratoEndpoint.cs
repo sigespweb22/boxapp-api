@@ -89,6 +89,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Get data Bom Controle (Third Party)
             IEnumerable<BCContratoModelService> clienteContratosThirdParty = new List<BCContratoModelService>();
             Int64 totalSincronizado = 0;
+            var clientesContratos = new List<ClienteContrato>();
             try
             {
                 foreach (var cliente in clientes)
@@ -116,10 +117,16 @@ namespace BoxBack.WebApi.EndPoints
                             var contratoMapped = new ClienteContrato();
                             try
                             {
+                                
+                                var clienteContratoThirdPartyId = clienteContratoThirdParty.Id;
+                                clienteContratoThirdParty.Id = null;
+
                                 contratoMapped = _mapper.Map<ClienteContrato>(clienteContratoThirdParty);
+                                
+                                contratoMapped.BomControleContratoId = clienteContratoThirdPartyId;
                                 contratoMapped.ClienteId = cliente.Id;
                                 
-                                await _context.ClienteContratos.AddAsync(contratoMapped);
+                                clientesContratos.Add(contratoMapped);
                                 totalSincronizado++;
                             }
                             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
@@ -130,8 +137,21 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
+            #region Persistance
+            try
+            {
+                _context.ClienteContratos.AddRange(clientesContratos);    
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            #endregion
+
             #region Commit
-            _unitOfWork.Commit();
+            try
+            {
+                _unitOfWork.Commit();    
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Return
