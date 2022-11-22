@@ -39,11 +39,11 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Obtém todos os contratos de um cliente do BOM CONTROLE (Pesquisa os contratos Por CNPJ ou nome do cliente) e mantém a base de contratos do cliente do BoxApp idêntica ao Bom Controle (Este método não atualiza os dados dos contratos, apenas mantém os mesmos contratos em ambos os sistemas)
+        /// Sincroniza a base de contratos de clientes do BOM CONTROLE com a base de contratos de clientes do BoxApp (Este método não atualiza os dados de contrato, apenas mantém os mesmos contratos em ambos os sistemas)
         /// </summary>
         /// <param></param>
-        /// <returns>Um array de objetos com os contratos do clientes</returns>
-        /// <response code="200">Array de objeto com os contratos de clientes</response>
+        /// <returns>Um objeto com o total de contratos de clientes sincronizados</returns>
+        /// <response code="200">Objeto com o total de clientes sincronizados</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Nenhum contrato encontrado</response>
         /// <response code="500">Erro desconhecido</response>
@@ -53,9 +53,9 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        [Route("sincronizar-third-party")]
+        [Route("sincronizar-from-third-party")]
         [HttpGet]
-        public async Task<IActionResult> SincronizarThirdPartyPAsync()
+        public async Task<IActionResult> SincronizarFromThirdPartyPAsync()
         {
             #region Get clientes
             IEnumerable<Cliente> clientes = new List<Cliente>();
@@ -157,6 +157,82 @@ namespace BoxBack.WebApi.EndPoints
             #region Return
             return CustomResponse(200, new {
                 TotalSincronizado = totalSincronizado,
+            });
+            #endregion
+        }
+
+        /// <summary>
+        /// Atualiza a periodicidade dos contratos de clientes do BoxApp a partir da periodicidade dos mesmos contratos no BOM CONTROLE
+        /// </summary>
+        /// <param></param>
+        /// <returns>Um objeto com o total de contratos atualizados</returns>
+        /// <response code="200">Um objeto com o total de contratos atualizados</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Nenhum contrato encontrado</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanClienteContratoUpdate, CanClienteContratoAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("update-periodicidade-from-third-party")]
+        [HttpGet]
+        public async Task<IActionResult> UpdatePeriodicidadeFromThirdPartyPAsync()
+        {
+            #region Get contratos
+            IEnumerable<ClienteContrato> clientesContratos = new List<ClienteContrato>();
+            try
+            {
+                clientesContratos = await _context.ClienteContratos.AsNoTracking().ToListAsync();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (clientesContratos == null || clientesContratos.Count() <= 0)
+            {
+                AddError("Nenhum contrato de cliente encontrado na base de dados, para então seguir com a atualização da periodicidade dos contratos a partir dos dados da api de terceiro.");
+                return CustomResponse(500);
+            }
+            #endregion
+
+            // TODO: Implementar busca do token diretamente da tabela chave api terceiro
+            #region Token resolve
+            var token = "ApiKey Z0EjZPzTOb_AOeUDlulXwdnhg9JMHSUQbKek2rFejjXyG9pyoA2hMY35uD1B6bzjynsbTrCaUm347KMoDwiTPkaCND-m5EQwHaUUcTkvYNyhbXzYG7zLggKd7MwMR1qwsW16kQFhc94.";
+            #endregion
+
+            #region Obtém os contratos da Api Terceiro um a um e atualiza a periodicidade no BoxApp
+            var contratoFromThirdParty = new BCContratoModelService();
+            Int64 totalContratosAtualizados = 0;
+            try
+            {
+                foreach (var clienteContrato in clientesContratos)
+                {
+                    contratoFromThirdParty = await _bcServices.VendaContratoObter((long)clienteContrato.BomControleContratoId, token);
+                    if (contratoFromThirdParty != null)
+                    {
+                        if (clienteContrato.Periodicidade != contratoFromThirdParty.Periodicidade)
+                        {
+                            clienteContrato.Periodicidade = contratoFromThirdParty.Periodicidade;
+                            _context.ClienteContratos.Update(clienteContrato);
+                            totalContratosAtualizados++;
+                        } else continue;
+                    } else continue;
+                }
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Commit
+            try
+            {
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Return
+            return CustomResponse(200, new {
+                TotalContratosAtualizados = totalContratosAtualizados,
             });
             #endregion
         }

@@ -570,12 +570,11 @@ namespace BoxBack.WebApi.EndPoints
         }
         
         /// <summary>
-        /// Obtém todos os clientes do BOM CONTROLE e mantém a base de clientes do BoxApp idêntica (Este método não atualiza os dados dos clientes, apenas mantém os mesmos clientes em ambos os sistemas)
-        /// Não serão sincronizados os clientes da api de terceiro que estiverem com a propriedade "Documento" - Das propriedades Pessoa Jurídica e Pessoa Física
-        /// Ao menos uma propriedade "Documento" ou do objeto Pessoa Jurídica ou Pessoa Física deve possuir algum dado
+        /// Sincroniza a base de clientes do BOM CONTROLE com a base de clientes do BoxApp (Este método não atualiza os dados dos clientes, apenas mantém os mesmos clientes em ambos os sistemas)
+        /// Não serão sincronizados os clientes em que a propriedade "Documento" - Das propriedades Pessoa Jurídica e Pessoa Física - for null
         /// </summary>
         /// <param></param>
-        /// <returns>Um objeto com o total de clientes sincronizados</returns>
+        /// <returns>Um objeto com o total de clientes sincronizados e total de clientes não sincronizados por falta de CPF/CNPJ</returns>
         /// <response code="200">Objeto com o total de clientes sincronizados</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Nenhum cliente encontrado</response>
@@ -586,9 +585,9 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        [Route("sincronizar-third-party")]
+        [Route("sincronizar-from-third-party")]
         [HttpGet]
-        public async Task<IActionResult> SincronizarTPAsync()
+        public async Task<IActionResult> SincronizarFromTPAsync()
         {
             #region Token resolve
             // TODO: Implementar busca do token diretamente da tabela chave api terceiro
