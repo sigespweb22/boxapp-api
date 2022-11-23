@@ -196,7 +196,7 @@ namespace BoxBack.Application.Services
                 Title = "Chaves Apis",
                 Path = "/sistema/configuracoes/chave-api/list",
                 Action = "list",
-                Subject = "ac-chave_api-page"
+                Subject = "ac-chave_api_terceiro-page"
             };
             navigationF.Children.Add(token);
 

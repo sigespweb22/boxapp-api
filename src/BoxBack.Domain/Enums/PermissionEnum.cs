@@ -29,10 +29,8 @@ namespace BoxBack.Domain.Enums
         #region Dashboard
         [Description("Pode realizar todas as ações/operações em todas as dashboards")]
         CanDashboardAll = 1,
-
         [Description("Pode visualizar todas as dashboards do cliente")]
         CanDashboardClienteAll = 2,
-
         [Description("Pode visualizar todas as dashboards de controle de acesso")]
         CanDashboardControleAcessoAll = 3,
         #endregion
@@ -231,9 +229,9 @@ namespace BoxBack.Domain.Enums
         CanFornecedorProdutoList = 14002,
         [Description("Pode listar os dados de um produto de fornecedor")]
         CanFornecedorProdutoRead = 14003,
-        [Description("Pode criar um produto de fornecedor")]
+        [Description("Pode visualizar um produto de fornecedor")]
         CanFornecedorProdutoCreate = 14004,
-        [Description("Pode atualizar um produto de fornecedor")]
+        [Description("Pode criar um produto de fornecedor")]
         CanFornecedorProdutoUpdate = 14005,
         [Description("Pode deletar um produto de fornecedor")]
         CanFornecedorProdutoDelete = 14006,
@@ -243,7 +241,22 @@ namespace BoxBack.Domain.Enums
         [Description("Pode realizar todas as ações/operações em todos os serviços de fornecedores")]
         CanDashboardComercialAll = 15001,
         [Description("Pode listar o indicador de clientes ativos com contratos")]
-        CanDashboardComercialClienteContratoList = 15002
+        CanDashboardComercialClienteContratoList = 15002,
+        #endregion
+
+        #region Chave Api Terceiro
+        [Description("Pode realizar todas as ações/operações em todas as chaves de api de terceiro")]
+        CanChaveApiTerceiroAll = 16001,
+        [Description("Pode listar os dados de todas as chaves de api de terceiro")]
+        CanChaveApiTerceiroList = 16001,
+        [Description("Pode listar os dados de uma chave de api de terceiro")]
+        CanChaveApiTerceiroRead = 16001,
+        [Description("Pode criar uma chave de api de terceiro")]
+        CanChaveApiTerceiroCreate = 16001,
+        [Description("Pode atualizar uma chave de api de terceiro")]
+        CanChaveApiTerceiroUpdate = 16001,
+        [Description("Pode deletar uma chave de api de terceiro")]
+        CanChaveApiTerceiroDelete = 16001,
         #endregion
     }
 }
