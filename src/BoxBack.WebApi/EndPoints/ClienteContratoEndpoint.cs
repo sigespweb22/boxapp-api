@@ -117,7 +117,6 @@ namespace BoxBack.WebApi.EndPoints
                             var contratoMapped = new ClienteContrato();
                             try
                             {
-                                
                                 var clienteContratoThirdPartyId = clienteContratoThirdParty.Id;
                                 clienteContratoThirdParty.Id = null;
 
