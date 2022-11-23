@@ -132,5 +132,72 @@ namespace BoxBack.WebApi.EndPoints
 
             return Ok(clientesContratosValoresChartViewModel);
         }
+
+        /// <summary>
+        /// Lista de valores de ticket médio com base nos valores dos contratos de clientes. Ticket médio mensal e anual
+        /// </summary>
+        /// <param></param>
+        /// <returns>Um json com valores de ticket médio</returns>
+        /// <response code="200">Lista de valores de ticket médio com base nos valores dos contratos de clientes</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Lista vazia</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [Authorize(Roles = "Master, CanDashboardComercialClienteContratoList, CanDashboardComercialAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("clientes-contratos/ticket-medio")]
+        [HttpGet]
+        public async Task<IActionResult> ClientesContratosTicketMedioAsync()
+        {
+            #region Get data
+            var clientesContratos = new List<ClienteContrato>();
+            try
+            {
+                clientesContratos = await _context.ClienteContratos
+                                                    .AsNoTracking()
+                                                    .ToListAsync();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (clientesContratos == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            #region Get calculations
+            var clientesContratosTicketMedioChartViewModel = new ClientesContratosTicketMedioChartViewModel();
+            try
+            {
+                clientesContratosTicketMedioChartViewModel.ValorTicketMedioMensal = CalcularTicketMedioMensal(clientesContratos.Where(x => x.Periodicidade.Equals(PeriodicidadeEnum.MENSAL)));
+                clientesContratosTicketMedioChartViewModel.ValorTicketMedioAnual = CalcularTicketMedioAnual(clientesContratos.Where(x => x.Periodicidade.Equals(PeriodicidadeEnum.ANUAL)));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            return Ok(clientesContratosTicketMedioChartViewModel);
+        }
+
+        private decimal CalcularTicketMedioMensal(IEnumerable<ClienteContrato> contratosMensais)
+        {
+            var totalContratos = contratosMensais.Count();
+            var valorTotalContratos = contratosMensais.Sum(x => x.ValorContrato);
+            
+            if (totalContratos <= 0 && valorTotalContratos <= 0) return 0;
+            return valorTotalContratos / totalContratos;
+        }
+
+        private decimal CalcularTicketMedioAnual(IEnumerable<ClienteContrato> contratosMensais)
+        {
+            var totalContratos = contratosMensais.Count();
+            var valorTotalContratos = contratosMensais.Sum(x => x.ValorContrato);
+            
+            if (totalContratos <= 0 && valorTotalContratos <= 0) return 0;
+            return valorTotalContratos / totalContratos / 12;
+        }
     }
 }
