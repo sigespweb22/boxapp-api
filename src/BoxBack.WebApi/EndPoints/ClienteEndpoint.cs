@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.IO.Compression;
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Services;
 using BoxBack.Domain.ModelsServices;
 using BoxBack.Application.ViewModels.Selects;
+using BoxBack.Domain.Enums;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -550,12 +552,38 @@ namespace BoxBack.WebApi.EndPoints
             }
             #endregion
 
+            #region Chave api resolve
+            var chaveApiTerceiro = new ChaveApiTerceiro();
+            try
+            {
+                chaveApiTerceiro = await _context
+                                                .ChavesApiTerceiro
+                                                .Where(x => x.DataValidade >= DateTimeOffset.Now &&
+                                                       x.IsDeleted == false && !string.IsNullOrEmpty(x.Key))
+                                                .FirstOrDefaultAsync(x => x.ApiTerceiro.Equals(ApiTerceiroEnum.BOM_CONTROLE));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (chaveApiTerceiro == null)
+            { 
+                AddError("Nenhuma chave de api de terceiro encontrada, verifique os possíveis erros: \n\nNenhuma chave de api cadastrada para esta integração. \n\nA chave de api cadastrada não possui uma Key. \n\nA chave de api cadastrada não está ativa. \n\nA chave de api cadastrada está com Data de Validade vencida.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            #region Token resolve
+            String token = string.Empty;
+            try
+            {
+                token = $"ApiKey {chaveApiTerceiro.Key}";
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
             #region Get data
             var cliente = new BCClienteModelService();
             try
             {
-                var token = "ApiKey Z0EjZPzTOb-8NpoAk4GtAa8xOF7FW8cQDS4OPyGpk90XLOgEysE3zLAD7ClZLMNaynsbTrCaUm1lQiABFUNKY5Gg92GcpUhpHaUUcTkvYNyhbXzYG7zLggKd7MwMR1qwsW16kQFhc94.";
-                
                 cliente = await _bcServices.ClienteObter(id, token);
                 if (cliente == null)
                 {
@@ -589,9 +617,32 @@ namespace BoxBack.WebApi.EndPoints
         [HttpGet]
         public async Task<IActionResult> SincronizarFromTPAsync()
         {
+            #region Chave api resolve
+            var chaveApiTerceiro = new ChaveApiTerceiro();
+            try
+            {
+                chaveApiTerceiro = await _context
+                                                .ChavesApiTerceiro
+                                                .Where(x => x.DataValidade >= DateTimeOffset.Now &&
+                                                       x.IsDeleted == false && !string.IsNullOrEmpty(x.Key))
+                                                .FirstOrDefaultAsync(x => x.ApiTerceiro.Equals(ApiTerceiroEnum.BOM_CONTROLE));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (chaveApiTerceiro == null)
+            { 
+                AddError("Nenhuma chave de api de terceiro encontrada, verifique os possíveis erros: \n\nNenhuma chave de api cadastrada para esta integração. \n\nA chave de api cadastrada não possui uma Key. \n\nA chave de api cadastrada não está ativa. \n\nA chave de api cadastrada está com Data de Validade vencida.");
+                return CustomResponse(404);
+            }
+            #endregion
+
             #region Token resolve
-            // TODO: Implementar busca do token diretamente da tabela chave api terceiro
-            var token = "ApiKey Z0EjZPzTOb-8NpoAk4GtAa8xOF7FW8cQDS4OPyGpk90XLOgEysE3zLAD7ClZLMNaynsbTrCaUm1lQiABFUNKY5Gg92GcpUhpHaUUcTkvYNyhbXzYG7zLggKd7MwMR1qwsW16kQFhc94.";
+            String token = string.Empty;
+            try
+            {
+                token = $"ApiKey {chaveApiTerceiro.Key}";
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Get data Bom Controle (TP)

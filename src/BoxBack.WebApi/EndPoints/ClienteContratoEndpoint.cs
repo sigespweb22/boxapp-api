@@ -72,9 +72,32 @@ namespace BoxBack.WebApi.EndPoints
             }
             #endregion
 
-            // TODO: Implementar busca do token diretamente da tabela chave api terceiro
+            #region Chave api resolve
+            var chaveApiTerceiro = new ChaveApiTerceiro();
+            try
+            {
+                chaveApiTerceiro = await _context
+                                                .ChavesApiTerceiro
+                                                .Where(x => x.DataValidade >= DateTimeOffset.Now &&
+                                                       x.IsDeleted == false && !string.IsNullOrEmpty(x.Key))
+                                                .FirstOrDefaultAsync(x => x.ApiTerceiro.Equals(ApiTerceiroEnum.BOM_CONTROLE));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (chaveApiTerceiro == null)
+            { 
+                AddError("Nenhuma chave de api de terceiro encontrada, verifique os possíveis erros: \n\nNenhuma chave de api cadastrada para esta integração. \n\nA chave de api cadastrada não possui uma Key. \n\nA chave de api cadastrada não está ativa. \n\nA chave de api cadastrada está com Data de Validade vencida.");
+                return CustomResponse(404);
+            }
+            #endregion
+
             #region Token resolve
-            var token = "ApiKey Z0EjZPzTOb_AOeUDlulXwdnhg9JMHSUQbKek2rFejjXyG9pyoA2hMY35uD1B6bzjynsbTrCaUm347KMoDwiTPkaCND-m5EQwHaUUcTkvYNyhbXzYG7zLggKd7MwMR1qwsW16kQFhc94.";
+            String token = string.Empty;
+            try
+            {
+                token = $"ApiKey {chaveApiTerceiro.Key}";
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Get contratos
@@ -194,9 +217,32 @@ namespace BoxBack.WebApi.EndPoints
             }
             #endregion
 
-            // TODO: Implementar busca do token diretamente da tabela chave api terceiro
+            #region Chave api resolve
+            var chaveApiTerceiro = new ChaveApiTerceiro();
+            try
+            {
+                chaveApiTerceiro = await _context
+                                                .ChavesApiTerceiro
+                                                .Where(x => x.DataValidade >= DateTimeOffset.Now &&
+                                                       x.IsDeleted == false && !string.IsNullOrEmpty(x.Key))
+                                                .FirstOrDefaultAsync(x => x.ApiTerceiro.Equals(ApiTerceiroEnum.BOM_CONTROLE));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (chaveApiTerceiro == null)
+            { 
+                AddError("Nenhuma chave de api de terceiro encontrada, verifique os possíveis erros: \n\nNenhuma chave de api cadastrada para esta integração. \n\nA chave de api cadastrada não possui uma Key. \n\nA chave de api cadastrada não está ativa. \n\nA chave de api cadastrada está com Data de Validade vencida.");
+                return CustomResponse(404);
+            }
+            #endregion
+
             #region Token resolve
-            var token = "ApiKey Z0EjZPzTOb_AOeUDlulXwdnhg9JMHSUQbKek2rFejjXyG9pyoA2hMY35uD1B6bzjynsbTrCaUm347KMoDwiTPkaCND-m5EQwHaUUcTkvYNyhbXzYG7zLggKd7MwMR1qwsW16kQFhc94.";
+            String token = string.Empty;
+            try
+            {
+                token = $"ApiKey {chaveApiTerceiro.Key}";
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Obtém os contratos da Api Terceiro um a um e atualiza a periodicidade no BoxApp
