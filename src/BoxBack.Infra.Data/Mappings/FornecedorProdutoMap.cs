@@ -39,7 +39,7 @@ namespace BoxBack.Infra.Data.Mappings
             
             builder
                 .HasMany(c => c.Produtos)
-                .WithOne(c => c.FornecedorProdutos)
+                .WithOne(c => c.FornecedorProduto)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }

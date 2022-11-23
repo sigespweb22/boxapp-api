@@ -32,5 +32,9 @@ namespace BoxBack.Domain.Models
         [ForeignKey("TenantId")]
         public Guid TenantId { get; set; }
         public Tenant Tenant { get; set; }
+
+        [ForeignKey("FornecedorProdutoId")]
+        public Guid FornecedorProdutoId { get; set; }
+        public FornecedorProduto FornecedorProduto { get; set; }
     }
 }
