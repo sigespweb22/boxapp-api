@@ -50,8 +50,8 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<ChaveApiTerceiro> ChavesApiTerceiro { get; set; }
         public DbSet<ClienteContrato> ClienteContratos { get; set; }
         public DbSet<Produto> Produtos { get; set; }
+        public DbSet<FornecedorProduto> FornecedorProdutos { get; set; }
         
-
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             // NpgsqlConnection.GlobalTypeMapper.MapEnum<InstrumentoPrisaoTipoEnum>();
@@ -88,6 +88,7 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new ChaveApiTerceiroMap());
             modelBuilder.ApplyConfiguration(new ClienteContratoMap());
             modelBuilder.ApplyConfiguration(new ProdutoMap());
+            modelBuilder.ApplyConfiguration(new FornecedorProdutoMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

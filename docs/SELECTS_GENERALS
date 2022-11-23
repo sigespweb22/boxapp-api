@@ -1,0 +1,21 @@
+SELECT * FROM public."Clientes" WHERE "NomeFantasia" LIKE '%teste%';
+SELECT * FROM public."ClienteContratos" WHERE "ClienteId" = '9b202b80-8936-4fe0-8df0-01b8a2d504cf';
+
+SELECT * FROM "ClienteContratos";
+
+SELECT CAST(SUM("ValorContrato")as money) FROM "ClienteContratos" WHERE "Periodicidade" = 5
+SELECT COUNT("Periodicidade") FROM "ClienteContratos" WHERE "Periodicidade" = 5
+SELECT 7.660 / 4
+
+SELECT CAST(SUM("ValorContrato")as money) FROM "ClienteContratos" WHERE "Periodicidade" = 4;
+SELECT COUNT("Periodicidade") FROM "ClienteContratos" WHERE "Periodicidade" = 4
+SELECT 7.660 / 4 / 12
+
+DELETE FROM "ClienteContratos"
+
+SELECT * FROM "Clientes"
+
+SELECT * FROM "ChavesApiTerceiro";
+
+SELECT * FROM "Clientes"
+SELECT * FROM "ClienteContratos"
