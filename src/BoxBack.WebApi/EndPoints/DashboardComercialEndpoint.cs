@@ -26,8 +26,8 @@ namespace BoxBack.WebApi.EndPoints
         private readonly IMapper _mapper;
 
         public DashboardComercialEndpoint(BoxAppDbContext context,
-                                       IUnitOfWork unitOfWork,
-                                       IMapper mapper)
+                                          IUnitOfWork unitOfWork,
+                                          IMapper mapper)
         {
             _context = context;
             _unitOfWork = unitOfWork;
@@ -72,7 +72,7 @@ namespace BoxBack.WebApi.EndPoints
                 return CustomResponse(404);
             }
             #endregion
-            
+
             #region Map
             var clientesContratosNumerosChartViewModel = new ClientesContratosNumerosChartViewModel()
             {
@@ -81,7 +81,7 @@ namespace BoxBack.WebApi.EndPoints
                 TotalClientesUltimosMeses = 0
             };
             #endregion
-            
+
             return Ok(clientesContratosNumerosChartViewModel);
         }
 
@@ -120,7 +120,7 @@ namespace BoxBack.WebApi.EndPoints
                 return CustomResponse(404);
             }
             #endregion
-            
+
             #region Map
             var clientesContratosValoresChartViewModel = new ClientesContratosValoresChartViewModel()
             {
@@ -129,7 +129,7 @@ namespace BoxBack.WebApi.EndPoints
                 TotalEmReaisContratosAnuais = clientesContratos.Where(x => x.Periodicidade.Equals(PeriodicidadeEnum.ANUAL)).Sum(x => x.ValorContrato)
             };
             #endregion
-            
+
             return Ok(clientesContratosValoresChartViewModel);
         }
     }
