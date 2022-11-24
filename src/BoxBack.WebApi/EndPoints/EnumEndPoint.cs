@@ -54,5 +54,41 @@ namespace BoxBack.WebApi.EndPoints
 
             return Ok(generos);
         }
+
+        /// <summary>
+        /// Lista de todos os tipo de pessoa
+        /// </summary>
+        /// <param></param>
+        /// <returns>Um json com todos os tipos de pessoa</returns>
+        /// <response code="200">Lista de tipos de pessoa</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Lista vazia</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("tipos-pessoa/list")]
+        [HttpGet]
+        public IActionResult TiposPessoaListAsync()
+        {
+            #region Get data
+            var tiposPessoa = new List<string>();
+            try
+            {
+                tiposPessoa = EnumExtensions<TipoPessoaEnum>.GetNames().ToList();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (tiposPessoa.Count() == 0)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            return Ok(tiposPessoa);
+        }
     }
 }
