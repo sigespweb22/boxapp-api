@@ -163,7 +163,7 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
-            return Ok(fornecedorServicosMap);
+            return Ok(fornecedorProdutoMap);
         }
 
         /// <summary> 

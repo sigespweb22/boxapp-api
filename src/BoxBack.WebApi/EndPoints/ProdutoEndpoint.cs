@@ -61,13 +61,14 @@ namespace BoxBack.WebApi.EndPoints
                                             .AsNoTracking()
                                             .OrderByDescending(x => x.UpdatedAt)
                                             .ToListAsync();
-                if (produtos == null)
-                {
-                    AddError("Não encontrado.");
-                    return CustomResponse(404);
-                }
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (produtos == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
             #endregion
             
             #region Filter search
@@ -163,6 +164,7 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 produtoMapped = _mapper.Map<Produto>(produtoViewModel);
+                produtoMapped.FornecedorProduto = null;
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
