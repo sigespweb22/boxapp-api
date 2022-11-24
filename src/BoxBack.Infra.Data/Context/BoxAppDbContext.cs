@@ -35,9 +35,11 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<ClienteServico> ClientesServicos { get; set; }
+        public DbSet<ClienteProduto> ClienteProdutos { get; set; }
         public DbSet<Servico> Servicos { get; set; }
         public DbSet<Fornecedor> Fornecedores { get; set; }
         public DbSet<FornecedorServico> FornecedorServicos { get; set; }
+        public DbSet<FornecedorProduto> FornecedorProdutos { get; set; }
         public DbSet<Pipeline> Pipelines { get; set; }
         public DbSet<PipelineEtapa> PipelineEtapas { get; set; }
         public DbSet<PipelineAssinante> PipelineAssinantes { get; set; }
@@ -51,7 +53,6 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<ChaveApiTerceiro> ChavesApiTerceiro { get; set; }
         public DbSet<ClienteContrato> ClienteContratos { get; set; }
         public DbSet<Produto> Produtos { get; set; }
-        public DbSet<FornecedorProduto> FornecedorProdutos { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
@@ -90,6 +91,7 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new ClienteContratoMap());
             modelBuilder.ApplyConfiguration(new ProdutoMap());
             modelBuilder.ApplyConfiguration(new FornecedorProdutoMap());
+            modelBuilder.ApplyConfiguration(new ClienteProdutoMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

@@ -36,5 +36,7 @@ namespace BoxBack.Domain.Models
         [ForeignKey("FornecedorProdutoId")]
         public Guid FornecedorProdutoId { get; set; }
         public FornecedorProduto FornecedorProduto { get; set; }
+
+        public ICollection<ClienteProduto> ClienteProdutos { get; set; }
     }
 }
