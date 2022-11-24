@@ -50,7 +50,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista de todos os SERVIÇOS de um cliente
-        /// </summary>s
+        /// </summary>
         /// <param name="q"></param>
         /// <param name="clienteId"></param>
         /// <returns>Um json com os SERVIÇOS do cliente</returns>
@@ -362,7 +362,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Retorna um cliente pelo seu Id
-        /// </summary>s
+        /// </summary>
         /// <param name="id"></param>
         /// <returns>Um objeto com o cliente solicitado</returns>
         /// <response code="200">Lista um cliente</response>
@@ -422,7 +422,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista os dados do CNPJ de uma empresa a partir de uma api de terceiro
-        /// </summary>s
+        /// </summary>
         /// <param name="cnpj"></param>
         /// <returns>Um json com os dados da empresa</returns>
         /// <response code="200">Dados da empresa</response>

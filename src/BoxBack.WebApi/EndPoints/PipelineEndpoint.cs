@@ -35,7 +35,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista todos os pipelines
-        /// </summary>s
+        /// </summary>
         /// <param name="q"></param>
         /// <returns>Um json com os pipelines</returns>
         /// <response code="200">Lista de pipelines</response>

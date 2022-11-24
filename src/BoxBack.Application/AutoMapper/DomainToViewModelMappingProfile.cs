@@ -56,6 +56,9 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<FornecedorServico, FornecedorServicoSelect2ViewModel>()
                 .ForMember(dst => dst.Id, src => src.MapFrom(x => x.Id))
                 .ForMember(dst => dst.Nome, src => src.MapFrom(x => x.Nome));
+            CreateMap<FornecedorProduto, FornecedorProdutoSelect2ViewModel>()
+                .ForMember(dst => dst.Id, src => src.MapFrom(x => x.Id))
+                .ForMember(dst => dst.Nome, src => src.MapFrom(x => x.Nome));
             CreateMap<Servico, ServicoSelect2ViewModel>()
                 .ForMember(dst => dst.Id, src => src.MapFrom(x => x.Id))
                 .ForMember(dst => dst.Nome, src => src.MapFrom(x => x.Nome));
@@ -73,6 +76,8 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<Produto, ProdutoViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
             CreateMap<FornecedorProduto, FornecedorProdutoViewModel>()
+                .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
+            CreateMap<ClienteProduto, ClienteProdutoViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
         }
     }

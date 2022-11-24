@@ -21,7 +21,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista de todos os gêneros
-        /// </summary>s
+        /// </summary>
         /// <param></param>
         /// <returns>Um json com todos os gêneros</returns>
         /// <response code="200">Lista de gêneros</response>

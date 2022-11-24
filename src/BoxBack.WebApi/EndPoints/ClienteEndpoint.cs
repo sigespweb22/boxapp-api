@@ -52,7 +52,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista todos os clientes
-        /// </summary>s
+        /// </summary>
         /// <param name="q"></param>
         /// <returns>Um json com os clientes</returns>
         /// <response code="200">Lista de clientes</response>
@@ -430,7 +430,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Retorna um cliente pelo seu Id
-        /// </summary>s
+        /// </summary>
         /// <param name="id"></param>
         /// <returns>Um objeto com o cliente solicitado</returns>
         /// <response code="200">Lista um cliente</response>
@@ -490,7 +490,7 @@ namespace BoxBack.WebApi.EndPoints
         #region Third Party
         /// <summary>
         /// Lista os dados do CNPJ de uma empresa a partir de uma api de terceiro
-        /// </summary>s
+        /// </summary>
         /// <param name="cnpj"></param>
         /// <returns>Um json com os dados da empresa</returns>
         /// <response code="200">Dados da empresa</response>

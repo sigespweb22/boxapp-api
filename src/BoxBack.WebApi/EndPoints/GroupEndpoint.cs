@@ -44,7 +44,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista todos os grupos
-        /// </summary>s
+        /// </summary>
         /// <param name="q"></param>
         /// <returns>Um json com os grupos</returns>
         /// <response code="200">Lista de grupos</response>
@@ -104,7 +104,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista todos os grupos ativos
-        /// </summary>s
+        /// </summary>
         /// <param name="q"></param>
         /// <param name="isDeleted"></param>
         /// <returns>Um json com os grupos ativos</returns>

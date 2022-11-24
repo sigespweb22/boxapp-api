@@ -50,7 +50,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista todos os FORNECEDORES
-        /// </summary>s
+        /// </summary>
         /// <param name="q"></param>
         /// <returns>Um json com os FORNECEDORES</returns>
         /// <response code="200">Lista de FORNECEDORES</response>
@@ -108,7 +108,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Retorna um fornecedor pelo seu Id
-        /// </summary>s
+        /// </summary>
         /// <param name="id"></param>
         /// <returns>Um objeto com o fornecedor solicitado</returns>
         /// <response code="200">Lista um fornecedor</response>
@@ -436,7 +436,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista os dados do CNPJ de uma empresa a partir de uma api de terceiro
-        /// </summary>s
+        /// </summary>
         /// <param name="cnpj"></param>
         /// <returns>Um json com os dados da empresa</returns>
         /// <response code="200">Dados da empresa</response>

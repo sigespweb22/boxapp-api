@@ -49,7 +49,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista todos os usuários
-        /// </summary>s
+        /// </summary>
         /// <param name="q"></param>
         /// <returns>Um json com os usuários</returns>
         /// <response code="200">Lista de usuários</response>
@@ -113,7 +113,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista um usuário pelo id
-        /// </summary>s
+        /// </summary>
         /// <param name="id"></param>
         /// <returns>Um objeto tipado com o usuário</returns>
         /// <response code="200">O usuário</response>
@@ -169,7 +169,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista todos os usuários ativos
-        /// </summary>s
+        /// </summary>
         /// <param name="q"></param>
         /// <returns>Um json com os usuários ativos</returns>
         /// <response code="200">Lista de usuários ativos</response>

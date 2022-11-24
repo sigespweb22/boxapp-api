@@ -35,7 +35,7 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<ClienteServico> ClientesServicos { get; set; }
-        public DbSet<ClienteProduto> ClienteProdutos { get; set; }
+        public DbSet<ClienteProduto> ClientesProdutos { get; set; }
         public DbSet<Servico> Servicos { get; set; }
         public DbSet<Fornecedor> Fornecedores { get; set; }
         public DbSet<FornecedorServico> FornecedorServicos { get; set; }

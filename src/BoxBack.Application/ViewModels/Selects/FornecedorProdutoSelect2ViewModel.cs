@@ -1,6 +1,6 @@
 namespace BoxBack.Application.ViewModels.Selects
 {
-    public class FornecedorServicoSelect2ViewModel
+    public class FornecedorProdutoSelect2ViewModel
     {
         public string Id { get; set; }
         public string Nome { get; set; }

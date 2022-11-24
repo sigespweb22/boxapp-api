@@ -116,55 +116,55 @@ namespace BoxBack.WebApi.EndPoints
             });
         }
 
-        // /// <summary>
-        // /// Lista todos os SERVIÇOS de um fornecedor para uma select2
-        // /// </summary>
-        // /// <param name="q"></param>
-        // /// <param name="isDeleted"></param>
-        // /// <returns>Um json com os SERVIÇOS de um fornecedor</returns>
-        // /// <response code="200">Lista de SERVIÇOS de um fornecedor</response>
-        // /// <response code="400">Problemas de validação ou dados nulos</response>
-        // /// <response code="404">Lista vazia</response>
-        // /// <response code="500">Erro desconhecido</response>
-        // [Authorize(Roles = "Master, CanFornecedorServicoList, CanFornecedorServicoAll")]
-        // [ProducesResponseType(StatusCodes.Status200OK)]
-        // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        // [ProducesResponseType(StatusCodes.Status404NotFound)]
-        // [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        // [Route("list-to-select")] 
-        // [HttpGet]
-        // public async Task<IActionResult> ListToSelectAsync(string q, bool isDeleted = false)
-        // {
-        //     #region Get data
-        //     var fornecedorServicosDB = new List<FornecedorServico>();
-        //     try
-        //     {
-        //         fornecedorServicosDB = await _context
-        //                                         .FornecedorServicos
-        //                                         .AsNoTracking()
-        //                                         .Where(x => !x.IsDeleted || x.IsDeleted == isDeleted)
-        //                                         .ToListAsync();
-        //     }
-        //     catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+        /// <summary>
+        /// Lista todos os PRODUTOS de FORNECEDORES para uma select
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="isDeleted"></param>
+        /// <returns>Um array json com os PRODUTOS de FORNECEDORES</returns>
+        /// <response code="200">Lista de PRODUTOS de FORNECEDORES</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Lista vazia</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanFornecedorProdutoList, CanFornecedorProdutoAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("list-to-select")] 
+        [HttpGet]
+        public async Task<IActionResult> ListToSelectAsync(string q, bool isDeleted = false)
+        {
+            #region Get data
+            var fornecedorProdutoDB = new List<FornecedorProduto>();
+            try
+            {
+                fornecedorProdutoDB = await _context
+                                                .FornecedorProdutos
+                                                .AsNoTracking()
+                                                .Where(x => !x.IsDeleted || x.IsDeleted == isDeleted)
+                                                .ToListAsync();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
-        //     if (fornecedorServicosDB == null)
-        //     {
-        //         AddError("Não encontrado");
-        //         return CustomResponse(404);
-        //     }
-        //     #endregion
+            if (fornecedorProdutoDB == null)
+            {
+                AddError("Não encontrado");
+                return CustomResponse(404);
+            }
+            #endregion
             
-        //     #region Map
-        //     IEnumerable<FornecedorServicoSelect2ViewModel> fornecedorServicosMap = new List<FornecedorServicoSelect2ViewModel>();
-        //     try
-        //     {
-        //         fornecedorServicosMap = _mapper.Map<IEnumerable<FornecedorServicoSelect2ViewModel>>(fornecedorServicosDB);
-        //     }
-        //     catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-        //     #endregion
+            #region Map
+            IEnumerable<FornecedorProdutoSelect2ViewModel> fornecedorProdutoMap = new List<FornecedorProdutoSelect2ViewModel>();
+            try
+            {
+                fornecedorProdutoMap = _mapper.Map<IEnumerable<FornecedorProdutoSelect2ViewModel>>(fornecedorProdutoDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
             
-        //     return Ok(fornecedorServicosMap);
-        // }
+            return Ok(fornecedorServicosMap);
+        }
 
         /// <summary> 
         /// Adiciona um PRODUTO para um FORNECEDOR
@@ -355,64 +355,64 @@ namespace BoxBack.WebApi.EndPoints
             return CustomResponse(200, new { message = "Status do produto do fornecedor alterado com sucesso.", fornecedorId = fornecedorProduto.FornecedorId } );
         }
 
-        // /// <summary>
-        // /// Retorna um fornecedorServico pelo seu Id
-        // /// </summary>s
-        // /// <param name="fornecedorId"></param>
-        // /// <returns>Um objeto com o fornecedorServico solicitado</returns>
-        // /// <response code="200">Lista um fornecedorServico</response>
-        // /// <response code="400">Problemas de validação ou dados nulos</response>
-        // /// <response code="404">FornecedorServico não encontrado</response>
-        // /// <response code="500">Erro desconhecido</response>
-        // [Authorize(Roles = "Master, CanFornecedorServicoRead, CanFornecedorServicoAll")]
-        // [ProducesResponseType(StatusCodes.Status200OK)]
-        // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        // [ProducesResponseType(StatusCodes.Status404NotFound)]
-        // [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        // [Produces("application/json")]
-        // [Route("list-one/{id}")]
-        // [HttpGet]
-        // public async Task<IActionResult> ListOneAsync([FromRoute]Guid? fornecedorId)
-        // {
-        //     #region Required validations
-        //     if (!fornecedorId.HasValue || fornecedorId == Guid.Empty)
-        //     {
-        //         AddError("Id requerido.");
-        //         return CustomResponse(400);
-        //     }
-        //     #endregion
+        /// <summary>
+        /// Retorna um PRODUTO de FORNECEDOR pelo seu Id
+        /// </summary>
+        /// <param name="fornecedorId"></param>
+        /// <returns>Um objeto com o PRODUTO do FORNECEDOR</returns>
+        /// <response code="200">Lista um PRODUTO de um FORNECEDOR</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">PRODUTO de FORNECEDOR não encontrado</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanFornecedorProdutoRead, CanFornecedorProdutoAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("list-one/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> ListOneAsync([FromRoute]Guid? fornecedorId)
+        {
+            #region Required validations
+            if (!fornecedorId.HasValue || fornecedorId == Guid.Empty)
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
 
-        //     #region Get data
-        //     var fornecedorServico = new FornecedorServico();
-        //     try
-        //     {
-        //         fornecedorServico = await _context.FornecedorServicos
-        //                                             .AsNoTracking()
-        //                                             .FirstOrDefaultAsync(x => x.FornecedorId.Equals(fornecedorId));
-        //     }
-        //     catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #region Get data
+            var fornecedorProduto = new FornecedorProduto();
+            try
+            {
+                fornecedorProduto = await _context.FornecedorProdutos
+                                                    .AsNoTracking()
+                                                    .FirstOrDefaultAsync(x => x.FornecedorId.Equals(fornecedorId));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
-        //     if (fornecedorServico == null)
-        //     {
-        //         AddError("Não encontrado.");
-        //         return CustomResponse(404);
-        //     }
-        //     #endregion
+            if (fornecedorProduto == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
+            #endregion
             
-        //     #region Map
-        //     var fornecedorServicoMapped = new ClienteViewModel();
-        //     try
-        //     {
-        //         fornecedorServicoMapped = _mapper.Map<ClienteViewModel>(fornecedorServico);
-        //     }
-        //     catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-        //     #endregion
+            #region Map
+            var fornecedorProdutoMapped = new FornecedorProdutoViewModel();
+            try
+            {
+                fornecedorProdutoMapped = _mapper.Map<FornecedorProdutoViewModel>(fornecedorProduto);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
             
-        //     return Ok(new {
-        //         Data = fornecedorServicoMapped,
-        //         FornecedorServico = fornecedorServicoMapped,
-        //         Params = fornecedorId
-        //     });
-        // }
+            return Ok(new {
+                Data = fornecedorProdutoMapped,
+                FornecedorProduto = fornecedorProdutoMapped,
+                Params = fornecedorId
+            });
+        }
     }
 }
