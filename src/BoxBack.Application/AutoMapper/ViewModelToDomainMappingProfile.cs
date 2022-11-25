@@ -33,6 +33,9 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ClienteServicoViewModel, ClienteServico>()
                 .ForMember(dst => dst.ServicoId, src => src.MapFrom(x => x.Servico.Id))
                 .ForMember(dst => dst.Nome, src => src.MapFrom(x => x.Servico.Nome));
+            CreateMap<ClienteProdutoViewModel, ClienteProduto>()
+                .ForMember(dst => dst.ProdutoId, src => src.MapFrom(x => x.Produto.Id))
+                .ForMember(dst => dst.Nome, src => src.MapFrom(x => x.Produto.Nome));
             CreateMap<ServicoViewModel, Servico>()
                 .ForMember(dst => dst.FornecedorServicoId, src => src.MapFrom(x => x.FornecedorServico.Id));
             CreateMap<PipelineAssinanteViewModel, PipelineAssinante>()
@@ -73,7 +76,6 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.Periodicidade, src => src.MapFrom(x => x.Periodicidade));
             CreateMap<ProdutoViewModel, Produto>();
             CreateMap<FornecedorProdutoViewModel, FornecedorProduto>();
-            CreateMap<ClienteProdutoViewModel, ClienteProduto>();
         }
     }
 }

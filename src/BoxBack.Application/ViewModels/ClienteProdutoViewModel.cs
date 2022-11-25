@@ -1,11 +1,4 @@
-using System.Dynamic;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using BoxBack.Domain.Enums;
-using BoxBack.Domain.Models;
-using BoxBack.Application.ViewModels;
 
 
 namespace BoxBack.Application.ViewModels
@@ -18,6 +11,8 @@ namespace BoxBack.Application.ViewModels
         public string Caracteristicas { get; set; }
         public string Status { get; set; }
         public Guid? ClienteId { get; set; }
+
         public Guid? ProdutoId { get; set; }
+        public ProdutoViewModel Produto { get; set; }
     }
 }
