@@ -51,7 +51,7 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<PipelineTarefaApontamentoAnexo> PipelineTarefaApontamentoAnexos { get; set; }
         public DbSet<TarefaTag> TarefaTags { get; set; }
         public DbSet<ChaveApiTerceiro> ChavesApiTerceiro { get; set; }
-        public DbSet<ClienteContrato> ClienteContratos { get; set; }
+        public DbSet<ClienteContrato> ClientesContratos { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder builder)

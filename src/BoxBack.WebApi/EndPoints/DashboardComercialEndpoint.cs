@@ -108,7 +108,7 @@ namespace BoxBack.WebApi.EndPoints
             var clientesContratos = new List<ClienteContrato>();
             try
             {
-                clientesContratos = await _context.ClienteContratos
+                clientesContratos = await _context.ClientesContratos
                                                     .AsNoTracking()
                                                     .ToListAsync();
             }
@@ -156,7 +156,7 @@ namespace BoxBack.WebApi.EndPoints
             var clientesContratos = new List<ClienteContrato>();
             try
             {
-                clientesContratos = await _context.ClienteContratos
+                clientesContratos = await _context.ClientesContratos
                                                     .AsNoTracking()
                                                     .ToListAsync();
             }

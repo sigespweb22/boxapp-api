@@ -1,6 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using BoxBack.Domain.Models;
 
 namespace BoxBack.Application.ViewModels
 {
@@ -13,5 +11,8 @@ namespace BoxBack.Application.ViewModels
 
         public string CreatedAt { get; set; }
         public string UpdatedAt { get; set; }
+
+        public Guid? ClienteId { get; set; }
+        public ClienteViewModel Cliente { get; set; }
     }
 }
