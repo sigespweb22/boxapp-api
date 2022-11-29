@@ -240,7 +240,6 @@ namespace BoxBack.Domain.Enums
         #region Dashboard Comercial
         [Description("Pode realizar todas as ações/operações em todos os serviços de fornecedores")]
         CanDashboardComercialAll = 15001,
-        [Description("Pode listar o indicador de clientes ativos com contratos")]
         CanDashboardComercialClienteContratoList = 15002,
         #endregion
 
