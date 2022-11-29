@@ -12,6 +12,8 @@ namespace BoxBack.Application.ViewModels
         public string CreatedAt { get; set; }
         public string UpdatedAt { get; set; }
 
+        public string Status  { get; set; }
+
         public Guid? ClienteId { get; set; }
         public ClienteViewModel Cliente { get; set; }
     }

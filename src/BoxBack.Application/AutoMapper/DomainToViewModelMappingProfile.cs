@@ -69,7 +69,8 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"))
                 .ForMember(dst => dst.DataValidade, src => src.MapFrom(x => x.DataValidade.ToString("dd/MM/yyyy")));
             CreateMap<ChaveApiTerceiro, ChaveApiTerceiroSelect2ViewModel>();
-            CreateMap<ClienteContrato, ClienteContratoViewModel>();
+            CreateMap<ClienteContrato, ClienteContratoViewModel>()
+                .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));;
             CreateMap<Cliente, ClientePadraoIntegracaoViewModel>()
                 .ForMember(dst => dst.Contratos, src => src.MapFrom(x => x.ClienteContratos));
             CreateMap<ClienteContrato, ClienteContratoPadraoIntegracaoViewModel>();
