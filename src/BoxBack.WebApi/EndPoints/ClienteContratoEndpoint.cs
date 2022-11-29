@@ -39,7 +39,6 @@ namespace BoxBack.WebApi.EndPoints
             _bcServices = bcServices;
         }
 
-
         /// <summary>
         /// Lista de todos os CONTRATOS de um cliente
         /// </summary>
@@ -578,7 +577,14 @@ namespace BoxBack.WebApi.EndPoints
             {
                 foreach (var clienteContrato in clientesContratos)
                 {
-                    contratoFromThirdParty = await _bcServices.VendaContratoObter((long)clienteContrato.BomControleContratoId, token);
+                    try
+                    {
+                        contratoFromThirdParty = await _bcServices.VendaContratoObter((long)clienteContrato.BomControleContratoId, token);
+                    }
+                    catch (Refit.ApiException ex) { 
+                        if (ex.HasContent) continue;
+                    }
+                    
                     if (contratoFromThirdParty != null)
                     {
                         if (clienteContrato.Periodicidade != contratoFromThirdParty.Periodicidade)

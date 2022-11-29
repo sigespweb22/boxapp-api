@@ -90,5 +90,41 @@ namespace BoxBack.WebApi.EndPoints
 
             return Ok(tiposPessoa);
         }
+
+        /// <summary>
+        /// Lista de todas as periodicidades
+        /// </summary>
+        /// <param></param>
+        /// <returns>Um json com todas as periodicidades</returns>
+        /// <response code="200">Lista das periodicidades</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Lista vazia</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("periodicidades/list")]
+        [HttpGet]
+        public IActionResult PeriodicidadesListAsync()
+        {
+            #region Get data
+            var periodicidades = new List<string>();
+            try
+            {
+                periodicidades = EnumExtensions<PeriodicidadeEnum>.GetNames().ToList();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            if (periodicidades.Count() == 0)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            return Ok(periodicidades);
+        }
     }
 }

@@ -47,24 +47,6 @@ namespace BoxBack.Application.Services
                 Children = new List<Son>()
             };
 
-            oldestDashboardSonA = new Son
-            {
-                Title = "Controle Acesso",
-                Path = "/dashboards/controle-acesso",
-                Action = "list",
-                Subject = "ac-dashboard-controle_acesso-page"
-            };
-            navigationA.Children.Add(oldestDashboardSonA);
-
-            oldestDashboardSonB = new Son
-            {
-                Title = "Clientes",
-                Path = "/dashboards/cliente",
-                Action = "list",
-                Subject = "ac-dashboard-cliente-page"
-            };
-            navigationA.Children.Add(oldestDashboardSonB);
-
             var comercial = new Son
             {
                 Title = "Comercial",
