@@ -17,6 +17,7 @@ using BoxBack.Domain.Services;
 using BoxBack.Domain.ModelsServices;
 using BoxBack.Application.ViewModels.Selects;
 using BoxBack.Domain.Enums;
+using BoxBack.WebApi.Helpers;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -185,10 +186,38 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> CreateAsync([FromBody]ClienteViewModel clienteViewModel)
         {
             #region Validations required
-            if (string.IsNullOrEmpty(clienteViewModel.CNPJ))
+            if (clienteViewModel.TipoPessoa == TipoPessoaEnum.JURIDICA.ToString())
             {
-                AddError("Cnpj é requerido.");
-                return CustomResponse(400);
+                if (string.IsNullOrEmpty(clienteViewModel.CNPJ))
+                {
+                    AddError("Cnpj é requerido para tipo pessoa JURIDICA.");
+                    return CustomResponse(400);
+                }
+
+                if (string.IsNullOrEmpty(clienteViewModel.RazaoSocial))
+                {
+                    AddError("Razão social é requerida para tipo pessoa JURIDICA.");
+                    return CustomResponse(400);
+                }
+            } else if (clienteViewModel.TipoPessoa == TipoPessoaEnum.FISICA.ToString()) {
+                if (string.IsNullOrEmpty(clienteViewModel.Cpf))
+                {
+                    AddError("Cpf é requerido para tipo pessoa FISICA.");
+                    return CustomResponse(400);
+                }
+            }
+            #endregion
+
+            #region Clean CNPJ/CPF/Telefone to Map
+            if (clienteViewModel.TipoPessoa == TipoPessoaEnum.JURIDICA.ToString()) 
+            {
+                clienteViewModel.CNPJ = StringHelpers.CnpjClean(clienteViewModel.CNPJ);
+            } else if (clienteViewModel.TipoPessoa == TipoPessoaEnum.FISICA.ToString()) {
+                clienteViewModel.Cpf = StringHelpers.CpfClean(clienteViewModel.Cpf);
+            }
+            
+            if (!string.IsNullOrEmpty(clienteViewModel.TelefonePrincipal)) {
+                clienteViewModel.TelefonePrincipal = StringHelpers.TelefoneClean(clienteViewModel.TelefonePrincipal);
             }
             #endregion
 
@@ -250,6 +279,40 @@ namespace BoxBack.WebApi.EndPoints
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);
+            }
+
+            if (clienteViewModel.TipoPessoa == TipoPessoaEnum.JURIDICA.ToString())
+            {
+                if (string.IsNullOrEmpty(clienteViewModel.CNPJ))
+                {
+                    AddError("Cnpj é requerido para tipo pessoa JURIDICA.");
+                    return CustomResponse(400);
+                }
+                
+                if (string.IsNullOrEmpty(clienteViewModel.RazaoSocial))
+                {
+                    AddError("Razão social é requerida para tipo pessoa JURIDICA.");
+                    return CustomResponse(400);
+                }
+            } else if (clienteViewModel.TipoPessoa == TipoPessoaEnum.FISICA.ToString()) {
+                if (string.IsNullOrEmpty(clienteViewModel.CNPJ))
+                {
+                    AddError("Cpf é requerido para tipo pessoa FISICA.");
+                    return CustomResponse(400);
+                }
+            }
+            #endregion
+
+            #region Clean CNPJ/CPF/Telefone to Map
+            if (clienteViewModel.TipoPessoa == TipoPessoaEnum.JURIDICA.ToString()) 
+            {
+                clienteViewModel.TipoPessoa = StringHelpers.CnpjClean(clienteViewModel.TipoPessoa);
+            } else if (clienteViewModel.TipoPessoa == TipoPessoaEnum.FISICA.ToString()) {
+                clienteViewModel.TipoPessoa = StringHelpers.CpfClean(clienteViewModel.TipoPessoa);
+            }
+
+            if (!string.IsNullOrEmpty(clienteViewModel.TelefonePrincipal)) {
+                clienteViewModel.TelefonePrincipal = StringHelpers.TelefoneClean(clienteViewModel.TelefonePrincipal);
             }
             #endregion
 

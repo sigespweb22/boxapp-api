@@ -1,7 +1,6 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -97,6 +96,32 @@ namespace BoxBack.WebApi.Helpers
             try
             {
                 result = cnpj.Replace(".", string.Empty).Replace("-", string.Empty).Replace("/", string.Empty);
+            }
+            catch { throw; }
+            return result;
+        }
+        public static string CpfClean(string cpf)
+        {
+            String result = string.Empty;
+            if (string.IsNullOrEmpty(cpf))
+                return result;
+            
+            try
+            {
+                result = cpf.Replace(".", string.Empty).Replace(".", string.Empty).Replace("-", string.Empty);
+            }
+            catch { throw; }
+            return result;
+        }
+        public static string TelefoneClean(string telefone)
+        {
+            String result = string.Empty;
+            if (string.IsNullOrEmpty(telefone))
+                return result;
+            
+            try
+            {
+                result = telefone.Replace("(", string.Empty).Replace(")", string.Empty).Replace(".", string.Empty).Replace("-", string.Empty);
             }
             catch { throw; }
             return result;
