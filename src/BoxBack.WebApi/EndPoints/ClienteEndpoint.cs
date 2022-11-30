@@ -568,7 +568,7 @@ namespace BoxBack.WebApi.EndPoints
         ///     }
         ///
         /// </remarks>
-        [Authorize(Roles = "Master, CanCnpjTPRead, CanCnpjTPAll")]
+        [Authorize(Roles = "Master, CanClienteCreate, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -452,7 +452,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         /// <response code="500">Erro interno desconhecido</response>
-        [Authorize(Roles = "Master, CanCnpjTPRead, CanCnpjTPAll")]
+        [Authorize(Roles = "Master, CanFornecedorCreate, CanFornecedorAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

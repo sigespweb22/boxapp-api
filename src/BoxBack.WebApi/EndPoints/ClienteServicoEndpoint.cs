@@ -58,7 +58,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteServicoList, CanClienteServicoAll")]
+        [Authorize(Roles = "Master, CanClienteServicoList, CanClienteServicoAll, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -125,7 +125,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Authorize(Roles = "Master, CanClienteServicoCreate, CanClienteServicoAll")]
+        [Authorize(Roles = "Master, CanClienteServicoCreate, CanClienteServicoAll, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -165,7 +165,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteServicoUpdate, CanClienteServicoAll")]
+        [Authorize(Roles = "Master, CanClienteServicoUpdate, CanClienteServicoAll, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -239,7 +239,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Not found</response>
         [Route("delete/{id}")]
-        [Authorize(Roles = "Master, CanClienteServicoDelete, CanClienteServicoAll")]
+        [Authorize(Roles = "Master, CanClienteServicoDelete, CanClienteServicoAll, CanClienteAll")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -304,7 +304,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("alter-status/{id}")]
-        [Authorize(Roles = "Master, CanClienteServicoUpdate, CanClienteServicoAll")]
+        [Authorize(Roles = "Master, CanClienteServicoUpdate, CanClienteServicoAll, CanClienteAll")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -369,7 +369,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Cliente não encontrado</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteServicoRead, CanClienteServicoAll")]
+        [Authorize(Roles = "Master, CanClienteServicoRead, CanClienteServicoAll, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -438,7 +438,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         [Route("tp/{cnpj}")]
-        [Authorize(Roles = "Master, CanCnpjTPRead, CanCnpjTPAll")]
+        [Authorize(Roles = "Master, CanClienteServicoCreate, CanClienteServicoAll, CanClienteAll")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

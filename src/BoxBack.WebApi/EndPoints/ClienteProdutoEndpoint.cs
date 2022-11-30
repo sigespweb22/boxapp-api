@@ -57,7 +57,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteProdutoList, CanClienteProdutoAll")]
+        [Authorize(Roles = "Master, CanClienteProdutoList, CanClienteProdutoAll, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -124,7 +124,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Authorize(Roles = "Master, CanClienteProdutoCreate, CanClienteProdutoAll")]
+        [Authorize(Roles = "Master, CanClienteProdutoCreate, CanClienteProdutoAll, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -164,7 +164,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteProdutoUpdate, CanClienteProdutoAll")]
+        [Authorize(Roles = "Master, CanClienteProdutoUpdate, CanClienteProdutoAll, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -248,7 +248,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         
-        [Authorize(Roles = "Master, CanClienteProdutoUpdate, CanClienteProdutoAll")]
+        [Authorize(Roles = "Master, CanClienteProdutoUpdate, CanClienteProdutoAll, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -314,7 +314,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">PRODUTO não encontrado</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteProdutoRead, CanClienteProdutoAll")]
+        [Authorize(Roles = "Master, CanClienteProdutoRead, CanClienteProdutoAll, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
