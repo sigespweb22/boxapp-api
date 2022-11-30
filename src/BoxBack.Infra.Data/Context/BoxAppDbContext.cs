@@ -29,14 +29,17 @@ namespace BoxBack.Infra.Data.Context
         }
 
         public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<ApplicationRole> ApplicationRoles { get; set; }
         public DbSet<ApplicationGroup> ApplicationGroups { get; set; }
         public DbSet<ApplicationRoleGroup> ApplicationRoleGroups { get; set; }
         public DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<ClienteServico> ClientesServicos { get; set; }
+        public DbSet<ClienteProduto> ClientesProdutos { get; set; }
         public DbSet<Servico> Servicos { get; set; }
         public DbSet<Fornecedor> Fornecedores { get; set; }
         public DbSet<FornecedorServico> FornecedorServicos { get; set; }
+        public DbSet<FornecedorProduto> FornecedorProdutos { get; set; }
         public DbSet<Pipeline> Pipelines { get; set; }
         public DbSet<PipelineEtapa> PipelineEtapas { get; set; }
         public DbSet<PipelineAssinante> PipelineAssinantes { get; set; }
@@ -48,10 +51,9 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<PipelineTarefaApontamentoAnexo> PipelineTarefaApontamentoAnexos { get; set; }
         public DbSet<TarefaTag> TarefaTags { get; set; }
         public DbSet<ChaveApiTerceiro> ChavesApiTerceiro { get; set; }
-        public DbSet<ClienteContrato> ClienteContratos { get; set; }
-
+        public DbSet<ClienteContrato> ClientesContratos { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
         
-
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             // NpgsqlConnection.GlobalTypeMapper.MapEnum<InstrumentoPrisaoTipoEnum>();
@@ -87,6 +89,9 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new TarefaTagMap());
             modelBuilder.ApplyConfiguration(new ChaveApiTerceiroMap());
             modelBuilder.ApplyConfiguration(new ClienteContratoMap());
+            modelBuilder.ApplyConfiguration(new ProdutoMap());
+            modelBuilder.ApplyConfiguration(new FornecedorProdutoMap());
+            modelBuilder.ApplyConfiguration(new ClienteProdutoMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

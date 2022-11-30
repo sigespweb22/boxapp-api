@@ -14,6 +14,7 @@ using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Models;
 using BoxBack.Application.ViewModels;
 using BoxBack.Application.ViewModels.Selects;
+using BoxBack.Domain.Enums;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -74,7 +75,12 @@ namespace BoxBack.WebApi.EndPoints
             
             #region Filter search
             if(!string.IsNullOrEmpty(q))
-                chavesApiTerceiro = chavesApiTerceiro.Where(x => x.Descricao.Contains(q)).ToList();
+            {
+                ApiTerceiroEnum param;
+                Enum.TryParse<ApiTerceiroEnum>(q.ToUpper(), out param);
+                
+                chavesApiTerceiro = chavesApiTerceiro.Where(x => x.ApiTerceiro.Equals(param)).ToList();
+            }
             #endregion
 
             #region Map
@@ -88,7 +94,7 @@ namespace BoxBack.WebApi.EndPoints
             
             return Ok(new {
                 AllData = chavesApiTerceiroMapped.ToList(),
-                Servicos = chavesApiTerceiroMapped.ToList(),
+                ChavesApi = chavesApiTerceiroMapped.ToList(),
                 Params = q,
                 Total = chavesApiTerceiroMapped.Count()
             });

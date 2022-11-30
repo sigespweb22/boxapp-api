@@ -41,29 +41,20 @@ namespace BoxBack.Application.Services
             navigationA = new VerticalNavItemViewModel
             {
                 Title = "Dashboards",
-                Icon = "HomeOutline",
+                Icon = "HomeAnalytics",
                 BadgeContent = "novo",
                 BadgeColor = "primary",
                 Children = new List<Son>()
             };
 
-            oldestDashboardSonA = new Son
+            var comercial = new Son
             {
-                Title = "Controle Acesso",
-                Path = "/dashboards/controle-acesso",
+                Title = "Comercial",
+                Path = "/dashboards/comercial",
                 Action = "list",
-                Subject = "ac-dashboard-controle_acesso-page"
+                Subject = "ac-dashboard-comercial-page"
             };
-            navigationA.Children.Add(oldestDashboardSonA);
-
-            oldestDashboardSonB = new Son
-            {
-                Title = "Clientes",
-                Path = "/dashboards/cliente",
-                Action = "list",
-                Subject = "ac-dashboard-cliente-page"
-            };
-            navigationA.Children.Add(oldestDashboardSonB);
+            navigationA.Children.Add(comercial);
 
             navigationB = new VerticalNavItemViewModel
             {
@@ -187,7 +178,7 @@ namespace BoxBack.Application.Services
                 Title = "Chaves Apis",
                 Path = "/sistema/configuracoes/chave-api/list",
                 Action = "list",
-                Subject = "ac-chave_api-page"
+                Subject = "ac-chave_api_terceiro-page"
             };
             navigationF.Children.Add(token);
 

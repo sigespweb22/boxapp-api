@@ -41,7 +41,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista todas as roles
-        /// </summary>s
+        /// </summary>
         /// <param name="q"></param>
         /// <returns>Um json com as roles</returns>
         /// <response code="200">Lista de roles</response>
@@ -274,7 +274,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista todas roles (permissões) ativas
-        /// </summary>s
+        /// </summary>
         /// <param name="q"></param>
         /// <returns>Um json com as roles (permissões) ativas</returns>
         /// <response code="200">Lista de roles (permissões) ativas</response>

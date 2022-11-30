@@ -215,6 +215,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 servicoDB = await _context
                                     .Servicos
+                                    .Include(x => x.FornecedorServico)
                                     .AsNoTracking()
                                     .FirstOrDefaultAsync(x => x.Id == servicoViewModel.Id);
             }

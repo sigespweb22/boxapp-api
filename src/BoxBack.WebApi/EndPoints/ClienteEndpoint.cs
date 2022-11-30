@@ -16,6 +16,8 @@ using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Services;
 using BoxBack.Domain.ModelsServices;
 using BoxBack.Application.ViewModels.Selects;
+using BoxBack.Domain.Enums;
+using BoxBack.WebApi.Helpers;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -51,7 +53,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Lista todos os clientes
-        /// </summary>s
+        /// </summary>
         /// <param name="q"></param>
         /// <returns>Um json com os clientes</returns>
         /// <response code="200">Lista de clientes</response>
@@ -184,10 +186,38 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> CreateAsync([FromBody]ClienteViewModel clienteViewModel)
         {
             #region Validations required
-            if (string.IsNullOrEmpty(clienteViewModel.CNPJ))
+            if (clienteViewModel.TipoPessoa == TipoPessoaEnum.JURIDICA.ToString())
             {
-                AddError("Cnpj é requerido.");
-                return CustomResponse(400);
+                if (string.IsNullOrEmpty(clienteViewModel.CNPJ))
+                {
+                    AddError("Cnpj é requerido para tipo pessoa JURIDICA.");
+                    return CustomResponse(400);
+                }
+
+                if (string.IsNullOrEmpty(clienteViewModel.RazaoSocial))
+                {
+                    AddError("Razão social é requerida para tipo pessoa JURIDICA.");
+                    return CustomResponse(400);
+                }
+            } else if (clienteViewModel.TipoPessoa == TipoPessoaEnum.FISICA.ToString()) {
+                if (string.IsNullOrEmpty(clienteViewModel.Cpf))
+                {
+                    AddError("Cpf é requerido para tipo pessoa FISICA.");
+                    return CustomResponse(400);
+                }
+            }
+            #endregion
+
+            #region Clean CNPJ/CPF/Telefone to Map
+            if (clienteViewModel.TipoPessoa == TipoPessoaEnum.JURIDICA.ToString()) 
+            {
+                clienteViewModel.CNPJ = StringHelpers.CnpjClean(clienteViewModel.CNPJ);
+            } else if (clienteViewModel.TipoPessoa == TipoPessoaEnum.FISICA.ToString()) {
+                clienteViewModel.Cpf = StringHelpers.CpfClean(clienteViewModel.Cpf);
+            }
+            
+            if (!string.IsNullOrEmpty(clienteViewModel.TelefonePrincipal)) {
+                clienteViewModel.TelefonePrincipal = StringHelpers.TelefoneClean(clienteViewModel.TelefonePrincipal);
             }
             #endregion
 
@@ -249,6 +279,40 @@ namespace BoxBack.WebApi.EndPoints
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);
+            }
+
+            if (clienteViewModel.TipoPessoa == TipoPessoaEnum.JURIDICA.ToString())
+            {
+                if (string.IsNullOrEmpty(clienteViewModel.CNPJ))
+                {
+                    AddError("Cnpj é requerido para tipo pessoa JURIDICA.");
+                    return CustomResponse(400);
+                }
+                
+                if (string.IsNullOrEmpty(clienteViewModel.RazaoSocial))
+                {
+                    AddError("Razão social é requerida para tipo pessoa JURIDICA.");
+                    return CustomResponse(400);
+                }
+            } else if (clienteViewModel.TipoPessoa == TipoPessoaEnum.FISICA.ToString()) {
+                if (string.IsNullOrEmpty(clienteViewModel.CNPJ))
+                {
+                    AddError("Cpf é requerido para tipo pessoa FISICA.");
+                    return CustomResponse(400);
+                }
+            }
+            #endregion
+
+            #region Clean CNPJ/CPF/Telefone to Map
+            if (clienteViewModel.TipoPessoa == TipoPessoaEnum.JURIDICA.ToString()) 
+            {
+                clienteViewModel.TipoPessoa = StringHelpers.CnpjClean(clienteViewModel.TipoPessoa);
+            } else if (clienteViewModel.TipoPessoa == TipoPessoaEnum.FISICA.ToString()) {
+                clienteViewModel.TipoPessoa = StringHelpers.CpfClean(clienteViewModel.TipoPessoa);
+            }
+
+            if (!string.IsNullOrEmpty(clienteViewModel.TelefonePrincipal)) {
+                clienteViewModel.TelefonePrincipal = StringHelpers.TelefoneClean(clienteViewModel.TelefonePrincipal);
             }
             #endregion
 
@@ -429,7 +493,7 @@ namespace BoxBack.WebApi.EndPoints
 
         /// <summary>
         /// Retorna um cliente pelo seu Id
-        /// </summary>s
+        /// </summary>
         /// <param name="id"></param>
         /// <returns>Um objeto com o cliente solicitado</returns>
         /// <response code="200">Lista um cliente</response>
@@ -487,10 +551,9 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         #region Third Party
-
         /// <summary>
         /// Lista os dados do CNPJ de uma empresa a partir de uma api de terceiro
-        /// </summary>s
+        /// </summary>
         /// <param name="cnpj"></param>
         /// <returns>Um json com os dados da empresa</returns>
         /// <response code="200">Dados da empresa</response>
@@ -533,7 +596,7 @@ namespace BoxBack.WebApi.EndPoints
                     return CustomResponse(404, empresa);
                 }
             }
-            catch (Exception Content) { AddErrorToTryCatch(Content); return CustomResponse(400); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(400); }
             #endregion
             
             return CustomResponse(200, empresa);
@@ -551,12 +614,38 @@ namespace BoxBack.WebApi.EndPoints
             }
             #endregion
 
+            #region Chave api resolve
+            var chaveApiTerceiro = new ChaveApiTerceiro();
+            try
+            {
+                chaveApiTerceiro = await _context
+                                                .ChavesApiTerceiro
+                                                .Where(x => x.DataValidade >= DateTimeOffset.Now &&
+                                                       x.IsDeleted == false && !string.IsNullOrEmpty(x.Key))
+                                                .FirstOrDefaultAsync(x => x.ApiTerceiro.Equals(ApiTerceiroEnum.BOM_CONTROLE));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (chaveApiTerceiro == null)
+            { 
+                AddError("Nenhuma chave de api de terceiro encontrada, verifique os possíveis erros: \n\nNenhuma chave de api cadastrada para esta integração. \n\nA chave de api cadastrada não possui uma Key. \n\nA chave de api cadastrada não está ativa. \n\nA chave de api cadastrada está com Data de Validade vencida.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            #region Token resolve
+            String token = string.Empty;
+            try
+            {
+                token = $"ApiKey {chaveApiTerceiro.Key}";
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
             #region Get data
             var cliente = new BCClienteModelService();
             try
             {
-                var token = "ApiKey Z0EjZPzTOb-8NpoAk4GtAa8xOF7FW8cQDS4OPyGpk90XLOgEysE3zLAD7ClZLMNaynsbTrCaUm1lQiABFUNKY5Gg92GcpUhpHaUUcTkvYNyhbXzYG7zLggKd7MwMR1qwsW16kQFhc94.";
-                
                 cliente = await _bcServices.ClienteObter(id, token);
                 if (cliente == null)
                 {
@@ -564,10 +653,153 @@ namespace BoxBack.WebApi.EndPoints
                     return CustomResponse(404, cliente);
                 }
             }
-            catch (Exception Content) { AddErrorToTryCatch(Content); return CustomResponse(400); }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(400); }
             #endregion
             
             return CustomResponse(200, cliente);
+        }
+        
+        /// <summary>
+        /// Sincroniza a base de clientes do BOM CONTROLE com a base de clientes do BoxApp (Este método não atualiza os dados dos clientes, apenas mantém os mesmos clientes em ambos os sistemas)
+        /// Não serão sincronizados os clientes em que a propriedade "Documento" - Das propriedades Pessoa Jurídica e Pessoa Física - for null
+        /// </summary>
+        /// <param></param>
+        /// <returns>Um objeto com o total de clientes sincronizados e total de clientes não sincronizados por falta de CPF/CNPJ</returns>
+        /// <response code="200">Objeto com o total de clientes sincronizados</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Nenhum cliente encontrado</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanClienteCreate, CanClienteAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("sincronizar-from-third-party")]
+        [HttpGet]
+        public async Task<IActionResult> SincronizarFromTPAsync()
+        {
+            #region Chave api resolve
+            var chaveApiTerceiro = new ChaveApiTerceiro();
+            try
+            {
+                chaveApiTerceiro = await _context
+                                                .ChavesApiTerceiro
+                                                .Where(x => x.DataValidade >= DateTimeOffset.Now &&
+                                                       x.IsDeleted == false && !string.IsNullOrEmpty(x.Key))
+                                                .FirstOrDefaultAsync(x => x.ApiTerceiro.Equals(ApiTerceiroEnum.BOM_CONTROLE));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (chaveApiTerceiro == null)
+            { 
+                AddError("Nenhuma chave de api de terceiro encontrada, verifique os possíveis erros: \n\nNenhuma chave de api cadastrada para esta integração. \n\nA chave de api cadastrada não possui uma Key. \n\nA chave de api cadastrada não está ativa. \n\nA chave de api cadastrada está com Data de Validade vencida.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            #region Token resolve
+            String token = string.Empty;
+            try
+            {
+                token = $"ApiKey {chaveApiTerceiro.Key}";
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Get data Bom Controle (TP)
+            IEnumerable<BCClienteModelService> clientesThirdParty = new List<BCClienteModelService>();
+            try
+            {
+                clientesThirdParty = await _bcServices.ClientePesquisar(token);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (clientesThirdParty == null || clientesThirdParty.Count() <= 0)
+            {
+                AddError("Nenhum registro encontrado na api de terceiro");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            #region Get data BoxApp
+            IEnumerable<Cliente> clientesBoxApp = new List<Cliente>();
+            try
+            {
+                clientesBoxApp = await _context
+                                            .Clientes
+                                            .ToListAsync();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Sincronization
+            Int64 totalSincronizado = 0;
+            Int64 totalIsNotDocumento = 0;
+            foreach (var clienteTP in clientesThirdParty)
+            {
+                bool clienteThirdPartyAlreadyInBoxApp = false;
+                if (clienteTP.PessoaFisica == null)
+                {
+                    if (clienteTP.PessoaJuridica.Documento == null) totalIsNotDocumento++;
+
+                    clienteThirdPartyAlreadyInBoxApp = clientesBoxApp.Any(x => x.CNPJ == clienteTP.PessoaJuridica.Documento);
+                } else {
+                    if (clienteTP.PessoaFisica.Documento == null) totalIsNotDocumento++;
+
+                    clienteThirdPartyAlreadyInBoxApp = clientesBoxApp.Any(x => x.Cpf == clienteTP.PessoaFisica.Documento);
+                }
+
+                // Cliente não existe no BoxApp e está ativo no bom controle, portanto, deve ser cadastrado no BoxApp
+                if (!clienteThirdPartyAlreadyInBoxApp && clienteTP.Bloqueado == false)
+                {
+                    
+
+                    var cliente = new Cliente();
+                    try
+                    {
+                        if (clienteTP.TipoPessoa == "Juridica")
+                        {
+                            if (!string.IsNullOrEmpty(clienteTP.PessoaJuridica.Documento))
+                            {
+                                cliente = _mapper.Map<Cliente>(clienteTP);    
+                            }
+                        } else {
+                            if (!string.IsNullOrEmpty(clienteTP.PessoaFisica.Documento))
+                            {
+                                cliente = _mapper.Map<Cliente>(clienteTP);    
+                            }
+                        }
+                    }
+                    catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+                    
+                    try
+                    {
+                        if (cliente.Id != Guid.Empty)
+                        {
+                            await _context.Clientes.AddAsync(cliente);
+                            totalSincronizado++;
+                        }
+                    }
+                    catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+                }
+            }
+            #endregion
+
+            #region Commit
+            try
+            {
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Return
+            return CustomResponse(200, new {
+                TotalSincronizado = totalSincronizado,
+                TotalIsNotDocumento = totalIsNotDocumento
+            });
+            #endregion
         }
         #endregion
     }

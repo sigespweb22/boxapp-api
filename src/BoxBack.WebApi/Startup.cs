@@ -94,7 +94,7 @@ namespace BoxBack.WebApi
                                             "http://localhost:80",
                                             "http://localhost:80/",
                                             "http://localhost",
-                                            "http://177.93.105.56",
+                                             "http://177.93.105.56",
                                             "http://177.93.105.56/",
                                             "http://177.93.105.56:80/",
                                             "http://177.93.105.56:80",
