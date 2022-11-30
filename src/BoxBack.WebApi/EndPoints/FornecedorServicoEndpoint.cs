@@ -492,7 +492,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanCnpjTPRead, CanCnpjTPAll")]
+        [Authorize(Roles = "Master, CanFornecedorServicoCreate, CanFornecedorServicoAll, CanFornecedorAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
