@@ -295,7 +295,7 @@ namespace BoxBack.WebApi.EndPoints
                     return CustomResponse(400);
                 }
             } else if (clienteViewModel.TipoPessoa == TipoPessoaEnum.FISICA.ToString()) {
-                if (string.IsNullOrEmpty(clienteViewModel.CNPJ))
+                if (string.IsNullOrEmpty(clienteViewModel.Cpf))
                 {
                     AddError("Cpf é requerido para tipo pessoa FISICA.");
                     return CustomResponse(400);
