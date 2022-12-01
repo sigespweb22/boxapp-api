@@ -95,11 +95,13 @@ namespace BoxBack.Domain.Enums
         CanClienteDelete = 4006,
         #endregion
 
-        #region TP - CNPJ
-        [Description("Pode realizar todas as ações/operações em todos os Third party CNPJ - Api de terceiro para busca de CNPJ")]
-        CanCnpjTPAll = 5001,
-        [Description("Pode listar os dados de um Third party CNPJ - Api de terceiro para busca de CNPJ")]
-        CanCnpjTPRead = 5002,
+        #region 
+        // TODO: Trocar o conteúdo, para utilizar os valores de 5000
+        // TP - CNPJ
+        // [Description("Pode realizar todas as ações/operações em todos os Third party CNPJ - Api de terceiro para busca de CNPJ")]
+        // CanCnpjTPAll = 5001,
+        // [Description("Pode listar os dados de um Third party CNPJ - Api de terceiro para busca de CNPJ")]
+        // CanCnpjTPRead = 5002,
         #endregion
 
         #region Cliente Serviço

@@ -295,7 +295,7 @@ namespace BoxBack.WebApi.EndPoints
                     return CustomResponse(400);
                 }
             } else if (clienteViewModel.TipoPessoa == TipoPessoaEnum.FISICA.ToString()) {
-                if (string.IsNullOrEmpty(clienteViewModel.CNPJ))
+                if (string.IsNullOrEmpty(clienteViewModel.Cpf))
                 {
                     AddError("Cpf é requerido para tipo pessoa FISICA.");
                     return CustomResponse(400);
@@ -568,7 +568,7 @@ namespace BoxBack.WebApi.EndPoints
         ///     }
         ///
         /// </remarks>
-        [Authorize(Roles = "Master, CanCnpjTPRead, CanCnpjTPAll")]
+        [Authorize(Roles = "Master, CanClienteCreate, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

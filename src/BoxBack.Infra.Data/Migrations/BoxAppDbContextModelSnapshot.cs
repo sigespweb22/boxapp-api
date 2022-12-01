@@ -333,22 +333,22 @@ namespace BoxBack.Infra.Data.Migrations
                             Name = "CanClienteDelete",
                             NormalizedName = "CANCLIENTEDELETE"
                         },
-                        new
-                        {
-                            Id = "55e0b4a6-77b9-4fb0-8033-bc649228fa3f",
-                            ConcurrencyStamp = "87f356b2-03ea-4560-915e-2e97ceafa5cb",
-                            Description = "Pode realizar todas as ações/operações em todos os Third party CNPJ - Api de terceiro para busca de CNPJ",
-                            Name = "CanCnpjTPAll",
-                            NormalizedName = "CANCNPJTPALL"
-                        },
-                        new
-                        {
-                            Id = "65b369eb-c6c8-4296-8d5c-f7edd99be13a",
-                            ConcurrencyStamp = "08261521-eaa1-44c7-88b0-de62ef907606",
-                            Description = "Pode listar os dados de um Third party CNPJ - Api de terceiro para busca de CNPJ",
-                            Name = "CanCnpjTPRead",
-                            NormalizedName = "CANCNPJTPREAD"
-                        },
+                        // new
+                        // {
+                        //     Id = "55e0b4a6-77b9-4fb0-8033-bc649228fa3f",
+                        //     ConcurrencyStamp = "87f356b2-03ea-4560-915e-2e97ceafa5cb",
+                        //     Description = "Pode realizar todas as ações/operações em todos os Third party CNPJ - Api de terceiro para busca de CNPJ",
+                        //     Name = "CanCnpjTPAll",
+                        //     NormalizedName = "CANCNPJTPALL"
+                        // },
+                        // new
+                        // {
+                        //     Id = "65b369eb-c6c8-4296-8d5c-f7edd99be13a",
+                        //     ConcurrencyStamp = "08261521-eaa1-44c7-88b0-de62ef907606",
+                        //     Description = "Pode listar os dados de um Third party CNPJ - Api de terceiro para busca de CNPJ",
+                        //     Name = "CanCnpjTPRead",
+                        //     NormalizedName = "CANCNPJTPREAD"
+                        // },
                         new
                         {
                             Id = "bc4db068-6e3d-43e8-9df0-f9cffc2b9322",
