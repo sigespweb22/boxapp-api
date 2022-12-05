@@ -80,3 +80,5 @@ Totalmente escrito para atender o modelo de serviços web RESTful.
  * Sincronização de contratos com o BOM CONTROLE
  * Atualização da periodicidade dos contratos a partir do BOM CONTROLE
  * Cadastro de clientes agora atende aos tipos de pessoa (Física e Jurídica)
+ 
+ ## Novidades agora podem ser acompanhadas nas releases
