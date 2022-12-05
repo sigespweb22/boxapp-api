@@ -110,59 +110,59 @@ namespace BoxBack.Application.Services
             };
             navigationC.Children.Add(oldestSonNB1);
 
-            var oldestSonNB2 = new Son
-            {
-                Title = "Serviços",
-                Path = "/negocios/comercial/servico/list",
-                Action = "list",
-                Subject = "ac-servico-page"
-            };
-            navigationC.Children.Add(oldestSonNB2);
+            // var oldestSonNB2 = new Son
+            // {
+            //     Title = "Serviços",
+            //     Path = "/negocios/comercial/servico/list",
+            //     Action = "list",
+            //     Subject = "ac-servico-page"
+            // };
+            // navigationC.Children.Add(oldestSonNB2);
 
-            var oldestSonNB5 = new Son
-            {
-                Title = "Produtos",
-                Path = "/negocios/comercial/produto/list",
-                Action = "list",
-                Subject = "ac-produto-page"
-            };
-            navigationC.Children.Add(oldestSonNB5);
+            // var oldestSonNB5 = new Son
+            // {
+            //     Title = "Produtos",
+            //     Path = "/negocios/comercial/produto/list",
+            //     Action = "list",
+            //     Subject = "ac-produto-page"
+            // };
+            // navigationC.Children.Add(oldestSonNB5);
 
-            var navigationD = new VerticalNavItemViewModel
-            {
-                Title = "Processos",
-                Icon = "LanguageRubyOnRails",
-                BadgeContent = "",
-                BadgeColor = "primary",
-                Children = new List<Son>()
-            };
+            // var navigationD = new VerticalNavItemViewModel
+            // {
+            //     Title = "Processos",
+            //     Icon = "LanguageRubyOnRails",
+            //     BadgeContent = "",
+            //     BadgeColor = "primary",
+            //     Children = new List<Son>()
+            // };
 
-            var oldestSonNB3 = new Son
-            {
-                Title = "Pipelines",
-                Path = "/negocios/processos/pipeline/list",
-                Action = "list",
-                Subject = "ac-pipeline-page"
-            };
+            // var oldestSonNB3 = new Son
+            // {
+            //     Title = "Pipelines",
+            //     Path = "/negocios/processos/pipeline/list",
+            //     Action = "list",
+            //     Subject = "ac-pipeline-page"
+            // };
             
-            navigationD.Children.Add(oldestSonNB3);
+            // navigationD.Children.Add(oldestSonNB3);
 
-            var navigationE = new VerticalNavItemViewModel
-            {
-                Title = "Parceiros",
-                Icon = "HandshakeOutline",
-                BadgeContent = "",
-                BadgeColor = "primary",
-                Children = new List<Son>()
-            };
-            var oldestSonNB4 = new Son
-            {
-                Title = "Fornecedores",
-                Path = "/negocios/parceiros/fornecedor/list",
-                Action = "list",
-                Subject = "ac-fornecedor-page"
-            };
-            navigationE.Children.Add(oldestSonNB4);
+            // var navigationE = new VerticalNavItemViewModel
+            // {
+            //     Title = "Parceiros",
+            //     Icon = "HandshakeOutline",
+            //     BadgeContent = "",
+            //     BadgeColor = "primary",
+            //     Children = new List<Son>()
+            // };
+            // var oldestSonNB4 = new Son
+            // {
+            //     Title = "Fornecedores",
+            //     Path = "/negocios/parceiros/fornecedor/list",
+            //     Action = "list",
+            //     Subject = "ac-fornecedor-page"
+            // };
+            // navigationE.Children.Add(oldestSonNB4);
 
             navigationF = new VerticalNavItemViewModel
             {
@@ -193,8 +193,8 @@ namespace BoxBack.Application.Services
             await Task.Run(() => navigation.Add(navigationSectionB));
             await Task.Run(() => navigation.Add(navigationC));
 
-            await Task.Run(() => navigation.Add(navigationD));
-            await Task.Run(() => navigation.Add(navigationE));
+            // await Task.Run(() => navigation.Add(navigationD));
+            // await Task.Run(() => navigation.Add(navigationE));
             #endregion
             
             return navigation.ToList();

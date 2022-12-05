@@ -191,10 +191,10 @@ namespace BoxBack.WebApi.EndPoints
             return valorTotalContratos / totalContratos;
         }
 
-        private decimal CalcularTicketMedioAnual(IEnumerable<ClienteContrato> contratosMensais)
+        private decimal CalcularTicketMedioAnual(IEnumerable<ClienteContrato> contratosAnuais)
         {
-            var totalContratos = contratosMensais.Count();
-            var valorTotalContratos = contratosMensais.Sum(x => x.ValorContrato);
+            var totalContratos = contratosAnuais.Count();
+            var valorTotalContratos = contratosAnuais.Sum(x => x.ValorContrato);
             
             if (totalContratos <= 0 && valorTotalContratos <= 0) return 0;
             return valorTotalContratos / totalContratos / 12;
