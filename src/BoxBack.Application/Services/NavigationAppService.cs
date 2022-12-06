@@ -184,7 +184,13 @@ namespace BoxBack.Application.Services
 
             await Task.Run(() => navigation.Add(navigationA));
             
-            navigationSectionA.SectionTitle = "SYSTEM";
+            navigationSectionA = new VerticalNavItemViewModel
+            {
+                SectionTitle = "SYSTEM",
+                Action = "list",
+                Subject = "section-title-system"
+            };
+
             await Task.Run(() => navigation.Add(navigationSectionA));
             await Task.Run(() => navigation.Add(navigationB));
             await Task.Run(() => navigation.Add(navigationF));
