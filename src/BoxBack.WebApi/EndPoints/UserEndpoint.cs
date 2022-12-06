@@ -273,13 +273,38 @@ namespace BoxBack.WebApi.EndPoints
             userMap.Status = ApplicationUserStatusEnum.PENDING;
             #endregion
 
-            #region Data add and password
+            #region Persitance user data and password
+            var signIn = new IdentityResult();
             try
             {
-                await _manager.CreateAsync(userMap);
-                await _manager.AddPasswordAsync(userMap, applicationUserViewModel.Password);
+
+                signIn = await _manager.CreateAsync(userMap);
+                
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (signIn.Succeeded)
+            {
+                try
+                {
+                    await _manager.AddPasswordAsync(userMap, applicationUserViewModel.Password);    
+                }
+                catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            } else if (signIn.Errors.Count() > 0)
+            {
+                foreach (var error in signIn.Errors)
+                {
+                    switch(error.Code)
+                    {
+                        case "DuplicateUserName":
+                            AddError("Usuário já existe.");
+                            return CustomResponse(400);
+                        default:
+                            AddError(error.Code);
+                            return CustomResponse(400);
+                    }    
+                }
+            }
             #endregion
 
             #region Commit
