@@ -32,10 +32,12 @@ namespace BoxBack.Infra.Data.Mappings
             
             builder.Property(c => c.CNPJ)
                 .IsRequired(false)
+                .HasDefaultValue(null)
                 .HasMaxLength(20);
             
             builder.Property(c => c.Cpf)
                 .IsRequired(false)
+                .HasDefaultValue(null)
                 .HasMaxLength(20);
             
             builder
