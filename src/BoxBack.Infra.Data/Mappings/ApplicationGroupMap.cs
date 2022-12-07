@@ -36,7 +36,7 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasForeignKey(c => c.TenantId)
                 .OnDelete(DeleteBehavior.NoAction);
             
-            // builder.HasQueryFilter(p => !p.IsDeleted);
+            builder.HasQueryFilter(p => !p.IsDeleted);
             
             builder.HasData(
                 new ApplicationGroup

@@ -27,7 +27,7 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasForeignKey(c => c.GroupId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
-
+            
             // initial seed
             builder.HasData(
                 new ApplicationUserGroup

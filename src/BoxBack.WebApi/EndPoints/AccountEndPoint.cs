@@ -148,17 +148,18 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 token = _generatorToken.GetToken(user);
-                if (string.IsNullOrEmpty(token))
-                {
-                    AddError("Problemas ao obter token. Tente novamente, persistindo o problema informe a equipe de suporte.");
-                    return CustomResponse(400);
-                } 
-                else
-                {
-                    userMapped.AccessToken = token;
-                }
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (string.IsNullOrEmpty(token))
+            {
+                AddError("Problemas ao obter token. Tente novamente, persistindo o problema informe a equipe de suporte.");
+                return CustomResponse(400);
+            } 
+            else
+            {
+                userMapped.AccessToken = token;
+            }
             
             #endregion
             return Ok(new { userData = userMapped });
@@ -224,10 +225,20 @@ namespace BoxBack.WebApi.EndPoints
                                             .ThenInclude(c => c.ApplicationRoleGroups)
                                                 .ThenInclude(d => d.ApplicationRole)
                                     .FirstOrDefaultAsync(x => x.Id == userId);
-                if (user == null)
-                    return CustomResponse(404, new { message = "Nenhum registro encontrado." });
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (user == null)
+                    return CustomResponse(404, new { message = "Nenhum registro encontrado." });
+            #endregion
+
+            #region Generals validations
+            // check to groups inactives
+            if (user.ApplicationUserGroups.Count(x => !x.ApplicationGroup.IsDeleted) <= 0)
+            {
+                AddError("Usuário sem grupo ativo vinculado que permita acesso.\nSolicite ao usuário master da sua empresa para vincular seu usuário a outro grupo ativo, ou ativar ao menos um grupo já vinculado ao seu usuário.");
+                return CustomResponse(400);
+            }
             #endregion
 
             #region Map

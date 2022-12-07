@@ -67,6 +67,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 groups = await _context.ApplicationGroups
                                         .AsNoTracking()
+                                        .IgnoreQueryFilters()
                                         .Include(x => x.ApplicationRoleGroups)
                                         .ThenInclude(x => x.ApplicationRole)
                                         .OrderBy(x => x.Name)
@@ -331,6 +332,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 group = await _context
                                 .ApplicationGroups
+                                .IgnoreQueryFilters()
                                 .FirstOrDefaultAsync(x => x.Id == Guid.Parse(id));
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }

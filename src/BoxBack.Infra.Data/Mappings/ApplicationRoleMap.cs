@@ -16,7 +16,7 @@ namespace BoxBack.Infra.Data.Mappings
                 .WithOne(d => d.ApplicationRole)
                 .HasForeignKey(c => c.RoleId)
                 .IsRequired();
-
+            
             //Initial seed
             var roles = EnumHelper.GetNames<PermissionEnum>();
             foreach (var role in roles)

@@ -31,7 +31,7 @@ namespace BoxBack.WebApi.Security
                     
                     try
                     {
-                        foreach (var aUg in appUser.ApplicationUserGroups)
+                        foreach (var aUg in appUser.ApplicationUserGroups.Where(x => !x.ApplicationGroup.IsDeleted).ToList())
                         {
                             foreach (var aRg in aUg.ApplicationGroup.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name))
                             {
