@@ -103,14 +103,14 @@ namespace BoxBack.WebApi.EndPoints
                                     .ThenInclude(x => x.ApplicationRoleGroups)
                                     .ThenInclude(x => x.ApplicationRole)
                                     .FirstOrDefaultAsync(x => x.Email == authenticateViewModel.Email);
-                if (user == null)
-                {
-                    AddError("Usuário não encontrado.");
-                    return CustomResponse(404);
-                }
-                    
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (user == null)
+            {
+                AddError("Usuário não encontrado.");
+                return CustomResponse(404);
+            }
 
             // check to user inactive
             if (user.Status == ApplicationUserStatusEnum.INACTIVE)
@@ -126,6 +126,13 @@ namespace BoxBack.WebApi.EndPoints
                 return CustomResponse(400);
             }
             #endregion
+
+            // check to groups inactives
+            if (user.ApplicationUserGroups.Count(x => !x.ApplicationGroup.IsDeleted) <= 0)
+            {
+                AddError("Usuário sem grupo ativo vinculado que permita acesso.\nSolicite ao usuário master da sua empresa para vincular seu usuário a outro grupo ativo, ou ativar ao menos um grupo já vinculado ao seu usuário.");
+                return CustomResponse(400);
+            }
 
             #region Map
             var userMapped = new ApplicationUserViewModel();
