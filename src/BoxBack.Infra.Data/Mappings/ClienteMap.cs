@@ -44,6 +44,10 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasIndex(c => c.CNPJ)
                 .IsUnique();
             
+            builder
+                .HasIndex(c => c.Cpf)
+                .IsUnique();
+            
             builder.Property(c => c.TelefonePrincipal)
                 .IsRequired(false)
                 .HasMaxLength(20);
