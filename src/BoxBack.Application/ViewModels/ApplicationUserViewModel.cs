@@ -31,7 +31,7 @@ namespace BoxBack.Application.ViewModels
         public DateTimeOffset? LockoutEnd { get; set; }
 
         public List<string> ApplicationUserRoles { get; set; }
-        public List<string> Role { get; set; }
+        public List<string> Roles { get; set; }
 
         [MinLength(1, ErrorMessage = "\nAo menos um grupo é requerido.")]
         public List<ApplicationUserGroupViewModel> ApplicationUserGroups { get; set; } 
