@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
@@ -18,5 +19,6 @@ namespace BoxBack.Domain.Models
 
         public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
         public virtual ICollection<ApplicationRoleGroup> ApplicationRoleGroups { get; set; }
+        public virtual ICollection<ApplicationRoleClaim> ApplicationRoleClaims { get; set; }
     }
 }

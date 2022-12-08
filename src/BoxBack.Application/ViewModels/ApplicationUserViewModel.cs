@@ -35,6 +35,14 @@ namespace BoxBack.Application.ViewModels
 
         [MinLength(1, ErrorMessage = "\nAo menos um grupo é requerido.")]
         public List<ApplicationUserGroupViewModel> ApplicationUserGroups { get; set; } 
-        public List<string> ApplicationUserGroupsNames { get; set; }
+
+        // ** Propriedade das habilidades do usuário - CaslJS
+        public List<ApplicationRoleClaimViewModel> RolesClaims { get; set; }
+    }
+
+    public sealed class ApplicationRoleClaimViewModel
+    {
+        public string ability { get; set; }
+        public string subject { get; set; }
     }
 }
