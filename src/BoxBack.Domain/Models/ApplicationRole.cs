@@ -2,6 +2,7 @@ using System.Net.Mime;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using BoxBack.Domain.Enums;
 
 namespace BoxBack.Domain.Models
 {
@@ -16,6 +17,8 @@ namespace BoxBack.Domain.Models
         public ApplicationRole() {}
 
         public string Description { get;  set; }
+        public string Subject { get;  set; }
+        public CASLJSActionsEnum[] Actions { get; set; }
 
         public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
         public virtual ICollection<ApplicationRoleGroup> ApplicationRoleGroups { get; set; }

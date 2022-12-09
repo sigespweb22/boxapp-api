@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="m8KbccVwNlPYS12_Y0ul" name="Página-1">
-        <mxGraphModel dx="2810" dy="929" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="2995" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -96,6 +96,23 @@
                 </mxCell>
                 <mxCell id="32" value="ROLE 3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#a20025;fontColor=#ffffff;strokeColor=#6F0000;" parent="1" vertex="1">
                     <mxGeometry x="380" y="470" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="NDEGvY9XfKFNd4K21x4O" name="Página-2">
+        <mxGraphModel dx="1374" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+            <root>
+                <mxCell id="EwVxq-ZTSb2x7PLmQgKl-0"/>
+                <mxCell id="EwVxq-ZTSb2x7PLmQgKl-1" parent="EwVxq-ZTSb2x7PLmQgKl-0"/>
+                <mxCell id="EwVxq-ZTSb2x7PLmQgKl-2" value="Role" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="EwVxq-ZTSb2x7PLmQgKl-1">
+                    <mxGeometry x="90" y="260" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="EwVxq-ZTSb2x7PLmQgKl-3" value="RoleClaim" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="EwVxq-ZTSb2x7PLmQgKl-1">
+                    <mxGeometry x="50" y="354" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="EwVxq-ZTSb2x7PLmQgKl-4" value="User" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" vertex="1" parent="EwVxq-ZTSb2x7PLmQgKl-1">
+                    <mxGeometry x="150" y="150" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
