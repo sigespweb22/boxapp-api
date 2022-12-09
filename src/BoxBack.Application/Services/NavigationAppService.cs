@@ -56,6 +56,15 @@ namespace BoxBack.Application.Services
             };
             navigationA.Children.Add(comercial);
 
+            var publica = new Son
+            {
+                Title = "Publica",
+                Path = "/dashboards/publica",
+                Action = "list",
+                Subject = "ac-dashboard-publica-page"
+            };
+            navigationA.Children.Add(publica);
+
             navigationB = new VerticalNavItemViewModel
             {
                 Title = "Controle Acesso",

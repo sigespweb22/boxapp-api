@@ -240,7 +240,7 @@ namespace BoxBack.Domain.Enums
         #endregion
 
         #region Dashboard Comercial
-        [Description("Pode realizar todas as ações/operações em todos os serviços de fornecedores")]
+        [Description("Pode realizar todas as ações/operações em dashboard comercial")]
         CanDashboardComercialAll = 15001,
         CanDashboardComercialClienteContratoList = 15002,
         #endregion
@@ -258,6 +258,12 @@ namespace BoxBack.Domain.Enums
         CanChaveApiTerceiroUpdate = 16001,
         [Description("Pode deletar uma chave de api de terceiro")]
         CanChaveApiTerceiroDelete = 16001,
+        #endregion
+
+        #region Dashboard Publica
+        [Description("Pode realizar todas as ações/operações em dashboard publica")]
+        CanDashboardPublicaAll = 17001,
+        CanDashboardPublicaClienteContratoList = 17002,
         #endregion
     }
 }
