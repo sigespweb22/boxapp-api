@@ -58,7 +58,7 @@ namespace BoxBack.Application.Services
 
             var publica = new Son
             {
-                Title = "Publica",
+                Title = "Pública",
                 Path = "/dashboards/publica",
                 Action = "list",
                 Subject = "ac-dashboard-publica-page"
