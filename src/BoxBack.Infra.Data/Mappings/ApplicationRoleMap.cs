@@ -1,7 +1,5 @@
-using System.ComponentModel;
-using System.Collections.Immutable;
-using System.Text.RegularExpressions;
 using System;
+using System.Text.RegularExpressions;
 using BoxBack.Domain.Enums;
 using BoxBack.Domain.Helpers;
 using BoxBack.Domain.Models;
@@ -73,27 +71,24 @@ namespace BoxBack.Infra.Data.Mappings
             catch { throw new Exception("Problemas ao extrair o nome da entidade a partir do nome da role."); }
             #endregion
 
-            #region Create prefix entities
-            if (entities != null)
-            {
-                String prefix = string.Empty;
-                for (var i = 0; i < entities.Count(); i++)
-                {
-                    prefix = $"{prefix}{entities[i]}";
-                }
-            }
-            #endregion
-
             #region Create subject
             String subject = String.Empty;
             try
             {
-                subject = $"ac-{subject}-page";    
+                for (var i = 0; i < entities?.Count() -1; i++)
+                {
+                    if (i == 1)
+                    {
+                        subject = $"{subject}{entities[i]?.ToLower()}";
+                    } else {
+                        subject = $"{subject}{entities[i]}";    
+                    }
+                }
             }
             catch { throw new Exception("Problemas ao criar subject."); }
             #endregion
 
-            return subject;
+            return $"ac-{subject}-page";
         }
 
         private List<string> ExtractEntityFromRoleName(string roleName)
@@ -108,29 +103,26 @@ namespace BoxBack.Infra.Data.Mappings
             try
             {
                 roleNameSlice = Regex.Matches(roleName, stringPatter)
-                                          .OfType<Match>()
-                                          .Select(m => m.Value).ToArray();
+                                     .OfType<Match>()
+                                     .Select(m => m.Value).ToArray();
             }
-            catch { throw new Exception("sssProblemas ao extrair o nome da entidade a partir do nome da role."); }
+            catch { throw; }
             #endregion
 
-            #region Clear extract if has more entity  3
+            #region Clear extracted entities
             try
             {
-                if (roleNameSlice.Count() > 3)
-                 {
-                    Array.Clear(roleNameSlice, 0, 1);
-                    Array.Clear(roleNameSlice, (roleNameSlice.Count() - 1), 1);
-                 }
+                Array.Clear(roleNameSlice, 0, 1);
+                Array.Clear(roleNameSlice, (roleNameSlice.Count() - 1), 1);
             }
-            catch { throw new Exception("PProblemas ao extrair o nome da entidade a partir do nome da role."); }
+            catch { throw; }
             #endregion
 
             #region Create array to return
             var entities = new List<string>();
-            for (int i = 0; i < roleNameSlice.Count(); i++) 
+            for (int i = 0; i < roleNameSlice?.Length; i++) 
             {
-                entities.Add(roleNameSlice[i].ToLower());
+                entities.Add(roleNameSlice[i]);
             }
             #endregion
             
