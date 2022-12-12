@@ -9,8 +9,6 @@ namespace BoxBack.Infra.Data.Mappings
 {
     public class ApplicationRoleClaimMap : IEntityTypeConfiguration<ApplicationRoleClaim>
     {
-        private readonly BoxAppDbContext _dbContext;
-        
         public void Configure(EntityTypeBuilder<ApplicationRoleClaim> builder)
         {
         }

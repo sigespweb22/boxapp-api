@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+using System.ComponentModel;
 using System;
 using System.Text.RegularExpressions;
 using BoxBack.Domain.Enums;
@@ -47,7 +49,7 @@ namespace BoxBack.Infra.Data.Mappings
                         Name = role,
                         NormalizedName = role.ToUpper(),
                         Subject = CreateSubjectToRole(role),
-                        Actions = (CASLJSActionsEnum[])Enum.GetValues(typeof(CASLJSActionsEnum)),
+                        Actions = GetActionsEnumFromRoleName(role).ToArray(),
                         ConcurrencyStamp = Guid.NewGuid().ToString(),
                         Description = EnumHelper.Parse<PermissionEnum>(role).GetDescription()
                     };
@@ -89,6 +91,51 @@ namespace BoxBack.Infra.Data.Mappings
             #endregion
 
             return $"ac-{subject}-page";
+        }
+
+        private List<CASLJSActionsEnum> GetActionsEnumFromRoleName(string roleName)
+        {
+            #region Generals validations
+            if (string.IsNullOrEmpty(roleName)) throw new ArgumentException("Role name requerida.");
+            #endregion
+
+            #region Actions extract
+            String actionExtract;
+            try
+            {
+                actionExtract = ExtractActionFromRoleName(roleName);
+            }
+            catch { throw; }
+            #endregion        
+            
+            #region Convert action to enums number
+            Console.WriteLine(actionExtract);
+            var actionsMap = new List<CASLJSActionsEnum>();
+            if (actionExtract == "ALL")
+            {
+                Console.WriteLine(actionExtract);
+                try
+                {
+                    foreach (var item in Enum.GetValues(typeof(CASLJSActionsEnum)))
+                    {
+                        var newItem = (CASLJSActionsEnum)item;
+                        if (newItem != 0)
+                        {
+                            actionsMap.Add(newItem);
+                        }
+                    }
+                }
+                catch { throw; }
+            } else {
+                try
+                {
+                    actionsMap.Add(Enum.Parse<CASLJSActionsEnum>(actionExtract));
+                }
+                catch { throw; }
+            }
+            #endregion
+
+            return actionsMap;
         }
 
         private List<string> ExtractEntityFromRoleName(string roleName)
@@ -140,50 +187,18 @@ namespace BoxBack.Infra.Data.Mappings
             try
             {
                 roleNameSlice = Regex.Matches(roleName, stringPatter)
-                                          .OfType<Match>()
-                                          .Select(m => m.Value).ToArray();
+                                     .OfType<Match>()
+                                     .Select(m => m.Value).ToArray();
             }
             catch { throw new Exception("Problemas ao extrair a ação a partir do nome da role."); }
 
-            return roleNameSlice[2].ToUpper();
-        }
-
-        private CASLJSActionsEnum[] GetActionsEnumFromRoleName(string roleName)
-        {
-            #region Generals validations
-            if (string.IsNullOrEmpty(roleName)) throw new ArgumentException("Role name requerida.");
-            #endregion
-
-            #region Actions extract
-            String actionExtract;
             try
             {
-                actionExtract = ExtractActionFromRoleName(roleName);
+                Array.Reverse(roleNameSlice);
             }
-            catch { throw; }
-            #endregion        
-            
-            #region Get enuns data and map
-            CASLJSActionsEnum[] actions;
-            if (actionExtract == "ALL")
-            {
-                try
-                {
-                    Console.Write(Enum.GetValues(typeof(CASLJSActionsEnum)));
+            catch { throw new Exception("Problemas ao mapear a(s) action(s) a partir do nome da role."); }
 
-                    actions = (CASLJSActionsEnum[])Enum.GetValues(typeof(CASLJSActionsEnum));
-                }
-                catch { throw; }
-            } else {
-                try
-                {
-                    actions = (CASLJSActionsEnum[])Enum.Parse(typeof(CASLJSActionsEnum), actionExtract);
-                }
-                catch { throw; }
-            }
-            #endregion
-
-            return actions;
+            return roleNameSlice[0]?.ToUpper() ?? string.Empty;
         }
     }
 }
