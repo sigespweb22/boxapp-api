@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BoxBack.Infra.Data.Migrations
 {
     [DbContext(typeof(BoxAppDbContext))]
-    [Migration("20221121185633_Createv0.0.2")]
-    partial class Createv002
+    [Migration("20221121185633_v0.0.2")]
+    partial class v002
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

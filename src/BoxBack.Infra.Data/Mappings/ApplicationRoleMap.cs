@@ -27,15 +27,6 @@ namespace BoxBack.Infra.Data.Mappings
                 .WithOne(d => d.ApplicationRole)
                 .HasForeignKey(c => c.RoleId)
                 .IsRequired();
-            
-            builder.HasData(new ApplicationRole()
-            {
-                Id = "b0f96d85-3647-4651-9f78-b7529b577ec0",
-                Name = "Master",
-                NormalizedName = "MASTER",
-                ConcurrencyStamp = "4629cea3-3b65-43b9-9c4e-7cc68fe4e4e4",
-                Description = "Pode realizar todas as ações/operações, bem como ter acesso a todos os dados e funcionalidades"
-            });
 
             //Initial seed
             var roles = EnumHelper.GetNames<PermissionEnum>();
@@ -53,6 +44,25 @@ namespace BoxBack.Infra.Data.Mappings
                         ConcurrencyStamp = Guid.NewGuid().ToString(),
                         Description = EnumHelper.Parse<PermissionEnum>(role).GetDescription()
                     };
+
+                    builder.HasData(tmp);
+                } else {
+                    var actionToRoleMasters = new List<CASLJSActionsEnum>()
+                    {
+                        CASLJSActionsEnum.MANAGER
+                    };
+
+                    var tmp = new ApplicationRole()
+                    {
+                        Id = "b0f96d85-3647-4651-9f78-b7529b577ec0",
+                        Name = "Master",
+                        NormalizedName = "MASTER",
+                        Subject = "all",
+                        Actions = actionToRoleMasters.ToArray(),
+                        ConcurrencyStamp = "4629cea3-3b65-43b9-9c4e-7cc68fe4e4e4",
+                        Description = "Pode realizar todas as ações/operações, bem como ter acesso a todos os dados e funcionalidades"
+                    };
+
                     builder.HasData(tmp);
                 }
             }
@@ -109,11 +119,9 @@ namespace BoxBack.Infra.Data.Mappings
             #endregion        
             
             #region Convert action to enums number
-            Console.WriteLine(actionExtract);
             var actionsMap = new List<CASLJSActionsEnum>();
             if (actionExtract == "ALL")
             {
-                Console.WriteLine(actionExtract);
                 try
                 {
                     foreach (var item in Enum.GetValues(typeof(CASLJSActionsEnum)))
