@@ -40,6 +40,8 @@ namespace BoxBack.Infra.Data.Migrations
                 columns: new[] { "CreatedAt", "UpdatedAt" },
                 values: new object[] { new DateTimeOffset(new DateTime(2022, 12, 12, 14, 27, 49, 598, DateTimeKind.Unspecified).AddTicks(5339), new TimeSpan(0, -3, 0, 0, 0)), new DateTimeOffset(new DateTime(2022, 12, 12, 14, 27, 49, 598, DateTimeKind.Unspecified).AddTicks(5377), new TimeSpan(0, -3, 0, 0, 0)) });
 
+            
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "Actions", "ConcurrencyStamp", "Description", "Name", "NormalizedName", "Subject" },
@@ -135,6 +137,14 @@ namespace BoxBack.Infra.Data.Migrations
                     { "f90c2c1e-0e56-4886-8be4-9b04152f949e", new[] { 1 }, "c852c54f-d75c-4b03-a477-252bf0aec3e9", "Pode listar os dados de todos os pipelines", "CanPipelineList", "CANPIPELINELIST", "ac-pipeline-page" },
                     { "fce3882c-763a-4c8e-bc8c-746a5b5a3548", new[] { 1 }, "8bf02bc4-18a9-4a4d-88fa-c769e21c6f0b", "Pode listar os dados de todos os serviços de clientes", "CanClienteServicoList", "CANCLIENTESERVICOLIST", "ac-clienteServico-page" },
                     { "ff24d644-0f99-4ea5-9126-916e47816c3b", new[] { 1 }, "69806ed6-e4d7-4645-b879-43bad310b154", "Pode listar os dados de todos os contratos de clientes", "CanClienteContratoList", "CANCLIENTECONTRATOLIST", "ac-clienteContrato-page" }
+                });
+            
+            migrationBuilder.InsertData(
+                table: "AspNetRoleGroups",
+                columns: new[] { "RoleId", "GroupId" },
+                values: new object[,]
+                {
+                    { "b0f96d85-3647-4651-9f78-b7529b577ec0", "23e63d9c-283b-496b-b7d8-7dac2ef7a822" }
                 });
 
             migrationBuilder.InsertData(
