@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using BoxBack.Domain.Enums;
+using BoxBack.Domain.Models;
 
 namespace BoxBack.Application.ViewModels
 {
@@ -37,12 +39,12 @@ namespace BoxBack.Application.ViewModels
         public List<ApplicationUserGroupViewModel> ApplicationUserGroups { get; set; } 
 
         // ** Propriedade das habilidades do usuário - CaslJS
-        public List<ApplicationRoleClaimViewModel> RolesClaims { get; set; }
+        public List<AbilityCasl> AbilitiesCasl { get; set; }
     }
 
-    public sealed class ApplicationRoleClaimViewModel
+    public class AbilityCasl
     {
-        public string ability { get; set; }
-        public string subject { get; set; }
+        public string Subject { get;  set; }
+        public CASLJSActionsEnum[] Actions { get; set; }
     }
 }
