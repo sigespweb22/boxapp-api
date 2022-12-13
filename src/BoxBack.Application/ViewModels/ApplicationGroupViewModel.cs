@@ -10,7 +10,7 @@ namespace BoxBack.Application.ViewModels
         public string Name { get;set; } 
         public string Status { get; set; }
 
-        public List<ApplicationRoleGroupUpdateViewModel> ApplicationRoleGroups { get; set; }
+        public List<ApplicationRoleGroupViewModel> ApplicationRoleGroups { get; set; }
 
         public List<string> ApplicationRoleGroupsNames { get; set; }
     }

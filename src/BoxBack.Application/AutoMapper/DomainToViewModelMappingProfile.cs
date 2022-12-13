@@ -12,7 +12,6 @@ namespace BoxBack.Application.AutoMapper
         public DomainToViewModelMappingProfile()
         {
             CreateMap<ApplicationUserGroup, ApplicationUserGroupViewModel>()
-                .ForMember(dst => dst.ApplicationGroup, src => src.MapFrom(x => x.ApplicationGroup))
                 .ForMember(dst => dst.Name, src => src.MapFrom(x => x.ApplicationGroup.Name));
             CreateMap<ApplicationUser, ApplicationUserViewModel>()
                 .ForMember(dst => dst.Email, src => src.MapFrom(x => x.Email))
@@ -44,6 +43,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ApplicationGroup, ApplicationGroupSelect2ViewModel>()
                 .ForMember(dst => dst.Name, src => src.MapFrom(x => x.Name))
                 .ForMember(dst => dst.GroupId, src => src.MapFrom(x => x.Id));
+            CreateMap<ApplicationRoleGroup, ApplicationRoleGroupUpdateViewModel>();
             CreateMap<ApplicationRoleGroup, ApplicationRoleGroupViewModel>()
                 .ForMember(dst => dst.Name, src => src.MapFrom(x => x.ApplicationRole.Name));;
             CreateMap<ApplicationRole, ApplicationRoleSelect2ViewModel>()
