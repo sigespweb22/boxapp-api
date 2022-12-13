@@ -328,7 +328,7 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody]ApplicationUserViewModel applicationUserViewModel)
+        public async Task<IActionResult> UpdateAsync([FromBody]ApplicationUserUpdateViewModel applicationUserViewModel)
         {
             #region Required validations
             if (string.IsNullOrEmpty(applicationUserViewModel.Id))
@@ -371,7 +371,7 @@ namespace BoxBack.WebApi.EndPoints
                 applicationUserViewModel.Funcao = userDB.Funcao.ToString();
                 applicationUserViewModel.Setor = userDB.Setor.ToString();
                 applicationUserViewModel.Status = userDB.Status.ToString();
-                userMap = _mapper.Map<ApplicationUserViewModel, ApplicationUser>(applicationUserViewModel, userDB);
+                userMap = _mapper.Map<ApplicationUserUpdateViewModel, ApplicationUser>(applicationUserViewModel, userDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
