@@ -23,6 +23,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ApplicationGroup, ApplicationGroupViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"))
                 .ForMember(dst => dst.ApplicationRoleGroupsNames, src => src.MapFrom(x => x.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name)));
+            CreateMap<ApplicationGroup, ApplicationGroupUpdateViewModel>();
             CreateMap<Cliente, ClienteViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"))
                 .ForMember(dst => dst.Contratos, src => src.MapFrom(x => x.ClienteContratos));

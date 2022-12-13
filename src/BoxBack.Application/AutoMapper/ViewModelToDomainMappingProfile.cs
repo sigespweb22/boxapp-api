@@ -38,6 +38,7 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.Status));
             CreateMap<ApplicationRoleViewModel, ApplicationRole>();
             CreateMap<ApplicationGroupViewModel, ApplicationGroup>();
+            CreateMap<ApplicationGroupUpdateViewModel, ApplicationGroup>();
             CreateMap<ApplicationRoleGroupUpdateViewModel, ApplicationRoleGroup>();
             CreateMap<ApplicationRoleGroupViewModel, ApplicationRoleGroup>();
             CreateMap<ApplicationRoleViewModel, ApplicationRole>();
