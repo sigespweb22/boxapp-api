@@ -19,7 +19,5 @@ namespace BoxBack.Domain.Models
         [ForeignKey("GroupId")]
         public Guid GroupId { get; set; }
         public ApplicationGroup ApplicationGroup { get; set; }
-
-        
     }
 }

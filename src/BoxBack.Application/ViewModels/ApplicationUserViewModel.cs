@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using BoxBack.Domain.Enums;
+using BoxBack.Domain.Models;
 
 namespace BoxBack.Application.ViewModels
 {
