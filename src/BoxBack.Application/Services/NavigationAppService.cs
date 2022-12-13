@@ -52,7 +52,7 @@ namespace BoxBack.Application.Services
                 Title = "Comercial",
                 Path = "/dashboards/comercial",
                 Action = "list",
-                Subject = "ac-dashboard-comercial-page"
+                Subject = "ac-dashboardComercial-page"
             };
             navigationA.Children.Add(comercial);
 
@@ -191,11 +191,17 @@ namespace BoxBack.Application.Services
                 Subject = "section-title-system"
             };
 
+            navigationSectionB = new VerticalNavItemViewModel
+            {
+                SectionTitle = "BUSSINESS",
+                Action = "list",
+                Subject = "section-title-bussiness"
+            };
+
             await Task.Run(() => navigation.Add(navigationSectionA));
             await Task.Run(() => navigation.Add(navigationB));
             await Task.Run(() => navigation.Add(navigationF));
             
-            navigationSectionB.SectionTitle = "BUSSINESS";
             await Task.Run(() => navigation.Add(navigationSectionB));
             await Task.Run(() => navigation.Add(navigationC));
 

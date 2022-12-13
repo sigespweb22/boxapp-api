@@ -47,7 +47,7 @@ namespace BoxBack.Infra.Data.Mappings
                 } else {
                     var actionToRoleMasters = new List<CASLJSActionsEnum>()
                     {
-                        CASLJSActionsEnum.MANAGER
+                        CASLJSActionsEnum.manage
                     };
 
                     var tmp = new ApplicationRole()
@@ -118,7 +118,7 @@ namespace BoxBack.Infra.Data.Mappings
             
             #region Convert action to enums number
             var actionsMap = new List<CASLJSActionsEnum>();
-            if (actionExtract == "ALL")
+            if (actionExtract == "All")
             {
                 try
                 {
@@ -135,7 +135,7 @@ namespace BoxBack.Infra.Data.Mappings
             } else {
                 try
                 {
-                    actionsMap.Add(Enum.Parse<CASLJSActionsEnum>(actionExtract));
+                    actionsMap.Add(Enum.Parse<CASLJSActionsEnum>(actionExtract.ToLower()));
                 }
                 catch { throw; }
             }
@@ -175,7 +175,7 @@ namespace BoxBack.Infra.Data.Mappings
             var entities = new List<string>();
             for (int i = 0; i < roleNameSlice?.Length; i++) 
             {
-                entities.Add(roleNameSlice[i]);
+                entities.Add(roleNameSlice[i]?.ToLower());
             }
             #endregion
             
@@ -204,7 +204,7 @@ namespace BoxBack.Infra.Data.Mappings
             }
             catch { throw new Exception("Problemas ao mapear a(s) action(s) a partir do nome da role."); }
 
-            return roleNameSlice[0]?.ToUpper() ?? string.Empty;
+            return roleNameSlice[0] ?? string.Empty;
         }
     }
 }
