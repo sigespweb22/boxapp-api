@@ -232,17 +232,42 @@ namespace BoxBack.WebApi.EndPoints
 
             #region Validations
             bool alreadySameCNPJ;
-            try
+            bool alreadySameCPF;
+
+            switch (clienteViewModel.TipoPessoa)
             {
-                alreadySameCNPJ = await _context
-                                            .Clientes
-                                            .AnyAsync(x => x.CNPJ == clienteViewModel.CNPJ);
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            if (alreadySameCNPJ)
-            {
-                AddError("Já existe um cliente cadastrado com o mesmo CNPJ informado.");
-                return CustomResponse(400);
+                case "FISICA":
+                    try
+                    {
+                        alreadySameCPF = await _context
+                                                    .Clientes
+                                                    .AnyAsync(x => x.Cpf == clienteViewModel.Cpf);
+                    }
+                    catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+                    if (alreadySameCPF)
+                    {
+                        AddError("Já existe um cliente cadastrado com o mesmo CPF informado.");
+                        return CustomResponse(400);
+                    }
+                    break;
+                case "JURIDICA":
+                    try
+                    {
+                        alreadySameCNPJ = await _context
+                                                    .Clientes
+                                                    .AnyAsync(x => x.CNPJ == clienteViewModel.CNPJ);
+                    }
+                    catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+                    if (alreadySameCNPJ)
+                    {
+                        AddError("Já existe um cliente cadastrado com o mesmo CNPJ informado.");
+                        return CustomResponse(400);
+                    }
+                    break;
+                default:
+                    AddError("Tipo pessoa obrigatório.");
+                    return CustomResponse(400);
             }
             #endregion
 
@@ -306,9 +331,9 @@ namespace BoxBack.WebApi.EndPoints
             #region Clean CNPJ/CPF/Telefone to Map
             if (clienteViewModel.TipoPessoa == TipoPessoaEnum.JURIDICA.ToString()) 
             {
-                clienteViewModel.TipoPessoa = StringHelpers.CnpjClean(clienteViewModel.TipoPessoa);
+                clienteViewModel.CNPJ = StringHelpers.CnpjClean(clienteViewModel.CNPJ);
             } else if (clienteViewModel.TipoPessoa == TipoPessoaEnum.FISICA.ToString()) {
-                clienteViewModel.TipoPessoa = StringHelpers.CpfClean(clienteViewModel.TipoPessoa);
+                clienteViewModel.Cpf = StringHelpers.CpfClean(clienteViewModel.Cpf);
             }
 
             if (!string.IsNullOrEmpty(clienteViewModel.TelefonePrincipal)) {
@@ -329,6 +354,49 @@ namespace BoxBack.WebApi.EndPoints
             {
                 AddError("Cliente não encontrada para atualizar.");
                 return CustomResponse(404);
+            }
+            #endregion
+
+            #region Validations
+            bool alreadySameCNPJ;
+            bool alreadySameCPF;
+
+            switch (clienteViewModel.TipoPessoa)
+            {
+                case "FISICA":
+                    try
+                    {
+                        alreadySameCPF = await _context
+                                                    .Clientes
+                                                    .Where(x => x.Id != clienteViewModel.Id)
+                                                    .AnyAsync(x => x.Cpf == clienteViewModel.Cpf);
+                    }
+                    catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+                    if (alreadySameCPF)
+                    {
+                        AddError("Já existe um cliente cadastrado com o mesmo CPF informado.");
+                        return CustomResponse(400);
+                    }
+                    break;
+                case "JURIDICA":
+                    try
+                    {
+                        alreadySameCNPJ = await _context
+                                                    .Clientes
+                                                    .Where(x => x.Id != clienteViewModel.Id)
+                                                    .AnyAsync(x => x.CNPJ == clienteViewModel.CNPJ);
+                    }
+                    catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+                    if (alreadySameCNPJ)
+                    {
+                        AddError("Já existe um cliente cadastrado com o mesmo CNPJ informado.");
+                        return CustomResponse(400);
+                    }
+                    break;
+                default:
+                    AddError("Tipo pessoa obrigatório.");
+                    return CustomResponse(400);
             }
             #endregion
 
@@ -368,7 +436,6 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="204">Deletado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Not found</response>
-        
         [Authorize(Roles = "Master, CanClienteDelete, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -435,7 +502,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         
-        [Authorize(Roles = "Master, CanClienteAlterStatus, CanClienteAll")]
+        [Authorize(Roles = "Master, CanClienteUpdate, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

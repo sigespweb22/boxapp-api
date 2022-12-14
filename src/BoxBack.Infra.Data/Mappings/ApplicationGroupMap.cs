@@ -2,7 +2,6 @@ using System;
 using BoxBack.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.AspNetCore.Identity;
 
 namespace BoxBack.Infra.Data.Mappings
 {
@@ -36,7 +35,7 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasForeignKey(c => c.TenantId)
                 .OnDelete(DeleteBehavior.NoAction);
             
-            // builder.HasQueryFilter(p => !p.IsDeleted);
+            builder.HasQueryFilter(p => !p.IsDeleted);
             
             builder.HasData(
                 new ApplicationGroup
@@ -52,6 +51,16 @@ namespace BoxBack.Infra.Data.Mappings
                     TenantId = Guid.Parse("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45")
                 }
             );
+        }
+
+        private string ExtractEntityNameFromRoleName(string roleName)
+        {
+            return string.Empty;
+        }
+
+        private string ExtractActionNameFromRoleName(string roleName)
+        {
+            return string.Empty;
         }
     }
 }

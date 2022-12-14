@@ -1,4 +1,3 @@
-using System.Net.Mime;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -6,9 +5,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using BoxBack.Infra;
-using BoxBack.Application.ViewModels;
-using BoxBack.Infra.Data.Context;
 using BoxBack.Domain.Models;
 
 namespace BoxBack.WebApi.Security
@@ -31,7 +27,7 @@ namespace BoxBack.WebApi.Security
                     
                     try
                     {
-                        foreach (var aUg in appUser.ApplicationUserGroups)
+                        foreach (var aUg in appUser.ApplicationUserGroups.Where(x => !x.ApplicationGroup.IsDeleted).ToList())
                         {
                             foreach (var aRg in aUg.ApplicationGroup.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name))
                             {

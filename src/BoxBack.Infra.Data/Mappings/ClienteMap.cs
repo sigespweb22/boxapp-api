@@ -32,14 +32,20 @@ namespace BoxBack.Infra.Data.Mappings
             
             builder.Property(c => c.CNPJ)
                 .IsRequired(false)
+                .HasDefaultValue(null)
                 .HasMaxLength(20);
             
             builder.Property(c => c.Cpf)
                 .IsRequired(false)
+                .HasDefaultValue(null)
                 .HasMaxLength(20);
             
             builder
                 .HasIndex(c => c.CNPJ)
+                .IsUnique();
+            
+            builder
+                .HasIndex(c => c.Cpf)
                 .IsUnique();
             
             builder.Property(c => c.TelefonePrincipal)

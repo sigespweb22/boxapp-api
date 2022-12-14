@@ -4,7 +4,6 @@ using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
 using BoxBack.Domain.Enums;
 using BoxBack.Application.ViewModels.Selects;
-using BoxBack.Domain.ModelsServices;
 
 namespace BoxBack.Application.AutoMapper
 {
@@ -24,6 +23,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ApplicationGroup, ApplicationGroupViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"))
                 .ForMember(dst => dst.ApplicationRoleGroupsNames, src => src.MapFrom(x => x.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name)));
+            CreateMap<ApplicationGroup, ApplicationGroupUpdateViewModel>();
             CreateMap<Cliente, ClienteViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"))
                 .ForMember(dst => dst.Contratos, src => src.MapFrom(x => x.ClienteContratos));
@@ -44,6 +44,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ApplicationGroup, ApplicationGroupSelect2ViewModel>()
                 .ForMember(dst => dst.Name, src => src.MapFrom(x => x.Name))
                 .ForMember(dst => dst.GroupId, src => src.MapFrom(x => x.Id));
+            CreateMap<ApplicationRoleGroup, ApplicationRoleGroupUpdateViewModel>();
             CreateMap<ApplicationRoleGroup, ApplicationRoleGroupViewModel>()
                 .ForMember(dst => dst.Name, src => src.MapFrom(x => x.ApplicationRole.Name));;
             CreateMap<ApplicationRole, ApplicationRoleSelect2ViewModel>()

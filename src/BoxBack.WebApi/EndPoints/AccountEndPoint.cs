@@ -103,14 +103,14 @@ namespace BoxBack.WebApi.EndPoints
                                     .ThenInclude(x => x.ApplicationRoleGroups)
                                     .ThenInclude(x => x.ApplicationRole)
                                     .FirstOrDefaultAsync(x => x.Email == authenticateViewModel.Email);
-                if (user == null)
-                {
-                    AddError("Usuário não encontrado.");
-                    return CustomResponse(404);
-                }
-                    
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (user == null)
+            {
+                AddError("Usuário não encontrado.");
+                return CustomResponse(404);
+            }
 
             // check to user inactive
             if (user.Status == ApplicationUserStatusEnum.INACTIVE)
@@ -127,6 +127,13 @@ namespace BoxBack.WebApi.EndPoints
             }
             #endregion
 
+            // check to groups inactives
+            if (user.ApplicationUserGroups.Count(x => !x.ApplicationGroup.IsDeleted) <= 0)
+            {
+                AddError("Usuário sem grupo ativo vinculado que permita acesso.\nSolicite ao usuário master da sua empresa para vincular seu usuário a outro grupo ativo, ou ativar ao menos um grupo já vinculado ao seu usuário.");
+                return CustomResponse(400);
+            }
+
             #region Map
             var userMapped = new ApplicationUserViewModel();
             try
@@ -141,17 +148,18 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 token = _generatorToken.GetToken(user);
-                if (string.IsNullOrEmpty(token))
-                {
-                    AddError("Problemas ao obter token. Tente novamente, persistindo o problema informe a equipe de suporte.");
-                    return CustomResponse(400);
-                } 
-                else
-                {
-                    userMapped.AccessToken = token;
-                }
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (string.IsNullOrEmpty(token))
+            {
+                AddError("Problemas ao obter token. Tente novamente, persistindo o problema informe a equipe de suporte.");
+                return CustomResponse(400);
+            } 
+            else
+            {
+                userMapped.AccessToken = token;
+            }
             
             #endregion
             return Ok(new { userData = userMapped });
@@ -217,10 +225,20 @@ namespace BoxBack.WebApi.EndPoints
                                             .ThenInclude(c => c.ApplicationRoleGroups)
                                                 .ThenInclude(d => d.ApplicationRole)
                                     .FirstOrDefaultAsync(x => x.Id == userId);
-                if (user == null)
-                    return CustomResponse(404, new { message = "Nenhum registro encontrado." });
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (user == null)
+                    return CustomResponse(404, new { message = "Nenhum registro encontrado." });
+            #endregion
+
+            #region Generals validations
+            // check to groups inactives
+            if (user.ApplicationUserGroups.Count(x => !x.ApplicationGroup.IsDeleted) <= 0)
+            {
+                AddError("Usuário sem grupo ativo vinculado que permita acesso.\nSolicite ao usuário master da sua empresa para vincular seu usuário a outro grupo ativo, ou ativar ao menos um grupo já vinculado ao seu usuário.");
+                return CustomResponse(400);
+            }
             #endregion
 
             #region Map
@@ -233,10 +251,10 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
             // map manually roles
-            userMapped.Role = new List<string>();
+            userMapped.Roles = new List<string>();
             try
             {
-                userMapped.Role = MapperExtensions.MapFromTwoDepths(user.ApplicationUserGroups.Select(x => x.ApplicationGroup.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name)));
+                userMapped.Roles = MapperExtensions.MapFromTwoDepths(user.ApplicationUserGroups.Select(x => x.ApplicationGroup.ApplicationRoleGroups.Select(x => x.ApplicationRole.Name)));
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion

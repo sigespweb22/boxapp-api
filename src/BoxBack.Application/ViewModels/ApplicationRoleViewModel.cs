@@ -1,11 +1,4 @@
-using System.Dynamic;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using BoxBack.Domain.Enums;
-using BoxBack.Domain.Models;
-using BoxBack.Application.ViewModels;
 
 namespace BoxBack.Application.ViewModels
 {
@@ -22,5 +15,8 @@ namespace BoxBack.Application.ViewModels
 
         [Required(ErrorMessage = "\nDescrição é requerida.")]
         public string Description { get; set; }
+
+        public string Subject { get; set; }
+        public string[] Actions { get; set; }
     }
 }
