@@ -21,13 +21,11 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasMaxLength(255);
             
             builder.Property(c => c.ComissaoReais)
-                .IsRequired(false)
-                .HasDefaultValue(null)
+                .HasDefaultValue(0)
                 .HasColumnType("decimal(7,3)");
             
             builder.Property(c => c.ComissaoPercentual)
-                .IsRequired(false)
-                .HasDefaultValue(null);
+                .HasDefaultValue(0);
             
             builder
                 .HasOne(c => c.ApplicationUser)

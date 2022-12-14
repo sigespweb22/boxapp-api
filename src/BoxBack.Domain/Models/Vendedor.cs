@@ -23,7 +23,6 @@ namespace BoxBack.Domain.Models
 
 
         // Relashionship
-        public string Email { get; set; }
         [ForeignKey("UserId")]
         public string UserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

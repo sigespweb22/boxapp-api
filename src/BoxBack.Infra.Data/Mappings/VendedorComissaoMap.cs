@@ -17,8 +17,7 @@ namespace BoxBack.Infra.Data.Mappings
                 .ValueGeneratedOnAdd();
             
             builder.Property(c => c.ValorComissao)
-                .IsRequired(false)
-                .HasDefaultValue(null)
+                .HasDefaultValue(0)
                 .HasColumnType("decimal(7,3)");
             
             builder
