@@ -259,5 +259,50 @@ namespace BoxBack.Domain.Enums
         CanDashboardPublicaAll = 17001,
         CanDashboardPublicaClienteContratoList = 17002,
         #endregion
+
+        #region Vendedor
+        [Description("Pode realizar todas as ações/operações em todos os produtos de fornecedores")]
+        CanVendedorAll = 18001,
+        [Description("Pode listar os dados de todos os produtos de fornecedores")]
+        CanVendedorList = 18002,
+        [Description("Pode listar os dados de um produto de fornecedor")]
+        CanVendedorRead = 18003,
+        [Description("Pode visualizar um produto de fornecedor")]
+        CanVendedorCreate = 18004,
+        [Description("Pode criar um produto de fornecedor")]
+        CanVendedorUpdate = 18005,
+        [Description("Pode deletar um produto de fornecedor")]
+        CanVendedorDelete = 18006,
+        #endregion
+
+        #region Vendedor Comissão
+        [Description("Pode realizar todas as ações/operações em todos os produtos de fornecedores")]
+        CanVendedorComissaoAll = 19001,
+        [Description("Pode listar os dados de todos os produtos de fornecedores")]
+        CanVendedorComissaoList = 19002,
+        [Description("Pode listar os dados de um produto de fornecedor")]
+        CanVendedorComissaoRead = 19003,
+        [Description("Pode visualizar um produto de fornecedor")]
+        CanVendedorComissaoCreate = 19004,
+        [Description("Pode criar um produto de fornecedor")]
+        CanVendedorComissaoUpdate = 19005,
+        [Description("Pode deletar um produto de fornecedor")]
+        CanVendedorComissaoDelete = 19006,
+        #endregion
+
+        #region Vendedor Contrato
+        [Description("Pode realizar todas as ações/operações em todos os produtos de fornecedores")]
+        CanVendedorContratoAll = 20001,
+        [Description("Pode listar os dados de todos os produtos de fornecedores")]
+        CanVendedorContratoList = 20002,
+        [Description("Pode listar os dados de um produto de fornecedor")]
+        CanVendedorContratoRead = 20003,
+        [Description("Pode visualizar um produto de fornecedor")]
+        CanVendedorContratoCreate = 20004,
+        [Description("Pode criar um produto de fornecedor")]
+        CanVendedorContratoUpdate = 20005,
+        [Description("Pode deletar um produto de fornecedor")]
+        CanVendedorContratoDelete = 20006,
+        #endregion
     }
 }
