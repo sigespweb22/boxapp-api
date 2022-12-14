@@ -40,16 +40,15 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Lista de todos os CONTRATOS de um cliente
+        /// Lista de todos os VENDEDORES
         /// </summary>
         /// <param name="q"></param>
-        /// <param name="clienteId"></param>
-        /// <returns>Um array json com os CONTRATOS do cliente</returns>
-        /// <response code="200">Lista de CONTRATOS do cliente</response>
+        /// <returns>Um array json com os VENDEDORES</returns>
+        /// <response code="200">Lista de VENDEDORES</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Lista vazia</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteContratoList, CanClienteContratoAll")]
+        [Authorize(Roles = "Master, CanVendedorList, CanVendedorAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -57,29 +56,20 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("list")]
         [HttpGet]
-        public async Task<IActionResult> ListAsync(string q, string clienteId)
+        public async Task<IActionResult> ListAsync(string q)
         {
-            #region Required validations
-            if (string.IsNullOrEmpty(clienteId))
-            {
-                AddError("Id Cliente requerido.");
-                return CustomResponse(400);
-            }
-            #endregion
-
             #region Get data
-            var clienteContratos = new List<ClienteContrato>();
+            var vendedores = new List<Vendedor>();
             try
             {
-                clienteContratos = await _context.ClientesContratos
-                                                    .AsNoTracking()
-                                                    .Where(x => x.ClienteId == Guid.Parse(clienteId))
-                                                    .OrderByDescending(x => x.UpdatedAt)
-                                                    .ToListAsync();
+                vendedores = await _context.Vendedores
+                                            .AsNoTracking()
+                                            .OrderByDescending(x => x.UpdatedAt)
+                                            .ToListAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
-            if (clienteContratos == null)
+            if (vendedores == null)
             {
                 AddError("Não encontrado.");
                 return CustomResponse(404);
@@ -89,57 +79,54 @@ namespace BoxBack.WebApi.EndPoints
             #region Filter search 
             if(!string.IsNullOrEmpty(q))
             {
-                PeriodicidadeEnum query;
-                Enum.TryParse<PeriodicidadeEnum>(q, out query);
-
                 try
                 {
-                    clienteContratos = clienteContratos.Where(x => x.Periodicidade.Equals(query)).ToList();    
+                    vendedores = vendedores.Where(x => x.Nome.Equals(q)).ToList();    
                 }
                 catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             }
             #endregion
 
             #region Map
-            IEnumerable<ClienteContratoViewModel> clienteContratoMapped = new List<ClienteContratoViewModel>();
+            IEnumerable<VendedorViewModel> vendedorMapped = new List<VendedorViewModel>();
             try
             {
-                clienteContratoMapped = _mapper.Map<IEnumerable<ClienteContratoViewModel>>(clienteContratos);
+                vendedorMapped = _mapper.Map<IEnumerable<VendedorViewModel>>(vendedores);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
             return Ok(new {
-                AllData = clienteContratoMapped.ToList(),
-                clienteContratos = clienteContratoMapped.ToList(),
+                AllData = vendedorMapped.ToList(),
+                Vendedores = vendedorMapped.ToList(),
                 Params = q,
-                Total = clienteContratoMapped.Count()
+                Total = vendedorMapped.Count()
             });
         }
 
         /// <summary> 
-        /// Adiciona um CONTRATO para um cliente
+        /// Adiciona um VENDEDOR
         /// </summary>
-        /// <param name="clienteContratoViewModel"></param>
+        /// <param name="vendedorViewModel"></param>
         /// <returns>True se adicionardo com sucesso</returns>
         /// <response code="201">Criado com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Authorize(Roles = "Master, CanClienteContratoCreate, CanClienteContratoAll")]
+        [Authorize(Roles = "Master, CanVendedorCreate, CanVendedorAll")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("create")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody]ClienteContratoViewModel clienteContratoViewModel)
+        public async Task<IActionResult> CreateAsync([FromBody]VendedorViewModel vendedorViewModel)
         {
             #region Map
-            var clienteContratoMapped = new ClienteContrato();
+            var vendedorMapped = new Vendedor();
             try
             {
-                clienteContratoMapped = _mapper.Map<ClienteContrato>(clienteContratoViewModel);
+                vendedorMapped = _mapper.Map<Vendedor>(vendedorViewModel);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -147,35 +134,35 @@ namespace BoxBack.WebApi.EndPoints
             #region Persistance and commit
             try
             {
-                await _context.ClientesContratos.AddAsync(clienteContratoMapped);
+                await _context.Vendedores.AddAsync(vendedorMapped);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            return CreatedAtAction(null, new { clienteId = clienteContratoViewModel.ClienteId});
+            return CustomResponse(201);
         }
 
         /// <summary>
-        /// Atualiza o CONTRATOS de um cliente
+        /// Atualiza o VENDEDOR
         /// </summary>
-        /// <param name="clienteContratoViewModel"></param>
+        /// <param name="vendedorViewModel"></param>
         /// <returns>True se atualizada com sucesso</returns>
         /// <response code="204">Atualizada com sucesso</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteContratoUpdate, CanClienteContratoAll")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "Master, CanVendedorUpdate, CanVendedorAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody]ClienteContratoViewModel clienteContratoViewModel)
+        public async Task<IActionResult> UpdateAsync([FromBody]VendedorViewModel vendedorViewModel)
         {
             #region Required validations
-            if (!clienteContratoViewModel.Id.HasValue ||
-                clienteContratoViewModel.Id == Guid.Empty)
+            if (!vendedorViewModel.Id.HasValue ||
+                vendedorViewModel.Id == Guid.Empty)
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);
@@ -183,36 +170,35 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Get data for update
-            var clienteContratoDB = new ClienteContrato();
+            var vendedorDB = new Vendedor();
             try
             {
-                clienteContratoDB = await _context
-                                            .ClientesContratos
+                vendedorDB = await _context
+                                            .Vendedores
                                             .AsNoTracking()
-                                            .FirstOrDefaultAsync(x => x.Id == clienteContratoViewModel.Id);
+                                            .FirstOrDefaultAsync(x => x.Id == vendedorViewModel.Id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            if (clienteContratoDB == null)
+            if (vendedorDB == null)
             {
-                AddError("Serviço de cliente não encontrado para atualizar.");
+                AddError("Vendedor não encontrado para atualizar.");
                 return CustomResponse(404);
             }
             #endregion
 
             #region Map
-            var clienteContratoMap = new ClienteContrato();
+            var vendedorMap = new Vendedor();
             try
             {
-                clienteContratoMap = _mapper.Map<ClienteContratoViewModel, ClienteContrato>(clienteContratoViewModel, clienteContratoDB);
-                clienteContratoMap.Cliente = null;
+                vendedorMap = _mapper.Map<VendedorViewModel, Vendedor>(vendedorViewModel, vendedorDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            #region Update serviço cliente
+            #region Update vendedor
             try
             {
-                _context.ClientesContratos.Update(clienteContratoMap);
+                _context.Vendedores.Update(vendedorMap);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -225,11 +211,11 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            return CustomResponse(200, new { clienteId = clienteContratoViewModel.ClienteId } );
+            return CustomResponse(204);
         }
 
         /// <summary>
-        /// Altera o status de um CONTRATO de um cliente
+        /// Altera o status de um VENDEDOR
         /// </summary>
         /// <param name="id"></param>
         /// <returns>True se a operação foi realizada com sucesso</returns>
@@ -247,7 +233,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         
-        [Authorize(Roles = "Master, CanClienteContratoUpdate, CanClienteContratoAll")]
+        [Authorize(Roles = "Master, CanVendedorUpdate, CanVendedorAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -266,28 +252,28 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
     
             #region Get data
-            var clienteContrato = new ClienteContrato();
+            var vendedor = new Vendedor();
             try
             {
-                clienteContrato = await _context.ClientesContratos.FindAsync(id);
+                vendedor = await _context.Vendedores.FindAsync(id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             
-            if (clienteContrato == null)
+            if (vendedor == null)
             {
-                AddError("Contrato do cliente não encontrado para alterar seu status.");
+                AddError("Vendedor não encontrado para alterar seu status.");
                 return CustomResponse(404);
             }
             #endregion
 
             #region Map
-            switch(clienteContrato.IsDeleted)
+            switch(vendedor.IsDeleted)
             {
                 case true:
-                    clienteContrato.IsDeleted = false;
+                    vendedor.IsDeleted = false;
                     break;
                 case false:
-                    clienteContrato.IsDeleted = true;
+                    vendedor.IsDeleted = true;
                     break;
             }
             #endregion
@@ -295,28 +281,29 @@ namespace BoxBack.WebApi.EndPoints
             #region Alter status
             try
             {
-                _context.ClientesContratos.Update(clienteContrato);
+                _context.Vendedores.Update(vendedor);
                 _unitOfWork.Commit();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            return CustomResponse(200, new { message = "Status contrato do cliente alterado com sucesso.", clienteId = clienteContrato.ClienteId } );
+            return CustomResponse(200, new { message = "Status vendedor alterado com sucesso."} );
         }
 
         /// <summary>
-        /// Retorna um CONTRATO de CLIENTE pelo seu Id
+        /// Retorna um VENDEDOR pelo seu Id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Um objeto com o CONTRATO solicitado</returns>
-        /// <response code="200">Lista um CONTRATO de CLIENTE</response>
+        /// <returns>Um objeto com o VENDEDOR solicitado</returns>
+        /// <response code="200">Lista um VENDEDOR</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
-        /// <response code="404">CONTRATO não encontrado</response>
+        /// <response code="404">VENDEDOR não encontrado</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteContratoRead, CanClienteContratoAll")]
+        [Authorize(Roles = "Master, CanVendedorRead, CanVendedorAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("list-one/{id}")]
         [HttpGet]
@@ -331,15 +318,15 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Get data
-            var clienteContrato = new ClienteContrato();
+            var vendedor = new Vendedor();
             try
             {
-                clienteContrato = await _context.ClientesContratos
-                                                .FindAsync(Guid.Parse(id));
+                vendedor = await _context.Vendedores
+                                         .FindAsync(Guid.Parse(id));
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
-            if (clienteContrato == null)
+            if (vendedor == null)
             {
                 AddError("Não encontrado.");
                 return CustomResponse(404);
@@ -347,272 +334,19 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
             
             #region Map
-            var clienteContratoMapped = new ClienteContratoViewModel();
+            var vendedorMapped = new VendedorViewModel();
             try
             {
-                clienteContratoMapped = _mapper.Map<ClienteContratoViewModel>(clienteContrato);
+                vendedorMapped = _mapper.Map<VendedorViewModel>(vendedor);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
             
             return Ok(new {
-                Data = clienteContratoMapped,
-                ClienteContrato = clienteContratoMapped,
+                Data = vendedorMapped,
+                Vendedor = vendedorMapped,
                 Params = id
             });
         }
-
-        #region Third party API
-        /// <summary>
-        /// Sincroniza a base de contratos de clientes do BOM CONTROLE com a base de contratos de clientes do BoxApp (Este método não atualiza os dados de contrato, apenas mantém os mesmos contratos em ambos os sistemas)
-        /// </summary>
-        /// <param></param>
-        /// <returns>Um objeto com o total de contratos de clientes sincronizados</returns>
-        /// <response code="200">Objeto com o total de clientes sincronizados</response>
-        /// <response code="400">Problemas de validação ou dados nulos</response>
-        /// <response code="404">Nenhum contrato encontrado</response>
-        /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteContratoCreate, CanClienteContratoAll")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Produces("application/json")]
-        [Route("sincronizar-from-third-party")]
-        [HttpGet]
-        public async Task<IActionResult> SincronizarFromThirdPartyPAsync()
-        {
-            #region Get clientes
-            IEnumerable<Cliente> clientes = new List<Cliente>();
-            try
-            {
-                clientes = await _context.Clientes.ToListAsync();
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-
-            if (clientes == null || clientes.Count() <= 0)
-            {
-                AddError("Nenhum cliente encontrado na base de dados, para então seguir com a sincronização dos contratos com o sistema de terceiro.");
-                return CustomResponse(500);
-            }
-            #endregion
-
-            #region Chave api resolve
-            var chaveApiTerceiro = new ChaveApiTerceiro();
-            try
-            {
-                chaveApiTerceiro = await _context
-                                                .ChavesApiTerceiro
-                                                .Where(x => x.DataValidade >= DateTimeOffset.Now &&
-                                                       x.IsDeleted == false && !string.IsNullOrEmpty(x.Key))
-                                                .FirstOrDefaultAsync(x => x.ApiTerceiro.Equals(ApiTerceiroEnum.BOM_CONTROLE));
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-
-            if (chaveApiTerceiro == null)
-            { 
-                AddError("Nenhuma chave de api de terceiro encontrada, verifique os possíveis erros: \n\nNenhuma chave de api cadastrada para esta integração. \n\nA chave de api cadastrada não possui uma Key. \n\nA chave de api cadastrada não está ativa. \n\nA chave de api cadastrada está com Data de Validade vencida.");
-                return CustomResponse(404);
-            }
-            #endregion
-
-            #region Token resolve
-            String token = string.Empty;
-            try
-            {
-                token = $"ApiKey {chaveApiTerceiro.Key}";
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
-
-            #region Get contratos
-            IEnumerable<ClienteContrato> contratos = new List<ClienteContrato>();
-            try
-            {
-                contratos = await _context.ClientesContratos.ToListAsync();
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
-
-            #region Get data Bom Controle (Third Party)
-            IEnumerable<BCContratoModelService> clienteContratosThirdParty = new List<BCContratoModelService>();
-            Int64 totalSincronizado = 0;
-            var clientesContratos = new List<ClienteContrato>();
-            try
-            {
-                foreach (var cliente in clientes)
-                {
-                    switch (cliente.TipoPessoa) {
-                        case TipoPessoaEnum.FISICA:
-                            clienteContratosThirdParty = await _bcServices.VendaContratoPesquisar(cliente.Cpf, token);
-                            break;
-                        case TipoPessoaEnum.JURIDICA:
-                            clienteContratosThirdParty = await _bcServices.VendaContratoPesquisar(cliente.CNPJ, token);
-                            break;
-                        default:
-                            clienteContratosThirdParty = null;
-                            break;
-                    }
-
-                    if (clienteContratosThirdParty == null) continue;
-
-                    foreach (var clienteContratoThirdParty in clienteContratosThirdParty)
-                    {
-                        // Verifico se o contrato obtido da api de terceiro já não existe na minha base
-                        if (!contratos.Any(x => x.BomControleContratoId.Equals(clienteContratoThirdParty.Id)))
-                        {
-                            // contrato não existe, portanto, posso sincronizá-lo para minha base
-                            var contratoMapped = new ClienteContrato();
-                            try
-                            {
-                                var clienteContratoThirdPartyId = clienteContratoThirdParty.Id;
-                                clienteContratoThirdParty.Id = null;
-
-                                contratoMapped = _mapper.Map<ClienteContrato>(clienteContratoThirdParty);
-                                
-                                contratoMapped.BomControleContratoId = clienteContratoThirdPartyId;
-                                contratoMapped.ClienteId = cliente.Id;
-                                
-                                clientesContratos.Add(contratoMapped);
-                                totalSincronizado++;
-                            }
-                            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
-
-            #region Persistance
-            try
-            {
-                _context.ClientesContratos.AddRange(clientesContratos);    
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            
-            #endregion
-
-            #region Commit
-            try
-            {
-                _unitOfWork.Commit();    
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
-
-            #region Return
-            return CustomResponse(200, new {
-                TotalSincronizado = totalSincronizado,
-            });
-            #endregion
-        }
-
-        /// <summary>
-        /// Atualiza a periodicidade dos contratos de clientes do BoxApp a partir da periodicidade dos mesmos contratos no BOM CONTROLE
-        /// </summary>
-        /// <param></param>
-        /// <returns>Um objeto com o total de contratos atualizados</returns>
-        /// <response code="200">Um objeto com o total de contratos atualizados</response>
-        /// <response code="400">Problemas de validação ou dados nulos</response>
-        /// <response code="404">Nenhum contrato encontrado</response>
-        /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteContratoUpdate, CanClienteContratoAll")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Produces("application/json")]
-        [Route("update-periodicidade-from-third-party")]
-        [HttpGet]
-        public async Task<IActionResult> UpdatePeriodicidadeFromThirdPartyPAsync()
-        {
-            #region Get contratos
-            IEnumerable<ClienteContrato> clientesContratos = new List<ClienteContrato>();
-            try
-            {
-                clientesContratos = await _context.ClientesContratos.AsNoTracking().ToListAsync();
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-
-            if (clientesContratos == null || clientesContratos.Count() <= 0)
-            {
-                AddError("Nenhum contrato de cliente encontrado na base de dados, para então seguir com a atualização da periodicidade dos contratos a partir dos dados da api de terceiro.");
-                return CustomResponse(500);
-            }
-            #endregion
-
-            #region Chave api resolve
-            var chaveApiTerceiro = new ChaveApiTerceiro();
-            try
-            {
-                chaveApiTerceiro = await _context
-                                                .ChavesApiTerceiro
-                                                .Where(x => x.DataValidade >= DateTimeOffset.Now &&
-                                                       x.IsDeleted == false && !string.IsNullOrEmpty(x.Key))
-                                                .FirstOrDefaultAsync(x => x.ApiTerceiro.Equals(ApiTerceiroEnum.BOM_CONTROLE));
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-
-            if (chaveApiTerceiro == null)
-            { 
-                AddError("Nenhuma chave de api de terceiro encontrada, verifique os possíveis erros: \n\nNenhuma chave de api cadastrada para esta integração. \n\nA chave de api cadastrada não possui uma Key. \n\nA chave de api cadastrada não está ativa. \n\nA chave de api cadastrada está com Data de Validade vencida.");
-                return CustomResponse(404);
-            }
-            #endregion
-
-            #region Token resolve
-            String token = string.Empty;
-            try
-            {
-                token = $"ApiKey {chaveApiTerceiro.Key}";
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
-
-            #region Obtém os contratos da Api Terceiro um a um e atualiza a periodicidade no BoxApp
-            var contratoFromThirdParty = new BCContratoModelService();
-            Int64 totalContratosAtualizados = 0;
-            try
-            {
-                foreach (var clienteContrato in clientesContratos)
-                {
-                    try
-                    {
-                        contratoFromThirdParty = await _bcServices.VendaContratoObter((long)clienteContrato.BomControleContratoId, token);
-                    }
-                    catch (Refit.ApiException ex) { 
-                        if (ex.HasContent) continue;
-                    }
-                    
-                    if (contratoFromThirdParty != null)
-                    {
-                        if (clienteContrato.Periodicidade != contratoFromThirdParty.Periodicidade)
-                        {
-                            clienteContrato.Periodicidade = contratoFromThirdParty.Periodicidade;
-                            _context.ClientesContratos.Update(clienteContrato);
-                            totalContratosAtualizados++;
-                        } else continue;
-                    } else continue;
-                }
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
-
-            #region Commit
-            try
-            {
-                _unitOfWork.Commit();
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
-
-            #region Return
-            return CustomResponse(200, new {
-                TotalContratosAtualizados = totalContratosAtualizados,
-            });
-            #endregion
-        }
-        #endregion
     }
 }
