@@ -19,7 +19,7 @@ namespace BoxBack.Domain.Models
         // Relationships
         [ForeignKey("ClienteContratoId")]
         public Guid ClienteContratoId { get; set; }
-        public ClienteContrato clienteContrato { get; set; }
+        public ClienteContrato ClienteContrato { get; set; }
 
         [ForeignKey("VendedorId")]
         public Guid VendedorId { get; set; }

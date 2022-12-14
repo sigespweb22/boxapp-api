@@ -1,0 +1,37 @@
+using BoxBack.Domain.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace BoxBack.Infra.Data.Mappings
+{
+    public class VendedorComissaoMap : IEntityTypeConfiguration<VendedorComissao>
+    {
+        public void Configure(EntityTypeBuilder<VendedorComissao> builder)
+        {
+            builder.ToTable("VendedoresComissoes");
+
+            builder.HasKey(c => c.Id);
+
+            builder.Property(c => c.Id)
+                .HasColumnName("Id")
+                .ValueGeneratedOnAdd();
+            
+            builder.Property(c => c.ValorComissao)
+                .IsRequired(false)
+                .HasDefaultValue(null)
+                .HasColumnType("decimal(7,3)");
+            
+            builder
+                .HasOne(c => c.Vendedor)
+                .WithMany(c => c.VendedorComissoes)
+                .HasForeignKey(c => c.VendedorId)
+                .OnDelete(DeleteBehavior.NoAction);
+            
+            builder
+               .HasOne(c => c.ClienteContrato)
+               .WithMany(c => c.VendedoresComissoes)
+               .HasForeignKey(c => c.VendedorId)
+               .OnDelete(DeleteBehavior.NoAction);
+        }   
+    }
+}
