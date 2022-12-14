@@ -20,12 +20,6 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasForeignKey(c => c.RoleId)
                 .IsRequired();
             
-            builder
-                .HasMany(c => c.ApplicationRoleClaims)
-                .WithOne(d => d.ApplicationRole)
-                .HasForeignKey(c => c.RoleId)
-                .IsRequired();
-
             //Initial seed
             var roles = EnumHelper.GetNames<PermissionEnum>();
             foreach (var role in roles)
@@ -85,13 +79,13 @@ namespace BoxBack.Infra.Data.Mappings
             String subject = String.Empty;
             try
             {
-                for (var i = 0; i < entities?.Count() -1; i++)
+                for (var i = 0; i < entities.Count() - 1; i++)
                 {
-                    if (i == 1)
+                    if (i != 1)
                     {
-                        subject = $"{subject}{entities[i]?.ToLower()}";
+                        subject = $"{subject}{StringHelpers.FirstCharToUpper(entities[i])}";
                     } else {
-                        subject = $"{subject}{entities[i]}";    
+                        subject = $"{subject}{entities[i]}"; 
                     }
                 }
             }
