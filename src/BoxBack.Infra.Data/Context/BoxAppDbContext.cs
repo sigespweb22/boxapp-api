@@ -53,6 +53,9 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<ChaveApiTerceiro> ChavesApiTerceiro { get; set; }
         public DbSet<ClienteContrato> ClientesContratos { get; set; }
         public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Vendedor> Vendedores { get; set; }
+        public DbSet<VendedorComissao> VendedoresComissoes { get; set; }
+        public DbSet<VendedorContrato> VendedoresContratos { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
@@ -92,6 +95,9 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new ProdutoMap());
             modelBuilder.ApplyConfiguration(new FornecedorProdutoMap());
             modelBuilder.ApplyConfiguration(new ClienteProdutoMap());
+            modelBuilder.ApplyConfiguration(new VendedorMap());
+            modelBuilder.ApplyConfiguration(new VendedorComissaoMap());
+            modelBuilder.ApplyConfiguration(new VendedorContratoMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
