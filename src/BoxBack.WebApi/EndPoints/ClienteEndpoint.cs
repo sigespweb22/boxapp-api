@@ -502,7 +502,7 @@ namespace BoxBack.WebApi.EndPoints
         ///
         /// </remarks>
         
-        [Authorize(Roles = "Master, CanClienteAlterStatus, CanClienteAll")]
+        [Authorize(Roles = "Master, CanClienteUpdate, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
