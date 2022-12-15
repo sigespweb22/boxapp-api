@@ -91,6 +91,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ProdutoViewModel, Produto>();
             CreateMap<FornecedorProdutoViewModel, FornecedorProduto>();
             CreateMap<VendedorViewModel, Vendedor>();
+            CreateMap<VendedorContratoViewModel, VendedorContrato>();
         }
     }
 }
