@@ -11,6 +11,8 @@ namespace BoxBack.Application.ViewModels
         [Required(ErrorMessage = "\nNome vendedor é requerido.")]
         public string Nome { get; set; }
 
+        public string Status { get; set; }
+
         public string UserId { get; set; }
         public ApplicationUserViewModel ApplicationUser { get; set; }
     }

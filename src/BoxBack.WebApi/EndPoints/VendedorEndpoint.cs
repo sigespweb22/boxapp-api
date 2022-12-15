@@ -232,7 +232,6 @@ namespace BoxBack.WebApi.EndPoints
         ///     }
         ///
         /// </remarks>
-        
         [Authorize(Roles = "Master, CanVendedorUpdate, CanVendedorAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
