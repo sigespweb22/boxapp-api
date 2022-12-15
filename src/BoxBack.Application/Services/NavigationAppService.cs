@@ -97,7 +97,7 @@ namespace BoxBack.Application.Services
                 Title = "Grupos",
                 Path = "/sistema/controle-acesso/grupo/list",
                 Action = "list",
-                Subject = "ac-grupo-page"
+                Subject = "ac-group-page"
             };
             navigationB.Children.Add(oldestSonD);
 
@@ -187,7 +187,7 @@ namespace BoxBack.Application.Services
                 Title = "Chaves Apis",
                 Path = "/sistema/configuracoes/chave-api/list",
                 Action = "list",
-                Subject = "ac-chave_api_terceiro-page"
+                Subject = "ac-chaveApiTerceiro-page"
             };
             navigationF.Children.Add(token);
 
