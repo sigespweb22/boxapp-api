@@ -109,7 +109,7 @@ namespace BoxBack.WebApi.EndPoints
             
             return Ok(new {
                 AllData = vendedorContratoMapped.ToList(),
-                vendedorContratos = vendedorContratoMapped.ToList(),
+                VendedorContratos = vendedorContratoMapped.ToList(),
                 Params = q,
                 Total = vendedorContratoMapped.Count()
             });

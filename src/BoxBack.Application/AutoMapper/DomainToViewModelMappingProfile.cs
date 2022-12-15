@@ -88,9 +88,7 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
             CreateMap<VendedorContrato, VendedorContratoViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
-            CreateMap<Vendedor, VendedorSelect2ViewModel>()
-                .ForMember(dst => dst.VendedorId, src => src.MapFrom(x => x.Id))
-                .ForMember(dst => dst.Nome, src => src.MapFrom(x => x.Nome));
+            CreateMap<Vendedor, VendedorSelect2ViewModel>();
         }
     }
 }
