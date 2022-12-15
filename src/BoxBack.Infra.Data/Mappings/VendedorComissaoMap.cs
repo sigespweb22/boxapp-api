@@ -29,7 +29,7 @@ namespace BoxBack.Infra.Data.Mappings
             builder
                .HasOne(c => c.ClienteContrato)
                .WithMany(c => c.VendedoresComissoes)
-               .HasForeignKey(c => c.VendedorId)
+               .HasForeignKey(c => c.ClienteContratoId)
                .OnDelete(DeleteBehavior.NoAction);
         }   
     }
