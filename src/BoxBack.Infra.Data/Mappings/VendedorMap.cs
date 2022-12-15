@@ -20,13 +20,6 @@ namespace BoxBack.Infra.Data.Mappings
                 .IsRequired()
                 .HasMaxLength(255);
             
-            builder.Property(c => c.ComissaoReais)
-                .HasDefaultValue(0)
-                .HasColumnType("decimal(7,3)");
-            
-            builder.Property(c => c.ComissaoPercentual)
-                .HasDefaultValue(0);
-            
             builder
                 .HasOne(c => c.ApplicationUser)
                 .WithOne(c => c.Vendedor)

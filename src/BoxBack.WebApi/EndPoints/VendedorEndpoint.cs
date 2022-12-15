@@ -13,6 +13,7 @@ using BoxBack.Domain.Interfaces;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Services;
 using BoxBack.Application.ViewModels;
+using BoxBack.Application.ViewModels.Selects;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -344,6 +345,55 @@ namespace BoxBack.WebApi.EndPoints
                 Vendedor = vendedorMapped,
                 Params = id
             });
+        }
+
+        /// <summary>
+        /// Lista todos os VENDEDORES para uma select2
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="isDeleted"></param>
+        /// <returns>Um array json com os VENDEDORES</returns>
+        /// <response code="200">Lista de VENDEDORES</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Lista vazia</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanVendedorList, CanVendedorAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("list-to-select")] 
+        [HttpGet]
+        public async Task<IActionResult> ListToSelectAsync(string q, bool isDeleted = false)
+        {
+            #region Get data
+            var vendedoresDB = new List<Vendedor>();
+            try
+            {
+                vendedoresDB = await _context
+                                        .Vendedores
+                                        .Where(x => !x.IsDeleted || x.IsDeleted == isDeleted)
+                                        .ToListAsync();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            
+            if (vendedoresDB == null)
+            {
+                AddError("Não encontrado");
+                return CustomResponse(404);
+            }
+            #endregion
+            
+            #region Map
+            IEnumerable<VendedorSelect2ViewModel> vendedoresMap = new List<VendedorSelect2ViewModel>();
+            try
+            {
+                vendedoresMap = _mapper.Map<IEnumerable<VendedorSelect2ViewModel>>(vendedoresDB);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            return Ok(vendedoresMap);
         }
     }
 }

@@ -15,6 +15,13 @@ namespace BoxBack.Infra.Data.Mappings
             builder.Property(c => c.Id)
                 .HasColumnName("Id")
                 .ValueGeneratedOnAdd();
+
+            builder.Property(c => c.ComissaoReais)
+                .HasDefaultValue(0)
+                .HasColumnType("decimal(7,3)");
+            
+            builder.Property(c => c.ComissaoPercentual)
+                .HasDefaultValue(0);
             
             builder
                 .HasOne(c => c.Vendedor)
