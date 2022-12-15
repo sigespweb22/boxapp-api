@@ -67,6 +67,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 groups = await _context.ApplicationGroups
                                         .AsNoTracking()
+                                        .IgnoreQueryFilters()
                                         .Include(x => x.ApplicationRoleGroups)
                                         .ThenInclude(x => x.ApplicationRole)
                                         .OrderBy(x => x.Name)
@@ -222,7 +223,7 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody]ApplicationGroupViewModel applicationGroupViewModel)
+        public async Task<IActionResult> UpdateAsync([FromBody]ApplicationGroupUpdateViewModel applicationGroupViewModel)
         {
             #region Required validations
             if (string.IsNullOrEmpty(applicationGroupViewModel.Id))
@@ -265,7 +266,7 @@ namespace BoxBack.WebApi.EndPoints
                 // applicationUserViewModel.Funcao = userDB.Funcao.ToString();
                 // applicationUserViewModel.Setor = userDB.Setor.ToString();
                 // applicationUserViewModel.Status = userDB.Status.ToString();
-                groupMap = _mapper.Map<ApplicationGroupViewModel, ApplicationGroup>(applicationGroupViewModel, groupDB);
+                groupMap = _mapper.Map<ApplicationGroupUpdateViewModel, ApplicationGroup>(applicationGroupViewModel, groupDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
@@ -331,6 +332,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 group = await _context
                                 .ApplicationGroups
+                                .IgnoreQueryFilters()
                                 .FirstOrDefaultAsync(x => x.Id == Guid.Parse(id));
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="ZShh_gid76VzSa8Wm5ik" name="Ecossistemas BoxApp">
-        <mxGraphModel dx="986" dy="2799" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1824" dy="1959" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -1043,7 +1043,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="PjU7GTZcp21ykV1gFNS_" name="Padrão de comunicação entre camadas de sistemas">
-        <mxGraphModel dx="1586" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1824" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="i8PRJfwW0fpIDQNTJLlo-0"/>
                 <mxCell id="i8PRJfwW0fpIDQNTJLlo-1" parent="i8PRJfwW0fpIDQNTJLlo-0"/>
@@ -1102,7 +1102,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="-YHX1L5GLMSXIPV7U7ps" name="Endereços importantes">
-        <mxGraphModel dx="1586" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1824" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -1115,7 +1115,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="dvDqL-1x1C2zQUIQTiQ9" name="Scrum">
-        <mxGraphModel dx="1586" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1824" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="MLsAs9dkRaDjuZiQD-N9-0"/>
                 <mxCell id="MLsAs9dkRaDjuZiQD-N9-1" parent="MLsAs9dkRaDjuZiQD-N9-0"/>
@@ -1243,7 +1243,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="jwyp6whXzRpZ3XzgssWn" name="Composição padrão telas">
-        <mxGraphModel dx="1586" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1824" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="iDllT3f8cEkQCWWwhwEc-0"/>
                 <mxCell id="iDllT3f8cEkQCWWwhwEc-1" parent="iDllT3f8cEkQCWWwhwEc-0"/>
@@ -1269,7 +1269,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="cQG6PAzR0BiU9lr8OepN" name="Modelo de criação de telas">
-        <mxGraphModel dx="986" dy="1630" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1824" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="dulHNBuzd8QKUaNGfWdR-0"/>
                 <mxCell id="dulHNBuzd8QKUaNGfWdR-1" parent="dulHNBuzd8QKUaNGfWdR-0"/>
@@ -1334,35 +1334,6 @@
                 </mxCell>
                 <mxCell id="8b4eOiBoM6bxf7YjHauX-3" value="RIGHT" style="rounded=0;whiteSpace=wrap;html=1;" parent="dulHNBuzd8QKUaNGfWdR-1" vertex="1">
                     <mxGeometry x="245" y="355" width="80" height="60" as="geometry"/>
-                </mxCell>
-            </root>
-        </mxGraphModel>
-    </diagram>
-    <diagram id="rsmb_Jm0zLleiQ_9hdZz" name="Versionamento e Teste">
-        <mxGraphModel dx="986" dy="1630" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
-            <root>
-                <mxCell id="tjgDPrPTEfSVksrKcb1v-0"/>
-                <mxCell id="tjgDPrPTEfSVksrKcb1v-1" parent="tjgDPrPTEfSVksrKcb1v-0"/>
-                <mxCell id="mtMdW1WWcMfGzfO7xagW-2" value="" style="endArrow=classic;html=1;" parent="tjgDPrPTEfSVksrKcb1v-1" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="330" y="670" as="sourcePoint"/>
-                        <mxPoint x="330" y="190" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="mtMdW1WWcMfGzfO7xagW-4" value="main" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="tjgDPrPTEfSVksrKcb1v-1" vertex="1">
-                    <mxGeometry x="300" y="670" width="60" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="mtMdW1WWcMfGzfO7xagW-5" value="v1.5.0" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="tjgDPrPTEfSVksrKcb1v-1" vertex="1">
-                    <mxGeometry x="323" y="590" width="60" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="mtMdW1WWcMfGzfO7xagW-9" value="v1.5.1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="tjgDPrPTEfSVksrKcb1v-1" vertex="1">
-                    <mxGeometry x="383" y="512" width="60" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="mtMdW1WWcMfGzfO7xagW-10" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=none;routingCenterX=-0.5;rotation=-90;" parent="tjgDPrPTEfSVksrKcb1v-1" vertex="1">
-                    <mxGeometry x="190" y="415" width="340" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="mtMdW1WWcMfGzfO7xagW-12" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=none;routingCenterX=-0.5;rotation=-90;" parent="tjgDPrPTEfSVksrKcb1v-1" vertex="1">
-                    <mxGeometry x="248.13" y="338.13" width="343.75" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

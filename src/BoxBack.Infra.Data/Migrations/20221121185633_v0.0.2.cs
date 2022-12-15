@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BoxBack.Infra.Data.Migrations
 {
-    public partial class Createv002 : Migration
+    public partial class v002 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using BoxBack.Domain.Enums;
 using BoxBack.Domain.Models;
 
 namespace BoxBack.Application.ViewModels
 {
-    public class ApplicationUserViewModel
+    public class ApplicationUserUpdateViewModel
     {
         public string Id { get;set; }
         public string UserId { get;set; }
@@ -32,19 +31,8 @@ namespace BoxBack.Application.ViewModels
         public bool LockoutEnabled { get; set; }
         public DateTimeOffset? LockoutEnd { get; set; }
 
-        public List<string> ApplicationUserRoles { get; set; }
-        public List<string> Roles { get; set; }
 
         [MinLength(1, ErrorMessage = "\nAo menos um grupo é requerido.")]
-        public List<ApplicationUserGroupViewModel> ApplicationUserGroups { get; set; } 
-
-        // ** Propriedade das habilidades do usuário - CaslJS
-        public List<AbilityCasl> AbilitiesCasl { get; set; }
-    }
-
-    public class AbilityCasl
-    {
-        public string Subject { get;  set; }
-        public CASLJSActionsEnum[] Actions { get; set; }
+        public List<ApplicationUserGroupUpdateViewModel> ApplicationUserGroups { get; set; } 
     }
 }

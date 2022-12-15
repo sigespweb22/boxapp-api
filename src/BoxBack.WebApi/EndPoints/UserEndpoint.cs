@@ -273,13 +273,38 @@ namespace BoxBack.WebApi.EndPoints
             userMap.Status = ApplicationUserStatusEnum.PENDING;
             #endregion
 
-            #region Data add and password
+            #region Persitance user data and password
+            var signIn = new IdentityResult();
             try
             {
-                await _manager.CreateAsync(userMap);
-                await _manager.AddPasswordAsync(userMap, applicationUserViewModel.Password);
+
+                signIn = await _manager.CreateAsync(userMap);
+                
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (signIn.Succeeded)
+            {
+                try
+                {
+                    await _manager.AddPasswordAsync(userMap, applicationUserViewModel.Password);    
+                }
+                catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            } else if (signIn.Errors.Count() > 0)
+            {
+                foreach (var error in signIn.Errors)
+                {
+                    switch(error.Code)
+                    {
+                        case "DuplicateUserName":
+                            AddError("Usuário já existe.");
+                            return CustomResponse(400);
+                        default:
+                            AddError(error.Code);
+                            return CustomResponse(400);
+                    }    
+                }
+            }
             #endregion
 
             #region Commit
@@ -303,7 +328,7 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("update")]
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody]ApplicationUserViewModel applicationUserViewModel)
+        public async Task<IActionResult> UpdateAsync([FromBody]ApplicationUserUpdateViewModel applicationUserViewModel)
         {
             #region Required validations
             if (string.IsNullOrEmpty(applicationUserViewModel.Id))
@@ -346,7 +371,7 @@ namespace BoxBack.WebApi.EndPoints
                 applicationUserViewModel.Funcao = userDB.Funcao.ToString();
                 applicationUserViewModel.Setor = userDB.Setor.ToString();
                 applicationUserViewModel.Status = userDB.Status.ToString();
-                userMap = _mapper.Map<ApplicationUserViewModel, ApplicationUser>(applicationUserViewModel, userDB);
+                userMap = _mapper.Map<ApplicationUserUpdateViewModel, ApplicationUser>(applicationUserViewModel, userDB);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
