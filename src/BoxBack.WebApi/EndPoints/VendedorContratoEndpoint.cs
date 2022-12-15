@@ -71,6 +71,9 @@ namespace BoxBack.WebApi.EndPoints
             {
                 vendedorContratos = await _context.VendedoresContratos
                                                     .AsNoTracking()
+                                                    .Include(x => x.Vendedor)
+                                                    .Include(x => x.ClienteContrato)
+                                                    .ThenInclude(x => x.Cliente)
                                                     .Where(x => x.VendedorId == Guid.Parse(vendedorId))
                                                     .OrderByDescending(x => x.UpdatedAt)
                                                     .ToListAsync();
@@ -314,10 +317,10 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("list-one/{id}")]
         [HttpGet]
-        public async Task<IActionResult> ListOneAsync([FromRoute]string id)
+        public async Task<IActionResult> ListOneAsync([FromRoute]Guid? id)
         {
             #region Required validations
-            if (string.IsNullOrEmpty(id))
+            if (!id.HasValue || id == Guid.Empty)
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);
@@ -329,7 +332,10 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 vendedorContrato = await _context.VendedoresContratos
-                                                .FindAsync(Guid.Parse(id));
+                                                 .Include(x => x.Vendedor)
+                                                 .Include(x => x.ClienteContrato)
+                                                 .ThenInclude(x => x.Cliente)
+                                                 .FirstOrDefaultAsync(x => x.Id == id);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
