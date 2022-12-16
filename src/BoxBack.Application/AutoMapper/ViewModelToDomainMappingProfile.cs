@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
+using BoxBack.Application.Extensions;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Enums;
 using BoxBack.Domain.Models;
@@ -91,7 +92,9 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ProdutoViewModel, Produto>();
             CreateMap<FornecedorProdutoViewModel, FornecedorProduto>();
             CreateMap<VendedorViewModel, Vendedor>();
-            CreateMap<VendedorContratoViewModel, VendedorContrato>();
+            CreateMap<VendedorContratoViewModel, VendedorContrato>()
+                .ForMember(dst => dst.ComissaoPercentual, src => src.MapFrom(x => x.ComissaoPercentual))
+                .ForMember(dst => dst.ComissaoReais, src => src.MapFrom(x => x.ComissaoReais));
         }
     }
 }

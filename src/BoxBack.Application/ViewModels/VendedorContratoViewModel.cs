@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace BoxBack.Application.ViewModels
 {
@@ -6,8 +7,9 @@ namespace BoxBack.Application.ViewModels
     {
         public Guid? Id { get; set; }
         public string Status { get; set; }
-        public Int32 ComissaoPercentual { get; set; }
-        public decimal ComissaoReais { get; set; }
+
+        public Int32 ComissaoPercentual { get; set; } = 0;
+        public decimal ComissaoReais { get; set; } = 0;
 
         // Relationships
         public Guid VendedorId { get; set; }
