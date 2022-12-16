@@ -119,6 +119,15 @@ namespace BoxBack.Application.Services
             };
             navigationC.Children.Add(oldestSonNB1);
 
+            var oldestSonNB2 = new Son
+            {
+                Title = "Vendedores",
+                Path = "/negocios/comercial/vendedor/list",
+                Action = "list",
+                Subject = "ac-vendedor-page"
+            };
+            navigationC.Children.Add(oldestSonNB2);
+
             // var oldestSonNB2 = new Son
             // {
             //     Title = "Serviços",
