@@ -136,13 +136,13 @@ namespace BoxBack.WebApi.EndPoints
             #region Generals validations
             try
             {
-                if (AlreadyVinculo(new VendedorContratoViewModel()))
+                if (AlreadyVinculo(vendedorContratoViewModel))
                 {
                     AddError("Já existe um vínculo de contrato ativo para o mesmo vendedor e contrato informados.");
                     return CustomResponse(400);
                 }
             }
-            catch { throw; }
+            catch (Exception ex) { AddError(ex.Message); return CustomResponse(400); }
 
             #endregion
 
