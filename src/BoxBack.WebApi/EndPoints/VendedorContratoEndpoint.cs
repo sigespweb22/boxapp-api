@@ -133,6 +133,19 @@ namespace BoxBack.WebApi.EndPoints
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody]VendedorContratoViewModel vendedorContratoViewModel)
         {
+            #region Generals validations
+            try
+            {
+                if (AlreadyVinculo(new VendedorContratoViewModel()))
+                {
+                    AddError("Já existe um vínculo de contrato ativo para o mesmo vendedor e contrato informados.");
+                    return CustomResponse(400);
+                }
+            }
+            catch { throw; }
+
+            #endregion
+
             #region Map
             var vendedorContratoMapped = new VendedorContrato();
             try
@@ -360,6 +373,36 @@ namespace BoxBack.WebApi.EndPoints
                 VendedorContrato = vendedorContratoMapped,
                 Params = id
             });
+        }
+
+        private bool AlreadyVinculo (VendedorContratoViewModel vendedorContratoViewModel)
+        {
+            #region Validation required
+            if (vendedorContratoViewModel == null)
+                throw new ArgumentNullException ("Dados requeridos não informados.");
+            
+            if (vendedorContratoViewModel.VendedorId == Guid.Empty)
+                throw new ArgumentNullException ("Id do vendedor não informado");
+            
+            if (vendedorContratoViewModel.ClienteContratoId == Guid.Empty)
+                throw new ArgumentNullException ("Id do contrato não informado");
+            #endregion
+
+            #region Check to already
+            bool alreadyVinculo;
+            try
+            {
+                alreadyVinculo = _context
+                                    .VendedoresContratos
+                                    .IgnoreQueryFilters()
+                                    .Any(x => x.IsDeleted == false && 
+                                         x.VendedorId.Equals(vendedorContratoViewModel.VendedorId) &&
+                                         x.ClienteContratoId.Equals(vendedorContratoViewModel.ClienteContratoId));
+            }
+            catch (System.Exception ex) { throw new InvalidOperationException(ex.Message); }
+            #endregion
+
+            return alreadyVinculo;
         }
     }
 }
