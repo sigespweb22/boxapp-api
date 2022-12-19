@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using BoxBack.Domain.Models;
 
 namespace BoxBack.Application.ViewModels
 {
@@ -14,5 +15,6 @@ namespace BoxBack.Application.ViewModels
         // Relationships
         public Guid VendedorId { get; set; }
         public Guid ClienteContratoId { get; set; }
+        public ClienteContrato ClienteContrato { get; set; }
     }
 }
