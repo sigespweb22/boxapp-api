@@ -528,10 +528,10 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> UpdatePeriodicidadeFromThirdPartyPAsync()
         {
             #region Get contratos
-            IEnumerable<ClienteContrato> clientesContratos = new List<ClienteContrato>();
+            ClienteContrato[] clientesContratos;
             try
             {
-                clientesContratos = await _context.ClientesContratos.AsNoTracking().ToListAsync();
+                clientesContratos = await _context.ClientesContratos.AsNoTracking().ToArrayAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
@@ -575,11 +575,11 @@ namespace BoxBack.WebApi.EndPoints
             Int64 totalContratosAtualizados = 0;
             try
             {
-                foreach (var clienteContrato in clientesContratos)
+                for (var i = 0; i <  clientesContratos.Count(); i++)
                 {
                     try
                     {
-                        contratoFromThirdParty = await _bcServices.VendaContratoObter((long)clienteContrato.BomControleContratoId, token);
+                        contratoFromThirdParty = await _bcServices.VendaContratoObter((long)clientesContratos[i].BomControleContratoId, token);
                     }
                     catch (Refit.ApiException ex) { 
                         if (ex.HasContent) continue;
@@ -587,10 +587,10 @@ namespace BoxBack.WebApi.EndPoints
                     
                     if (contratoFromThirdParty != null)
                     {
-                        if (clienteContrato.Periodicidade != contratoFromThirdParty.Periodicidade)
+                        if (clientesContratos[i].Periodicidade != contratoFromThirdParty.Periodicidade)
                         {
-                            clienteContrato.Periodicidade = contratoFromThirdParty.Periodicidade;
-                            _context.ClientesContratos.Update(clienteContrato);
+                            clientesContratos[i].Periodicidade = contratoFromThirdParty.Periodicidade;
+                            _context.ClientesContratos.Update(clientesContratos[i]);
                             totalContratosAtualizados++;
                         } else continue;
                     } else continue;

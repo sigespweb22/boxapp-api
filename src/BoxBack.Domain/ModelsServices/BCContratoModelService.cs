@@ -1,4 +1,3 @@
-using System.Collections;
 using System;
 using System.Collections.Generic;
 using BoxBack.Domain.Enums;
@@ -32,8 +31,8 @@ namespace BoxBack.Domain.ModelsServices
         public Guid IdMovimentacaoFinanceira { get; set; }
         public Int32 TipoFatura { get; set; }
         public string NomeTipoFatura { get; set; }
-        public DateTime DataVencimento { get; set; }
-        public DateTime DataCompetencia { get; set; }
+        public DateTime? DataVencimento { get; set; }
+        public DateTime? DataCompetencia { get; set; }
         public decimal Valor { get; set; }
         public decimal Desconto { get; set; }
         public DateTime? DataPagamento { get; set; }
@@ -51,7 +50,7 @@ namespace BoxBack.Domain.ModelsServices
         public string ObservacaoNotaFiscal { get; set; }
         public string LinkNotaFiscal { get; set; }
         public string LinkXmlNotaFiscal { get; set; }
-        public DateTime DataPromessaPagamento { get; set; }
+        public DateTime? DataPromessaPagamento { get; set; }
         public bool ClienteNaoVaiPagar { get; set; }
         public string Anexos { get; set; }
     }
