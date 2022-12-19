@@ -56,6 +56,7 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<Vendedor> Vendedores { get; set; }
         public DbSet<VendedorComissao> VendedoresComissoes { get; set; }
         public DbSet<VendedorContrato> VendedoresContratos { get; set; }
+        public DbSet<ClienteContratoFatura> ClientesContratosFaturas { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
@@ -98,6 +99,7 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new VendedorMap());
             modelBuilder.ApplyConfiguration(new VendedorComissaoMap());
             modelBuilder.ApplyConfiguration(new VendedorContratoMap());
+            modelBuilder.ApplyConfiguration(new ClienteContratoFaturaMap());
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
