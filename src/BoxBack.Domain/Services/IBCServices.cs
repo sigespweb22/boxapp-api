@@ -58,7 +58,7 @@ namespace BoxBack.Domain.Services
         /// <response code="500">Erro interno desconhecido</response>
         [Get("/VendaContrato/Pesquisar")]
         [Headers("Content-Type: application/json")]
-        Task<IList<BCContratoModelService>> VendaContratoPesquisar(string pesquisa, [Header("Authorization")] string apiKey);
+        Task<BCContratoModelService[]> VendaContratoPesquisar(string pesquisa, [Header("Authorization")] string apiKey);
 
         /// <summary>
         /// Obtém um contrato de um cliente pelo seu id
