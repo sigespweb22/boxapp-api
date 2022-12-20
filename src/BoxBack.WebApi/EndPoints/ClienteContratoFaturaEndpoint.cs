@@ -72,7 +72,7 @@ namespace BoxBack.WebApi.EndPoints
             if (clientesContratos == null || clientesContratos.Count() <= 0)
             {
                 AddError("Nenhum contrato encontrado na base de dados, para então seguir com a sincronização das faturas de contratos com o sistema de terceiro.");
-                return CustomResponse(500);
+                return CustomResponse(404);
             }
             #endregion
 
@@ -156,6 +156,115 @@ namespace BoxBack.WebApi.EndPoints
             #region Return
             return CustomResponse(200, new {
                 TotalSincronizado = totalSincronizado,
+            });
+            #endregion
+        }
+
+        /// <summary>
+        /// Atualiza as FATURAS de CONTRATOS de clientes do BOXAPP
+        /// com os dados das FATURAS de CONTRATOS de clientes do BoxApp
+        /// </summary>
+        /// <param></param>
+        /// <returns>Um objeto com o total de FATURAS de CONTRATOS de clientes sincronizadas</returns>
+        /// <response code="200">Objeto com o total de faturas atualizadas com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Nenhuma fatura encontrada</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanClienteContratoFaturaUpdate, CanClienteContratofaturaAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("update-from-third-party")]
+        [HttpGet]
+        public async Task<IActionResult> UpdateFromThirdPartyAsync()
+        {
+            #region Get faturas
+            ClienteContratoFatura[] clientesContratosFaturas;
+            try
+            {
+                clientesContratosFaturas = await _context.ClientesContratosFaturas.ToArrayAsync();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (clientesContratosFaturas == null || clientesContratosFaturas.Length <= 0)
+            {
+                AddError("Nenhuma fatura encontrada na base de dados, para então seguir com a atualização dos dados de fatura.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            #region Chave api resolve
+            var chaveApiTerceiro = new ChaveApiTerceiro();
+            try
+            {
+                chaveApiTerceiro = await _context
+                                                .ChavesApiTerceiro
+                                                .Where(x => x.DataValidade >= DateTimeOffset.Now &&
+                                                       x.IsDeleted == false && !string.IsNullOrEmpty(x.Key))
+                                                .FirstOrDefaultAsync(x => x.ApiTerceiro.Equals(ApiTerceiroEnum.BOM_CONTROLE));
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (chaveApiTerceiro == null)
+            { 
+                AddError("Nenhuma chave de api de terceiro encontrada, verifique os possíveis erros: \n\nNenhuma chave de api cadastrada para esta integração. \n\nA chave de api cadastrada não possui uma Key. \n\nA chave de api cadastrada não está ativa. \n\nA chave de api cadastrada está com Data de Validade vencida.");
+                return CustomResponse(404);
+            }
+            #endregion
+
+            #region Token resolve
+            String token = string.Empty;
+            try
+            {
+                token = $"ApiKey {chaveApiTerceiro.Key}";
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Get data Bom Controle (Third Party) to map and update faturas
+            BCFaturaModelService faturaThirdParty = new BCFaturaModelService();
+            Int64 totalFaturasAtualizadas = 0;
+            for (var a = 0; a < clientesContratosFaturas.Count(); a++)
+            {
+                if (clientesContratosFaturas[a].BomControleContratoId == 0) continue;
+                
+                try
+                {
+                    faturaThirdParty = await _bcServices.FaturaObter(clientesContratosFaturas[a].BomControleContratoId, token);
+                }
+                catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+                if (faturaThirdParty == null) continue;
+
+                var clienteContratoFaturaMap = new ClienteContratoFatura();
+                try
+                {
+                    clienteContratoFaturaMap = _mapper.Map<ClienteContratoFatura>(faturaThirdParty);
+                }
+                catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+                try
+                {
+                    _context.ClientesContratosFaturas.Update(clienteContratoFaturaMap);
+                    totalFaturasAtualizadas++;
+                }
+                catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            }
+            #endregion
+
+            #region Commit
+            try
+            {
+                _unitOfWork.Commit();    
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+
+            #region Return
+            return CustomResponse(200, new {
+                TotalFaturasAtualizadas = totalFaturasAtualizadas,
             });
             #endregion
         }
