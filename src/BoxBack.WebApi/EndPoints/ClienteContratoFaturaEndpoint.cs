@@ -41,12 +41,13 @@ namespace BoxBack.WebApi.EndPoints
 
         #region Third party API
         /// <summary>
-        /// Sincroniza a base de fatura de contratos de clientes do BOM CONTROLE 
-        /// com a base de faturas de contratos de clientes do BoxApp (Este método não atualiza os dados de contrato, apenas mantém os mesmos contratos em ambos os sistemas)
+        /// Sincroniza a base de FATURAS de CONTRATOS de clientes do BOM CONTROLE 
+        /// com a base de FATURAS de CONTRATOS de clientes do BoxApp (Este método não atualiza os dados de contrato,
+        /// apenas mantém os mesmos contratos em ambos os sistemas)
         /// </summary>
         /// <param></param>
-        /// <returns>Um objeto com o total de faturas de contratos de clientes sincronizados</returns>
-        /// <response code="200">Objeto com o total de faturas de conatratos de clientes sincronizados</response>
+        /// <returns>Um objeto com o total de FATURAS de CONTRATOS de clientes sincronizadas</returns>
+        /// <response code="200">Objeto com o total de FATURAS de CONTRATOS de clientes sincronizados</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Nenhum contrato encontrado</response>
         /// <response code="500">Erro desconhecido</response>
@@ -131,6 +132,9 @@ namespace BoxBack.WebApi.EndPoints
                     }
                     catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
+                    // check to double
+                    if (AlreadyClienteContratoFaturaAsync(clienteContratoFatura)) continue;
+
                     try
                     {
                         _context.ClientesContratosFaturas.Add(clienteContratoFatura);
@@ -154,6 +158,33 @@ namespace BoxBack.WebApi.EndPoints
                 TotalSincronizado = totalSincronizado,
             });
             #endregion
+        }
+        #endregion
+
+        #region Private methods
+        private bool AlreadyClienteContratoFaturaAsync(ClienteContratoFatura clienteContratoFatura)
+        {
+            #region General validations
+            if (clienteContratoFatura.ClienteContratoId == null) throw new ArgumentException("Id contrato requerido.");
+            if (clienteContratoFatura.DataCompetencia == null) throw new ArgumentException("Data compentência requerida.");
+            if (clienteContratoFatura.Valor == 0) throw new ArgumentException("Valor requerido.");
+            if (clienteContratoFatura.NumeroParcela == 0) throw new ArgumentException("Número parcela requerido.");
+            #endregion
+
+            #region Check to already
+            // check to same clienteContratoId, dataCompentencia, valor e numeroParcela
+            bool already;
+            try
+            {
+                already = _context.ClientesContratosFaturas.Any(x => x.ClienteContratoId.Equals(clienteContratoFatura.ClienteContratoId) &&
+                                                                x.DataCompetencia.Equals(clienteContratoFatura.DataCompetencia) &&
+                                                                x.Valor.Equals(clienteContratoFatura.Valor) &&
+                                                                x.NumeroParcela.Equals(clienteContratoFatura.NumeroParcela));
+            }
+            catch { throw; }
+            #endregion
+
+            return already;
         }
         #endregion
     }
