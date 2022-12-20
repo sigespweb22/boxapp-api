@@ -39,6 +39,77 @@ namespace BoxBack.WebApi.EndPoints
             _bcServices = bcServices;
         }
 
+        /// <summary>
+        /// Lista de todas as FATURAS de um CONTRATO de CLIENTE
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="clienteContratoId"></param>
+        /// <returns>Um array json com as FATURAS do contrato do cliente</returns>
+        /// <response code="200">Lista de FATURAS do contrato do cliente</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Lista vazia</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanClienteContratoFaturaList, CanClienteContratoFaturaAll, CanClienteAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("list")]
+        [HttpGet]
+        public async Task<IActionResult> ListAsync(string q, string clienteContratoId)
+        {
+            #region Generals validations
+            if (string.IsNullOrEmpty(clienteContratoId))
+            {
+                AddError("Id Contrato requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data
+            var clienteContratoFaturas = new List<ClienteContratoFatura>();
+            try
+            {
+                clienteContratoFaturas = await _context.ClientesContratosFaturas
+                                                        .AsNoTracking()
+                                                        .Include(x => x.ClienteContrato)
+                                                        .ThenInclude(x => x.Cliente)
+                                                        .Where(x => x.ClienteContratoId == Guid.Parse(clienteContratoId))
+                                                        .OrderBy(x => x.NumeroParcela)
+                                                        .ToListAsync();
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (clienteContratoFaturas == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
+            #endregion
+            
+            #region Filter search 
+            if(!string.IsNullOrEmpty(q))
+                clienteContratoFaturas = clienteContratoFaturas.Where(x => x.Valor.Equals(q)).ToList();
+            #endregion
+
+            #region Map
+            IEnumerable<ClienteContratoFaturaViewModel> clienteContratoFaturaMapped = new List<ClienteContratoFaturaViewModel>();
+            try
+            {
+                clienteContratoFaturaMapped = _mapper.Map<IEnumerable<ClienteContratoFaturaViewModel>>(clienteContratoFaturas);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            #endregion
+            
+            return Ok(new {
+                AllData = clienteContratoFaturaMapped.ToList(),
+                clienteContratoFaturas = clienteContratoFaturaMapped.ToList(),
+                Params = q,
+                Total = clienteContratoFaturaMapped.Count()
+            });
+        }
+
         #region Third party API
         /// <summary>
         /// Sincroniza a base de FATURAS de CONTRATOS de clientes do BOM CONTROLE 
@@ -51,7 +122,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Nenhum contrato encontrado</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteContratoFaturaCreate, CanClienteContratofaturaAll")]
+        [Authorize(Roles = "Master, CanClienteContratoFaturaCreate, CanClienteContratofaturaAll, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -170,7 +241,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Nenhuma fatura encontrada</response>
         /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteContratoFaturaUpdate, CanClienteContratofaturaAll")]
+        [Authorize(Roles = "Master, CanClienteContratoFaturaUpdate, CanClienteContratofaturaAll, CanClienteAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
