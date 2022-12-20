@@ -308,5 +308,20 @@ namespace BoxBack.Domain.Enums
         [Description("Pode deletar um produto de fornecedor")]
         CanVendedorContratoDelete = 20006,
         #endregion
+
+        #region Cliente Contrato Fatura
+        [Description("Pode realizar todas as ações/operações em todas as faturas de contratos de clientes")]
+        CanClienteContratoFaturaAll = 21001,
+        [Description("Pode listar os dados de todos os produtos de fornecedores")]
+        CanClienteContratoFaturaList = 21002,
+        [Description("Pode listar os dados de um produto de fornecedor")]
+        CanClienteContratoFaturaRead = 21003,
+        [Description("Pode visualizar um produto de fornecedor")]
+        CanClienteContratoFaturaCreate = 21004,
+        [Description("Pode criar um produto de fornecedor")]
+        CanClienteContratoFaturaUpdate = 21005,
+        [Description("Pode deletar um produto de fornecedor")]
+        CanClienteContratoFaturaDelete = 21006,
+        #endregion
     }
 }
