@@ -226,7 +226,7 @@ namespace BoxBack.WebApi.EndPoints
             #region Get data Bom Controle (Third Party) to map and update faturas
             BCFaturaModelService faturaThirdParty = new BCFaturaModelService();
             Int64 totalFaturasAtualizadas = 0;
-            for (var a = 0; a < clientesContratosFaturas.Count(); a++)
+            for (var a = 0; a < clientesContratosFaturas.Length; a++)
             {
                 if (clientesContratosFaturas[a].BomControleContratoId == 0) continue;
                 
@@ -241,7 +241,7 @@ namespace BoxBack.WebApi.EndPoints
                 var clienteContratoFaturaMap = new ClienteContratoFatura();
                 try
                 {
-                    clienteContratoFaturaMap = _mapper.Map<ClienteContratoFatura>(faturaThirdParty);
+                    clienteContratoFaturaMap = _mapper.Map<BCFaturaModelService, ClienteContratoFatura>(faturaThirdParty, clientesContratosFaturas[a]);
                 }
                 catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
@@ -274,8 +274,7 @@ namespace BoxBack.WebApi.EndPoints
         private bool AlreadyClienteContratoFaturaAsync(ClienteContratoFatura clienteContratoFatura)
         {
             #region General validations
-            if (clienteContratoFatura.ClienteContratoId == null) throw new ArgumentException("Id contrato requerido.");
-            if (clienteContratoFatura.DataCompetencia == null) throw new ArgumentException("Data compentência requerida.");
+            if (clienteContratoFatura.ClienteContratoId == Guid.Empty) throw new ArgumentException("Id contrato requerido.");
             if (clienteContratoFatura.Valor == 0) throw new ArgumentException("Valor requerido.");
             if (clienteContratoFatura.NumeroParcela == 0) throw new ArgumentException("Número parcela requerido.");
             #endregion
