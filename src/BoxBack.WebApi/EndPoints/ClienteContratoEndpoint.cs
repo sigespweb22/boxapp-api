@@ -465,12 +465,7 @@ namespace BoxBack.WebApi.EndPoints
                             var contratoMapped = new ClienteContrato();
                             try
                             {
-                                var clienteContratoThirdPartyId = clienteContratosThirdParty[b].Id;
-                                clienteContratosThirdParty[b].Id = null;
-
                                 contratoMapped = _mapper.Map<ClienteContrato>(clienteContratosThirdParty[b]);
-                                
-                                contratoMapped.BomControleContratoId = clienteContratoThirdPartyId;
                                 contratoMapped.ClienteId = clientes[a].Id;
                                 
                                 clientesContratos.Add(contratoMapped);

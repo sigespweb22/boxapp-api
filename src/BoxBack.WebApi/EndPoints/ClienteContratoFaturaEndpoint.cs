@@ -60,17 +60,17 @@ namespace BoxBack.WebApi.EndPoints
         [HttpGet]
         public async Task<IActionResult> SincronizarFromThirdPartyAsync()
         {
-            #region Get clientes
-            Cliente[] clientes;
+            #region Get contratos
+            ClienteContrato[] clientesContratos;
             try
             {
-                clientes = await _context.Clientes.ToArrayAsync();
+                clientesContratos = await _context.ClientesContratos.ToArrayAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
-            if (clientes == null || clientes.Count() <= 0)
+            if (clientesContratos == null || clientesContratos.Count() <= 0)
             {
-                AddError("Nenhum cliente encontrado na base de dados, para então seguir com a sincronização dos contratos com o sistema de terceiro.");
+                AddError("Nenhum contrato encontrado na base de dados, para então seguir com a sincronização das faturas de contratos com o sistema de terceiro.");
                 return CustomResponse(500);
             }
             #endregion
@@ -103,72 +103,42 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
-            #region Get contratos
-            IEnumerable<ClienteContrato> contratos = new List<ClienteContrato>();
-            try
-            {
-                contratos = await _context.ClientesContratos.ToListAsync();
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
-
-            #region Get data Bom Controle (Third Party)
-            BCContratoModelService[] clienteContratosThirdParty;
+            #region Get data Bom Controle (Third Party) and map and persistance faturas
+            BCContratoModelService clientesContratosThirdParty = new BCContratoModelService();
             Int64 totalSincronizado = 0;
-            var clientesContratos = new List<ClienteContrato>();
-            try
+            for (var a = 0; a < clientesContratos.Count(); a++)
             {
-                for (var a = 0; a < clientes.Count(); a++)
+                if (clientesContratos[a].BomControleContratoId == 0) continue;
+                
+                try
                 {
-                    switch (clientes[a].TipoPessoa) {
-                        case TipoPessoaEnum.FISICA:
-                            clienteContratosThirdParty = await _bcServices.VendaContratoPesquisar(clientes[a].Cpf, token);
-                            break;
-                        case TipoPessoaEnum.JURIDICA:
-                            clienteContratosThirdParty = await _bcServices.VendaContratoPesquisar(clientes[a].CNPJ, token);
-                            break;
-                        default:
-                            clienteContratosThirdParty = null;
-                            break;
-                    }
+                    clientesContratosThirdParty = await _bcServices.VendaContratoObter(clientesContratos[a].BomControleContratoId, token);
+                }
+                catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
-                    if (clienteContratosThirdParty == null) continue;
+                if (clientesContratosThirdParty == null) continue;
+                if (clientesContratosThirdParty.Faturas == null || clientesContratosThirdParty.Faturas.Count() == 0) continue;
 
-                    for (var b = 0; b < clienteContratosThirdParty.Count(); b++)
+                BCFaturaModelService[] clientesContratosFaturasThirdParty = clientesContratosThirdParty.Faturas.ToArray();
+
+                for (var b = 0; b < clientesContratosFaturasThirdParty.Length; b++)
+                {
+                    var clienteContratoFatura = new ClienteContratoFatura();
+                    try
                     {
-                        // Verifico se o contrato obtido da api de terceiro já não existe na minha base
-                        if (!contratos.Any(x => x.BomControleContratoId.Equals(clienteContratosThirdParty[b].Id)))
-                        {
-                            // contrato não existe, portanto, posso sincronizá-lo para minha base
-                            var contratoMapped = new ClienteContrato();
-                            try
-                            {
-                                var clienteContratoThirdPartyId = clienteContratosThirdParty[b].Id;
-                                clienteContratosThirdParty[b].Id = null;
-
-                                contratoMapped = _mapper.Map<ClienteContrato>(clienteContratosThirdParty[b]);
-                                
-                                contratoMapped.BomControleContratoId = clienteContratoThirdPartyId;
-                                contratoMapped.ClienteId = clientes[a].Id;
-                                
-                                clientesContratos.Add(contratoMapped);
-                                totalSincronizado++;
-                            }
-                            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-                        }
+                        clienteContratoFatura = _mapper.Map<ClienteContratoFatura>(clientesContratosFaturasThirdParty[b]);
+                        clienteContratoFatura.ClienteContratoId = clientesContratos[a].Id;
                     }
+                    catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+                    try
+                    {
+                        _context.ClientesContratosFaturas.Add(clienteContratoFatura);
+                        totalSincronizado++;
+                    }
+                    catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
                 }
             }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
-
-            #region Persistance
-            try
-            {
-                _context.ClientesContratos.AddRange(clientesContratos);    
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            
             #endregion
 
             #region Commit
