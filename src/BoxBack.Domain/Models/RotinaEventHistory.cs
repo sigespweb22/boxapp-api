@@ -19,15 +19,15 @@ namespace BoxBack.Domain.Models
 
         
         
-        public DateTimeOffset DataInicio { get; private set; }
-        public DateTimeOffset DataFim { get; private set; }
-        public RotinaStatusProgressoEnum StatusProgresso { get; private set; }
+        public DateTimeOffset DataInicio { get; set; }
+        public DateTimeOffset DataFim { get; set; }
+        public RotinaStatusProgressoEnum StatusProgresso { get; set; }
 
 
 
         // Relationships
         [ForeignKey("RotinaId")]
-        public Guid RotinaId { get; private set; }
-        public Rotina Rotina { get; private set; }
+        public Guid RotinaId { get; set; }
+        public Rotina Rotina { get; set; }
     }
 }

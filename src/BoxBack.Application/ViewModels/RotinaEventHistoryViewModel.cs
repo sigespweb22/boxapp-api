@@ -14,6 +14,7 @@ namespace BoxBack.Application.ViewModels
         public string DataFim { get; private set; }
         public string StatusProgresso { get; private set; }
 
+        public Guid RotinaId { get; set; }
         public RotinaViewModel RotinaViewModel { get; set; }
     }
 }
