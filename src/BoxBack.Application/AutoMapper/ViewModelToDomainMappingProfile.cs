@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
-using BoxBack.Application.Extensions;
 using BoxBack.Application.ViewModels;
-using BoxBack.Domain.Enums;
 using BoxBack.Domain.Models;
 using BoxBack.Domain.ModelsServices;
 
