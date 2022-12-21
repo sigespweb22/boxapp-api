@@ -200,6 +200,24 @@ namespace BoxBack.Application.Services
             };
             navigationF.Children.Add(token);
 
+            var rotinas = new VerticalNavItemViewModel
+            {
+                Title = "Rotinas",
+                Icon = "TimerCogOutline",
+                BadgeContent = "",
+                BadgeColor = "primary",
+                Children = new List<Son>()
+            };
+
+            var rotinasTodas = new Son
+            {
+                Title = "Todas",
+                Path = "/sistema/rotinas/list",
+                Action = "list",
+                Subject = "ac-rotina-page"
+            };
+            rotinas.Children.Add(rotinasTodas);
+
             await Task.Run(() => navigation.Add(navigationA));
             
             navigationSectionA = new VerticalNavItemViewModel
@@ -219,6 +237,7 @@ namespace BoxBack.Application.Services
             await Task.Run(() => navigation.Add(navigationSectionA));
             await Task.Run(() => navigation.Add(navigationB));
             await Task.Run(() => navigation.Add(navigationF));
+            await Task.Run(() => navigation.Add(rotinas));
             
             await Task.Run(() => navigation.Add(navigationSectionB));
             await Task.Run(() => navigation.Add(navigationC));

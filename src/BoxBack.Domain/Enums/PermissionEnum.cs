@@ -323,5 +323,12 @@ namespace BoxBack.Domain.Enums
         [Description("Pode deletar um produto de fornecedor")]
         CanClienteContratoFaturaDelete = 21006,
         #endregion
+
+        #region Rotina
+        [Description("Pode realizar todas as ações/operações relacionadas a entidade de sistema rotina")]
+        CanRotinaAll = 21100,
+        [Description("Pode listar todas as rotinas de sistema")]
+        CanRotinaList = 21101
+        #endregion
     }
 }

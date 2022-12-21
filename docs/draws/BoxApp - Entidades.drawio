@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="u1IXutD8dk-Endy1BjFs" name="Vendedor">
-        <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" page="1" fold="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1043" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -51,10 +51,10 @@
                 <mxCell id="24" value="+ ClienteContratoId: Guid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="21" vertex="1">
                     <mxGeometry y="78" width="230" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="60" value="+ ClienteContrato: ClienteContrato" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" vertex="1" parent="21">
+                <mxCell id="60" value="+ ClienteContrato: ClienteContrato" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="21" vertex="1">
                     <mxGeometry y="104" width="230" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="61" value="+ VendedorId: Guid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" vertex="1" parent="21">
+                <mxCell id="61" value="+ VendedorId: Guid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="21" vertex="1">
                     <mxGeometry y="130" width="230" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="27" value="+ Vendedor: Vendedor" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="21" vertex="1">
@@ -121,7 +121,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="xPJZApzN6peizSj4EJyi" name="Page-2">
-        <mxGraphModel dx="1374" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1826" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="bzFpp4pKSv_o9e-CWEXd-0"/>
                 <mxCell id="bzFpp4pKSv_o9e-CWEXd-1" parent="bzFpp4pKSv_o9e-CWEXd-0"/>
@@ -193,20 +193,20 @@
         </mxGraphModel>
     </diagram>
     <diagram id="_3j10fdEf_icdi6i4k5d" name="Page-3">
-        <mxGraphModel dx="1374" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1043" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="OurQNfJTx2G7mQGxrtvT-0"/>
                 <mxCell id="OurQNfJTx2G7mQGxrtvT-1" parent="OurQNfJTx2G7mQGxrtvT-0"/>
-                <mxCell id="OurQNfJTx2G7mQGxrtvT-8" value="" style="edgeStyle=none;html=1;" edge="1" parent="OurQNfJTx2G7mQGxrtvT-1" source="OurQNfJTx2G7mQGxrtvT-2" target="OurQNfJTx2G7mQGxrtvT-7">
+                <mxCell id="OurQNfJTx2G7mQGxrtvT-8" value="" style="edgeStyle=none;html=1;" parent="OurQNfJTx2G7mQGxrtvT-1" source="OurQNfJTx2G7mQGxrtvT-2" target="OurQNfJTx2G7mQGxrtvT-7" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="OurQNfJTx2G7mQGxrtvT-2" value="&lt;b&gt;&lt;i&gt;&lt;u&gt;BOXAPP&lt;/u&gt;&lt;/i&gt;&lt;/b&gt;&lt;br&gt;SINCRONIZAR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="OurQNfJTx2G7mQGxrtvT-1">
+                <mxCell id="OurQNfJTx2G7mQGxrtvT-2" value="&lt;b&gt;&lt;i&gt;&lt;u&gt;BOXAPP&lt;/u&gt;&lt;/i&gt;&lt;/b&gt;&lt;br&gt;SINCRONIZAR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="OurQNfJTx2G7mQGxrtvT-1" vertex="1">
                     <mxGeometry x="100" y="250" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="OurQNfJTx2G7mQGxrtvT-3" value="&lt;b&gt;&lt;u&gt;&lt;i&gt;BOM CONTROLE&lt;br&gt;&lt;/i&gt;&lt;/u&gt;&lt;/b&gt;CONTRATOS FATURAS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" vertex="1" parent="OurQNfJTx2G7mQGxrtvT-1">
+                <mxCell id="OurQNfJTx2G7mQGxrtvT-3" value="&lt;b&gt;&lt;u&gt;&lt;i&gt;BOM CONTROLE&lt;br&gt;&lt;/i&gt;&lt;/u&gt;&lt;/b&gt;CONTRATOS FATURAS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" parent="OurQNfJTx2G7mQGxrtvT-1" vertex="1">
                     <mxGeometry x="630" y="250" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="OurQNfJTx2G7mQGxrtvT-7" value="OBTÉM TODOS OS CONTRATOS&lt;br&gt;(LOCAL)&amp;nbsp;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;rounded=1;" vertex="1" parent="OurQNfJTx2G7mQGxrtvT-1">
+                <mxCell id="OurQNfJTx2G7mQGxrtvT-7" value="OBTÉM TODOS OS CONTRATOS&lt;br&gt;(LOCAL)&amp;nbsp;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;rounded=1;" parent="OurQNfJTx2G7mQGxrtvT-1" vertex="1">
                     <mxGeometry x="300" y="250" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
