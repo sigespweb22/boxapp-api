@@ -1,9 +1,5 @@
-using System.Net;
-using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Security.AccessControl;
-using BoxBack.WebApi.EndPoints;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.InterfacesNoSQL;
 using BoxBack.Domain.ModelsNoSQL;
@@ -12,16 +8,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
 namespace BoxBack.WebApi.EndPoints
 {
     [Produces("application/json")]
-    [Route("api/v1/clientes")]
+    [Route("api/v1/clientess")]
     public class ClienteNoSQLEndPoint : ApiController
     {
         private readonly IClienteRepositoryNoSQL _clienteRepositoryNoSQL;
@@ -43,23 +34,23 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">If the item is null</response>
         /// <response code="404">If the item is not exist</response>
         [HttpGet]
-        [Authorize(Roles = "MASTER, CLIENTE_ALL")]
+        [Authorize(Roles = "Master")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClienteViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllAsync()
         {
             var clientes = await _clienteRepositoryNoSQL.GetAll();
-            var result = _mapper.Map<IEnumerable<ClienteViewModel>>(clientes);
+            // var result = _mapper.Map<IEnumerable<ClienteViewModel>>(clientes);
 
-            if (result == null || result.Count() <= 0)
+            if (clientes == null || clientes.Count() <= 0)
                 return StatusCode(404, "Nenhum cliente encontrado.");
 
             return Ok (new
             {
                 Success = true,
                 Message = "OK",
-                Data = result
+                Data = clientes
             });
         }
 
@@ -69,7 +60,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <param name="cliente"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "MASTER, CLIENTE_ADD")]
+        [Authorize(Roles = "Master")]
         public async Task Post([FromBody] ClienteNoSQL cliente)
         {
             await _clienteRepositoryNoSQL.AddAsync(cliente);
@@ -83,7 +74,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <response code="400">If the item is null</response>
         /// <response code="404">If the item is not exist</response>
         [HttpDelete]
-        [Authorize(Roles = "MASTER, CLIENTE_REMOVE")]
+        [Authorize(Roles = "Master")]
         public async Task<bool> DeleteAsync(string id)
         {
             return await _clienteRepositoryNoSQL.RemoveAsync(id);
