@@ -328,7 +328,11 @@ namespace BoxBack.Domain.Enums
         [Description("Pode realizar todas as ações/operações relacionadas a entidade de sistema rotina")]
         CanRotinaAll = 21100,
         [Description("Pode listar todas as rotinas de sistema")]
-        CanRotinaList = 21101
+        CanRotinaList = 21101,
+        [Description("Pode atualizar os dados de rotinas")]
+        CanRotinaUpdate = 21102,
+        [Description("Pode listar os dados de uma rotina")]
+        CanRotinaRead = 21103
         #endregion
     }
 }
