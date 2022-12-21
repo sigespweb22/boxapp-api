@@ -16,14 +16,16 @@ namespace BoxBack.Domain.Models
         // Constructor empty to EFCore
         public Rotina() {}
 
-        public string Nome { get; private set; }
-        public string Descricao { get; private set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
+        public string Observacao { get; set; }
+        public Int32 ChaveSequencial { get; set; }
 
         // Relationships
         public ICollection<RotinaEventHistory> RotinasEventsHistories { get; set; }
 
         [ForeignKey("TenantId")]
-        public Guid TenantId { get; private set; }
-        public Tenant Tenant { get; private set; }
+        public Guid TenantId { get; set; }
+        public Tenant Tenant { get; set; }
     }
 }

@@ -730,7 +730,7 @@ namespace BoxBack.WebApi.EndPoints
         /// Sincroniza a base de clientes do BOM CONTROLE com a base de clientes do BoxApp (Este método não atualiza os dados dos clientes, apenas mantém os mesmos clientes em ambos os sistemas)
         /// Não serão sincronizados os clientes em que a propriedade "Documento" - Das propriedades Pessoa Jurídica e Pessoa Física - for null
         /// </summary>
-        /// <param></param>
+        /// <param></param> 
         /// <returns>Um objeto com o total de clientes sincronizados e total de clientes não sincronizados por falta de CPF/CNPJ</returns>
         /// <response code="200">Objeto com o total de clientes sincronizados</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>

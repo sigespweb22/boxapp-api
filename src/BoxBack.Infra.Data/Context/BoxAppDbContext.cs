@@ -57,6 +57,8 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<VendedorComissao> VendedoresComissoes { get; set; }
         public DbSet<VendedorContrato> VendedoresContratos { get; set; }
         public DbSet<ClienteContratoFatura> ClientesContratosFaturas { get; set; }
+        public DbSet<Rotina> Rotinas { get; set; }
+        public DbSet<RotinaEventHistory> RotinasEventsHistories { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
@@ -100,6 +102,16 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new VendedorComissaoMap());
             modelBuilder.ApplyConfiguration(new VendedorContratoMap());
             modelBuilder.ApplyConfiguration(new ClienteContratoFaturaMap());
+            modelBuilder.ApplyConfiguration(new RotinaMap());
+            modelBuilder.ApplyConfiguration(new RotinaEventHistoryMap());
+
+            modelBuilder.HasSequence<Int32>("OrderNumbers")
+                        .StartsAt(1)
+                        .IncrementsBy(1);
+                        
+            modelBuilder.Entity<Rotina>()
+                        .Property(c => c.ChaveSequencial)
+                        .HasDefaultValueSql("nextval('\"OrderNumbers\"')");
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

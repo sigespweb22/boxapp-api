@@ -8,7 +8,7 @@ namespace BoxBack.Infra.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<RotinaEventHistory> builder)
         {
-            builder.ToTable("Rotinas");
+            builder.ToTable("RotinaEventsHistories");
 
             builder.HasKey(c => c.Id);
 

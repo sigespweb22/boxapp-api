@@ -22,6 +22,8 @@ namespace BoxBack.Infra.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.HasSequence<int>("OrderNumbers");
+
             modelBuilder.Entity("BoxBack.Domain.Models.ApplicationGroup", b =>
                 {
                     b.Property<Guid>("Id")
@@ -69,13 +71,13 @@ namespace BoxBack.Infra.Data.Migrations
                         new
                         {
                             Id = new Guid("23e63d9c-283b-496b-b7d8-7dac2ef7a822"),
-                            CreatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 13, 43, 56, 632, DateTimeKind.Unspecified).AddTicks(439), new TimeSpan(0, -3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 445, DateTimeKind.Unspecified).AddTicks(4641), new TimeSpan(0, -3, 0, 0, 0)),
                             CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             IsDeleted = false,
                             Name = "Master",
                             TenantId = new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
                             UniqueKey = "ors0eAr4DPkvrwhy5gVnQAqRDnJUO43j9HzbkPyZ/7Q=",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 13, 43, 56, 632, DateTimeKind.Unspecified).AddTicks(458), new TimeSpan(0, -3, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 445, DateTimeKind.Unspecified).AddTicks(4655), new TimeSpan(0, -3, 0, 0, 0)),
                             UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9"
                         });
                 });
@@ -127,9 +129,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "bb4dd20a-5eb3-42d7-afda-022c9f5aad30",
+                            Id = "45df84b2-58f7-4c86-9dcc-07b1e1ed14a2",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "d53569c9-c0c9-4ad8-afe0-595525bbb81e",
+                            ConcurrencyStamp = "992c42fc-bbd7-46b0-9b77-e4529e0c6f30",
                             Description = "Pode realizar todas as ações/operações em todas as dashboards",
                             Name = "CanDashboardAll",
                             NormalizedName = "CANDASHBOARDALL",
@@ -137,9 +139,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "7d4dff8f-d6f7-47da-abc3-74f7279e7241",
+                            Id = "d65a4da6-4784-4e4c-8806-eebe0895aedb",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "5a740f23-cd31-492c-a5b6-0b3ff2d5362e",
+                            ConcurrencyStamp = "000b4b9f-27f0-4724-bf7f-1f4723ef607e",
                             Description = "Pode visualizar todas as dashboards do cliente",
                             Name = "CanDashboardClienteAll",
                             NormalizedName = "CANDASHBOARDCLIENTEALL",
@@ -147,9 +149,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "2ddb2efb-7776-45e1-9875-079d378c52a4",
+                            Id = "4f8cf168-3e0f-4d90-acd0-a4883adba23f",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "c8dccd2c-1300-470d-9b23-1d6980e983bb",
+                            ConcurrencyStamp = "55870180-58bd-48d1-8efd-9a03b7730de0",
                             Description = "Pode visualizar todas as dashboards de controle de acesso",
                             Name = "CanDashboardControleAcessoAll",
                             NormalizedName = "CANDASHBOARDCONTROLEACESSOALL",
@@ -157,9 +159,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "f1d1e625-16de-4b3e-ba85-80cd36a78eb0",
+                            Id = "089a7818-959d-4709-bec5-28f32f50c01a",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "c08a9667-26cc-4a68-a982-07b8f14c7428",
+                            ConcurrencyStamp = "372645be-4ce0-4f79-81c3-ca83b6cba648",
                             Description = "Pode realizar todas as ações/operações em todos os usuários",
                             Name = "CanUserAll",
                             NormalizedName = "CANUSERALL",
@@ -167,9 +169,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "51ea115d-c472-4b5f-80da-04323b32e1bd",
+                            Id = "00973ebf-a927-40e9-a088-dfc80ec9d4d2",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "b3b7d8f6-d10b-4a74-bca6-7610ed40c748",
+                            ConcurrencyStamp = "1d98014c-a7a0-44ab-a847-790cc8bb6cf8",
                             Description = "Pode listar os dados de todos os usuários",
                             Name = "CanUserList",
                             NormalizedName = "CANUSERLIST",
@@ -177,9 +179,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "4f7a72ab-a2ff-45dc-ac7a-ef68c336ebbb",
+                            Id = "9b2556fc-e0ba-42ed-938a-c82737c14ffa",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "b8a1e3a6-c9b3-4b78-b5c9-1bca519a1207",
+                            ConcurrencyStamp = "28c3698b-90a2-47c5-bfd9-1fd087e3d9c5",
                             Description = "Pode listar os dados de um usuários",
                             Name = "CanUserRead",
                             NormalizedName = "CANUSERREAD",
@@ -187,9 +189,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "c1adbbeb-ec0d-425f-a9ca-19f7ccb5ed8a",
+                            Id = "6d92bdb2-1dc0-48eb-b999-8b47aa92846c",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "1aea72f3-2a77-4318-b569-eec771bbeff2",
+                            ConcurrencyStamp = "86d3c282-3fdb-4962-a03f-1e7c9c34c55c",
                             Description = "Pode criar um usuário",
                             Name = "CanUserCreate",
                             NormalizedName = "CANUSERCREATE",
@@ -197,9 +199,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "6a23e044-597a-445c-b82a-539b619291de",
+                            Id = "9190d8eb-f510-4963-8cb2-9dc1e975b5c1",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "fbcc471c-5ca9-4ef1-bcbb-2af972d2013c",
+                            ConcurrencyStamp = "c7f255b5-8026-42f3-96ca-dcbbb6b27ddc",
                             Description = "Pode atualizar os dados de um usuário",
                             Name = "CanUserUpdate",
                             NormalizedName = "CANUSERUPDATE",
@@ -207,9 +209,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "33436296-2071-4a99-abd5-a240c102588e",
+                            Id = "88f15794-8d45-42ad-a677-4f493a85d207",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "0eb3f01a-8d79-4740-8596-89d73983a11d",
+                            ConcurrencyStamp = "54410de2-7686-4405-b266-d2cd70c10366",
                             Description = "Pode deletar um usuário",
                             Name = "CanUserDelete",
                             NormalizedName = "CANUSERDELETE",
@@ -217,9 +219,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "351bf071-27c8-4e2d-8e7c-373123771377",
+                            Id = "25d0f769-c3fe-4761-83cb-2b50ced7a2b0",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "dc00ae2b-2710-4422-b832-07f730aaaaab",
+                            ConcurrencyStamp = "6129073e-aa89-4044-a1b4-c14ac138af53",
                             Description = "Pode realizar todas as ações/operações em todos as roles/permissões",
                             Name = "CanRoleAll",
                             NormalizedName = "CANROLEALL",
@@ -227,9 +229,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "9cdd7915-92c0-4bc6-890c-96509be27d0e",
+                            Id = "891bb2b1-1382-4ef7-a883-de3da2902526",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "7989eb0e-158c-4960-a2e6-ea3e4fff96cb",
+                            ConcurrencyStamp = "e4b95d1f-63ff-4978-9db0-b8f2ebfe6395",
                             Description = "Pode listar os dados de todas as roles/permissões",
                             Name = "CanRoleList",
                             NormalizedName = "CANROLELIST",
@@ -237,9 +239,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "0f14c61d-554f-46f6-84ee-ca20a907ff77",
+                            Id = "68260c25-3541-4c8c-9db4-92cb86886c15",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "81fb6c8f-9bfb-4153-8278-f0f4787898a3",
+                            ConcurrencyStamp = "5e0c7d70-04fa-4f97-860e-cebc6633906a",
                             Description = "Pode listar os dados de uma roles/permissão",
                             Name = "CanRoleRead",
                             NormalizedName = "CANROLEREAD",
@@ -247,9 +249,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "834a6958-1efb-47cb-a113-e6b7c009979e",
+                            Id = "0c37a388-cb8f-417b-83d5-a2e4c6a12ed3",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "df61b80f-e438-45cd-bb48-2f768f28ab7d",
+                            ConcurrencyStamp = "368f04c9-5dd7-4768-8cf4-bc2ad0aa2956",
                             Description = "Pode criar uma role/permissão",
                             Name = "CanRoleCreate",
                             NormalizedName = "CANROLECREATE",
@@ -257,9 +259,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "dfc38dd8-252a-4532-9bfb-04ae29ad3460",
+                            Id = "42e2ec59-eee2-4c6f-818d-968395d172c6",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "51cb443a-470e-4757-b858-db243e4bb6b5",
+                            ConcurrencyStamp = "862083a3-16a4-4f65-8113-12023a3b7168",
                             Description = "Pode atualizar os dados de uma roles/permissão",
                             Name = "CanRoleUpdate",
                             NormalizedName = "CANROLEUPDATE",
@@ -267,9 +269,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "2c9c5589-0ebb-416e-ae3c-75441dd95d3d",
+                            Id = "4be0aff7-ffc0-4b78-a7e3-203ce1e604a9",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "b7cec114-004b-4573-837d-69fd037d2815",
+                            ConcurrencyStamp = "6b31f115-02c2-4881-9dc3-68186e197116",
                             Description = "Pode deletar uma role/permissão",
                             Name = "CanRoleDelete",
                             NormalizedName = "CANROLEDELETE",
@@ -277,9 +279,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "8aca8582-e029-4740-abc7-330f1357cbc5",
+                            Id = "f44d5fe5-6040-4a31-a965-29bce6c289a2",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "3a589dc7-6a9f-45fd-bec0-1f8896ee3bbf",
+                            ConcurrencyStamp = "958ac788-a0bd-4110-a1b5-0a7b77fbd6b7",
                             Description = "Pode realizar todas as ações/operações em todos os grupos",
                             Name = "CanGroupAll",
                             NormalizedName = "CANGROUPALL",
@@ -287,9 +289,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "132ea754-e0b6-47d6-b767-308c4b16e701",
+                            Id = "2b308ba7-7b04-4cc3-8fc1-1394126ceb31",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "a226078d-f4de-43f6-9a75-27d1a722fe16",
+                            ConcurrencyStamp = "6c4f1400-863a-4019-bf37-e5101d9fa38b",
                             Description = "Pode listar os dados de todos os grupos",
                             Name = "CanGroupList",
                             NormalizedName = "CANGROUPLIST",
@@ -297,9 +299,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "88f46de4-6a7e-4a45-9882-8479e382a4f7",
+                            Id = "be32aa6d-cf0f-4400-b1c3-58cc3d563def",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "adc2a79f-fd7e-4add-99da-8177efdde1a6",
+                            ConcurrencyStamp = "82512c96-76af-4d3d-95f8-298d419761e9",
                             Description = "Pode listar os dado de um grupo",
                             Name = "CanGroupRead",
                             NormalizedName = "CANGROUPREAD",
@@ -307,9 +309,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "d5661a32-957b-44ff-85cb-195af178801b",
+                            Id = "6c4ab3e1-8b62-4282-9af4-0ccb9d7d8115",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "4c7a4bbb-d710-48ef-ad76-1ec63c1d5250",
+                            ConcurrencyStamp = "0d7e1d8f-09d4-41a2-a095-819c1929f3bb",
                             Description = "Pode criar um grupo",
                             Name = "CanGroupCreate",
                             NormalizedName = "CANGROUPCREATE",
@@ -317,9 +319,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "5d8e8373-38d5-4d96-9aa6-232fa7d77df0",
+                            Id = "0836082b-8f07-48ac-90b0-cbdfd3af99e9",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "bca17956-d834-49e0-a41b-3583e2c8d700",
+                            ConcurrencyStamp = "ab973363-ae50-48ca-8856-bcd04bf25b3c",
                             Description = "Pode atualizar os dados de um grupo",
                             Name = "CanGroupUpdate",
                             NormalizedName = "CANGROUPUPDATE",
@@ -327,9 +329,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "1708c2f2-5e8e-4615-8dea-37f2bb4ee5b8",
+                            Id = "e8375f7c-7027-4d46-90a3-66a6c9e016bc",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "fb6f2b82-4e2d-419f-b405-b151cc850144",
+                            ConcurrencyStamp = "ca65fb62-dc2e-419e-8ee8-2eefa64c725b",
                             Description = "Pode deletar um grupo",
                             Name = "CanGroupDelete",
                             NormalizedName = "CANGROUPDELETE",
@@ -337,9 +339,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "6e78cea6-0172-4c28-93cf-fc3d432541b8",
+                            Id = "780992d6-ac27-4760-bcb4-942036f5b616",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "ce198854-1273-4fc6-b625-ee607268c0bd",
+                            ConcurrencyStamp = "79b56383-be76-472c-bcba-fd9e2b682202",
                             Description = "Pode visualizar todos os indicadores da dashboard comercial",
                             Name = "CanClienteAll",
                             NormalizedName = "CANCLIENTEALL",
@@ -347,9 +349,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "23b840f3-e476-41a2-b8bd-e8ae787b72c0",
+                            Id = "fe8cb09e-03bc-45fe-9392-ffcf50b13ae9",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "2624d146-998b-4bd6-81a5-415f2e23093a",
+                            ConcurrencyStamp = "7375491f-d918-49f2-aa07-2102ae95978b",
                             Description = "Pode listar os dados de todos os clientes",
                             Name = "CanClienteList",
                             NormalizedName = "CANCLIENTELIST",
@@ -357,9 +359,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "a0176d11-3e85-4cd9-90c5-37ce656a6767",
+                            Id = "461de69c-9a55-4fbf-ab8a-193528cfd49b",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "4dc01b83-9ae2-4b13-a3d1-93123656c6d9",
+                            ConcurrencyStamp = "25f04f0e-c0cf-45fc-aa26-83ae97a0ff3b",
                             Description = "Pode listar os dado de um cliente",
                             Name = "CanClienteRead",
                             NormalizedName = "CANCLIENTEREAD",
@@ -367,9 +369,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "a328e280-a78e-4d18-9be2-27b7fc874671",
+                            Id = "54a2e2b3-bc1c-4d09-b505-4f340f7f2c2c",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "f58bcc56-827e-4260-abe4-36f7ea0043b8",
+                            ConcurrencyStamp = "1b4fa7cc-b57b-4788-b650-d494434a0ea0",
                             Description = "Pode criar um cliente",
                             Name = "CanClienteCreate",
                             NormalizedName = "CANCLIENTECREATE",
@@ -377,9 +379,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "4ef0366c-5d42-4e57-a5a1-f18e202b7c51",
+                            Id = "e7b04f83-dc46-40a1-8de2-1e4a9d348480",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "6e78f88b-feca-4d12-b255-da8ad0498ce6",
+                            ConcurrencyStamp = "f26138eb-eb72-4d44-8a8f-d1fd3a7e6705",
                             Description = "Pode atualizar os dados de um cliente",
                             Name = "CanClienteUpdate",
                             NormalizedName = "CANCLIENTEUPDATE",
@@ -387,9 +389,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "80a2bb23-918d-4447-aa88-b98bef42c485",
+                            Id = "82675658-c10a-45a7-a19d-cdf1fb2e5e87",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "0b3cb0f8-f62c-4f63-a0b9-1bc8f4962841",
+                            ConcurrencyStamp = "63ede07c-c96c-4051-a3e2-ebe238bdc77d",
                             Description = "Pode deletar um cliente",
                             Name = "CanClienteDelete",
                             NormalizedName = "CANCLIENTEDELETE",
@@ -397,9 +399,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "905f12d5-20c1-4c74-847b-e95d03c57b78",
+                            Id = "62073956-c36c-4104-970d-30d0bdfab34d",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "7c1cf279-bce9-4d21-8956-2fc124629210",
+                            ConcurrencyStamp = "daddc850-ab60-4614-866c-f2e4403e5027",
                             Description = "Pode listar o título do sistema",
                             Name = "CanTitleSystemList",
                             NormalizedName = "CANTITLESYSTEMLIST",
@@ -407,9 +409,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "a3741758-3cf3-4d08-986a-0eb6c95991c7",
+                            Id = "81d5230a-5cd8-48f8-9e57-0bc54ae34f65",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "4ff23d5d-248e-45f5-9ed1-c47f507c21c1",
+                            ConcurrencyStamp = "863fe44a-ab0f-4790-ac07-0e8a7d4c3aca",
                             Description = "Pode listar o título dos negócios",
                             Name = "CanTitleBussinesList",
                             NormalizedName = "CANTITLEBUSSINESLIST",
@@ -417,9 +419,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "10298682-ab32-4bdb-936e-59a528dd960e",
+                            Id = "ffac2b70-63f1-4c69-980f-d605baa208e4",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "7763e277-5d19-4a93-8993-504feb8d1fa6",
+                            ConcurrencyStamp = "8f81d963-cddb-4052-a562-eda34eec407e",
                             Description = "Pode realizar todas as ações/operações em todos os serviços de clientes",
                             Name = "CanClienteServicoAll",
                             NormalizedName = "CANCLIENTESERVICOALL",
@@ -427,9 +429,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "2fdd1c1e-57b8-4643-a921-d884716fc3fa",
+                            Id = "7d56dfe5-83ea-4bc9-ad73-d3acbc0ff939",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "82e89f8e-50a7-4e02-bf00-d39a96c61bf6",
+                            ConcurrencyStamp = "62a6c20e-766e-4896-8c44-371cfbaa5cda",
                             Description = "Pode listar os dados de todos os serviços de clientes",
                             Name = "CanClienteServicoList",
                             NormalizedName = "CANCLIENTESERVICOLIST",
@@ -437,9 +439,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "1569a776-a5e4-4404-afd2-50c1ffb1f4f4",
+                            Id = "7f106f81-ea1c-4ab6-baf8-9048380a6076",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "faf6202f-bedd-4095-90f4-4a58c68177ed",
+                            ConcurrencyStamp = "3a581936-6b58-4832-921d-50e8415d4e10",
                             Description = "Pode listar os dado de um serviço de cliente",
                             Name = "CanClienteServicoRead",
                             NormalizedName = "CANCLIENTESERVICOREAD",
@@ -447,9 +449,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "df9dc5f3-17d5-463a-9854-d6d6e79828e9",
+                            Id = "edbdd8ec-2e2d-4351-80f4-5e8a13df0e40",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "51571a9d-2b16-476c-81a2-aca41364d6ac",
+                            ConcurrencyStamp = "7d4fcae9-583c-49a3-bbbc-cf8e1e435f91",
                             Description = "Pode criar um serviço para um cliente",
                             Name = "CanClienteServicoCreate",
                             NormalizedName = "CANCLIENTESERVICOCREATE",
@@ -457,9 +459,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "53ab8c05-2f3b-4079-abbf-2bb9903f4074",
+                            Id = "ee00bd67-8eec-4607-9112-dcfbd32c07f1",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "ec2a2dda-ef82-4532-ac8f-72352f877ae4",
+                            ConcurrencyStamp = "1a530616-2df4-4946-b926-507ed2ffb846",
                             Description = "Pode atualizar um serviço de um cliente",
                             Name = "CanClienteServicoUpdate",
                             NormalizedName = "CANCLIENTESERVICOUPDATE",
@@ -467,9 +469,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "6b69abc3-b557-4593-908b-2e59f65bd7ca",
+                            Id = "1135f8bf-7af5-4c5f-ad70-a958470d04a8",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "1682c15b-3103-4553-8253-bfad16be0f91",
+                            ConcurrencyStamp = "282dd317-a271-42b3-9b4e-13c3e8517562",
                             Description = "Pode deletar um serviço de um cliente",
                             Name = "CanClienteServicoDelete",
                             NormalizedName = "CANCLIENTESERVICODELETE",
@@ -477,9 +479,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "36adf74c-e10b-4204-99fd-fdd9d25ee339",
+                            Id = "d01523f9-031a-479d-ba33-d4efb83079ad",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "55455338-6e5a-485c-a287-544a69814e69",
+                            ConcurrencyStamp = "5d69570d-5691-4bd9-8a1a-890e7397bfe2",
                             Description = "Pode realizar todas as ações/operações em todos os serviços",
                             Name = "CanServicoAll",
                             NormalizedName = "CANSERVICOALL",
@@ -487,9 +489,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "4a4fabb5-7cdb-4e35-aede-af14739fd10a",
+                            Id = "c278686d-28ee-4532-966a-8200d2ce3e88",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "418b0322-92b8-4d9f-ad8e-fffc30619f1e",
+                            ConcurrencyStamp = "5aefc42b-200e-4bd9-8592-3e2d17e2a82c",
                             Description = "Pode listar os dados de todos os serviços",
                             Name = "CanServicoList",
                             NormalizedName = "CANSERVICOLIST",
@@ -497,9 +499,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "7eda0cac-323d-4a79-b127-c2b428e6cf78",
+                            Id = "f7a549d5-4251-4bc0-9789-1df3eecf6a97",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "e2107192-eef3-4afb-9a0f-b2ffeb35da27",
+                            ConcurrencyStamp = "a64382cc-1a43-4b7e-9565-2ba6de6c94f0",
                             Description = "Pode listar os dados de um serviço",
                             Name = "CanServicoRead",
                             NormalizedName = "CANSERVICOREAD",
@@ -507,9 +509,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "6a33cc73-17be-4a88-848e-67a37bcc7eaf",
+                            Id = "cf58a30f-d3db-49ea-a263-070478e9fa29",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "2e266914-190f-4ff9-84cc-4e8d41b22704",
+                            ConcurrencyStamp = "44c05a4a-daeb-4caf-9537-73f08cfa27fd",
                             Description = "Pode atualizar um serviço",
                             Name = "CanServicoUpdate",
                             NormalizedName = "CANSERVICOUPDATE",
@@ -517,9 +519,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "450cd419-7efd-45df-b92f-21495894d63c",
+                            Id = "6aad9a0a-aac6-48f6-9fb6-309ab4040459",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "60dfce06-d1c7-4807-ad84-280900047352",
+                            ConcurrencyStamp = "63de8ee0-ad77-4587-b081-1cd1e32cdc58",
                             Description = "Pode criar um serviço",
                             Name = "CanServicoCreate",
                             NormalizedName = "CANSERVICOCREATE",
@@ -527,9 +529,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "cc5600ca-5dc3-4f5c-a063-28f705a872b2",
+                            Id = "b1767e81-ed76-4552-b298-6e48c53c992b",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "8fecbc9a-1b61-4862-9586-e6436c8f9e66",
+                            ConcurrencyStamp = "add66895-b6bb-422d-8cc7-30c760fd8b0c",
                             Description = "Pode deletar um serviço",
                             Name = "CanServicoDelete",
                             NormalizedName = "CANSERVICODELETE",
@@ -537,9 +539,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "1325be22-c8b4-4b4b-b373-4cc9e09503b7",
+                            Id = "51d1c7e3-eb00-4e7f-874d-ea62e1603a94",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "9730503e-f555-42c2-be4a-e199d88cc1a5",
+                            ConcurrencyStamp = "5b76cd6d-9f8c-4db4-9c6a-a337689f89ce",
                             Description = "Pode realizar todas as ações/operações em todos os pipelines",
                             Name = "CanPipelineAll",
                             NormalizedName = "CANPIPELINEALL",
@@ -547,9 +549,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "95c083e5-f7b2-4071-8771-ff33eba38a31",
+                            Id = "f61afe07-4abd-40db-814f-88c1f10ebc70",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "f86f1ae4-0cb0-4184-b99a-0bd183d1f730",
+                            ConcurrencyStamp = "37e36d2a-0771-4b81-ac56-1ab917132367",
                             Description = "Pode listar os dados de todos os pipelines",
                             Name = "CanPipelineList",
                             NormalizedName = "CANPIPELINELIST",
@@ -557,9 +559,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "b22c996d-35de-4e0b-96c1-43576f3867b6",
+                            Id = "43799b94-04e2-44ce-bf66-a75bf3377d46",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "8c5a057c-8430-4660-a929-edff20774164",
+                            ConcurrencyStamp = "9af6359a-3bd2-4fad-b60f-e96451c91b8b",
                             Description = "Pode listar os dados de um pipeline",
                             Name = "CanPipelineRead",
                             NormalizedName = "CANPIPELINEREAD",
@@ -567,9 +569,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "dae19db9-4008-465f-8c89-f6eba515e2d3",
+                            Id = "321ff78c-feb8-485b-b448-72d9a2141156",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "fb2fcc8a-a528-46ef-aa6a-eaa2c3a6e3ef",
+                            ConcurrencyStamp = "4628df92-bae8-4248-80cb-86cd03ff9220",
                             Description = "Pode criar um pipeline",
                             Name = "CanPipelineCreate",
                             NormalizedName = "CANPIPELINECREATE",
@@ -577,9 +579,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "140c0f75-adb2-454b-89ac-253459567a8b",
+                            Id = "f76c5490-185f-490b-8888-cd837dd40863",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "d903f654-1ccb-4f0a-bda2-ee07653fb005",
+                            ConcurrencyStamp = "7f351919-3c50-480f-b068-d500f313aeb4",
                             Description = "Pode atualizar um pipeline",
                             Name = "CanPipelineUpdate",
                             NormalizedName = "CANPIPELINEUPDATE",
@@ -587,9 +589,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "d6d9522f-ad67-480c-9a9a-b2c5dae8fe17",
+                            Id = "13f3737d-de17-44d6-9641-8901a775f67e",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "d2b46bf1-e3bb-4c70-b8ce-9ea9a82cf751",
+                            ConcurrencyStamp = "b63b603f-d0b6-4b7a-a255-bca6152980f2",
                             Description = "Pode deletar um pipeline",
                             Name = "CanPipelineDelete",
                             NormalizedName = "CANPIPELINEDELETE",
@@ -597,9 +599,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "b998bcc3-dfe6-42f2-b552-605abf52993b",
+                            Id = "13721186-e4eb-4cfe-88da-34ef2b93dc82",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "1e58ed5a-852b-4d4a-929b-ec2a79488f71",
+                            ConcurrencyStamp = "9d30b9ec-b6db-4a5d-9a10-8106df9b5067",
                             Description = "Pode realizar todas as ações/operações em todos os fornecedores",
                             Name = "CanFornecedorAll",
                             NormalizedName = "CANFORNECEDORALL",
@@ -607,9 +609,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "b5c457fb-baa6-492f-9d82-929183709528",
+                            Id = "827c2c14-ba3d-40cb-bbcc-654f6f1694e4",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "9e6ff802-d903-4044-99d6-66d11cd55e40",
+                            ConcurrencyStamp = "74e9bf4e-5b0d-4225-8691-09a288672587",
                             Description = "Pode listar os dados de todos os fornecedores",
                             Name = "CanFornecedorList",
                             NormalizedName = "CANFORNECEDORLIST",
@@ -617,9 +619,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "0a2eff2c-6d81-4e2d-8b9d-bafe4558cae6",
+                            Id = "862040a4-4f52-4029-ad34-ae2fbb576465",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "7520b235-3fba-48b1-b814-5e996f05a0b7",
+                            ConcurrencyStamp = "92e9af46-e3f2-49cb-8cab-080970137ab6",
                             Description = "Pode listar os dados de um fornecedor",
                             Name = "CanFornecedorRead",
                             NormalizedName = "CANFORNECEDORREAD",
@@ -627,9 +629,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "c79bead9-9c97-4c87-a1ec-00c60d4bba02",
+                            Id = "11f337b4-a612-468b-82cf-eb777b970d53",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "5af6d96b-d555-440e-9c3c-809aeb31384d",
+                            ConcurrencyStamp = "fea8beed-ec01-4edb-a0d1-8c8ad37da3fb",
                             Description = "Pode criar um fornecedor",
                             Name = "CanFornecedorCreate",
                             NormalizedName = "CANFORNECEDORCREATE",
@@ -637,9 +639,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "f7ee0684-3607-48fa-9fae-7e0b8b29f0d5",
+                            Id = "29fc9d9c-93ad-4fdf-9231-a18856129efa",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "9de24d9e-b43e-4b82-ae5f-e97693a92361",
+                            ConcurrencyStamp = "78f8eefb-e462-4a4c-91c1-d0c9074e2a18",
                             Description = "Pode atualizar um fornecedor",
                             Name = "CanFornecedorUpdate",
                             NormalizedName = "CANFORNECEDORUPDATE",
@@ -647,9 +649,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "01692288-e887-4762-b617-25ba1f8cbfc7",
+                            Id = "07292a06-0c72-4677-ba2d-88db46f6989e",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "ea55e8fd-5b6a-422d-bbc9-8412b7b4e320",
+                            ConcurrencyStamp = "b6397f66-16b5-49e2-9b13-53f693c557f4",
                             Description = "Pode deletar um fornecedor",
                             Name = "CanForncedorDelete",
                             NormalizedName = "CANFORNCEDORDELETE",
@@ -657,9 +659,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "0d926d33-3b3f-46d1-a0ce-335bcd2f22ad",
+                            Id = "adf093be-d27d-43d4-9a62-41268e8f0925",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "bbe9c1f1-77f5-4000-ba2f-7fb02b08c61e",
+                            ConcurrencyStamp = "feb1950e-fc15-41f7-86e0-c2c4946c3616",
                             Description = "Pode realizar todas as ações/operações em todos os serviços de fornecedores",
                             Name = "CanFornecedorServicoAll",
                             NormalizedName = "CANFORNECEDORSERVICOALL",
@@ -667,9 +669,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "1858e027-f342-4cf4-af87-3ffa32b21574",
+                            Id = "6a0d6f87-a0ca-4cdf-8d53-ca5e1a129927",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "28bdc88f-a369-4246-813f-2ae746204569",
+                            ConcurrencyStamp = "32acc79a-6a38-4a78-809c-903321c710ff",
                             Description = "Pode listar os dados de todos os serviços de fornecedores",
                             Name = "CanFornecedorServicoList",
                             NormalizedName = "CANFORNECEDORSERVICOLIST",
@@ -677,9 +679,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "a1b74362-418b-431f-a048-7e520dca0a64",
+                            Id = "92a5e106-2f24-40b5-b77d-122ab4fb2bf3",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "18a84b19-af4a-4323-9931-2d5fe2959940",
+                            ConcurrencyStamp = "b31ccce7-7c3c-4b47-a23f-f1b91fcb7e16",
                             Description = "Pode listar os dado de um serviço de fornecedor",
                             Name = "CanFornecedorServicoRead",
                             NormalizedName = "CANFORNECEDORSERVICOREAD",
@@ -687,9 +689,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "0c850b6e-75c9-4509-81ea-b880eb7a2435",
+                            Id = "8d1add50-a21f-4a9e-96fa-d730fa20f2c2",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "c3bdacf2-274f-4435-ad3a-354895682c0b",
+                            ConcurrencyStamp = "f3fbd06a-b2aa-4478-9d6a-31b1f08915d1",
                             Description = "Pode criar um serviço para um fornecedor",
                             Name = "CanFornecedorServicoCreate",
                             NormalizedName = "CANFORNECEDORSERVICOCREATE",
@@ -697,9 +699,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "304759ba-9bff-4b88-9e33-c669e99832af",
+                            Id = "c7b1b904-9a38-4b91-bc25-a2b2791fc76b",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "62d47f00-b60e-4623-bc24-d80b9c57601b",
+                            ConcurrencyStamp = "25467b3d-f6c1-448b-b6c2-6ce951bbdbd9",
                             Description = "Pode atualizar um serviço de um fornecedor",
                             Name = "CanFornecedorServicoUpdate",
                             NormalizedName = "CANFORNECEDORSERVICOUPDATE",
@@ -707,9 +709,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "a3a748d0-b736-4651-8e64-4cedbcce2991",
+                            Id = "fedef518-8c3f-4a7f-848f-cfbae8964dd9",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "eb52c96c-9e0e-409c-a71a-0b488939639f",
+                            ConcurrencyStamp = "eb265705-8ddb-466c-a810-e3c07ac63675",
                             Description = "Pode deletar um serviço de um fornecedor",
                             Name = "CanFornecedorServicoDelete",
                             NormalizedName = "CANFORNECEDORSERVICODELETE",
@@ -717,9 +719,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "368c1831-248f-4063-9265-2dda7bb34889",
+                            Id = "74d19367-b382-4c9f-a9cf-412969085577",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "f5b6d4f4-ee13-4ce3-a03a-1ffe3b1c0a85",
+                            ConcurrencyStamp = "a8c16e64-f683-4132-a148-008b3a116d6c",
                             Description = "Pode realizar todas as ações/operações em todos os produtos",
                             Name = "CanProdutoAll",
                             NormalizedName = "CANPRODUTOALL",
@@ -727,9 +729,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "e829be93-b013-424b-bcd5-4fe00bec4934",
+                            Id = "ba1656ae-8903-4dad-acb4-c67c3795f3c9",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "73637b5a-27e8-451c-9cee-ec158539d999",
+                            ConcurrencyStamp = "4bf93362-8f0d-4bda-bf47-c1e569931022",
                             Description = "Pode listar os dados de todos os produtos",
                             Name = "CanProdutoList",
                             NormalizedName = "CANPRODUTOLIST",
@@ -737,9 +739,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "29053f9f-1bfd-46a3-94ad-b06d16d6c6fc",
+                            Id = "7e07e597-94c9-4364-9fdd-500282adac04",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "fa7f5fa9-b22b-4be4-97fe-ba3b24875e34",
+                            ConcurrencyStamp = "57268436-bc58-499c-ab46-579b6ce137cb",
                             Description = "Pode listar os dados de um produtos",
                             Name = "CanProdutoRead",
                             NormalizedName = "CANPRODUTOREAD",
@@ -747,9 +749,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "6b71c8c4-6616-4ce8-b94a-498c0bb18c98",
+                            Id = "5a1e350c-7074-4414-a262-7cfaf1dce2b6",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "f71b9371-a651-486e-a75b-d29ab15db942",
+                            ConcurrencyStamp = "a87874cf-7dfc-4a2a-beba-43a8e2cb32b1",
                             Description = "Pode criar um produtos",
                             Name = "CanProdutoCreate",
                             NormalizedName = "CANPRODUTOCREATE",
@@ -757,9 +759,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "9ae50cc2-5256-4f86-9eb1-12f7c0171d0f",
+                            Id = "4a679016-b17f-4c9c-a313-0b1c972790b8",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "aace16cc-6e33-4590-9c2d-826c6f0e4b5d",
+                            ConcurrencyStamp = "98957fc1-74f2-45e8-9131-33074b2cf60a",
                             Description = "Pode atualizar um produtos",
                             Name = "CanProdutoUpdate",
                             NormalizedName = "CANPRODUTOUPDATE",
@@ -767,9 +769,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "270fe072-62b7-4d7a-854d-a7567ee5c47a",
+                            Id = "e10ddae0-3bcd-42d7-bc70-0fcba33cc87f",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "75a630a2-fe7d-48fb-a9bb-11661fbdbc4c",
+                            ConcurrencyStamp = "c6df125a-edfa-43e1-a290-b9a915722c78",
                             Description = "Pode deletar um produtos",
                             Name = "CanProdutoDelete",
                             NormalizedName = "CANPRODUTODELETE",
@@ -777,9 +779,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "f85ddb59-bbcd-41dd-814a-56927059866f",
+                            Id = "11769367-14fe-45ef-a84d-2cb579adb44f",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "e0226379-fa60-4e14-9d87-506a1b9db27d",
+                            ConcurrencyStamp = "fbc0f7e6-25e8-469d-b367-72c0fe19d658",
                             Description = "Pode realizar todas as ações/operações em todos os contratos de clientes",
                             Name = "CanClienteContratoAll",
                             NormalizedName = "CANCLIENTECONTRATOALL",
@@ -787,9 +789,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "d186a34a-3367-47b0-8e08-484aeb05dbb9",
+                            Id = "80fc6ae5-d065-44c9-9993-4fab1d8f65ef",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "32c22778-bfed-492a-b804-c018c7639e8e",
+                            ConcurrencyStamp = "ad179a99-4362-43e0-9be4-4329a84c1495",
                             Description = "Pode listar os dados de todos os contratos de clientes",
                             Name = "CanClienteContratoList",
                             NormalizedName = "CANCLIENTECONTRATOLIST",
@@ -797,9 +799,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "e5fc42cf-f4da-455b-a543-ba26dd090a95",
+                            Id = "246e59f5-95bd-4b15-9ec7-c70623289bf7",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "cb2e85ef-604c-4567-8f11-d9d1aa566018",
+                            ConcurrencyStamp = "8f5bc901-9208-4de8-a414-d1b2dc3d6577",
                             Description = "Pode listar os dados de um contrato de cliente",
                             Name = "CanClienteContratoRead",
                             NormalizedName = "CANCLIENTECONTRATOREAD",
@@ -807,9 +809,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "107547f6-ff86-4251-b795-5bb47ab5cf3d",
+                            Id = "c331a082-b77f-4c26-8686-3b398bdac4b9",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "e509722d-52c3-4479-956c-7c6f7a5bc454",
+                            ConcurrencyStamp = "8fa33677-c5ac-4f06-807c-a64a9f732317",
                             Description = "Pode criar um contrato de cliente",
                             Name = "CanClienteContratoCreate",
                             NormalizedName = "CANCLIENTECONTRATOCREATE",
@@ -817,9 +819,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "67700c7b-6e81-4f09-b63a-db0ac75c06ff",
+                            Id = "8ab86b51-60d0-4aca-b5e3-21129b450a80",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "e0b50181-a616-4260-a0c7-36d88d078ff7",
+                            ConcurrencyStamp = "be1b208d-97b4-4f36-a767-452f96e595e1",
                             Description = "Pode atualizar um contrato de cliente",
                             Name = "CanClienteContratoUpdate",
                             NormalizedName = "CANCLIENTECONTRATOUPDATE",
@@ -827,9 +829,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "6be35c30-5067-485f-a3e3-27f47cf3af71",
+                            Id = "da998c80-e110-42ba-9d3d-7b647fe76079",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "26670ebb-5327-4a2e-80fc-8445083b34c2",
+                            ConcurrencyStamp = "77b43e2f-8acf-4fe1-9449-74d58a061435",
                             Description = "Pode deletar um contrato de cliente",
                             Name = "CanClienteContratoDelete",
                             NormalizedName = "CANCLIENTECONTRATODELETE",
@@ -837,9 +839,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "4ed8f646-1916-4ba0-be1c-783264a25cd8",
+                            Id = "e7fc62fd-91b0-4fb7-b2a7-3d2be8fb0e21",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "3c4aa624-6e4a-4cbf-87b8-e666fc549a64",
+                            ConcurrencyStamp = "c6d33537-5390-477e-8074-db087e8afc04",
                             Description = "Pode realizar todas as ações/operações em todos os produtos de clientes",
                             Name = "CanClienteProdutoAll",
                             NormalizedName = "CANCLIENTEPRODUTOALL",
@@ -847,9 +849,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "08022872-8bf7-48ff-9183-4d26eeba46e8",
+                            Id = "d00cd824-85eb-44a1-9f70-68be73d697ea",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "fffbc328-70a8-4164-9cff-8ad98fa52d0d",
+                            ConcurrencyStamp = "82cb0a8c-c85e-46cd-9873-b9f52a907908",
                             Description = "Pode listar os dados de todos os produtos de clientes",
                             Name = "CanClienteProdutoList",
                             NormalizedName = "CANCLIENTEPRODUTOLIST",
@@ -857,9 +859,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "f3af9579-83f7-4d35-bd3b-60d2b89aaf5f",
+                            Id = "c10de3c6-a8e1-4952-a0e7-afbd7ead71b1",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "7b7b2598-88db-49fc-9264-a42ea12ab1dd",
+                            ConcurrencyStamp = "f33f6070-3dd3-4624-9dd9-6c70a8abb40b",
                             Description = "Pode listar os dados de um produto de cliente",
                             Name = "CanClienteProdutoRead",
                             NormalizedName = "CANCLIENTEPRODUTOREAD",
@@ -867,9 +869,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "a7617eca-a733-4064-858e-d26e030a75f4",
+                            Id = "44f6ed77-08ee-4114-a026-2990cdcc5ecf",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "ed858ea6-91ee-4f28-8196-ba15f84818f0",
+                            ConcurrencyStamp = "ca9735b1-310c-4bef-9bfd-9348e27f5612",
                             Description = "Pode criar um produto de cliente",
                             Name = "CanClienteProdutoCreate",
                             NormalizedName = "CANCLIENTEPRODUTOCREATE",
@@ -877,9 +879,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "a8fbd640-d2f8-4fa9-abbe-bc891fb82732",
+                            Id = "28867602-2c91-4495-af84-182ab1ff14e9",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "18478b08-0a96-4fc6-8429-72311e554feb",
+                            ConcurrencyStamp = "9728660f-d72f-4420-9a90-61d400d3ee54",
                             Description = "Pode atualizar um produto de cliente",
                             Name = "CanClienteProdutoUpdate",
                             NormalizedName = "CANCLIENTEPRODUTOUPDATE",
@@ -887,9 +889,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "1a3489a5-b944-4a6b-951a-8dcdcdd6a7f1",
+                            Id = "a79e2a47-2edc-4e34-872b-89b72e5169fc",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "7f47d00e-f121-4e79-956e-ad7830fe8955",
+                            ConcurrencyStamp = "88c9b8f7-6c74-4f3d-aee4-79c547aa9cf1",
                             Description = "Pode deletar um produto de cliente",
                             Name = "CanClienteProdutoDelete",
                             NormalizedName = "CANCLIENTEPRODUTODELETE",
@@ -897,9 +899,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "2934a1e3-beac-429f-8011-2bbf5dc09c32",
+                            Id = "0e03dff6-7fc1-4e43-81ec-1925b7e5bbeb",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "352797c7-526d-496d-b689-048bff776e95",
+                            ConcurrencyStamp = "f92909e6-1f6e-4a68-9a90-7f28fe3a6a5f",
                             Description = "Pode realizar todas as ações/operações em todos os produtos de fornecedores",
                             Name = "CanFornecedorProdutoAll",
                             NormalizedName = "CANFORNECEDORPRODUTOALL",
@@ -907,9 +909,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "3e16b995-26b3-4afe-a25d-2ac1c2a1962a",
+                            Id = "32e2f360-4188-422b-8243-f286b816ddc5",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "7ec8c842-c91d-4944-934f-5ae3e58d6624",
+                            ConcurrencyStamp = "637b3db0-0e72-4a8a-a784-263d8a0eb723",
                             Description = "Pode listar os dados de todos os produtos de fornecedores",
                             Name = "CanFornecedorProdutoList",
                             NormalizedName = "CANFORNECEDORPRODUTOLIST",
@@ -917,9 +919,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "a8329371-bef9-40d2-9aec-2ded841d2a0b",
+                            Id = "eaa63234-a9b6-46cb-9bb8-8aaea16a20c6",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "d52b6fc9-cd7a-46ea-9b55-1ea5268fe6f5",
+                            ConcurrencyStamp = "a600ff29-f76b-4e4f-93ae-f307c26822c2",
                             Description = "Pode listar os dados de um produto de fornecedor",
                             Name = "CanFornecedorProdutoRead",
                             NormalizedName = "CANFORNECEDORPRODUTOREAD",
@@ -927,9 +929,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "09320b14-2ef3-4129-a8e3-77439ccb52b4",
+                            Id = "032ecfe1-c45c-4330-be95-c540b319e401",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "efc83b02-e3cf-4f3d-9a64-a2d391e8a21f",
+                            ConcurrencyStamp = "ac7ed1d3-f205-4538-8533-7ea1d3a8a989",
                             Description = "Pode visualizar um produto de fornecedor",
                             Name = "CanFornecedorProdutoCreate",
                             NormalizedName = "CANFORNECEDORPRODUTOCREATE",
@@ -937,9 +939,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "fe7bc212-cd26-461e-870d-a5a59f89132b",
+                            Id = "7207a482-0c0a-4425-bef8-8fcb4abc8b81",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "50b89b73-e83b-4f5c-9029-4157de47e0d6",
+                            ConcurrencyStamp = "4eb1ee36-1c31-4cd0-9320-e2e77bef84e6",
                             Description = "Pode criar um produto de fornecedor",
                             Name = "CanFornecedorProdutoUpdate",
                             NormalizedName = "CANFORNECEDORPRODUTOUPDATE",
@@ -947,9 +949,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "906f7580-f72b-4c1a-a13c-87a9d74f823d",
+                            Id = "55b76d0e-0582-43ff-a7ce-95f49c3200d0",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "76242660-caca-438f-9c92-3a45c859822c",
+                            ConcurrencyStamp = "95fd3593-1e9f-4dfc-9549-1bab452a0397",
                             Description = "Pode deletar um produto de fornecedor",
                             Name = "CanFornecedorProdutoDelete",
                             NormalizedName = "CANFORNECEDORPRODUTODELETE",
@@ -957,9 +959,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "39666ee7-1b83-4f29-b4b0-0b78bccc101d",
+                            Id = "8a3984d0-efaf-456c-a6d9-82d4020f9ee4",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "3a36004e-c3dc-4a6c-a972-b2f328ca4122",
+                            ConcurrencyStamp = "1627781d-e165-4b6e-9a66-707b13f2d48a",
                             Description = "Pode realizar todas as ações/operações em dashboard comercial",
                             Name = "CanDashboardComercialAll",
                             NormalizedName = "CANDASHBOARDCOMERCIALALL",
@@ -967,9 +969,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "e80cc22c-38d1-4caf-b97f-35dccce11915",
+                            Id = "ffc53283-2780-4fe6-ac16-00a95f4e990f",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "da2c1bb3-d7ab-48b1-8c63-e793eed13347",
+                            ConcurrencyStamp = "66e00a96-b212-459b-9540-3c93e159240e",
                             Description = "CanDashboardComercialClienteContratoList",
                             Name = "CanDashboardComercialClienteContratoList",
                             NormalizedName = "CANDASHBOARDCOMERCIALCLIENTECONTRATOLIST",
@@ -977,9 +979,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "e42e291b-9463-4462-b876-b83bbd75341f",
+                            Id = "f20ce61a-e2b8-4a52-b860-1bb6f3e429b9",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "dd2b93e1-7432-4fc2-8734-20d4ca34dc78",
+                            ConcurrencyStamp = "32b1a3f8-97a2-42b1-adc5-ee2969ed35a8",
                             Description = "Pode criar uma chave de api de terceiro",
                             Name = "CanChaveApiTerceiroAll",
                             NormalizedName = "CANCHAVEAPITERCEIROALL",
@@ -987,9 +989,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "5a9e03ab-4b85-4690-8bfa-4a33dec82b4c",
+                            Id = "b9ef3d50-3c24-4dfc-985c-a6b552da0ccc",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "6b6b76b7-6943-4010-82a3-5b5eeb2344d8",
+                            ConcurrencyStamp = "68a7aa3c-8e57-4ccd-98a9-4fd7dfd26653",
                             Description = "Pode criar uma chave de api de terceiro",
                             Name = "CanChaveApiTerceiroList",
                             NormalizedName = "CANCHAVEAPITERCEIROLIST",
@@ -997,9 +999,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "0c5a21fc-c4fe-420a-a0eb-d21108c6bd46",
+                            Id = "23ac860d-4ce0-4726-9c95-613edfda9fd1",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "e9d9c558-0fb0-44ea-be19-d6c872d1d4e3",
+                            ConcurrencyStamp = "f236520e-2bb6-46a2-9972-cfd3f4a8c758",
                             Description = "Pode criar uma chave de api de terceiro",
                             Name = "CanChaveApiTerceiroRead",
                             NormalizedName = "CANCHAVEAPITERCEIROREAD",
@@ -1007,9 +1009,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "89e00215-5d24-454f-a6f6-ab1f2559633b",
+                            Id = "139ed7f5-705e-4e71-b2ce-2376e09da704",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "3c2d8838-a49b-4413-8882-25ef134b90fb",
+                            ConcurrencyStamp = "9405200b-152e-40f3-a256-30483da6dfd6",
                             Description = "Pode criar uma chave de api de terceiro",
                             Name = "CanChaveApiTerceiroCreate",
                             NormalizedName = "CANCHAVEAPITERCEIROCREATE",
@@ -1017,9 +1019,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "8891cdaf-f160-4fbb-b679-628981aca76b",
+                            Id = "1d021685-1bfc-41ba-ae31-eb86aa31dcbb",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "7598413b-11d5-4487-a425-2ca92c60bdf4",
+                            ConcurrencyStamp = "29e691a7-a6d8-4204-a161-6e52d8b48246",
                             Description = "Pode criar uma chave de api de terceiro",
                             Name = "CanChaveApiTerceiroUpdate",
                             NormalizedName = "CANCHAVEAPITERCEIROUPDATE",
@@ -1027,9 +1029,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "c62c00e2-b966-49f0-9d95-da2272281785",
+                            Id = "592cb6f3-2332-4475-b412-2f165b88098b",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "9e99c506-e7f6-4e2c-a7c3-23689d75faa4",
+                            ConcurrencyStamp = "35782933-3f81-41b8-b1fc-094d6612a047",
                             Description = "Pode criar uma chave de api de terceiro",
                             Name = "CanChaveApiTerceiroDelete",
                             NormalizedName = "CANCHAVEAPITERCEIRODELETE",
@@ -1037,9 +1039,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "d2e6d784-6fd7-4a34-a9ff-b7791b7964a0",
+                            Id = "48042e04-553c-42f7-bb7c-df5ab5c6120b",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "b77dc5f8-33c4-4748-94c2-6793bc9dc24d",
+                            ConcurrencyStamp = "7f16457d-29bb-4078-a574-ece3ba798995",
                             Description = "Pode realizar todas as ações/operações em dashboard publica",
                             Name = "CanDashboardPublicaAll",
                             NormalizedName = "CANDASHBOARDPUBLICAALL",
@@ -1047,9 +1049,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "3d95924a-8876-4d61-8016-5d4ec38391d9",
+                            Id = "c409d0ce-fc38-487d-b8ea-f37957edb484",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "c3402541-c454-4bc6-bef7-85965c0a4465",
+                            ConcurrencyStamp = "e2002ad9-a868-4e40-b84a-6913229e3b81",
                             Description = "CanDashboardPublicaClienteContratoList",
                             Name = "CanDashboardPublicaClienteContratoList",
                             NormalizedName = "CANDASHBOARDPUBLICACLIENTECONTRATOLIST",
@@ -1057,9 +1059,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "9cd67d41-613f-4e77-9a47-927038652f58",
+                            Id = "57deb8ab-2f1c-43f0-a7ee-0a644bf882a8",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "25220443-0482-4f9e-8ae6-e58681575870",
+                            ConcurrencyStamp = "e3d6e2e7-097c-4e2d-8350-408581e8ec40",
                             Description = "Pode realizar todas as ações/operações em todos os produtos de fornecedores",
                             Name = "CanVendedorAll",
                             NormalizedName = "CANVENDEDORALL",
@@ -1067,9 +1069,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "95d931a1-b280-4e88-96f1-e590df6d5cf6",
+                            Id = "472d70fd-3f9a-4167-a6e3-5319cfbfb159",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "3c8066ae-4eb7-47af-aac2-b6fc8614c568",
+                            ConcurrencyStamp = "4f9dc68a-95f7-423b-9fac-23bae60cc6b8",
                             Description = "Pode listar os dados de todos os produtos de fornecedores",
                             Name = "CanVendedorList",
                             NormalizedName = "CANVENDEDORLIST",
@@ -1077,9 +1079,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "8fd78875-bd29-4637-b054-c20a109ecde2",
+                            Id = "4a1b97a5-771a-4ee8-89d7-b17649948e8d",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "78978115-58bc-4a72-99d4-8a5decca164f",
+                            ConcurrencyStamp = "948e0f6c-c478-4a58-8881-1d8918ab0b32",
                             Description = "Pode listar os dados de um produto de fornecedor",
                             Name = "CanVendedorRead",
                             NormalizedName = "CANVENDEDORREAD",
@@ -1087,9 +1089,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "b03885ca-2617-42db-8ee5-3c1cb7fae4ec",
+                            Id = "c6138d08-75e7-4eb2-b2cd-53da4152ad62",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "70f9ca8f-b56b-4f76-972a-b4e7735aca41",
+                            ConcurrencyStamp = "cb7410b9-8a9a-4267-8fd8-7b55dd1d54bd",
                             Description = "Pode visualizar um produto de fornecedor",
                             Name = "CanVendedorCreate",
                             NormalizedName = "CANVENDEDORCREATE",
@@ -1097,9 +1099,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "1cf96a6e-e9f8-4705-af47-2671981c6a74",
+                            Id = "3c69c71f-5c31-40df-8c93-e585da5bdfaa",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "5c897c30-b6c9-4854-b7c6-371c356fd231",
+                            ConcurrencyStamp = "9ef0f861-487d-4529-b0c2-e55ca22b7a13",
                             Description = "Pode criar um produto de fornecedor",
                             Name = "CanVendedorUpdate",
                             NormalizedName = "CANVENDEDORUPDATE",
@@ -1107,9 +1109,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "8c0a2f0c-b6aa-4e93-8a19-671234f944cd",
+                            Id = "35275db8-bbb3-4333-8681-0c43f43f2f3b",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "5da47687-0c66-4bd0-b0ca-ce97d2b59137",
+                            ConcurrencyStamp = "1d164068-76ba-4749-a1f8-41460457fef0",
                             Description = "Pode deletar um produto de fornecedor",
                             Name = "CanVendedorDelete",
                             NormalizedName = "CANVENDEDORDELETE",
@@ -1117,9 +1119,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "b4216c65-f65d-4a13-9194-73219d137730",
+                            Id = "e3d639a1-a36c-4d30-890d-d2ffba5facd3",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "4799445b-d10f-4c8b-9e16-32ea883fe189",
+                            ConcurrencyStamp = "0a96caef-37dc-48e5-ab71-7df571647099",
                             Description = "Pode realizar todas as ações/operações em todos os produtos de fornecedores",
                             Name = "CanVendedorComissaoAll",
                             NormalizedName = "CANVENDEDORCOMISSAOALL",
@@ -1127,9 +1129,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "84f3a70a-e22f-474c-aa46-2261778e4902",
+                            Id = "9a6363d2-ab6d-4580-988f-2cc4c2736987",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "5ba71750-544c-4467-86a3-6509e7bc0962",
+                            ConcurrencyStamp = "9d275be9-0602-4c9d-8c89-88b69b5605f3",
                             Description = "Pode listar os dados de todos os produtos de fornecedores",
                             Name = "CanVendedorComissaoList",
                             NormalizedName = "CANVENDEDORCOMISSAOLIST",
@@ -1137,9 +1139,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "75aa35ec-bec9-49b2-800c-b12617f0bc6e",
+                            Id = "8fc6902a-b38a-4ba4-ba8b-36bdbdcd33cb",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "cea9e0eb-edd7-445c-ae68-edffb1eed880",
+                            ConcurrencyStamp = "e310a3a5-989e-471a-8438-e946626974a8",
                             Description = "Pode listar os dados de um produto de fornecedor",
                             Name = "CanVendedorComissaoRead",
                             NormalizedName = "CANVENDEDORCOMISSAOREAD",
@@ -1147,9 +1149,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "81a3e2d4-9e2f-4241-93fd-5af924ab6f95",
+                            Id = "43d69eb9-0ae0-4164-ac33-35a4211be2a9",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "d7992142-7d58-42f6-ab63-2d50946ac220",
+                            ConcurrencyStamp = "f43a0f18-9ad7-4dcb-8894-ef76851aa3ac",
                             Description = "Pode visualizar um produto de fornecedor",
                             Name = "CanVendedorComissaoCreate",
                             NormalizedName = "CANVENDEDORCOMISSAOCREATE",
@@ -1157,9 +1159,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "e0162c0b-fef2-4971-9c6f-b1640433f9bd",
+                            Id = "c4662403-c229-4555-9b5c-8a231cf64991",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "6845870a-aabe-4f3d-8b2a-a2b399872d90",
+                            ConcurrencyStamp = "0640c2ec-8140-4af2-9395-4b8677453f64",
                             Description = "Pode criar um produto de fornecedor",
                             Name = "CanVendedorComissaoUpdate",
                             NormalizedName = "CANVENDEDORCOMISSAOUPDATE",
@@ -1167,9 +1169,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "4e9e2abf-60f8-4b53-8edb-74107071d05c",
+                            Id = "16fab3e2-67e3-4319-82ba-36adc7825a80",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "7ddb5b50-1a70-469e-b3bb-fc1c54df5f2e",
+                            ConcurrencyStamp = "7132c4b3-d1ee-4370-9677-886e373e6c9d",
                             Description = "Pode deletar um produto de fornecedor",
                             Name = "CanVendedorComissaoDelete",
                             NormalizedName = "CANVENDEDORCOMISSAODELETE",
@@ -1177,9 +1179,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "11fffcbb-2084-429c-9618-c3c8804c6311",
+                            Id = "aa5a4a56-445e-439f-b5c1-574d6f4b25a7",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "5ee409ba-fa16-48d1-9c3a-72a796bf23d7",
+                            ConcurrencyStamp = "fe0f6078-4c51-4636-b790-1c037842f343",
                             Description = "Pode realizar todas as ações/operações em todos os produtos de fornecedores",
                             Name = "CanVendedorContratoAll",
                             NormalizedName = "CANVENDEDORCONTRATOALL",
@@ -1187,9 +1189,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "9c58cb38-9c97-4ee5-9a92-1e9bf084e1c8",
+                            Id = "2d640524-09bb-40c5-8bd0-988c7d49e1d4",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "5228a0d7-ffd6-4a84-9390-347a9cfa8e1a",
+                            ConcurrencyStamp = "d1fc057f-0059-4572-ac02-51df3c6efa79",
                             Description = "Pode listar os dados de todos os produtos de fornecedores",
                             Name = "CanVendedorContratoList",
                             NormalizedName = "CANVENDEDORCONTRATOLIST",
@@ -1197,9 +1199,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "58635505-1a73-40a7-973c-81d97995038c",
+                            Id = "3ac93af3-5a72-4599-b561-d40ea66cc10e",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "24b60e65-0cc0-46d9-b76c-fbea1ef1cd22",
+                            ConcurrencyStamp = "9998a3fb-f8b9-49be-9218-831c5ce78637",
                             Description = "Pode listar os dados de um produto de fornecedor",
                             Name = "CanVendedorContratoRead",
                             NormalizedName = "CANVENDEDORCONTRATOREAD",
@@ -1207,9 +1209,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "c315fc74-060b-447c-bc01-c615306ba31b",
+                            Id = "afca5c12-73fe-4411-b9a2-a7d911bd569b",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "4f599abc-8231-49ce-be2c-eaf8ac1ed825",
+                            ConcurrencyStamp = "29e90506-9a48-4703-ad79-33b660369055",
                             Description = "Pode visualizar um produto de fornecedor",
                             Name = "CanVendedorContratoCreate",
                             NormalizedName = "CANVENDEDORCONTRATOCREATE",
@@ -1217,9 +1219,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "51b4bdb5-c658-47fe-b645-4079ad8d0574",
+                            Id = "c1a2c4bf-b978-438e-98f6-4c7c7355adc2",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "3c0f9dc9-d3c6-4b1e-b9a4-142f709a0e87",
+                            ConcurrencyStamp = "16edc048-a7cc-4f3a-8142-42a510dfc6cd",
                             Description = "Pode criar um produto de fornecedor",
                             Name = "CanVendedorContratoUpdate",
                             NormalizedName = "CANVENDEDORCONTRATOUPDATE",
@@ -1227,9 +1229,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "92c1970c-e1bc-495c-887c-c7c84c176139",
+                            Id = "70b5fc07-a699-4eea-98c6-821777d62885",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "38fce4af-9314-49bb-892b-d76f449ec6cc",
+                            ConcurrencyStamp = "4a1e8eee-5a70-49dc-9fe1-285210281856",
                             Description = "Pode deletar um produto de fornecedor",
                             Name = "CanVendedorContratoDelete",
                             NormalizedName = "CANVENDEDORCONTRATODELETE",
@@ -1237,9 +1239,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "7ac70df4-b851-4a36-b3cb-14b2dabe9929",
+                            Id = "7977d9ee-5f80-4f41-9301-3acabfd4028c",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "190ee037-f6f0-456a-a716-20c783a457ea",
+                            ConcurrencyStamp = "3fd117ed-2c9e-45df-bc1d-7936ae79cb87",
                             Description = "Pode realizar todas as ações/operações em todas as faturas de contratos de clientes",
                             Name = "CanClienteContratoFaturaAll",
                             NormalizedName = "CANCLIENTECONTRATOFATURAALL",
@@ -1247,9 +1249,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "95c17c16-8ea3-48ab-aff1-49730819202a",
+                            Id = "4363e4ef-5295-42df-971d-b5ab7871142d",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "f8019ab7-7bf6-4248-914f-77b67a2bb815",
+                            ConcurrencyStamp = "48e549d8-7744-445e-a42a-b2752412cc0e",
                             Description = "Pode listar os dados de todos os produtos de fornecedores",
                             Name = "CanClienteContratoFaturaList",
                             NormalizedName = "CANCLIENTECONTRATOFATURALIST",
@@ -1257,9 +1259,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "02e224dc-a673-4dd1-8765-4cc9196fa9bf",
+                            Id = "9b4227b2-46de-47c9-8647-aeaa92b81d7a",
                             Actions = new[] { 2 },
-                            ConcurrencyStamp = "bd93c987-eaaa-44dc-a79c-df588ec1fe4d",
+                            ConcurrencyStamp = "5fab251e-1c03-4e2c-8dc8-11fe287c87e8",
                             Description = "Pode listar os dados de um produto de fornecedor",
                             Name = "CanClienteContratoFaturaRead",
                             NormalizedName = "CANCLIENTECONTRATOFATURAREAD",
@@ -1267,9 +1269,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "a9b5a0f1-8a20-4798-8fb6-5190d6fde602",
+                            Id = "d4eb18cb-2d84-4a42-8889-49fad88b82ed",
                             Actions = new[] { 3 },
-                            ConcurrencyStamp = "be4b6b94-1317-4676-9c82-0fd2709145b3",
+                            ConcurrencyStamp = "b25c0fb7-8d22-4f46-bad1-c0942ff111e2",
                             Description = "Pode visualizar um produto de fornecedor",
                             Name = "CanClienteContratoFaturaCreate",
                             NormalizedName = "CANCLIENTECONTRATOFATURACREATE",
@@ -1277,9 +1279,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "052733b9-7e07-4fa1-95bb-a443878c5a6e",
+                            Id = "e8d7bf7a-e31d-4d59-aec6-6cc9ac7f1864",
                             Actions = new[] { 4 },
-                            ConcurrencyStamp = "f97a5dfb-e0dc-478d-8086-74e4f7dd8a0b",
+                            ConcurrencyStamp = "43a01fd2-947c-4806-ae50-a642c1c59c7f",
                             Description = "Pode criar um produto de fornecedor",
                             Name = "CanClienteContratoFaturaUpdate",
                             NormalizedName = "CANCLIENTECONTRATOFATURAUPDATE",
@@ -1287,9 +1289,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "4f5e9c31-ee46-4947-b266-bbdc9406d27f",
+                            Id = "07e73ead-d87a-4221-bada-392e6433fb4b",
                             Actions = new[] { 5 },
-                            ConcurrencyStamp = "a03b0ae3-d6d9-478c-b41e-cf84722af6ed",
+                            ConcurrencyStamp = "e2e9063b-e9d8-4d6a-939d-bd6babc3f9f2",
                             Description = "Pode deletar um produto de fornecedor",
                             Name = "CanClienteContratoFaturaDelete",
                             NormalizedName = "CANCLIENTECONTRATOFATURADELETE",
@@ -1297,9 +1299,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "cc7dd6c2-4f1a-44cf-a197-c9ddcc7a352d",
+                            Id = "52d547e0-b949-4777-b5c3-c670da7c705d",
                             Actions = new[] { 1, 2, 3, 4, 5 },
-                            ConcurrencyStamp = "84c3566d-1806-45c2-80f5-be55a1455b15",
+                            ConcurrencyStamp = "82e50d4c-381c-4406-a6ab-126892b3affe",
                             Description = "Pode realizar todas as ações/operações relacionadas a entidade de sistema rotina",
                             Name = "CanRotinaAll",
                             NormalizedName = "CANROTINAALL",
@@ -1307,9 +1309,9 @@ namespace BoxBack.Infra.Data.Migrations
                         },
                         new
                         {
-                            Id = "a953516b-7a56-4a9a-9153-bd7e92c7c53f",
+                            Id = "0029b27c-5292-4997-9f74-671da4bc5d67",
                             Actions = new[] { 1 },
-                            ConcurrencyStamp = "4aae3ea8-992a-40e1-b7de-a234e0cc876e",
+                            ConcurrencyStamp = "a5cf9085-deb5-440f-8e05-e0a2a1013c86",
                             Description = "Pode listar todas as rotinas de sistema",
                             Name = "CanRotinaList",
                             NormalizedName = "CANROTINALIST",
@@ -1584,7 +1586,7 @@ namespace BoxBack.Infra.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5d16223f-d5e6-46f2-97c8-3a7701f1699d"),
+                            Id = new Guid("cc6d3e0d-59f4-4f86-8799-7b6a083f5229"),
                             ApiTerceiro = 0,
                             CreatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             DataValidade = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
@@ -2561,7 +2563,13 @@ namespace BoxBack.Infra.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id");
+
+                    b.Property<int>("ChaveSequencial")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValueSql("nextval('\"OrderNumbers\"')");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -2570,12 +2578,19 @@ namespace BoxBack.Infra.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(2500)
+                        .HasColumnType("character varying(2500)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("Observacao")
                         .HasColumnType("text");
 
                     b.Property<Guid>("TenantId")
@@ -2591,14 +2606,84 @@ namespace BoxBack.Infra.Data.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Rotina");
+                    b.ToTable("Rotinas", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("4684e42a-2c55-434c-8dfb-1c673a54ac86"),
+                            ChaveSequencial = 1,
+                            CreatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 453, DateTimeKind.Unspecified).AddTicks(9405), new TimeSpan(0, -3, 0, 0, 0)),
+                            CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                            Descricao = "Esta rotina insere automaticamente no boxapp os clientes ativos do sistema Bom Controle",
+                            IsDeleted = false,
+                            Nome = "Sincronização de clientes com o sistema Bom Controle",
+                            TenantId = new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 453, DateTimeKind.Unspecified).AddTicks(9423), new TimeSpan(0, -3, 0, 0, 0)),
+                            UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9"
+                        },
+                        new
+                        {
+                            Id = new Guid("0e3dd3e2-e2c5-45fc-9c9e-6f2b3a7e8a10"),
+                            ChaveSequencial = 2,
+                            CreatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 453, DateTimeKind.Unspecified).AddTicks(9440), new TimeSpan(0, -3, 0, 0, 0)),
+                            CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                            Descricao = "Esta rotina insere automaticamente no boxapp os contratos de clientes ainda não existente, a partir do sistema Bom Controle. Na mesma rotina já atualiza a periodicidade destes novos contratos e posteriormente atualiza os dados dos contratos afins já existentes no boxapp.",
+                            IsDeleted = false,
+                            Nome = "Sincronização e atualização de contratos de clientes com o sistema Bom Controle",
+                            Observacao = "A atualização de periodicidade que ocorre logo após a importação dos contratos só se faz necessária uma vez que, o método da api do sistema Bom Controle que retorna os contratos não traz este dado. Portanto, se faz necessário buscá-lo em um outro método da api do Bom Controle.",
+                            TenantId = new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 453, DateTimeKind.Unspecified).AddTicks(9441), new TimeSpan(0, -3, 0, 0, 0)),
+                            UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9"
+                        },
+                        new
+                        {
+                            Id = new Guid("5465346e-128f-4ae1-b129-de27b1b2969b"),
+                            ChaveSequencial = 3,
+                            CreatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 453, DateTimeKind.Unspecified).AddTicks(9446), new TimeSpan(0, -3, 0, 0, 0)),
+                            CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                            Descricao = "Esta rotina insere automaticamente no boxapp todas as faturas de contratos de clientes do bom controle",
+                            IsDeleted = false,
+                            Nome = "Sincronização de faturas de contratos de clientes com o sistema Bom Controle",
+                            TenantId = new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 453, DateTimeKind.Unspecified).AddTicks(9448), new TimeSpan(0, -3, 0, 0, 0)),
+                            UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9"
+                        },
+                        new
+                        {
+                            Id = new Guid("bc2e47cf-296a-4ae8-8058-d96ff5111a65"),
+                            ChaveSequencial = 4,
+                            CreatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 453, DateTimeKind.Unspecified).AddTicks(9452), new TimeSpan(0, -3, 0, 0, 0)),
+                            CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                            Descricao = "Esta rotina atualiza automaticamente no boxapp os dados de faturas a partir de informações do sistema Bom Controle.",
+                            IsDeleted = false,
+                            Nome = "Atualização dos dados de faturas de contratos de clientes com o sistema Bom Controle",
+                            TenantId = new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 453, DateTimeKind.Unspecified).AddTicks(9453), new TimeSpan(0, -3, 0, 0, 0)),
+                            UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9"
+                        },
+                        new
+                        {
+                            Id = new Guid("d23735f9-02e1-4961-a820-89b344ae988d"),
+                            ChaveSequencial = 5,
+                            CreatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 453, DateTimeKind.Unspecified).AddTicks(9457), new TimeSpan(0, -3, 0, 0, 0)),
+                            CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                            Descricao = "Esta rotina interna gera as comissões de vendedores. As comissões são obtidas a partir dos dados de comissão (Em real ou Porcentagem), parametrizados ao vincular um contrato a um vendedor, bem como são geradas comissões apenas de contratos com faturas pagas (Em dia).",
+                            IsDeleted = false,
+                            Nome = "Gerar comissão de vendedores ativos no Boxapp",
+                            Observacao = "É recomendado que antes de rodar esta rotina, seja rodado a rotina de ChaveSequencial - 2, 3 e 4 -, afim de atualizar os contratos e suas faturas.",
+                            TenantId = new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 453, DateTimeKind.Unspecified).AddTicks(9458), new TimeSpan(0, -3, 0, 0, 0)),
+                            UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9"
+                        });
                 });
 
             modelBuilder.Entity("BoxBack.Domain.Models.RotinaEventHistory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -2631,7 +2716,7 @@ namespace BoxBack.Infra.Data.Migrations
 
                     b.HasIndex("RotinaId");
 
-                    b.ToTable("RotinaEventHistory");
+                    b.ToTable("RotinaEventsHistories", (string)null);
                 });
 
             modelBuilder.Entity("BoxBack.Domain.Models.Servico", b =>
@@ -2810,13 +2895,13 @@ namespace BoxBack.Infra.Data.Migrations
                             Id = new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
                             ApiKey = new Guid("57d390e7-2b87-47fe-9bc8-0bae3a388499"),
                             Cnpj = "12.368.943/0001-50",
-                            CreatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 13, 43, 56, 626, DateTimeKind.Unspecified).AddTicks(8956), new TimeSpan(0, -3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 440, DateTimeKind.Unspecified).AddTicks(5579), new TimeSpan(0, -3, 0, 0, 0)),
                             CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             EmailPrincipal = "rafale@boxtecnologia.com.br",
                             IsDeleted = false,
                             Nome = "Box Tecnologia Ltda",
                             NomeExibicao = "Box Tecnologia",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 13, 43, 56, 626, DateTimeKind.Unspecified).AddTicks(9021), new TimeSpan(0, -3, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2022, 12, 21, 15, 35, 58, 440, DateTimeKind.Unspecified).AddTicks(5606), new TimeSpan(0, -3, 0, 0, 0)),
                             UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9"
                         });
                 });
@@ -3350,7 +3435,7 @@ namespace BoxBack.Infra.Data.Migrations
                     b.HasOne("BoxBack.Domain.Models.Tenant", "Tenant")
                         .WithMany("Rotinas")
                         .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Tenant");
@@ -3361,7 +3446,7 @@ namespace BoxBack.Infra.Data.Migrations
                     b.HasOne("BoxBack.Domain.Models.Rotina", "Rotina")
                         .WithMany("RotinasEventsHistories")
                         .HasForeignKey("RotinaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Rotina");
