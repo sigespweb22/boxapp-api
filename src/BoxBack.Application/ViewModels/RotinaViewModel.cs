@@ -14,6 +14,8 @@ namespace BoxBack.Application.ViewModels
         public string Observacao { get; set; }
         public Int32 ChaveSequencial { get; set; }
 
+        public string Status { get; set; }
+
         public ICollection<RotinaEventHistoryViewModel> RotinasEventsHistories { get; set; }
     }
 }
