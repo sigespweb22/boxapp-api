@@ -5,7 +5,7 @@ using Refit;
 using BoxBack.Domain.Models.Services;
 using BoxBack.Domain.ModelsServices;
 
-namespace BoxBack.Domain.Services
+namespace BoxBack.Domain.ServicesThirdParty
 {
     public interface ICNPJAServices
     {

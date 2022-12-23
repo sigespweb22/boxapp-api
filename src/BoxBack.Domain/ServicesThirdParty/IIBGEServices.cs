@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Refit;
 using BoxBack.Domain.Models;
 
-namespace BoxBack.Domain.Services
+namespace BoxBack.Domain.ServicesThirdParty
 {
     public interface IIBGEServices
     {

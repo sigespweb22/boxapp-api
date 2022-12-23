@@ -1,15 +1,11 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using BoxBack.Infra.Data.UoW;
 using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.InterfacesNoSQL;
-using BoxBack.Infra.Data.Repository;
 using BoxBack.Infra.Data.RepositoryNoSQL;
-using BoxBack.Application.Services;
 using BoxBack.Application.Interfaces;
 using BoxBack.Infra.CrossCutting.Identity.Services;
-using BoxBack.Application.Helpers;
-using Microsoft.AspNetCore.Http;
+using BoxBack.Application.AppServices;
 
 namespace BoxBack.Infra.CrossCutting.IoC
 {

@@ -4,7 +4,7 @@ using BoxBack.Domain.ModelsServices;
 using System.Collections.Generic;
 using System;
 
-namespace BoxBack.Domain.Services
+namespace BoxBack.Domain.ServicesThirdParty
 {
     public interface IBCServices
     {

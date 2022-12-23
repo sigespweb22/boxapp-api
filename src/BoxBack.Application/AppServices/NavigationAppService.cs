@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels.Navigation;
 
-namespace BoxBack.Application.Services
+namespace BoxBack.Application.AppServices
 {
     public class NavigationAppService : INavigationAppService
     {

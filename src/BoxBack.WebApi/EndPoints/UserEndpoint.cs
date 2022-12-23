@@ -15,7 +15,7 @@ using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.Enums;
 using BoxBack.Application.ViewModels.Selects;
 using BoxBack.WebApi.Controllers;
-using BoxBack.Domain.Services;
+using BoxBack.Domain.ServicesThirdParty;
 using System.Text.RegularExpressions;
 
 namespace BoxBack.WebApi.EndPoints
