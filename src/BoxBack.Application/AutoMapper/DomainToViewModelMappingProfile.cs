@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Runtime.InteropServices;
+using System.Linq;
 using AutoMapper;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
@@ -89,7 +90,9 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<VendedorContrato, VendedorContratoViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
             CreateMap<Vendedor, VendedorSelect2ViewModel>();
-            CreateMap<ClienteContratoFatura, ClienteContratoFaturaViewModel>();
+            CreateMap<ClienteContratoFatura, ClienteContratoFaturaViewModel>()
+                .ForMember(dst => dst.Status, src => src.MapFrom(x => x.Quitado ? "Pago" : "Não está pago"))
+                .ForMember(dst => dst.DataCompetencia, src => src.MapFrom(x => x.DataCompetencia.ToString("dd/MM/yyyy")));
             CreateMap<Rotina, RotinaViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
             CreateMap<RotinaEventHistory, RotinaEventHistoryViewModel>();
