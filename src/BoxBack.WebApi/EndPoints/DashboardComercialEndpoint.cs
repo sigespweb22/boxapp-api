@@ -77,7 +77,7 @@ namespace BoxBack.WebApi.EndPoints
             var clientesContratosNumerosChartViewModel = new ClientesContratosNumerosChartViewModel()
             {
                 TotalClientesSemContrato = clientes.Count(x => x.ClienteContratos.Count() <= 0),
-                TotalClientesComContrato = clientes.Count(x => x.ClienteContratos.Count() > 0),
+                TotalClientesComContrato = clientes.Count(x => x.ClienteContratos.Count() >= 1),
                 TotalClientesUltimosMeses = 0
             };
             #endregion

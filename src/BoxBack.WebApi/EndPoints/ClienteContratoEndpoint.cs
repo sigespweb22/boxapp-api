@@ -380,13 +380,13 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("sincronizar-from-third-party")]
         [HttpGet]
-        public async Task<IActionResult> SincronizarFromThirdPartyPAsync()
+        public async Task<IActionResult> SincronizarFromThirdPartyAsync()
         {
             #region Get clientes
-            IEnumerable<Cliente> clientes = new List<Cliente>();
+            Cliente[] clientes;
             try
             {
-                clientes = await _context.Clientes.ToListAsync();
+                clientes = await _context.Clientes.ToArrayAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
@@ -435,19 +435,19 @@ namespace BoxBack.WebApi.EndPoints
             #endregion
 
             #region Get data Bom Controle (Third Party)
-            IEnumerable<BCContratoModelService> clienteContratosThirdParty = new List<BCContratoModelService>();
+            BCContratoModelService[] clienteContratosThirdParty;
             Int64 totalSincronizado = 0;
             var clientesContratos = new List<ClienteContrato>();
             try
             {
-                foreach (var cliente in clientes)
+                for (var a = 0; a < clientes.Count(); a++)
                 {
-                    switch (cliente.TipoPessoa) {
+                    switch (clientes[a].TipoPessoa) {
                         case TipoPessoaEnum.FISICA:
-                            clienteContratosThirdParty = await _bcServices.VendaContratoPesquisar(cliente.Cpf, token);
+                            clienteContratosThirdParty = await _bcServices.VendaContratoPesquisar(clientes[a].Cpf, token);
                             break;
                         case TipoPessoaEnum.JURIDICA:
-                            clienteContratosThirdParty = await _bcServices.VendaContratoPesquisar(cliente.CNPJ, token);
+                            clienteContratosThirdParty = await _bcServices.VendaContratoPesquisar(clientes[a].CNPJ, token);
                             break;
                         default:
                             clienteContratosThirdParty = null;
@@ -456,22 +456,17 @@ namespace BoxBack.WebApi.EndPoints
 
                     if (clienteContratosThirdParty == null) continue;
 
-                    foreach (var clienteContratoThirdParty in clienteContratosThirdParty)
+                    for (var b = 0; b < clienteContratosThirdParty.Count(); b++)
                     {
                         // Verifico se o contrato obtido da api de terceiro já não existe na minha base
-                        if (!contratos.Any(x => x.BomControleContratoId.Equals(clienteContratoThirdParty.Id)))
+                        if (!contratos.Any(x => x.BomControleContratoId.Equals(clienteContratosThirdParty[b].Id)))
                         {
                             // contrato não existe, portanto, posso sincronizá-lo para minha base
                             var contratoMapped = new ClienteContrato();
                             try
                             {
-                                var clienteContratoThirdPartyId = clienteContratoThirdParty.Id;
-                                clienteContratoThirdParty.Id = null;
-
-                                contratoMapped = _mapper.Map<ClienteContrato>(clienteContratoThirdParty);
-                                
-                                contratoMapped.BomControleContratoId = clienteContratoThirdPartyId;
-                                contratoMapped.ClienteId = cliente.Id;
+                                contratoMapped = _mapper.Map<ClienteContrato>(clienteContratosThirdParty[b]);
+                                contratoMapped.ClienteId = clientes[a].Id;
                                 
                                 clientesContratos.Add(contratoMapped);
                                 totalSincronizado++;
@@ -528,10 +523,10 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> UpdatePeriodicidadeFromThirdPartyPAsync()
         {
             #region Get contratos
-            IEnumerable<ClienteContrato> clientesContratos = new List<ClienteContrato>();
+            ClienteContrato[] clientesContratos;
             try
             {
-                clientesContratos = await _context.ClientesContratos.AsNoTracking().ToListAsync();
+                clientesContratos = await _context.ClientesContratos.AsNoTracking().ToArrayAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
@@ -575,11 +570,11 @@ namespace BoxBack.WebApi.EndPoints
             Int64 totalContratosAtualizados = 0;
             try
             {
-                foreach (var clienteContrato in clientesContratos)
+                for (var i = 0; i <  clientesContratos.Count(); i++)
                 {
                     try
                     {
-                        contratoFromThirdParty = await _bcServices.VendaContratoObter((long)clienteContrato.BomControleContratoId, token);
+                        contratoFromThirdParty = await _bcServices.VendaContratoObter((long)clientesContratos[i].BomControleContratoId, token);
                     }
                     catch (Refit.ApiException ex) { 
                         if (ex.HasContent) continue;
@@ -587,10 +582,10 @@ namespace BoxBack.WebApi.EndPoints
                     
                     if (contratoFromThirdParty != null)
                     {
-                        if (clienteContrato.Periodicidade != contratoFromThirdParty.Periodicidade)
+                        if (clientesContratos[i].Periodicidade != contratoFromThirdParty.Periodicidade)
                         {
-                            clienteContrato.Periodicidade = contratoFromThirdParty.Periodicidade;
-                            _context.ClientesContratos.Update(clienteContrato);
+                            clientesContratos[i].Periodicidade = contratoFromThirdParty.Periodicidade;
+                            _context.ClientesContratos.Update(clientesContratos[i]);
                             totalContratosAtualizados++;
                         } else continue;
                     } else continue;

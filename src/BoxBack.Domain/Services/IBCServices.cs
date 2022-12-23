@@ -58,7 +58,7 @@ namespace BoxBack.Domain.Services
         /// <response code="500">Erro interno desconhecido</response>
         [Get("/VendaContrato/Pesquisar")]
         [Headers("Content-Type: application/json")]
-        Task<IList<BCContratoModelService>> VendaContratoPesquisar(string pesquisa, [Header("Authorization")] string apiKey);
+        Task<BCContratoModelService[]> VendaContratoPesquisar(string pesquisa, [Header("Authorization")] string apiKey);
 
         /// <summary>
         /// Obtém um contrato de um cliente pelo seu id
@@ -74,5 +74,20 @@ namespace BoxBack.Domain.Services
         [Get("/VendaContrato/Obter/{id}")]
         [Headers("Content-Type: application/json")]
         Task<BCContratoModelService> VendaContratoObter(Int64 id, [Header("Authorization")] string apiKey);
+
+        /// <summary>
+        /// Obtém uma fatura de um contrato de cliente pelo id da fatura
+        /// </summary>
+        /// <param></param>
+        /// <param name="id"></param>
+        /// <param name="apiKey"></param>
+        /// <returns>Retorna um json com os dados da fatura</returns>
+        /// <response code="200">Retorna sucesso com um objeto com a fatura pesquisada.</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Fatura não encontrada</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        [Get("/Fatura/Obter/{id}")]
+        [Headers("Content-Type: application/json")]
+        Task<BCFaturaModelService> FaturaObter(Int64 id, [Header("Authorization")] string apiKey);
     }
 }

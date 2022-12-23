@@ -26,7 +26,11 @@ namespace BoxBack.Domain.Models
         public Guid? ClienteId { get; set; }
         public Cliente Cliente { get; set; }
 
+        public ICollection<VendedorComissao> VendedoresComissoes { get; set; }
+        public ICollection<VendedorContrato> VendedoresContratos { get; set; }
+        public ICollection<ClienteContratoFatura> ClientesContratosFaturas { get; set; }
+
         // Id do registro do contrato no sistema de terceiro - Atualmente o Bom Controle
-        public Int64? BomControleContratoId { get; set; }
+        public Int64 BomControleContratoId { get; set; }
     }
 }
