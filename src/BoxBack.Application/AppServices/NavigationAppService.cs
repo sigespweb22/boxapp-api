@@ -26,8 +26,6 @@ namespace BoxBack.Application.AppServices
             var navigationB = new VerticalNavItemViewModel();
             var navigationF = new VerticalNavItemViewModel();
             
-            var navigationSectionC = new VerticalNavItemViewModel();
-
             navigationA.Children = new List<Son>();
             navigationB.Children = new List<Son>();
             navigationF.Children = new List<Son>();
