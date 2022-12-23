@@ -302,5 +302,97 @@ namespace BoxBack.WebApi.EndPoints
                 Params = id
             });
         }
+
+        /// <summary>
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
+        /// <response code="200">Sucesso do despacho da rotina</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">ROTINA não encontrado</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanRotinaRead, CanRotinaAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("dispatch-clientes-sync")]
+        [HttpGet]
+        public async Task<IActionResult> DispatchClientesSync()
+        {
+            await Task.Delay(50);
+            return CustomResponse(500);
+        }
+
+        /// <summary>
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
+        /// <response code="200">Sucesso do despacho da rotina</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">ROTINA não encontrado</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanRotinaRead, CanRotinaAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("dispatch-contratos-sync-update")]
+        [HttpGet]
+        public async Task<IActionResult> DispatchContratosSyncUpdate()
+        {
+            await Task.Delay(50);
+            return CustomResponse(500);
+        }
+
+        /// <summary>
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
+        /// <response code="200">Sucesso do despacho da rotina</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">ROTINA não encontrado</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanRotinaRead, CanRotinaAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("dispatch-faturas-sync")]
+        [HttpGet]
+        public async Task<IActionResult> DispatchFaturasSync()
+        {
+            await Task.Delay(50);
+            return CustomResponse(500);
+        }
+
+        /// <summary>
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
+        /// <response code="200">Sucesso do despacho da rotina</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">ROTINA não encontrado</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanRotinaRead, CanRotinaAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("dispatch-faturas-update")]
+        [HttpGet]
+        public async Task<IActionResult> DispatchFaturasUpdate()
+        {
+            await Task.Delay(50);
+            return CustomResponse(500);
+        }
     }
 }
