@@ -58,7 +58,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 rotinas = await _context.Rotinas
                                             .AsNoTracking()
-                                            .OrderByDescending(x => x.UpdatedAt)
+                                            .OrderBy(x => x.ChaveSequencial)
                                             .ToListAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
