@@ -59,6 +59,7 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<ClienteContratoFatura> ClientesContratosFaturas { get; set; }
         public DbSet<Rotina> Rotinas { get; set; }
         public DbSet<RotinaEventHistory> RotinasEventsHistories { get; set; }
+        public DbSet<VerticalNavItem> VerticalNavItems { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
@@ -104,6 +105,7 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new ClienteContratoFaturaMap());
             modelBuilder.ApplyConfiguration(new RotinaMap());
             modelBuilder.ApplyConfiguration(new RotinaEventHistoryMap());
+            modelBuilder.ApplyConfiguration(new VerticalNavItemMap());
 
             modelBuilder.HasSequence<Int32>("OrderNumbers")
                         .StartsAt(1)
