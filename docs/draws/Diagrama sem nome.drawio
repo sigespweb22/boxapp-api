@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-12-26T16:45:28.511Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" etag="cUEGLUMa26nOd2oE7vse" version="20.7.4" type="github">
+<mxfile host="app.diagrams.net" modified="2022-12-26T19:10:58.378Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" etag="5VhbcIMuh4JuL5SR1qjv" version="20.7.4" type="github" pages="2">
   <diagram id="bcfOEzViOeFCQz89kAM_" name="Página-1">
     <mxGraphModel dx="1434" dy="796" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -39,6 +39,35 @@
         </mxCell>
         <mxCell id="LhKKLPNGlaLUIo4Cgo96-11" value="ClienteContratoFatura&lt;br&gt;EndPoint" style="whiteSpace=wrap;html=1;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="340" y="380" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LhKKLPNGlaLUIo4Cgo96-13" value="Atualização de dados de fatura" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="1">
+          <mxGeometry x="120" y="540" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="WhsX3oTb6KMW0yIqo7UX" name="DDD">
+    <mxGraphModel dx="1434" dy="796" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0i6y_T5j30i2rRx53eq2-3" value="ENDPOINT" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;fillStyle=solid;gradientColor=none;verticalAlign=top;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="130" y="90" width="590" height="592.32" as="geometry" />
+        </mxCell>
+        <mxCell id="0i6y_T5j30i2rRx53eq2-5" value="APPLICATION" style="ellipse;whiteSpace=wrap;html=1;fillColor=#A10056;fontColor=#ffffff;strokeColor=#A50040;fillStyle=solid;gradientColor=none;verticalAlign=top;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="161" y="121" width="530" height="530" as="geometry" />
+        </mxCell>
+        <mxCell id="0i6y_T5j30i2rRx53eq2-6" value="DOMAIN" style="ellipse;whiteSpace=wrap;html=1;fillColor=#75003F;fontColor=#ffffff;strokeColor=#A50040;fillStyle=solid;gradientColor=none;verticalAlign=top;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="200.5" y="160.5" width="451" height="451" as="geometry" />
+        </mxCell>
+        <mxCell id="0i6y_T5j30i2rRx53eq2-7" value="INFRA" style="ellipse;whiteSpace=wrap;html=1;fillColor=#52002C;fontColor=#ffffff;strokeColor=#A50040;fillStyle=solid;gradientColor=none;verticalAlign=top;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="230.05" y="193" width="391.91" height="391.91" as="geometry" />
+        </mxCell>
+        <mxCell id="0i6y_T5j30i2rRx53eq2-8" value="API" style="text;html=1;strokeColor=#2D7600;fillColor=#60a917;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=solid;fontSize=33;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="490" y="70" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0i6y_T5j30i2rRx53eq2-9" value="SERVICES" style="text;html=1;strokeColor=#2D7600;fillColor=#60a917;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=solid;fontSize=33;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="500" y="121" width="180" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
