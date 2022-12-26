@@ -10,9 +10,9 @@ namespace BoxBack.Application.ViewModels
     {
         public Guid? Id { get; set; }
 
-        public string DataInicio { get; private set; }
-        public string DataFim { get; private set; }
-        public string StatusProgresso { get; private set; }
+        public string DataInicio { get; set; }
+        public string DataFim { get; set; }
+        public string StatusProgresso { get; set; }
         public Int32 TotalItensSucesso { get; set;}
         public Int32 TotalItensInsucesso { get; set;}
         public string ExceptionMensagem { get; set; }

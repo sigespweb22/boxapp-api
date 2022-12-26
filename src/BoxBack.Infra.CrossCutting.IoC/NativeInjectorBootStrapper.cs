@@ -9,6 +9,7 @@ using Sigesp.Domain.InterfacesRepositories;
 using Sigesp.Infra.Data.Repository;
 using BoxBack.Domain.InterfacesRepositories;
 using BoxBack.Domain.Interfaces;
+using BoxBack.Domain.Services;
 
 namespace BoxBack.Infra.CrossCutting.IoC
 {
@@ -21,9 +22,11 @@ namespace BoxBack.Infra.CrossCutting.IoC
 
             // Services
             services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IRotinaEventHistoryService, RotinaEventHistoryService>();
 
             // Repositories
             services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IRotinaEventHistoryRepository, RotinaEventHistoryRepository>();
 
             // Transient: Created each time.
             // Scoped: Created only once per request.

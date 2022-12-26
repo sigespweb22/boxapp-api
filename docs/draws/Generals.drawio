@@ -1,0 +1,55 @@
+<mxfile host="65bd71144e">
+    <diagram id="u1IXutD8dk-Endy1BjFs" name="Generals">
+        <mxGraphModel dx="1963" dy="1129" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-1" value="ENDPOINT" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;fillStyle=solid;gradientColor=none;verticalAlign=top;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="279" y="100" width="590" height="592.32" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-2" value="APPLICATION" style="ellipse;whiteSpace=wrap;html=1;fillColor=#A10056;fontColor=#ffffff;strokeColor=#A50040;fillStyle=solid;gradientColor=none;verticalAlign=top;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="310" y="131" width="530" height="530" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-3" value="DOMAIN" style="ellipse;whiteSpace=wrap;html=1;fillColor=#75003F;fontColor=#ffffff;strokeColor=#A50040;fillStyle=solid;gradientColor=none;verticalAlign=top;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="349.5" y="170.5" width="451" height="451" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-4" value="INFRA" style="ellipse;whiteSpace=wrap;html=1;fillColor=#52002C;fontColor=#ffffff;strokeColor=#A50040;fillStyle=solid;gradientColor=none;verticalAlign=top;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="379.05" y="203" width="391.91" height="387" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-5" value="API" style="text;html=1;strokeColor=#2D7600;fillColor=#60a917;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=solid;fontSize=33;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="639" y="80" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-6" value="SERVICES" style="text;html=1;strokeColor=#2D7600;fillColor=#60a917;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=solid;fontSize=33;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="639" y="120" width="180" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-7" value="SERVICES" style="text;html=1;strokeColor=#2D7600;fillColor=#60a917;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=solid;fontSize=33;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="639" y="160" width="180" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-8" value="REPOSITORY" style="text;html=1;strokeColor=#2D7600;fillColor=#60a917;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=solid;fontSize=33;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="639" y="200" width="230" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-9" value="ENDPOINT" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=solid;fontSize=33;fillColor=#F50082;fontColor=#ffffff;strokeColor=#A50040;" vertex="1" parent="1">
+                    <mxGeometry x="229" y="760" width="710" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-10" value="IAPPSERVICE" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=solid;fontSize=33;fillColor=#E6007A;fontColor=#ffffff;strokeColor=#A50040;" vertex="1" parent="1">
+                    <mxGeometry x="229" y="830" width="710" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-11" value="APPSERVICE : IAPPSERVICE" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=solid;fontSize=33;fillColor=#DE0075;fontColor=#ffffff;strokeColor=#A50040;" vertex="1" parent="1">
+                    <mxGeometry x="229" y="900" width="710" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-12" value="ISERVICE" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=solid;fontSize=33;fillColor=#AB005B;fontColor=#ffffff;strokeColor=#A50040;" vertex="1" parent="1">
+                    <mxGeometry x="229" y="970" width="710" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-13" value="SERVICE : ISERVICE" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=solid;fontSize=33;fillColor=#75003E;fontColor=#ffffff;strokeColor=#A50040;" vertex="1" parent="1">
+                    <mxGeometry x="229" y="1040" width="710" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-14" value="IREPOSITORY" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=solid;fontSize=33;fillColor=#4A0027;fontColor=#ffffff;strokeColor=#A50040;" vertex="1" parent="1">
+                    <mxGeometry x="229" y="1109" width="710" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="LfYBDEKyyAqHcAtLNoyd-15" value="REPOSITORY : IREPOSITORY" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=solid;fontSize=33;fillColor=#400021;fontColor=#ffffff;strokeColor=#A50040;" vertex="1" parent="1">
+                    <mxGeometry x="229" y="1180" width="710" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

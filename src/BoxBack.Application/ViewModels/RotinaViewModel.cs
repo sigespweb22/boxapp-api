@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Text;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace BoxBack.Application.ViewModels
 {
     public class RotinaViewModel
     {
-        public Guid? Id { get; set; }
+        public Guid Id { get; set; }
          public string Nome { get; set; }
         public string Descricao { get; set; }
         public string Observacao { get; set; }

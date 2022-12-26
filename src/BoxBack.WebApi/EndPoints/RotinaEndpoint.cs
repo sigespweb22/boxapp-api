@@ -120,7 +120,7 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> UpdateAsync([FromBody]RotinaViewModel rotinaViewModel)
         {
             #region Required validations
-            if (!rotinaViewModel.Id.HasValue ||
+            if (rotinaViewModel.Id == null ||
                 rotinaViewModel.Id == Guid.Empty)
             {
                 AddError("Id requerido.");
@@ -310,7 +310,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <summary>
         /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha
         /// </summary>
-        /// <param name=""></param>
+        /// <param name="rotinaId"></param>
         /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
         /// <response code="200">Sucesso do despacho da rotina</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
@@ -322,11 +322,31 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        [Route("dispatch-clientes-sync")]
+        [Route("dispatch-clientes-sync/{rotinaId}")]
         [HttpPost]
-        public async Task<IActionResult> DispatchClientesSync()
+        public async Task<IActionResult> DispatchClientesSync([FromRoute]Guid rotinaId)
         {
-            await _clienteAppService.SincronizarFromTPAsync();
+            if (rotinaId == null || rotinaId == Guid.Empty)
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+
+            try
+            {
+                await _clienteAppService.SincronizarFromTPAsync(rotinaId);    
+            }
+            catch (ArgumentNullException ex)
+            {
+                AddError(ex.Message);
+                return CustomResponse(404);
+            }
+            catch (Exception ex)
+            {
+                AddError(ex.Message);
+                return CustomResponse(500);
+            }
+            
             return CustomResponse(500);
         }
 
@@ -346,7 +366,7 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("dispatch-contratos-sync-update")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> DispatchContratosSyncUpdate()
         {
             await Task.Delay(50);
@@ -369,7 +389,7 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("dispatch-faturas-sync")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> DispatchFaturasSync()
         {
             await Task.Delay(50);
@@ -392,7 +412,7 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("dispatch-faturas-update")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> DispatchFaturasUpdate()
         {
             await Task.Delay(50);
