@@ -6,6 +6,8 @@ using BoxBack.Infra.Data.RepositoryNoSQL;
 using BoxBack.Application.Interfaces;
 using BoxBack.Infra.CrossCutting.Identity.Services;
 using BoxBack.Application.AppServices;
+using Sigesp.Domain.Interfaces;
+using Sigesp.Infra.Data.Repository;
 
 namespace BoxBack.Infra.CrossCutting.IoC
 {
@@ -13,6 +15,12 @@ namespace BoxBack.Infra.CrossCutting.IoC
     {
         public static void RegisterServices(IServiceCollection services)
         {
+            // Services
+            services.AddScoped<IClienteAppService, ClienteAppService>();
+
+            // Repositories
+            services.AddScoped<IClienteRepository, ClienteRepository>();
+
             // Transient: Created each time.
             // Scoped: Created only once per request.
             // Singleton: Created the first time they are requested. Each subsequent request uses the instance that was created the first time.

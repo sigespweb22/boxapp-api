@@ -12,6 +12,7 @@ using AutoMapper;
 using BoxBack.Domain.Interfaces;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Application.ViewModels;
+using BoxBack.Application.Interfaces;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -23,6 +24,7 @@ namespace BoxBack.WebApi.EndPoints
         private readonly BoxAppDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IClienteAppService _clienteAppService;
 
         public RotinaEndpoint(BoxAppDbContext context,
                                 IUnitOfWork unitOfWork,
@@ -322,7 +324,7 @@ namespace BoxBack.WebApi.EndPoints
         [HttpGet]
         public async Task<IActionResult> DispatchClientesSync()
         {
-            await Task.Delay(50);
+            await _clienteAppService.SincronizarFromTPAsync();
             return CustomResponse(500);
         }
 

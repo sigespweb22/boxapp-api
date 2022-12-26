@@ -727,33 +727,6 @@ namespace BoxBack.WebApi.EndPoints
             
             return CustomResponse(200, cliente);
         }
-        
-        /// <summary>
-        /// Sincroniza a base de clientes do BOM CONTROLE com a base de clientes do BoxApp (Este método não atualiza os dados dos clientes, apenas mantém os mesmos clientes em ambos os sistemas)
-        /// Não serão sincronizados os clientes em que a propriedade "Documento" - Das propriedades Pessoa Jurídica e Pessoa Física - for null
-        /// </summary>
-        /// <param></param> 
-        /// <returns>Um objeto com o total de clientes sincronizados e total de clientes não sincronizados por falta de CPF/CNPJ</returns>
-        /// <response code="200">Objeto com o total de clientes sincronizados</response>
-        /// <response code="400">Problemas de validação ou dados nulos</response>
-        /// <response code="404">Nenhum cliente encontrado</response>
-        /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanClienteCreate, CanClienteAll")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Produces("application/json")]
-        [Route("sincronizar-from-third-party")]
-        [HttpGet]
-        public async Task<IActionResult> SincronizarFromTPAsync()
-        {
-            try
-            {
-                await Task.Run(() => _clienteAppService.SincronizarFromTPAsync());
-                return CustomResponse(204);
-            } catch { throw; }
-        }
         #endregion
     }
 }
