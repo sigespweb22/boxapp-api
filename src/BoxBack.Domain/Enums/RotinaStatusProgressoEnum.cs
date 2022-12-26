@@ -11,6 +11,10 @@ namespace BoxBack.Domain.Enums
         
         [Description("Este status representa uma rotina já realizada")]
         [Display(Name = "Conluída")]
-        CONCLUIDA = 2
+        CONCLUIDA = 2,
+
+        [Description("Este status representa uma rotina com falha na execução")]
+        [Display(Name = "Falha na execução")]
+        FALHA_EXECUCAO = 3
     }
 }

@@ -22,7 +22,9 @@ namespace BoxBack.Domain.Models
         public DateTimeOffset DataInicio { get; set; }
         public DateTimeOffset DataFim { get; set; }
         public RotinaStatusProgressoEnum StatusProgresso { get; set; }
-
+        public Int32 TotalItensSucesso { get; set;}
+        public Int32 TotalItensInsucesso { get; set;}
+        public string ExceptionMensagem { get; set; }
 
 
         // Relationships
