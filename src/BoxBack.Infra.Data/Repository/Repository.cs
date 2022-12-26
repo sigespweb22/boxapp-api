@@ -1,13 +1,10 @@
-using System.ComponentModel;
-using System.Reflection.Emit;
 using System;
 using System.Linq;
-using BoxBack.Domain.Interfaces;
 using BoxBack.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using BoxBack.Infra.Data.Extensions;
+using BoxBack.Domain.InterfacesRepositories;
 
 namespace BoxBack.Infra.Data.Repository
 {

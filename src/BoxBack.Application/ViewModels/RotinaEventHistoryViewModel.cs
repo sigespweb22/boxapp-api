@@ -13,6 +13,9 @@ namespace BoxBack.Application.ViewModels
         public string DataInicio { get; private set; }
         public string DataFim { get; private set; }
         public string StatusProgresso { get; private set; }
+        public Int32 TotalItensSucesso { get; set;}
+        public Int32 TotalItensInsucesso { get; set;}
+        public string ExceptionMensagem { get; set; }
 
         public Guid RotinaId { get; set; }
         public RotinaViewModel RotinaViewModel { get; set; }

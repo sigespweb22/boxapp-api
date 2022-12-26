@@ -1,9 +1,10 @@
 using System.Threading.Tasks;
-using Sigesp.Domain.Interfaces;
+using BoxBack.Domain.Interfaces;
+using Sigesp.Domain.InterfacesRepositories;
 
 namespace BoxBack.Application.AppServices
 {
-    public class ClienteService
+    public class ClienteService : IClienteService
     {
         private readonly IClienteRepository _clienteRepository;
         

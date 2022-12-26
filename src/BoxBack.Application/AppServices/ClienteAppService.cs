@@ -1,18 +1,14 @@
-using System;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using BoxBack.Application.Interfaces;
-using BoxBack.Application.ViewModels.Navigation;
-using BoxBack.Infra.Data.Context;
+using BoxBack.Domain.Interfaces;
 
 namespace BoxBack.Application.AppServices
 {
     public class ClienteAppService : IClienteAppService
     {
-        private readonly ClienteService _clienteService;
+        private readonly IClienteService _clienteService;
 
-        public ClienteAppService(ClienteService clienteService)
+        public ClienteAppService(IClienteService clienteService)
         {
             _clienteService = clienteService;
         }
@@ -22,4 +18,4 @@ namespace BoxBack.Application.AppServices
             await _clienteService.SincronizarFromTPAsync();
         }
     }
-}
+} 

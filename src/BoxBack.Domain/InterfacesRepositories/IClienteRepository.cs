@@ -1,10 +1,9 @@
-using BoxBack.Domain.Interfaces;
+using BoxBack.Domain.InterfacesRepositories;
 using BoxBack.Domain.Models;
 
-namespace Sigesp.Domain.Interfaces
+namespace Sigesp.Domain.InterfacesRepositories
 {
     public interface IClienteRepository : IRepository<Cliente>
     {
-        
     }
 }

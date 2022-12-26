@@ -11,7 +11,7 @@ using BoxBack.Infra.Data.Context;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
 using AutoMapper;
-using BoxBack.Domain.Interfaces;
+using BoxBack.Domain.InterfacesRepositories;
 using BoxBack.Domain.Enums;
 using BoxBack.Application.ViewModels.Selects;
 using BoxBack.WebApi.Controllers;

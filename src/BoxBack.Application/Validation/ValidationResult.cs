@@ -1,9 +1,3 @@
-using System;
-using System.Linq;
-using BoxBack.Domain.Interfaces;
-using BoxBack.Infra.Data.Context;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 
 public class ValidationResult

@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using BoxBack.Infra.Data.Context;
 using BoxBack.Domain.Models;
 using AutoMapper;
-using BoxBack.Domain.Interfaces;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Application.ViewModels;
 using BoxBack.Application.Interfaces;
+using BoxBack.Domain.InterfacesRepositories;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -27,12 +27,14 @@ namespace BoxBack.WebApi.EndPoints
         private readonly IClienteAppService _clienteAppService;
 
         public RotinaEndpoint(BoxAppDbContext context,
-                                IUnitOfWork unitOfWork,
-                                IMapper mapper)
+                              IUnitOfWork unitOfWork,
+                              IMapper mapper,
+                              IClienteAppService clienteAppService)
         {
             _context = context;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _clienteAppService = clienteAppService;
         }
 
         /// <summary>
@@ -321,7 +323,7 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("dispatch-clientes-sync")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> DispatchClientesSync()
         {
             await _clienteAppService.SincronizarFromTPAsync();

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using BoxBack.Infra.Data.Context;
 using BoxBack.Domain.Models;
 using AutoMapper;
-using BoxBack.Domain.Interfaces;
+using BoxBack.Domain.InterfacesRepositories;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Application.ViewModels.Dashboard.Comercial;
 using BoxBack.Domain.Enums;

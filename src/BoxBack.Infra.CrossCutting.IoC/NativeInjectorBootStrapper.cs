@@ -1,13 +1,14 @@
 using Microsoft.Extensions.DependencyInjection;
 using BoxBack.Infra.Data.UoW;
-using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.InterfacesNoSQL;
 using BoxBack.Infra.Data.RepositoryNoSQL;
 using BoxBack.Application.Interfaces;
 using BoxBack.Infra.CrossCutting.Identity.Services;
 using BoxBack.Application.AppServices;
-using Sigesp.Domain.Interfaces;
+using Sigesp.Domain.InterfacesRepositories;
 using Sigesp.Infra.Data.Repository;
+using BoxBack.Domain.InterfacesRepositories;
+using BoxBack.Domain.Interfaces;
 
 namespace BoxBack.Infra.CrossCutting.IoC
 {
@@ -15,8 +16,11 @@ namespace BoxBack.Infra.CrossCutting.IoC
     {
         public static void RegisterServices(IServiceCollection services)
         {
-            // Services
+            // AppServices
             services.AddScoped<IClienteAppService, ClienteAppService>();
+
+            // Services
+            services.AddScoped<IClienteService, ClienteService>();
 
             // Repositories
             services.AddScoped<IClienteRepository, ClienteRepository>();
