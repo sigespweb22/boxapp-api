@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using BoxBack.Domain.Models;
 using Microsoft.EntityFrameworkCore;
@@ -17,26 +18,28 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasColumnName("Id")
                 .ValueGeneratedOnAdd();
 
-            var dashboardMain = new VerticalNavItem()
-            {
-                Position = 1,
-                Title = "Dashboards",
-                Icon = "HomeAnalytics",
-                BadgeContent = "novo",
-                BadgeColor = "primary",
-                Children = new List<VerticalNavItem>()
-            };
+            // var dashboardMain = new VerticalNavItem()
+            // {
+            //     Id = Guid.NewGuid(),
+            //     Position = 1,
+            //     Title = "Dashboards",
+            //     Icon = "HomeAnalytics",
+            //     BadgeContent = "novo",
+            //     BadgeColor = "primary",
+            //     Children = new List<VerticalNavItem>()
+            // };
 
-            var dashboardComercial = new VerticalNavItem()
-            {
-                Position = 1,
-                Title = "Comercial",
-                Path = "/dashboards/comercial",
-                Action = "list",
-                Subject = "ac-dashboardComercial-page"
-            };
+            // var dashboardComercial = new VerticalNavItem()
+            // {
+            //     Id = Guid.NewGuid(),
+            //     Position = 1,
+            //     Title = "Comercial",
+            //     Path = "/dashboards/comercial",
+            //     Action = "list",
+            //     Subject = "ac-dashboardComercial-page"
+            // };
 
-            builder.HasData(dashboardMain);
+            // builder.HasData(dashboardMain);
         }
     }
 }
