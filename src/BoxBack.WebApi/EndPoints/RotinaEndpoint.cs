@@ -327,26 +327,13 @@ namespace BoxBack.WebApi.EndPoints
         {
             if (rotinaId == Guid.Empty)
             {
-                AddError("Id requerido.");
+                AddError("Id da rotina requerido.");
                 return CustomResponse(400);
             }
 
-            try
-            {
-                await _clienteAppService.SincronizarFromTPAsync(rotinaId);    
-            }
-            catch (ArgumentNullException ex)
-            {
-                AddError(ex.Message);
-                return CustomResponse(404);
-            }
-            catch (Exception ex)
-            {
-                AddError(ex.Message);
-                return CustomResponse(500);
-            }
-            
-            return CustomResponse(500);
+            await Task.Run(() => _clienteAppService.SincronizarFromTPAsync(rotinaId)).ConfigureAwait(false);
+
+            return CustomResponse(200);
         }
 
         /// <summary>

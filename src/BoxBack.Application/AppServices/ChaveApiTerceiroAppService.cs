@@ -1,11 +1,8 @@
-using System.Text;
 using System;
 using System.Threading.Tasks;
 using BoxBack.Application.Interfaces;
-using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Enums;
 using BoxBack.Domain.Interfaces;
-using BoxBack.Domain.Models;
 
 namespace BoxBack.Application.AppServices
 {
@@ -22,7 +19,7 @@ namespace BoxBack.Application.AppServices
         {
             try
             {
-                return await _chaveApiTerceiroService.GetValidKeyByApiTerceiroNome(ate);
+                return await _chaveApiTerceiroService.GetValidKeyByApiTerceiroNome(ate);    
             }
             catch { throw; }
         }

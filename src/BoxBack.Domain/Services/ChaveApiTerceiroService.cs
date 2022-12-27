@@ -1,11 +1,8 @@
 using System;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using BoxBack.Domain.Enums;
 using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.Models;
-using Microsoft.EntityFrameworkCore;
 using Sigesp.Domain.InterfacesRepositories;
 
 namespace BoxBack.Domain.Services

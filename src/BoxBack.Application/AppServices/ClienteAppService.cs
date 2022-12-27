@@ -71,6 +71,10 @@ namespace BoxBack.Application.AppServices
                 _rotinaEventHistoryAppService.Update(rotinaEventHistoryViewModel);
                 await Task.FromCanceled(CancellationToken.None);
             }
+            catch (Exception ex)
+            {
+                return;
+            }
             #endregion
 
             try
