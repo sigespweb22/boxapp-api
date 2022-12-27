@@ -1,14 +1,15 @@
-using System.Threading;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using BoxBack.Domain.Enums;
 using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Sigesp.Domain.InterfacesRepositories;
 using System.Collections.Generic;
 using BoxBack.Domain.ModelsServices;
+using BoxBack.Domain.ServicesThirdParty;
+using BoxBack.Domain.InterfacesRepositories;
+using AutoMapper;
 
 namespace BoxBack.Domain.Services
 {
@@ -18,16 +19,24 @@ namespace BoxBack.Domain.Services
         private readonly IChaveApiTerceiroRepository _chaveApiTerceiroRepository;
         private readonly IRotinaEventHistoryRepository _rotinaEventHistoryRepository;
         private readonly IRotinaRepository _rotinaRepository;
+        private readonly IBCServices _bcServices;
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         
         public ClienteService(IClienteRepository clienteRepository,
                               IChaveApiTerceiroRepository chaveApiTerceiroRepository,
                               IRotinaEventHistoryRepository rotinaEventHistoryRepository,
-                              IRotinaRepository rotinaRepository)
+                              IRotinaRepository rotinaRepository,
+                              IBCServices bcServices,
+                              IMapper mapper,
+                              IUnitOfWork unitOfWork)
         {
             _clienteRepository = clienteRepository;
             _chaveApiTerceiroRepository = chaveApiTerceiroRepository;
             _rotinaEventHistoryRepository = rotinaEventHistoryRepository;
             _rotinaRepository = rotinaRepository;
+            _bcServices = bcServices;
+            _unitOfWork = unitOfWork;
         }
     
         public async Task SincronizarFromTPAsync(string token)
@@ -38,12 +47,11 @@ namespace BoxBack.Domain.Services
             {
                 clientesThirdParty = await _bcServices.ClientePesquisar(token);
             }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            catch (Exception e) when (e is FormatException or OverflowException) { throw e; }
 
             if (clientesThirdParty == null || clientesThirdParty.Count() <= 0)
             {
-                AddError("Nenhum registro encontrado na api de terceiro");
-                return CustomResponse(404);
+                throw new ArgumentNullException("Nenhum registro encontrado na api de terceiro para seguir com a sincronização.");
             }
             #endregion
 
@@ -51,11 +59,9 @@ namespace BoxBack.Domain.Services
             IEnumerable<Cliente> clientesBoxApp = new List<Cliente>();
             try
             {
-                clientesBoxApp = await _context
-                                            .Clientes
-                                            .ToListAsync();
+                clientesBoxApp = await _clienteRepository.GetAllAsync();
             }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            catch (Exception ex) { throw new InvalidOperationException(ex.Message); }
             #endregion
 
             #region Sincronization
@@ -78,8 +84,6 @@ namespace BoxBack.Domain.Services
                 // Cliente não existe no BoxApp e está ativo no bom controle, portanto, deve ser cadastrado no BoxApp
                 if (!clienteThirdPartyAlreadyInBoxApp && clienteTP.Bloqueado == false)
                 {
-                    
-
                     var cliente = new Cliente();
                     try
                     {
@@ -87,26 +91,26 @@ namespace BoxBack.Domain.Services
                         {
                             if (!string.IsNullOrEmpty(clienteTP.PessoaJuridica.Documento))
                             {
-                                cliente = _mapper.Map<Cliente>(clienteTP);    
+                                cliente = _mapper.Map<Cliente>(clienteTP);
                             }
                         } else {
                             if (!string.IsNullOrEmpty(clienteTP.PessoaFisica.Documento))
                             {
-                                cliente = _mapper.Map<Cliente>(clienteTP);    
+                                cliente = _mapper.Map<Cliente>(clienteTP);
                             }
                         }
                     }
-                    catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+                    catch (Exception ex) { throw new InvalidOperationException(ex.Message); }
                     
                     try
                     {
                         if (cliente.Id != Guid.Empty)
                         {
-                            await _context.Clientes.AddAsync(cliente);
+                            await _clienteRepository.AddAsync(cliente);
                             totalSincronizado++;
                         }
                     }
-                    catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+                    catch (Exception ex) { throw new InvalidOperationException(ex.Message); }
                 }
             }
             #endregion
@@ -116,7 +120,7 @@ namespace BoxBack.Domain.Services
             {
                 _unitOfWork.Commit();
             }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            catch (Exception ex) { throw new InvalidOperationException(ex.Message); }
             #endregion
             await Task.Run(() => "1");
         }

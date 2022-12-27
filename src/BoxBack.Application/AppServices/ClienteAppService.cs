@@ -1,12 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Enums;
 using BoxBack.Domain.Interfaces;
-using BoxBack.Domain.ModelsServices;
 
 namespace BoxBack.Application.AppServices
 {
@@ -65,27 +63,21 @@ namespace BoxBack.Application.AppServices
                 token = $"ApiKey {await _chaveApiTerceiroAppService.GetValidKeyByApiTerceiroNome(ApiTerceiroEnum.BOM_CONTROLE)}";
             }
             catch (ArgumentNullException ane) {
-
-                #region Event exception register
+                // event exception register
                 rotinaEventHistoryViewModel.StatusProgresso = RotinaStatusProgressoEnum.FALHA_EXECUCAO.ToString();
                 rotinaEventHistoryViewModel.DataFim = DateTimeOffset.Now.ToString();
                 rotinaEventHistoryViewModel.ExceptionMensagem = $"Nenhuma chave de api encontrada para seguir com o processo de integração. | ArgumentNullException => {ane.Message}";
 
                 _rotinaEventHistoryAppService.Update(rotinaEventHistoryViewModel);
                 await Task.FromCanceled(CancellationToken.None);
-                #endregion
             }
             #endregion
 
             try
             {
-                await _clienteService.SincronizarFromTPAsync(token);    
+                await _clienteService.SincronizarFromTPAsync(token);
             }
-            catch (System.Exception ex)
-            {
-                 // TODO
-            }
-            
+            catch { throw; }
         }
     }
 } 
