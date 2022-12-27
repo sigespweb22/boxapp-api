@@ -18,7 +18,23 @@ namespace BoxBack.Domain.Services
             _rotinaEventHistoryRepository = rotinaEventHistoryRepository;
             _unitOfWork = unitOfWork;
         }
-    
+
+        public async Task<RotinaEventHistory> GetByIdAsync(Guid id)
+        {
+            try
+            {
+                return await _rotinaEventHistoryRepository.GetByIdAsync(id);
+            }
+            catch { throw new InvalidOperationException(); }
+        }
+        public RotinaEventHistory GetById(Guid id)
+        {
+            try
+            {
+                return _rotinaEventHistoryRepository.GetById(id);
+            }
+            catch { throw new InvalidOperationException(); }
+        }
         public async Task AddAsync(RotinaEventHistory reh)
         {
             try
@@ -26,17 +42,28 @@ namespace BoxBack.Domain.Services
                 await _rotinaEventHistoryRepository.AddAsync(reh);
                 _unitOfWork.Commit();
             }
-            catch { throw new InvalidOperationException(); }
+            catch (Exception ex){ throw new Exception(ex.InnerException.Message); }
         }
-
         public void Update(RotinaEventHistory reh)
         {
+            var rotinaEventHistoryDB = _rotinaEventHistoryRepository.GetByIdAsync(reh.Id);
             try
             {
                 _rotinaEventHistoryRepository.Update(reh);
                 _unitOfWork.Commit();
             }
-            catch { throw new InvalidOperationException(); }
+            catch (InvalidOperationException io) 
+            {
+                throw new InvalidOperationException(io.Message);
+            }
+            catch (ArgumentException ex) 
+            {
+                throw new ArgumentException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.InnerException.Message);
+            }
         }
     }
 }

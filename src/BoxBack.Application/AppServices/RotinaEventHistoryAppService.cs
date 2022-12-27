@@ -31,9 +31,27 @@ namespace BoxBack.Application.AppServices
 
         public void Update(RotinaEventHistoryViewModel reh)
         {
+            #region Get data to map and after update
+            var rotinaEventHistoryDB = new RotinaEventHistory();
             try
             {
-                _rotinaEventHistoryService.Update(_mapper.Map<RotinaEventHistory>(reh));
+                rotinaEventHistoryDB = _rotinaEventHistoryService.GetById(reh.Id);
+            }
+            catch (InvalidCastException ic) { throw new InvalidCastException(ic.Message); }
+            #endregion
+
+            #region Map
+            try
+            {
+                _mapper.Map<RotinaEventHistoryViewModel, RotinaEventHistory>(reh, rotinaEventHistoryDB);
+            }
+            catch (InvalidCastException ic) { throw new InvalidCastException(ic.Message); }
+            
+            #endregion
+
+            try
+            {
+                _rotinaEventHistoryService.Update(rotinaEventHistoryDB);
             }
             catch { throw new ArgumentNullException(nameof(reh)); }
         }

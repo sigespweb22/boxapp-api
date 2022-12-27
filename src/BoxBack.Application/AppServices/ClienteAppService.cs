@@ -5,40 +5,64 @@ using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Enums;
 using BoxBack.Domain.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace BoxBack.Application.AppServices
 {
     public class ClienteAppService : IClienteAppService
     {
+        private readonly ILogger _logger;
         private readonly IClienteService _clienteService;
         private readonly IRotinaAppService _rotinaAppService;
         private readonly IRotinaEventHistoryAppService _rotinaEventHistoryAppService;
-        private readonly IChaveApiTerceiroAppService _chaveApiTerceiroAppService;        
+        private readonly IChaveApiTerceiroAppService _chaveApiTerceiroAppService;
 
-        public ClienteAppService(IClienteService clienteService,
+        public ClienteAppService(ILogger<ClienteAppService> logger,
+                                 IClienteService clienteService,
                                  IRotinaAppService rotinaService,
                                  IRotinaEventHistoryAppService rotinaEventHistoryAppService,
                                  IChaveApiTerceiroAppService chaveApiTerceiroAppService) 
         {
+            _logger = logger;
             _clienteService = clienteService;
             _rotinaAppService = rotinaService;
             _rotinaEventHistoryAppService = rotinaEventHistoryAppService;
             _chaveApiTerceiroAppService = chaveApiTerceiroAppService;
         }
         
-        public async Task SincronizarFromTPAsync(Guid rotinaId)
+        public async Task SincronizarFromTPAsync(CancellationTokenSource tokenSource)
         {
-            #region Create rotina event history
-            var rotinaViewModel = new RotinaViewModel();
+            #region Chave api resolve - Token
+            String token = string.Empty;
             try
             {
-                rotinaViewModel = await _rotinaAppService.GetByIdAsync(rotinaId);
+                token = $"ApiKey {await _chaveApiTerceiroAppService.GetValidKeyByApiTerceiroNome(ApiTerceiroEnum.BOM_CONTROLE)}";
             }
-            catch { throw; }
+            catch (InvalidOperationException io)
+            {
+                RotinaEventHistoryUpdateHandle(io.Message, rotinaId);
+            }
+            catch (Exception ex)
+            {
+                RotinaEventHistoryUpdateHandle(ex.Message, rotinaId);
+            }
+            #endregion
 
-            if (rotinaViewModel == null) throw new ArgumentNullException(nameof(rotinaViewModel));
+            try
+            {
+                await _clienteService.SincronizarFromTPAsync(token).ConfigureAwait(false);
+            }
+            catch
+            { 
+                // implementation on exceptions
+                throw; 
+            }
+        }
 
-            // create object to store rotina
+        private void RotinaEventHistoryUpdateHandle(string exceptionMessage, Guid rotinaId)
+        {
+            // obter o objeto do banco para atualizar
+
             var rotinaEventHistoryViewModel = new RotinaEventHistoryViewModel()
             {
                 Id = Guid.NewGuid(),
@@ -46,42 +70,32 @@ namespace BoxBack.Application.AppServices
                 StatusProgresso = RotinaStatusProgressoEnum.EM_EXECUCAO.ToString(),
                 TotalItensSucesso = 0,
                 TotalItensInsucesso = 0,
-                RotinaId = rotinaViewModel.Id
+                RotinaId = rotinaId
             };
 
+            rotinaEventHistoryViewModel.ExceptionMensagem = $"{exceptionMessage}";
+            rotinaEventHistoryViewModel.StatusProgresso = RotinaStatusProgressoEnum.FALHA_EXECUCAO.ToString();
+            rotinaEventHistoryViewModel.DataFim = DateTimeOffset.Now.ToString();
+
             try
             {
-                await _rotinaEventHistoryAppService.AddAsync(rotinaEventHistoryViewModel);    
-            }
-            catch { throw; }
-            #endregion
-
-            #region Chave api resolve - Token
-            String token = string.Empty;
-            try
-            {
-                token = $"ApiKey {await _chaveApiTerceiroAppService.GetValidKeyByApiTerceiroNome(ApiTerceiroEnum.BOM_CONTROLE)}";
-            }
-            catch (ArgumentNullException ane) {
-                // event exception register
-                rotinaEventHistoryViewModel.StatusProgresso = RotinaStatusProgressoEnum.FALHA_EXECUCAO.ToString();
-                rotinaEventHistoryViewModel.DataFim = DateTimeOffset.Now.ToString();
-                rotinaEventHistoryViewModel.ExceptionMensagem = $"Nenhuma chave de api encontrada para seguir com o processo de integração. | ArgumentNullException => {ane.Message}";
-
                 _rotinaEventHistoryAppService.Update(rotinaEventHistoryViewModel);
-                await Task.FromCanceled(CancellationToken.None);
+            }
+            catch (ArgumentNullException an) 
+            {
+                _logger.LogInformation($"Falhou tentativa de atualizar a rotina event history | {an.Message}");
+                throw new OperationCanceledException(an.Message);
+            }
+            catch (InvalidOperationException io) 
+            {
+                _logger.LogInformation($"Falhou tentativa de atualizar a rotina event history | {io.Message}");
+                throw new OperationCanceledException(io.Message);
             }
             catch (Exception ex)
             {
-                return;
+                _logger.LogInformation($"Falhou tentativa de atualizar a rotina event history | {ex.Message}");
+                throw new OperationCanceledException(ex.Message);
             }
-            #endregion
-
-            try
-            {
-                await _clienteService.SincronizarFromTPAsync(token);
-            }
-            catch { throw; }
         }
     }
 } 

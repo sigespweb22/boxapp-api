@@ -25,6 +25,8 @@ namespace BoxBack.Infra.Data
             builder.Property(c => c.Key)
                 .IsRequired(false);
             
+            builder.HasQueryFilter(p => !p.IsDeleted);
+            
             builder.HasData(
                 new ChaveApiTerceiro
                 {

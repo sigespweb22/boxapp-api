@@ -21,13 +21,13 @@ namespace BoxBack.Domain.Services
             var chaveApiTerceiro = new ChaveApiTerceiro();
             try
             {
-                chaveApiTerceiro = await _chaveApiTerceiroRepository.GetByApiTerceiroNome(ate);
+                chaveApiTerceiro = await _chaveApiTerceiroRepository.GetByApiTerceiroNome(ate).ConfigureAwait(false);
             }
-            catch { throw new ArgumentNullException(nameof(ate)); }
+            catch (Exception ex){ throw new Exception(ex.InnerException.Message); }
 
             #region Generals validations
-            if (IsChaveApiTerceiroNull(chaveApiTerceiro)) throw new ArgumentNullException(nameof(chaveApiTerceiro));
-            if (IsKeyNullOrEmpty(chaveApiTerceiro.Key)) throw new ArgumentNullException(nameof(chaveApiTerceiro.Key));
+            if (IsChaveApiTerceiroNull(chaveApiTerceiro)) throw new InvalidOperationException("Chave nula. Principal motivo é chave não encontrada.");
+            if (IsKeyNullOrEmpty(chaveApiTerceiro.Key)) throw new InvalidOperationException("Chave vazia.");
             if (IsKeyVencida(chaveApiTerceiro.DataValidade)) throw new InvalidOperationException("Chave vencida.");
             #endregion
 
@@ -40,7 +40,7 @@ namespace BoxBack.Domain.Services
         }
         private bool IsKeyNullOrEmpty(string key)
         {
-            return string.IsNullOrEmpty(key.ToString());
+            return string.IsNullOrEmpty(key);
         }
         private bool IsKeyVencida(DateTimeOffset dt)
         {
