@@ -14,9 +14,10 @@ namespace BoxBack.Application.AppServices
         private readonly IMapper _mapper;
 
         public RotinaAppService(IRotinaService rotinaService,
-                                IMapper _mapper)
+                                IMapper mapper)
         {
             _rotinaService = rotinaService;
+            _mapper = mapper;
         }
 
         public async Task<RotinaViewModel> GetByIdAsync(Guid rotinaId)

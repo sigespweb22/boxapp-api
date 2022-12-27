@@ -42,7 +42,8 @@ namespace BoxBack.WebApi.EndPoints
                                RoleManager<ApplicationRole> roleManager,
                                IMapper mapper,
                                ICNPJAServices cnpjaServices,
-                               IBCServices bcServices)
+                               IBCServices bcServices,
+                               IClienteAppService clienteAppService)
         {
             _context = context;
             _unitOfWork = unitOfWork;
@@ -51,6 +52,7 @@ namespace BoxBack.WebApi.EndPoints
             _mapper = mapper;
             _cnpjaServices = cnpjaServices;
             _bcServices = bcServices;
+            _clienteAppService = clienteAppService;
         }
 
         /// <summary>

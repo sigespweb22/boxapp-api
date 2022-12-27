@@ -36,6 +36,7 @@ namespace BoxBack.Domain.Services
             _rotinaEventHistoryRepository = rotinaEventHistoryRepository;
             _rotinaRepository = rotinaRepository;
             _bcServices = bcServices;
+            _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
     
@@ -47,7 +48,7 @@ namespace BoxBack.Domain.Services
             {
                 clientesThirdParty = await _bcServices.ClientePesquisar(token);
             }
-            catch (Exception e) when (e is FormatException or OverflowException) { throw e; }
+            catch (Exception e) when (e is FormatException or OverflowException) { return; }
 
             if (clientesThirdParty == null || clientesThirdParty.Count() <= 0)
             {
@@ -122,7 +123,6 @@ namespace BoxBack.Domain.Services
             }
             catch (Exception ex) { throw new InvalidOperationException(ex.Message); }
             #endregion
-            await Task.Run(() => "1");
         }
     }
 }

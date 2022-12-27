@@ -120,8 +120,7 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> UpdateAsync([FromBody]RotinaViewModel rotinaViewModel)
         {
             #region Required validations
-            if (rotinaViewModel.Id == null ||
-                rotinaViewModel.Id == Guid.Empty)
+            if (rotinaViewModel.Id == Guid.Empty)
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);
@@ -326,7 +325,7 @@ namespace BoxBack.WebApi.EndPoints
         [HttpPost]
         public async Task<IActionResult> DispatchClientesSync([FromRoute]Guid rotinaId)
         {
-            if (rotinaId == null || rotinaId == Guid.Empty)
+            if (rotinaId == Guid.Empty)
             {
                 AddError("Id requerido.");
                 return CustomResponse(400);
@@ -353,7 +352,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <summary>
         /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha
         /// </summary>
-        /// <param name=""></param>
+        /// <param name="rotinaId"></param>
         /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
         /// <response code="200">Sucesso do despacho da rotina</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
@@ -365,9 +364,9 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        [Route("dispatch-contratos-sync-update")]
+        [Route("dispatch-contratos-sync-update/{rotinaId}")]
         [HttpPost]
-        public async Task<IActionResult> DispatchContratosSyncUpdate()
+        public async Task<IActionResult> DispatchContratosSyncUpdate([FromRoute]Guid rotinaId)
         {
             await Task.Delay(50);
             return CustomResponse(500);
@@ -376,7 +375,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <summary>
         /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha
         /// </summary>
-        /// <param name=""></param>
+        /// <param name="rotinaId"></param>
         /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
         /// <response code="200">Sucesso do despacho da rotina</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
@@ -388,9 +387,9 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        [Route("dispatch-faturas-sync")]
+        [Route("dispatch-faturas-sync/{rotinaId}")]
         [HttpPost]
-        public async Task<IActionResult> DispatchFaturasSync()
+        public async Task<IActionResult> DispatchFaturasSync([FromRoute]Guid rotinaId)
         {
             await Task.Delay(50);
             return CustomResponse(500);
@@ -399,7 +398,7 @@ namespace BoxBack.WebApi.EndPoints
         /// <summary>
         /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha
         /// </summary>
-        /// <param name=""></param>
+        /// <param name="rotinaId"></param>
         /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
         /// <response code="200">Sucesso do despacho da rotina</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
@@ -411,9 +410,9 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        [Route("dispatch-faturas-update")]
+        [Route("dispatch-faturas-update/{rotinaId}")]
         [HttpPost]
-        public async Task<IActionResult> DispatchFaturasUpdate()
+        public async Task<IActionResult> DispatchFaturasUpdate([FromRoute]Guid rotinaId)
         {
             await Task.Delay(50);
             return CustomResponse(500);

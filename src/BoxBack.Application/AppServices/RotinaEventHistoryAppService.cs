@@ -13,9 +13,11 @@ namespace BoxBack.Application.AppServices
         private readonly IRotinaEventHistoryService _rotinaEventHistoryService;
         private readonly IMapper _mapper;
 
-        public RotinaEventHistoryAppService(IRotinaEventHistoryService rotinaEventHistoryService)
+        public RotinaEventHistoryAppService(IRotinaEventHistoryService rotinaEventHistoryService,
+                                            IMapper mapper)
         {
             _rotinaEventHistoryService = rotinaEventHistoryService;
+            _mapper = mapper;
         }
 
         public async Task AddAsync(RotinaEventHistoryViewModel reh)
