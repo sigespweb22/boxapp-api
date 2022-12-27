@@ -18,15 +18,22 @@ namespace BoxBack.Infra.CrossCutting.IoC
         public static void RegisterServices(IServiceCollection services)
         {
             // AppServices
+            services.AddScoped<IChaveApiTerceiroAppService, ChaveApiTerceiroAppService>();
             services.AddScoped<IClienteAppService, ClienteAppService>();
+            services.AddScoped<IRotinaAppService, RotinaAppService>();
+            services.AddScoped<IRotinaEventHistoryAppService, RotinaEventHistoryAppService>();
 
             // Services
+            services.AddScoped<IChaveApiTerceiroService, ChaveApiTerceiroService>();
             services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IRotinaService, RotinaService>();   
             services.AddScoped<IRotinaEventHistoryService, RotinaEventHistoryService>();
 
             // Repositories
+            services.AddScoped<IChaveApiTerceiroRepository, ChaveApiTerceiroRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IRotinaEventHistoryRepository, RotinaEventHistoryRepository>();
+            services.AddScoped<IRotinaRepository, RotinaRepository>();
 
             // Transient: Created each time.
             // Scoped: Created only once per request.
