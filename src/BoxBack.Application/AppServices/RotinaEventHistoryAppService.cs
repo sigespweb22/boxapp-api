@@ -81,7 +81,7 @@ namespace BoxBack.Application.AppServices
                 throw new OperationCanceledException(ex.Message);
             }
         }
-        private void UpdateWithStatusFalhaExecucaoHandle(string exceptionMessage, Guid rotinaEventoHistoryId)
+        public void UpdateWithStatusFalhaExecucaoHandle(string exceptionMessage, Guid rotinaEventoHistoryId)
         {
             #region Get data
             var rotinaEventHistoryDB = new RotinaEventHistory();
@@ -96,26 +96,16 @@ namespace BoxBack.Application.AppServices
             }
             #endregion
 
-
-
-            // obter o objeto do banco para atualizar
-            var rotinaEventHistoryViewModel = new RotinaEventHistoryViewModel()
-            {
-                Id = Guid.NewGuid(),
-                DataInicio =  DateTimeOffset.Now.ToString(),
-                StatusProgresso = RotinaStatusProgressoEnum.FALHA_EXECUCAO.ToString(),
-                TotalItensSucesso = 0,
-                TotalItensInsucesso = 0,
-                RotinaId = rotinaId
-            };
-
-            rotinaEventHistoryViewModel.ExceptionMensagem = $"{exceptionMessage}";
-            rotinaEventHistoryViewModel.StatusProgresso = RotinaStatusProgressoEnum.FALHA_EXECUCAO.ToString();
-            rotinaEventHistoryViewModel.DataFim = DateTimeOffset.Now.ToString();
+            #region Map to update
+            rotinaEventHistoryDB.Id = rotinaEventoHistoryId;
+            rotinaEventHistoryDB.DataFim = DateTimeOffset.Now;
+            rotinaEventHistoryDB.StatusProgresso = RotinaStatusProgressoEnum.FALHA_EXECUCAO;
+            rotinaEventHistoryDB.ExceptionMensagem = $"{exceptionMessage}";
+            #endregion
 
             try
             {
-                _rotinaEventHistoryAppService.Update(rotinaEventHistoryViewModel);
+                _rotinaEventHistoryService.Update(rotinaEventHistoryDB);
             }
             catch (ArgumentNullException an) 
             {
