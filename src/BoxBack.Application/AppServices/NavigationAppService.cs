@@ -25,10 +25,12 @@ namespace BoxBack.Application.AppServices
             var navigationSectionB = new VerticalNavItemViewModel();
             var navigationB = new VerticalNavItemViewModel();
             var navigationF = new VerticalNavItemViewModel();
+            var navigationG = new VerticalNavItemViewModel();
             
             navigationA.Children = new List<Son>();
             navigationB.Children = new List<Son>();
             navigationF.Children = new List<Son>();
+            navigationG.Children = new List<Son>();
 
             var oldestDashboardSonA = new Son();
             var oldestDashboardSonB = new Son();
@@ -62,6 +64,24 @@ namespace BoxBack.Application.AppServices
                 Subject = "ac-dashboard-publica-page"
             };
             navigationA.Children.Add(publica);
+
+            navigationG = new VerticalNavItemViewModel
+            {
+                Title = "Relatórios",
+                Icon = "ChartBox",
+                BadgeContent = "",
+                BadgeColor = "primary",
+                Children = new List<Son>()
+            };
+
+            var comercialRelatorio = new Son
+            {
+                Title = "Comercial",
+                Path = "/relatorios/comercial",
+                Action = "list",
+                Subject = "ac-relatorioComercial-page"
+            };
+            navigationG.Children.Add(comercialRelatorio);
 
             navigationB = new VerticalNavItemViewModel
             {
@@ -217,6 +237,7 @@ namespace BoxBack.Application.AppServices
             rotinas.Children.Add(rotinasTodas);
 
             await Task.Run(() => navigation.Add(navigationA));
+            await Task.Run(() => navigation.Add(navigationG));
             
             navigationSectionA = new VerticalNavItemViewModel
             {
