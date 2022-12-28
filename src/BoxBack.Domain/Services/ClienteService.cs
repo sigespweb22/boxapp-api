@@ -3,18 +3,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.Models;
-using Microsoft.EntityFrameworkCore;
 using Sigesp.Domain.InterfacesRepositories;
 using System.Collections.Generic;
 using BoxBack.Domain.ModelsServices;
 using BoxBack.Domain.ServicesThirdParty;
 using BoxBack.Domain.InterfacesRepositories;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 
 namespace BoxBack.Domain.Services
 {
     public class ClienteService : IClienteService
     {
+        private readonly ILogger _logger;
         private readonly IClienteRepository _clienteRepository;
         private readonly IChaveApiTerceiroRepository _chaveApiTerceiroRepository;
         private readonly IRotinaEventHistoryRepository _rotinaEventHistoryRepository;
@@ -22,8 +23,10 @@ namespace BoxBack.Domain.Services
         private readonly IBCServices _bcServices;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IRotinaEventHistoryService _rotinaEventHistoryService;
         
-        public ClienteService(IClienteRepository clienteRepository,
+        public ClienteService(ILogger<ClienteService> logger,
+                              IClienteRepository clienteRepository,
                               IChaveApiTerceiroRepository chaveApiTerceiroRepository,
                               IRotinaEventHistoryRepository rotinaEventHistoryRepository,
                               IRotinaRepository rotinaRepository,
@@ -31,6 +34,7 @@ namespace BoxBack.Domain.Services
                               IMapper mapper,
                               IUnitOfWork unitOfWork)
         {
+            _logger = logger;
             _clienteRepository = clienteRepository;
             _chaveApiTerceiroRepository = chaveApiTerceiroRepository;
             _rotinaEventHistoryRepository = rotinaEventHistoryRepository;
@@ -40,7 +44,7 @@ namespace BoxBack.Domain.Services
             _unitOfWork = unitOfWork;
         }
     
-        public async Task SincronizarFromTPAsync(string token)
+        public async Task SincronizarFromTPAsync(string token, Guid rotinaEventHistoryId)
         {
             #region Get data Bom Controle (TP)
             IEnumerable<BCClienteModelService> clientesThirdParty = new List<BCClienteModelService>();
@@ -121,8 +125,32 @@ namespace BoxBack.Domain.Services
             {
                 _unitOfWork.Commit();
             }
-            catch (Exception ex) { throw new InvalidOperationException(ex.Message); }
+            catch (InvalidOperationException io) {
+                _logger.LogInformation($"Problemas ao efetuar commit. | {io.Message}");
+                throw new InvalidOperationException(io.Message); 
+            }
             #endregion
+
+            #region Create rotina event history of success
+            try
+            {
+                _rotinaEventHistoryService.UpdateWithStatusConcluidaHandle(rotinaEventHistoryId, totalSincronizado, totalIsNotDocumento);
+            }
+            catch (InvalidOperationException io) 
+            {
+                throw new OperationCanceledException(io.Message, io.InnerException);
+            }
+            catch (ArgumentNullException an) 
+            {
+                throw new OperationCanceledException(an.Message, an.InnerException);
+            }
+            catch (Exception ex)
+            {
+                throw new OperationCanceledException(ex.Message, ex.InnerException);
+            }
+            #endregion
+
+            var a = 1;
         }
     }
 }

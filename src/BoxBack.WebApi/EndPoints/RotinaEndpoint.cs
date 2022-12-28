@@ -346,7 +346,7 @@ namespace BoxBack.WebApi.EndPoints
 
             // create rotina event history
             var rotinaEventHistoryId = Guid.NewGuid();
-            await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId).ConfigureAwait(false);
+            await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
 
             try
             {
@@ -359,6 +359,7 @@ namespace BoxBack.WebApi.EndPoints
             }
             finally
             {
+                // concluir aqui a task
                 source.Dispose();
             }
 

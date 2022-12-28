@@ -54,7 +54,7 @@ namespace BoxBack.Application.AppServices
             #region Sincronization service
             try
             {
-                await _clienteService.SincronizarFromTPAsync(token).ConfigureAwait(false);
+                await _clienteService.SincronizarFromTPAsync(token, rotinaEventHistoryId);
             }
             catch (InvalidOperationException io)
             {

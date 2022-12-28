@@ -24,6 +24,6 @@ namespace BoxBack.Domain.Models
 
 
         public ICollection<VendedorComissao> VendedorComissoes { get; set; }
-        public ICollection<VendedorContrato> VendedorContratos { get; set; }
+        public virtual ICollection<VendedorContrato> VendedorContratos { get; set; }
     }
 }

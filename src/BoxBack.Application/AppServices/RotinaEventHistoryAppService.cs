@@ -20,6 +20,7 @@ namespace BoxBack.Application.AppServices
                                             IRotinaEventHistoryService rotinaEventHistoryService,
                                             IMapper mapper)
         {
+            _logger = logger;
             _rotinaEventHistoryService = rotinaEventHistoryService;
             _mapper = mapper;
         }

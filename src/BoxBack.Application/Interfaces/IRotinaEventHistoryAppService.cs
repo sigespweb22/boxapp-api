@@ -9,6 +9,6 @@ namespace BoxBack.Application.Interfaces
         Task AddAsync(RotinaEventHistoryViewModel reh);
         void Update(RotinaEventHistoryViewModel reh);
         Task AddWithStatusEmExecucaoHandleAsync(Guid rotinaId, Guid id);
-        void UpdateWithStatusFalhaExecucaoHandle(string exceptionMessage, Guid rotinaEventoHistoryId);
+        void UpdateWithStatusFalhaExecucaoHandle(string exceptionMessage, Guid rotinaEventoHistoryId);        
     }
 }

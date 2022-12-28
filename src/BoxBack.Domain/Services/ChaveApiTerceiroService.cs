@@ -1,3 +1,4 @@
+using System.IO.MemoryMappedFiles;
 using System;
 using System.Threading.Tasks;
 using BoxBack.Domain.Enums;
@@ -44,7 +45,7 @@ namespace BoxBack.Domain.Services
         }
         private bool IsKeyVencida(DateTimeOffset dt)
         {
-            return dt >= DateTimeOffset.Now;
+            return DateTimeOffset.Now.Date > dt.Date;
         }
     }
 }
