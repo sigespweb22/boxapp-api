@@ -28,18 +28,21 @@ namespace BoxBack.WebApi.EndPoints
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IClienteAppService _clienteAppService;
+        private readonly IRotinaEventHistoryAppService _rotinaEventHistoryAppService;
 
         public RotinaEndpoint(ILogger<RotinaEndpoint> logger,
                               BoxAppDbContext context,
                               IUnitOfWork unitOfWork,
                               IMapper mapper,
-                              IClienteAppService clienteAppService)
+                              IClienteAppService clienteAppService,
+                              IRotinaEventHistoryAppService rotinaEventHistoryAppService)
         {
             _logger = logger;
             _context = context;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _clienteAppService = clienteAppService;
+            _rotinaEventHistoryAppService = rotinaEventHistoryAppService;
         }
 
         /// <summary>
@@ -330,21 +333,24 @@ namespace BoxBack.WebApi.EndPoints
         [HttpPost]
         public async Task<IActionResult> DispatchClientesSync([FromRoute]Guid rotinaId)
         {
+            #region Validations
             if (rotinaId == Guid.Empty)
             {
                 AddError("Id da rotina requerido.");
                 return CustomResponse(400);
             }
+            #endregion
 
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken cToken = source.Token;
 
             // create rotina event history
-            RotinaEventHistoryAddHandle(rotinaId);
+            var rotinaEventHistoryId = Guid.NewGuid();
+            await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId).ConfigureAwait(false);
 
             try
             {
-                await Task.Run(() => _clienteAppService.SincronizarFromTPAsync(source), cToken).ConfigureAwait(false);
+                await Task.Run(() => _clienteAppService.SincronizarFromTPAsync(source, rotinaEventHistoryId), cToken).ConfigureAwait(false);
             }
             catch (OperationCanceledException e)
             {
@@ -357,32 +363,6 @@ namespace BoxBack.WebApi.EndPoints
             }
 
             return CustomResponse(200);
-        }
-
-        // jogar este método para o appservice ...
-        private void RotinaEventHistoryAddHandle(Guid rotinaId)
-        {
-            // create object to store rotina
-            var rotinaEventHistoryViewModel = new RotinaEventHistoryViewModel()
-            {
-                Id = Guid.NewGuid(),
-                DataInicio =  DateTimeOffset.Now.ToString(),
-                StatusProgresso = RotinaStatusProgressoEnum.EM_EXECUCAO.ToString(),
-                TotalItensSucesso = 0,
-                TotalItensInsucesso = 0,
-                RotinaId = rotinaViewModel.Id
-            };
-
-            try
-            {
-                await _rotinaEventHistoryAppService.AddAsync(rotinaEventHistoryViewModel).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation($"Falhou tentativa de adicionar rotina event history | {ex.Message}");
-                throw new OperationCanceledException(ex.Message);
-            }
-            #endregion
         }
 
         /// <summary>

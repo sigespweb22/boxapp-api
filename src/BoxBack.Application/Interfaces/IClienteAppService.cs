@@ -6,6 +6,6 @@ namespace BoxBack.Application.Interfaces
 {
     public interface IClienteAppService
     {
-        Task SincronizarFromTPAsync(CancellationTokenSource tokenSource);
+        Task SincronizarFromTPAsync(CancellationTokenSource tokenSource, Guid rotinaEventHistoryId);
     }
 }
