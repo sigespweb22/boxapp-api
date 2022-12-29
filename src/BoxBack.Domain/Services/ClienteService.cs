@@ -32,7 +32,8 @@ namespace BoxBack.Domain.Services
                               IRotinaRepository rotinaRepository,
                               IBCServices bcServices,
                               IMapper mapper,
-                              IUnitOfWork unitOfWork)
+                              IUnitOfWork unitOfWork,
+                              IRotinaEventHistoryService rotinaEventHistoryService)
         {
             _logger = logger;
             _clienteRepository = clienteRepository;
@@ -42,6 +43,7 @@ namespace BoxBack.Domain.Services
             _bcServices = bcServices;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _rotinaEventHistoryService = rotinaEventHistoryService;
         }
     
         public async Task SincronizarFromTPAsync(string token, Guid rotinaEventHistoryId)
@@ -66,7 +68,7 @@ namespace BoxBack.Domain.Services
             {
                 clientesBoxApp = await _clienteRepository.GetAllAsync();
             }
-            catch (Exception ex) { throw new InvalidOperationException(ex.Message); }
+            catch (InvalidOperationException ex) { throw new InvalidOperationException(ex.Message); }
             #endregion
 
             #region Sincronization
@@ -105,7 +107,7 @@ namespace BoxBack.Domain.Services
                             }
                         }
                     }
-                    catch (Exception ex) { throw new InvalidOperationException(ex.Message); }
+                    catch (InvalidOperationException ex) { throw new InvalidOperationException(ex.Message); }
                     
                     try
                     {
@@ -115,7 +117,7 @@ namespace BoxBack.Domain.Services
                             totalSincronizado++;
                         }
                     }
-                    catch (Exception ex) { throw new InvalidOperationException(ex.Message); }
+                    catch (InvalidOperationException ex) { throw new InvalidOperationException(ex.Message); }
                 }
             }
             #endregion
@@ -125,6 +127,7 @@ namespace BoxBack.Domain.Services
             {
                 _unitOfWork.Commit();
             }
+            
             catch (InvalidOperationException io) {
                 _logger.LogInformation($"Problemas ao efetuar commit. | {io.Message}");
                 throw new InvalidOperationException(io.Message); 
@@ -136,21 +139,22 @@ namespace BoxBack.Domain.Services
             {
                 _rotinaEventHistoryService.UpdateWithStatusConcluidaHandle(rotinaEventHistoryId, totalSincronizado, totalIsNotDocumento);
             }
-            catch (InvalidOperationException io) 
+            catch (InvalidOperationException io)
             {
+                _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | {io.Message}");
                 throw new OperationCanceledException(io.Message, io.InnerException);
             }
             catch (ArgumentNullException an) 
             {
+                _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | {an.Message}");
                 throw new OperationCanceledException(an.Message, an.InnerException);
             }
             catch (Exception ex)
             {
+                _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | {ex.Message}");
                 throw new OperationCanceledException(ex.Message, ex.InnerException);
             }
             #endregion
-
-            var a = 1;
         }
     }
 }

@@ -348,9 +348,11 @@ namespace BoxBack.WebApi.EndPoints
             var rotinaEventHistoryId = Guid.NewGuid();
             await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
 
+            var sincronizarTask = Task.Run(() => _clienteAppService.SincronizarFromTPAsync(source, rotinaEventHistoryId), cToken);
+
             try
             {
-                await Task.Run(() => _clienteAppService.SincronizarFromTPAsync(source, rotinaEventHistoryId), cToken).ConfigureAwait(false);
+                await sincronizarTask.ConfigureAwait(false);
             }
             catch (OperationCanceledException e)
             {
@@ -359,7 +361,6 @@ namespace BoxBack.WebApi.EndPoints
             }
             finally
             {
-                // concluir aqui a task
                 source.Dispose();
             }
 
