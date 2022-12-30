@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.InteropServices;
 using System.Linq;
 using AutoMapper;
 using BoxBack.Application.ViewModels;
@@ -94,7 +96,12 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.Quitado ? "YES" : "NO"))
                 .ForMember(dst => dst.DataCompetencia, src => src.MapFrom(x => x.DataCompetencia.ToString("dd/MM/yyyy")));
             CreateMap<Rotina, RotinaViewModel>()
-                .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
+                .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"))
+                .ForMember(dst => dst.DataCriacaoUltimoEvento, src => src.MapFrom(x => x.RotinasEventsHistories.OrderByDescending(x => x.CreatedAt).Select(x => x.CreatedAt).FirstOrDefault().ToString("dd/MM/yyyy hh:mm:ss")))
+                .ForMember(dst => dst.StatusUltimoEvento, src => src.MapFrom(x => x.RotinasEventsHistories.OrderByDescending(x => x.CreatedAt).Select(x => x.StatusProgresso).FirstOrDefault()))
+                .ForMember(dst => dst.TotalItensSucessoUltimoEvento, src => src.MapFrom(x => x.RotinasEventsHistories.OrderByDescending(x => x.CreatedAt).Select(x => x.TotalItensSucesso).FirstOrDefault()))
+                .ForMember(dst => dst.TotalItensInsucessoUltimoEvento, src => src.MapFrom(x => x.RotinasEventsHistories.OrderByDescending(x => x.CreatedAt).Select(x => x.TotalItensInsucesso).FirstOrDefault()))
+                .ForMember(dst => dst.ExceptionMessageUltimoEvento, src => src.MapFrom(x => x.RotinasEventsHistories.OrderByDescending(x => x.CreatedAt).Select(x => x.ExceptionMensagem).FirstOrDefault()));
             CreateMap<RotinaEventHistory, RotinaEventHistoryViewModel>();
         }
     }

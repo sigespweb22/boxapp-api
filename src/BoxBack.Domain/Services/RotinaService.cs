@@ -26,5 +26,10 @@ namespace BoxBack.Domain.Services
             }
             catch { throw new InvalidOperationException(); }
         }
+
+        public void Dispose()
+        {
+            _rotinaRepository.Dispose();
+        }
     }
 }

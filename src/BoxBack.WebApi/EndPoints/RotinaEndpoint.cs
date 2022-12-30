@@ -70,6 +70,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 rotinas = await _context.Rotinas
                                             .AsNoTracking()
+                                            .Include(x => x.RotinasEventsHistories)
                                             .OrderBy(x => x.ChaveSequencial)
                                             .ToListAsync();
             }
@@ -87,7 +88,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 try
                 {
-                    rotinas = rotinas.Where(x => x.Nome.Equals(q)).ToList();    
+                    rotinas = rotinas.Where(x => x.Nome.Equals(q)).ToList();  
                 }
                 catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             }
@@ -319,28 +320,20 @@ namespace BoxBack.WebApi.EndPoints
         /// </summary>
         /// <param name="rotinaId"></param>
         /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
-        /// <response code="200">Sucesso do despacho da rotina</response>
+        /// <response code="204">Sucesso do despacho da rotina</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">ROTINA não encontrado</response>
         /// <response code="500">Erro desconhecido</response>
         [Authorize(Roles = "Master, CanRotinaRead, CanRotinaAll")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [Route("dispatch-clientes-sync/{rotinaId}")]
         [HttpPost]
-        public async Task<IActionResult> DispatchClientesSync([FromRoute]Guid rotinaId)
+        public async Task DispatchClientesSync([FromRoute]Guid rotinaId)
         {
-            #region Validations
-            if (rotinaId == Guid.Empty)
-            {
-                AddError("Id da rotina requerido.");
-                return CustomResponse(400);
-            }
-            #endregion
-
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken cToken = source.Token;
 
@@ -352,19 +345,15 @@ namespace BoxBack.WebApi.EndPoints
 
             try
             {
-                await sincronizarTask.ConfigureAwait(false);
+                #pragma warning disable CS4014 // Método assíncrono deve despachar a tarefa sem travar a thread atual
+                sincronizarTask.;
+                sincronizarTask.ConfigureAwait(false);
             }
             catch (OperationCanceledException e)
             {
-                source.Cancel();
                 _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
+                source.Cancel();
             }
-            finally
-            {
-                source.Dispose();
-            }
-
-            return CustomResponse(200);
         }
 
         /// <summary>

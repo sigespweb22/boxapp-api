@@ -5,16 +5,20 @@ using BoxBack.Domain.Enums;
 using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.Models;
 using Sigesp.Domain.InterfacesRepositories;
+using BoxBack.Domain.InterfacesRepositories;
 
 namespace BoxBack.Domain.Services
 {
     public class ChaveApiTerceiroService : IChaveApiTerceiroService
     {
         private readonly IChaveApiTerceiroRepository _chaveApiTerceiroRepository;
+        private readonly IUnitOfWork _unitOfWork;
         
-        public ChaveApiTerceiroService(IChaveApiTerceiroRepository chaveApiTerceiroRepository)
+        public ChaveApiTerceiroService(IChaveApiTerceiroRepository chaveApiTerceiroRepository,
+                                       IUnitOfWork unitOfWork)
         {
             _chaveApiTerceiroRepository = chaveApiTerceiroRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<string> GetValidKeyByApiTerceiroNome(ApiTerceiroEnum ate)
@@ -22,9 +26,9 @@ namespace BoxBack.Domain.Services
             var chaveApiTerceiro = new ChaveApiTerceiro();
             try
             {
-                chaveApiTerceiro = await _chaveApiTerceiroRepository.GetByApiTerceiroNome(ate).ConfigureAwait(false);
+                chaveApiTerceiro = await _chaveApiTerceiroRepository.GetByApiTerceiroNome(ate);
             }
-            catch (Exception ex){ throw new Exception(ex.InnerException.Message); }
+            catch (InvalidOperationException ex){ throw new InvalidOperationException(ex.Message, ex.InnerException); }
 
             #region Generals validations
             if (IsChaveApiTerceiroNull(chaveApiTerceiro)) throw new InvalidOperationException("Chave nula. Principal motivo é chave não encontrada.");
@@ -46,6 +50,11 @@ namespace BoxBack.Domain.Services
         private bool IsKeyVencida(DateTimeOffset dt)
         {
             return DateTimeOffset.Now.Date > dt.Date;
+        }
+
+        public void Dispose()
+        {
+            _chaveApiTerceiroRepository.Dispose();
         }
     }
 }

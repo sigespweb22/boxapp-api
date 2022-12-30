@@ -73,7 +73,7 @@ namespace BoxBack.Domain.Services
         public void UpdateWithStatusConcluidaHandle(Guid id, Int64 totalSuccess, Int64 totalFailures)
         {
             #region Argument Validations
-            if (id == null) throw new ArgumentNullException(nameof(id));
+            if (id == Guid.Empty) throw new ArgumentNullException(nameof(id));
             #endregion
 
             #region Get data
@@ -115,6 +115,11 @@ namespace BoxBack.Domain.Services
                 throw new Exception(ex.Message, ex.InnerException);
             }
             #endregion
+        }
+
+        public void Dispose()
+        {
+            _rotinaEventHistoryRepository.Dispose();
         }
     }
 }

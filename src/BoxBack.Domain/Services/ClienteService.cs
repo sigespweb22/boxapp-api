@@ -127,7 +127,6 @@ namespace BoxBack.Domain.Services
             {
                 _unitOfWork.Commit();
             }
-            
             catch (InvalidOperationException io) {
                 _logger.LogInformation($"Problemas ao efetuar commit. | {io.Message}");
                 throw new InvalidOperationException(io.Message); 
@@ -155,6 +154,11 @@ namespace BoxBack.Domain.Services
                 throw new OperationCanceledException(ex.Message, ex.InnerException);
             }
             #endregion
+        }
+
+        public void Dispose()
+        {
+            _clienteRepository.Dispose();
         }
     }
 }

@@ -12,6 +12,13 @@ namespace BoxBack.Application.ViewModels
         public Int32 ChaveSequencial { get; set; }
         public string DispatcherRoute { get; set; }
 
+        // dados do último evento da rotina
+        public string DataCriacaoUltimoEvento { get; set; }
+        public string StatusUltimoEvento { get; set; }
+        public string TotalItensInsucessoUltimoEvento { get; set; }
+        public string TotalItensSucessoUltimoEvento { get; set; }
+        public string ExceptionMessageUltimoEvento { get; set; }
+
         public string Status { get; set; }
 
         public ICollection<RotinaEventHistoryViewModel> RotinasEventsHistories { get; set; }
