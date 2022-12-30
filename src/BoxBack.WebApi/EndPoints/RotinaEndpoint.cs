@@ -332,7 +332,7 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("dispatch-clientes-sync/{rotinaId}")]
         [HttpPost]
-        public async Task DispatchClientesSync([FromRoute]Guid rotinaId)
+        public async Task DispatchClientesSyncAsync([FromRoute]Guid rotinaId)
         {
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken cToken = source.Token;
@@ -341,18 +341,23 @@ namespace BoxBack.WebApi.EndPoints
             var rotinaEventHistoryId = Guid.NewGuid();
             await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
 
-            var sincronizarTask = Task.Run(() => _clienteAppService.SincronizarFromTPAsync(source, rotinaEventHistoryId), cToken);
+            var synchronizeTask = Task.Run(() => _clienteAppService.SincronizarFromTPAsync(source, rotinaEventHistoryId)).ConfigureAwait(false);
 
             try
             {
-                #pragma warning disable CS4014 // Método assíncrono deve despachar a tarefa sem travar a thread atual
-                sincronizarTask.;
-                sincronizarTask.ConfigureAwait(false);
+                await synchronizeTask;
             }
             catch (OperationCanceledException e)
             {
                 _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
+                
                 source.Cancel();
+                source.Dispose();
+            }
+            finally
+            {
+                source.Cancel();
+                source.Dispose();
             }
         }
 
@@ -373,7 +378,7 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("dispatch-contratos-sync-update/{rotinaId}")]
         [HttpPost]
-        public async Task<IActionResult> DispatchContratosSyncUpdate([FromRoute]Guid rotinaId)
+        public async Task<IActionResult> DispatchContratosSyncUpdateAsync([FromRoute]Guid rotinaId)
         {
             await Task.Delay(50);
             return CustomResponse(500);
@@ -396,7 +401,7 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("dispatch-faturas-sync/{rotinaId}")]
         [HttpPost]
-        public async Task<IActionResult> DispatchFaturasSync([FromRoute]Guid rotinaId)
+        public async Task<IActionResult> DispatchFaturasSyncAsync([FromRoute]Guid rotinaId)
         {
             await Task.Delay(50);
             return CustomResponse(500);
@@ -419,7 +424,7 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("dispatch-faturas-update/{rotinaId}")]
         [HttpPost]
-        public async Task<IActionResult> DispatchFaturasUpdate([FromRoute]Guid rotinaId)
+        public async Task<IActionResult> DispatchFaturasUpdateAsync([FromRoute]Guid rotinaId)
         {
             await Task.Delay(50);
             return CustomResponse(500);

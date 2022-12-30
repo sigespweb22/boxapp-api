@@ -49,11 +49,6 @@ namespace BoxBack.Application.AppServices
                 _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(ex.Message, rotinaEventHistoryId);
                 throw new OperationCanceledException(ex.Message);
             }
-            finally
-            {
-                tokenSource.Cancel();
-                tokenSource.Dispose();
-            }
             #endregion
 
             #region Sincronization service
@@ -78,10 +73,6 @@ namespace BoxBack.Application.AppServices
                 _logger.LogInformation($"Formato do argumento inválido ou problemas ou de casting ou conversões. | {e.Message}");
                 _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(e.Message, rotinaEventHistoryId);
                 throw new OperationCanceledException(e.Message);
-            }
-            finally
-            {
-                tokenSource.Dispose();
             }
             #endregion
         }

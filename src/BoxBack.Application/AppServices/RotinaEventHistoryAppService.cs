@@ -61,6 +61,8 @@ namespace BoxBack.Application.AppServices
         }
         public async Task AddWithStatusEmExecucaoHandleAsync(Guid rotinaId, Guid id)
         {
+            if (rotinaId == Guid.Empty) throw new ArgumentNullException(nameof(rotinaId));
+            
             // create object to store rotina
             var rotinaEventHistory = new RotinaEventHistory()
             {
