@@ -1,11 +1,14 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using BoxBack.Application.Hubs;
+using BoxBack.Application.HubsInterfaces;
 using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Enums;
 using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.Models;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
 namespace BoxBack.Application.AppServices
@@ -15,14 +18,17 @@ namespace BoxBack.Application.AppServices
         private ILogger _logger;
         private readonly IRotinaEventHistoryService _rotinaEventHistoryService;
         private readonly IMapper _mapper;
+        private readonly IHubContext<NotificacaoHub, INotificacaoHub> _notificacaoHub;
 
         public RotinaEventHistoryAppService(ILogger<RotinaEventHistoryAppService> logger,
                                             IRotinaEventHistoryService rotinaEventHistoryService,
-                                            IMapper mapper)
+                                            IMapper mapper,
+                                            IHubContext<NotificacaoHub, INotificacaoHub> notificacaoHub)
         {
             _logger = logger;
             _rotinaEventHistoryService = rotinaEventHistoryService;
             _mapper = mapper;
+            _notificacaoHub = notificacaoHub;
         }
 
         public async Task AddAsync(RotinaEventHistoryViewModel reh)
@@ -83,6 +89,8 @@ namespace BoxBack.Application.AppServices
                 _logger.LogInformation($"Falhou tentativa de adicionar rotina event history | {ex.Message}");
                 throw new OperationCanceledException(ex.Message);
             }
+
+            await _notificacaoHub.Clients.All.ReceiveMessage("Deuuuuu certo");
         }
         public void UpdateWithStatusFalhaExecucaoHandle(string exceptionMessage, Guid rotinaEventoHistoryId)
         {

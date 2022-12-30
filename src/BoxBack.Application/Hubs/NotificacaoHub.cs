@@ -1,7 +1,7 @@
 using BoxBack.WebApi.HubsInterfaces;
 using Microsoft.AspNetCore.SignalR;
 
-namespace BoxBack.WebApi.Hubs
+namespace BoxBack.Application.Hubs
 {
      public class NotificacaoHub : Hub<INotificacaoHub> {}
 }
