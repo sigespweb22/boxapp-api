@@ -23,7 +23,7 @@ namespace BoxBack.Domain.InterfacesRepositories
 
         //Interfaces assíncronas
         Task AddAsync(TEntity obj);
-        Task AddRangeAsync(TEntity obj);
+        Task AddRangeAsync(IList<TEntity> obj);
         Task<string> GetIdFromPropertyAnyAsync(string property, string value);
         Task<IEnumerable<TEntity>> GetAllAsync();
     }

@@ -25,6 +25,7 @@ namespace BoxBack.Domain.Services
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRotinaEventHistoryService _rotinaEventHistoryService;
+        private readonly IClienteRepository _clienteRepository;
         
         public ClienteContratoService(ILogger<ClienteContratoService> logger,
                                       IClienteContratoRepository clienteContratoRepository,
@@ -34,7 +35,8 @@ namespace BoxBack.Domain.Services
                                       IBCServices bcServices,
                                       IMapper mapper,
                                       IUnitOfWork unitOfWork,
-                                      IRotinaEventHistoryService rotinaEventHistoryService)
+                                      IRotinaEventHistoryService rotinaEventHistoryService,
+                                      IClienteRepository clienteRepository)
         {
             _logger = logger;
             _clienteContratoRepository = clienteContratoRepository;
@@ -45,6 +47,7 @@ namespace BoxBack.Domain.Services
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _rotinaEventHistoryService = rotinaEventHistoryService;
+            _clienteRepository = clienteRepository;
         }
     
         public async Task SyncUpdateFromTPAsync(string token, Guid rotinaEventHistoryId)
@@ -173,7 +176,7 @@ namespace BoxBack.Domain.Services
             catch (Exception ex)
             {
                 _logger.LogInformation($"Falhou tentativa de obter um token de api de terceiro. | {ex.Message}");
-                _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(ex.Message, rotinaEventHistoryId);
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(ex.Message, rotinaEventHistoryId);
                 throw new OperationCanceledException(ex.Message);
             }
             #endregion
@@ -182,52 +185,35 @@ namespace BoxBack.Domain.Services
             Cliente[] clientes;
             try
             {
-                clientes = await _context.Clientes.ToArrayAsync();
+                clientes = (Cliente[])await _clienteRepository.GetAllAsync();
             }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de obter os clientes para iniciar a sincronização dos contratos. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(io.Message);
+            }
 
             if (clientes == null || clientes.Count() <= 0)
             {
-                AddError("Nenhum cliente encontrado na base de dados, para então seguir com a sincronização dos contratos com o sistema de terceiro.");
-                return CustomResponse(500);
+                _logger.LogInformation($"Nenhum cliente encontrado para iniciar a sincronização. | {clientes.Count()}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Nenhum cliente encontrado para iniciar a sincronização", rotinaEventHistoryId);
+                throw new ArgumentNullException("Nenhum cliente encontrato para iniciar a sincronização com api de terceiro.");
             }
-            #endregion
-
-            #region Chave api resolve
-            var chaveApiTerceiro = new ChaveApiTerceiro();
-            try
-            {
-                chaveApiTerceiro = await _context
-                                                .ChavesApiTerceiro
-                                                .Where(x => x.DataValidade >= DateTimeOffset.Now &&
-                                                       x.IsDeleted == false && !string.IsNullOrEmpty(x.Key))
-                                                .FirstOrDefaultAsync(x => x.ApiTerceiro.Equals(ApiTerceiroEnum.BOM_CONTROLE));
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-
-            if (chaveApiTerceiro == null)
-            { 
-                AddError("Nenhuma chave de api de terceiro encontrada, verifique os possíveis erros: \n\nNenhuma chave de api cadastrada para esta integração. \n\nA chave de api cadastrada não possui uma Key. \n\nA chave de api cadastrada não está ativa. \n\nA chave de api cadastrada está com Data de Validade vencida.");
-                return CustomResponse(404);
-            }
-            #endregion
-
-            #region Token resolve
-            String token = string.Empty;
-            try
-            {
-                token = $"ApiKey {chaveApiTerceiro.Key}";
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
             #region Get contratos
             IEnumerable<ClienteContrato> contratos = new List<ClienteContrato>();
             try
             {
-                contratos = await _context.ClientesContratos.ToListAsync();
+                contratos = await _clienteContratoRepository.GetAllAsync();
             }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de os contratos para iniciar a sincronização. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(io.Message);
+            }
             #endregion
 
             #region Get data Bom Controle (Third Party)
@@ -267,20 +253,32 @@ namespace BoxBack.Domain.Services
                                 clientesContratos.Add(contratoMapped);
                                 totalSincronizado++;
                             }
-                            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+                            catch (InvalidOperationException ex) { 
+                                _logger.LogInformation($"Nenhum cliente encontrado para iniciar a sincronização. | {clientes.Count()}");
+                                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Nenhum cliente encontrado para iniciar a sincronização", rotinaEventHistoryId);
+                                throw new InvalidOperationException(ex.Message); 
+                            }
                         }
                     }
                 }
             }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            catch (InvalidOperationException ex) { 
+                _logger.LogInformation($"Nenhum cliente encontrado para iniciar a sincronização. | {clientes.Count()}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Nenhum cliente encontrado para iniciar a sincronização", rotinaEventHistoryId);
+                throw new InvalidOperationException(ex.Message); 
+            }
             #endregion
 
             #region Persistance
             try
             {
-                _context.ClientesContratos.AddRange(clientesContratos);    
+                await _clienteContratoRepository.AddRangeAsync(clientesContratos);
             }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            catch (InvalidOperationException io) {
+                _logger.LogInformation($"Problemas ao adicionar os contratos. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new InvalidOperationException(io.Message); 
+            }
             
             #endregion
 
@@ -289,146 +287,145 @@ namespace BoxBack.Domain.Services
             {
                 _unitOfWork.Commit();    
             }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            catch (InvalidOperationException io) {
+                _logger.LogInformation($"Problemas ao efetuar commit. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new InvalidOperationException(io.Message); 
+            }
             #endregion
 
-            #region Return
-            return CustomResponse(200, new {
-                TotalSincronizado = totalSincronizado,
-            });
-            #endregion
-
-             #region Create rotina event history of success
+            #region Create rotina event history of success
             try
             {
-                _rotinaEventHistoryService.UpdateWithStatusConcluidaHandle(rotinaEventHistoryId, totalSincronizado, totalIsNotDocumento);
+                _rotinaEventHistoryService.UpdateWithStatusConcluidaHandle(rotinaEventHistoryId, totalSincronizado, 0);
             }
             catch (InvalidOperationException io)
             {
                 _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | {io.Message}");
-                throw new OperationCanceledException(io.Message, io.InnerException);
+                throw new InvalidOperationException(io.Message, io.InnerException);
             }
             catch (ArgumentNullException an) 
             {
                 _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | {an.Message}");
-                throw new OperationCanceledException(an.Message, an.InnerException);
+                throw new InvalidOperationException(an.Message, an.InnerException);
             }
             catch (Exception ex)
             {
                 _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | {ex.Message}");
-                throw new OperationCanceledException(ex.Message, ex.InnerException);
+                throw new InvalidOperationException(ex.Message, ex.InnerException);
             }
             #endregion
         }
-
-        public async Task UpdateFromThirdPartyAsync(string token, Guid rotinaEventHistoryId)
+        public async Task UpdateFromThirdPartyAsync(Guid rotinaEventHistoryId)
         {
-            #region Chave api resolve - Token
-            String token = string.Empty;
-            try
-            {
-                token = $"ApiKey {await _chaveApiTerceiroAppService.GetValidKeyByApiTerceiroNome(ApiTerceiroEnum.BOM_CONTROLE)}";
-            }
-            catch (InvalidOperationException io)
-            {
-                _logger.LogInformation($"Falhou tentativa de obter um token de api de terceiro. | {io.Message}");
-                _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
-                throw new OperationCanceledException(io.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation($"Falhou tentativa de obter um token de api de terceiro. | {ex.Message}");
-                _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(ex.Message, rotinaEventHistoryId);
-                throw new OperationCanceledException(ex.Message);
-            }
-            #endregion
+            await Task.Delay(300);
+            // #region Chave api resolve - Token
+            // String token = string.Empty;
+            // try
+            // {
+            //     token = $"ApiKey {await _chaveApiTerceiroAppService.GetValidKeyByApiTerceiroNome(ApiTerceiroEnum.BOM_CONTROLE)}";
+            // }
+            // catch (InvalidOperationException io)
+            // {
+            //     _logger.LogInformation($"Falhou tentativa de obter um token de api de terceiro. | {io.Message}");
+            //     _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+            //     throw new OperationCanceledException(io.Message);
+            // }
+            // catch (Exception ex)
+            // {
+            //     _logger.LogInformation($"Falhou tentativa de obter um token de api de terceiro. | {ex.Message}");
+            //     _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(ex.Message, rotinaEventHistoryId);
+            //     throw new OperationCanceledException(ex.Message);
+            // }
+            // #endregion
 
-            #region Get contratos
-            ClienteContrato[] clientesContratos;
-            try
-            {
-                clientesContratos = await _context.ClientesContratos.AsNoTracking().ToArrayAsync();
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            // #region Get contratos
+            // ClienteContrato[] clientesContratos;
+            // try
+            // {
+            //     clientesContratos = await _context.ClientesContratos.AsNoTracking().ToArrayAsync();
+            // }
+            // catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
-            if (clientesContratos == null || clientesContratos.Count() <= 0)
-            {
-                AddError("Nenhum contrato de cliente encontrado na base de dados, para então seguir com a atualização da periodicidade dos contratos a partir dos dados da api de terceiro.");
-                return CustomResponse(500);
-            }
-            #endregion
+            // if (clientesContratos == null || clientesContratos.Count() <= 0)
+            // {
+            //     AddError("Nenhum contrato de cliente encontrado na base de dados, para então seguir com a atualização da periodicidade dos contratos a partir dos dados da api de terceiro.");
+            //     return CustomResponse(500);
+            // }
+            // #endregion
 
-            #region Chave api resolve
-            var chaveApiTerceiro = new ChaveApiTerceiro();
-            try
-            {
-                chaveApiTerceiro = await _context
-                                                .ChavesApiTerceiro
-                                                .Where(x => x.DataValidade >= DateTimeOffset.Now &&
-                                                       x.IsDeleted == false && !string.IsNullOrEmpty(x.Key))
-                                                .FirstOrDefaultAsync(x => x.ApiTerceiro.Equals(ApiTerceiroEnum.BOM_CONTROLE));
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            // #region Chave api resolve
+            // var chaveApiTerceiro = new ChaveApiTerceiro();
+            // try
+            // {
+            //     chaveApiTerceiro = await _context
+            //                                     .ChavesApiTerceiro
+            //                                     .Where(x => x.DataValidade >= DateTimeOffset.Now &&
+            //                                            x.IsDeleted == false && !string.IsNullOrEmpty(x.Key))
+            //                                     .FirstOrDefaultAsync(x => x.ApiTerceiro.Equals(ApiTerceiroEnum.BOM_CONTROLE));
+            // }
+            // catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
-            if (chaveApiTerceiro == null)
-            { 
-                AddError("Nenhuma chave de api de terceiro encontrada, verifique os possíveis erros: \n\nNenhuma chave de api cadastrada para esta integração. \n\nA chave de api cadastrada não possui uma Key. \n\nA chave de api cadastrada não está ativa. \n\nA chave de api cadastrada está com Data de Validade vencida.");
-                return CustomResponse(404);
-            }
-            #endregion
+            // if (chaveApiTerceiro == null)
+            // { 
+            //     AddError("Nenhuma chave de api de terceiro encontrada, verifique os possíveis erros: \n\nNenhuma chave de api cadastrada para esta integração. \n\nA chave de api cadastrada não possui uma Key. \n\nA chave de api cadastrada não está ativa. \n\nA chave de api cadastrada está com Data de Validade vencida.");
+            //     return CustomResponse(404);
+            // }
+            // #endregion
 
-            #region Token resolve
-            String token = string.Empty;
-            try
-            {
-                token = $"ApiKey {chaveApiTerceiro.Key}";
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
+            // #region Token resolve
+            // String token = string.Empty;
+            // try
+            // {
+            //     token = $"ApiKey {chaveApiTerceiro.Key}";
+            // }
+            // catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            // #endregion
 
-            #region Obtém os contratos da Api Terceiro um a um e atualiza a periodicidade no BoxApp
-            var contratoFromThirdParty = new BCContratoModelService();
-            Int64 totalContratosAtualizados = 0;
-            try
-            {
-                for (var i = 0; i <  clientesContratos.Count(); i++)
-                {
-                    try
-                    {
-                        contratoFromThirdParty = await _bcServices.VendaContratoObter((long)clientesContratos[i].BomControleContratoId, token);
-                    }
-                    catch (Refit.ApiException ex) { 
-                        if (ex.HasContent) continue;
-                    }
+            // #region Obtém os contratos da Api Terceiro um a um e atualiza a periodicidade no BoxApp
+            // var contratoFromThirdParty = new BCContratoModelService();
+            // Int64 totalContratosAtualizados = 0;
+            // try
+            // {
+            //     for (var i = 0; i <  clientesContratos.Count(); i++)
+            //     {
+            //         try
+            //         {
+            //             contratoFromThirdParty = await _bcServices.VendaContratoObter((long)clientesContratos[i].BomControleContratoId, token);
+            //         }
+            //         catch (Refit.ApiException ex) { 
+            //             if (ex.HasContent) continue;
+            //         }
                     
-                    if (contratoFromThirdParty != null)
-                    {
-                        if (clientesContratos[i].Periodicidade != contratoFromThirdParty.Periodicidade)
-                        {
-                            clientesContratos[i].Periodicidade = contratoFromThirdParty.Periodicidade;
-                            _context.ClientesContratos.Update(clientesContratos[i]);
-                            totalContratosAtualizados++;
-                        } else continue;
-                    } else continue;
-                }
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
+            //         if (contratoFromThirdParty != null)
+            //         {
+            //             if (clientesContratos[i].Periodicidade != contratoFromThirdParty.Periodicidade)
+            //             {
+            //                 clientesContratos[i].Periodicidade = contratoFromThirdParty.Periodicidade;
+            //                 _context.ClientesContratos.Update(clientesContratos[i]);
+            //                 totalContratosAtualizados++;
+            //             } else continue;
+            //         } else continue;
+            //     }
+            // }
+            // catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            // #endregion
 
-            #region Commit
-            try
-            {
-                _unitOfWork.Commit();
-            }
-            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-            #endregion
+            // #region Commit
+            // try
+            // {
+            //     _unitOfWork.Commit();
+            // }
+            // catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+            // #endregion
 
-            #region Return
-            return CustomResponse(200, new {
-                TotalContratosAtualizados = totalContratosAtualizados,
-            });
-            #endregion
+            // #region Return
+            // return CustomResponse(200, new {
+            //     TotalContratosAtualizados = totalContratosAtualizados,
+            // });
+            // #endregion
         }
+        
         public void Dispose()
         {
             _clienteContratoRepository.Dispose();
