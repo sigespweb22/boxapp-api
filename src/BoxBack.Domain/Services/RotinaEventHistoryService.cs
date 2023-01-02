@@ -125,6 +125,76 @@ namespace BoxBack.Domain.Services
             _notificacaoHub.Clients.All.ReceiveMessage("ROTINA_EVENT_HISTORY_UPDATED_SUCCESS");
         }
 
+        public async Task AddWithStatusEmExecucaoHandleAsync(Guid rotinaId, Guid id)
+        {
+            if (rotinaId == Guid.Empty) throw new ArgumentNullException(nameof(rotinaId));
+            
+            // create object to store rotina
+            var rotinaEventHistory = new RotinaEventHistory()
+            {
+                Id = id,
+                DataInicio =  DateTimeOffset.Now,
+                StatusProgresso = RotinaStatusProgressoEnum.EM_EXECUCAO,
+                TotalItensSucesso = 0,
+                TotalItensInsucesso = 0,
+                RotinaId = rotinaId
+            };
+
+            try
+            {
+                await AddAsync(rotinaEventHistory);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Falhou tentativa de adicionar rotina event history | {ex.Message}");
+                throw new OperationCanceledException(ex.Message);
+            }
+
+            await _notificacaoHub.Clients.All.ReceiveMessage("ROTINA_EVENT_HISTORY_CREATED_SUCCESS");
+        }
+        public void UpdateWithStatusFalhaExecucaoHandle(string exceptionMessage, Guid rotinaEventoHistoryId)
+        {
+            #region Get data
+            var rotinaEventHistoryDB = new RotinaEventHistory();
+            try
+            {
+                rotinaEventHistoryDB = GetById(rotinaEventoHistoryId);
+            }
+            catch (InvalidOperationException io) 
+            {
+                _logger.LogInformation($"Falhou tentativa de obter o registro de rotina event history para sua atualização. | {io.Message}");
+                throw new OperationCanceledException(io.Message);
+            }
+            #endregion
+
+            #region Map to update
+            rotinaEventHistoryDB.Id = rotinaEventoHistoryId;
+            rotinaEventHistoryDB.DataFim = DateTimeOffset.Now;
+            rotinaEventHistoryDB.StatusProgresso = RotinaStatusProgressoEnum.FALHA_EXECUCAO;
+            rotinaEventHistoryDB.ExceptionMensagem = $"{exceptionMessage}";
+            #endregion
+
+            try
+            {
+                Update(rotinaEventHistoryDB);
+            }
+            catch (ArgumentNullException an) 
+            {
+                _logger.LogInformation($"Falhou tentativa de atualizar a rotina event history | {an.Message}");
+                throw new OperationCanceledException(an.Message);
+            }
+            catch (InvalidOperationException io) 
+            {
+                _logger.LogInformation($"Falhou tentativa de atualizar a rotina event history | {io.Message}");
+                throw new OperationCanceledException(io.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Falhou tentativa de atualizar a rotina event history | {ex.Message}");
+                throw new OperationCanceledException(ex.Message);
+            }
+        }
+
         public void Dispose()
         {
             _rotinaEventHistoryRepository.Dispose();
