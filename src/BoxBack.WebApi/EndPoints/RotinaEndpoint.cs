@@ -28,6 +28,7 @@ namespace BoxBack.WebApi.EndPoints
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IClienteAppService _clienteAppService;
+        private readonly IClienteContratoAppService _clienteContratoAppService;
         private readonly IRotinaEventHistoryAppService _rotinaEventHistoryAppService;
 
         public RotinaEndpoint(ILogger<RotinaEndpoint> logger,
@@ -35,7 +36,8 @@ namespace BoxBack.WebApi.EndPoints
                               IUnitOfWork unitOfWork,
                               IMapper mapper,
                               IClienteAppService clienteAppService,
-                              IRotinaEventHistoryAppService rotinaEventHistoryAppService)
+                              IRotinaEventHistoryAppService rotinaEventHistoryAppService,
+                              IClienteContratoAppService clienteContratoAppService)
         {
             _logger = logger;
             _context = context;
@@ -43,6 +45,7 @@ namespace BoxBack.WebApi.EndPoints
             _mapper = mapper;
             _clienteAppService = clienteAppService;
             _rotinaEventHistoryAppService = rotinaEventHistoryAppService;
+            _clienteContratoAppService = clienteContratoAppService;
         }
 
         /// <summary>
@@ -316,20 +319,11 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para sincronização de clientes com o bom controle
         /// </summary>
         /// <param name="rotinaId"></param>
-        /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
-        /// <response code="204">Sucesso do despacho da rotina</response>
-        /// <response code="400">Problemas de validação ou dados nulos</response>
-        /// <response code="404">ROTINA não encontrado</response>
-        /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanRotinaRead, CanRotinaAll")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Produces("application/json")]
+        /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
+        [Authorize(Roles = "Master, CanClienteCreate, CanClienteAll")]
         [Route("dispatch-clientes-sync/{rotinaId}")]
         [HttpPost]
         public async Task DispatchClientesSyncAsync([FromRoute]Guid rotinaId)
@@ -362,26 +356,40 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para sincronização de contratos de clientes com o bom controle
         /// </summary>
         /// <param name="rotinaId"></param>
-        /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
-        /// <response code="200">Sucesso do despacho da rotina</response>
-        /// <response code="400">Problemas de validação ou dados nulos</response>
-        /// <response code="404">ROTINA não encontrado</response>
-        /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanRotinaRead, CanRotinaAll")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Produces("application/json")]
+        /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
+        [Authorize(Roles = "Master, CanClienteContratoCreate, CanClienteContratoUpdate, CanClienteContratoAll")]
         [Route("dispatch-contratos-sync-update/{rotinaId}")]
         [HttpPost]
-        public async Task<IActionResult> DispatchContratosSyncUpdateAsync([FromRoute]Guid rotinaId)
+        public async Task DispatchContratosSyncUpdateAsync([FromRoute]Guid rotinaId)
         {
-            await Task.Delay(50);
-            return CustomResponse(500);
+            CancellationTokenSource source = new CancellationTokenSource();
+            CancellationToken cToken = source.Token;
+
+            // create rotina event history
+            var rotinaEventHistoryId = Guid.NewGuid();
+            await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
+
+            var syncUpdateTask = Task.Run(() => _clienteContratoAppService.SyncUpdateFromTPAsync(rotinaEventHistoryId));
+
+            try
+            {
+                await syncUpdateTask;
+            }
+            catch (OperationCanceledException e)
+            {
+                _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
+                
+                source.Cancel();
+                source.Dispose();
+            }
+            finally
+            {
+                source.Cancel();
+                source.Dispose();
+            }
         }
 
         /// <summary>
