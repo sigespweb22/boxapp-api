@@ -16,13 +16,13 @@ using BoxBack.Infra.CrossCutting.IoC;
 using Microsoft.Extensions.Logging;
 using Dapper;
 using BoxBack.WebApi.Helpers;
-using BoxBack.WebApi.Hubs;
 using BoxBack.WebApi.Security;
 using BoxBack.Domain.Models;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
+using BoxBack.Application.Hubs;
 
 namespace BoxBack.WebApi
 {

@@ -15,9 +15,6 @@ using BoxBack.Application.Interfaces;
 using BoxBack.Domain.InterfacesRepositories;
 using System.Threading;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.SignalR;
-using BoxBack.WebApi.Hubs;
-using BoxBack.WebApi.HubsInterfaces;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -343,7 +340,7 @@ namespace BoxBack.WebApi.EndPoints
             // create rotina event history
             var rotinaEventHistoryId = Guid.NewGuid();
             await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
-            
+
             var synchronizeTask = Task.Run(() => _clienteAppService.SincronizarFromTPAsync(source, rotinaEventHistoryId)).ConfigureAwait(false);
 
             try

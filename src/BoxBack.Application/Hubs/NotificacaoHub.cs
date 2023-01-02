@@ -1,4 +1,4 @@
-using BoxBack.WebApi.HubsInterfaces;
+using BoxBack.Application.HubsInterfaces;
 using Microsoft.AspNetCore.SignalR;
 
 namespace BoxBack.Application.Hubs
