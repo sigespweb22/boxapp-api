@@ -29,7 +29,7 @@ namespace BoxBack.Application.AppServices
             _chaveApiTerceiroAppService = chaveApiTerceiroAppService;
         }
         
-        public async Task SyncUpdateFromTPAsync(Guid rotinaEventHistoryId)
+        public async Task SyncFromTPAsync(Guid rotinaEventHistoryId)
         {
             #region Sincronization contratos de clientes
             try
@@ -55,7 +55,10 @@ namespace BoxBack.Application.AppServices
                 throw new OperationCanceledException(e.Message);
             }
             #endregion
+        }
 
+        public async Task UpdateFromTPAsync(Guid rotinaEventHistoryId)
+        {
             #region Update contratos de clientes
             try
             {

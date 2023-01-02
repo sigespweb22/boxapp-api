@@ -5,6 +5,7 @@ namespace BoxBack.Application.Interfaces
 {
     public interface IClienteContratoAppService
     {
-        Task SyncUpdateFromTPAsync(Guid rotinaEventHistoryId);
+        Task SyncFromTPAsync(Guid rotinaEventHistoryId);
+        Task UpdateFromTPAsync(Guid rotinaEventHistoryId);
     }
 }

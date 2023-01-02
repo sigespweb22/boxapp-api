@@ -192,6 +192,8 @@ namespace BoxBack.Domain.Services
                 _logger.LogInformation($"Falhou tentativa de atualizar a rotina event history | {ex.Message}");
                 throw new OperationCanceledException(ex.Message);
             }
+
+            _notificacaoHub.Clients.All.ReceiveMessage("ROTINA_EVENT_HISTORY_UPDATED_SUCCESS");
         }
 
         public void Dispose()

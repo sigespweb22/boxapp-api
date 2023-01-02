@@ -360,10 +360,10 @@ namespace BoxBack.WebApi.EndPoints
         /// </summary>
         /// <param name="rotinaId"></param>
         /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
-        [Authorize(Roles = "Master, CanClienteContratoCreate, CanClienteContratoUpdate, CanClienteContratoAll")]
-        [Route("dispatch-contratos-sync-update/{rotinaId}")]
+        [Authorize(Roles = "Master, CanClienteContratoCreate, CanClienteContratoAll")]
+        [Route("dispatch-contratos-sync/{rotinaId}")]
         [HttpPost]
-        public async Task DispatchContratosSyncUpdateAsync([FromRoute]Guid rotinaId)
+        public async Task DispatchContratosSyncAsync([FromRoute]Guid rotinaId)
         {
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken cToken = source.Token;
@@ -372,11 +372,48 @@ namespace BoxBack.WebApi.EndPoints
             var rotinaEventHistoryId = Guid.NewGuid();
             await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
 
-            var syncUpdateTask = Task.Run(() => _clienteContratoAppService.SyncUpdateFromTPAsync(rotinaEventHistoryId));
+            var syncTask = Task.Run(() => _clienteContratoAppService.SyncFromTPAsync(rotinaEventHistoryId));
 
             try
             {
-                await syncUpdateTask;
+                await syncTask;
+            }
+            catch (OperationCanceledException e)
+            {
+                _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
+                
+                source.Cancel();
+                source.Dispose();
+            }
+            finally
+            {
+                source.Cancel();
+                source.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para atualização da periodicidade de contratos de clientes com o bom controle
+        /// </summary>
+        /// <param name="rotinaId"></param>
+        /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
+        [Authorize(Roles = "Master, CanClienteContratoUpdate, CanClienteContratoAll")]
+        [Route("dispatch-contratos-update/{rotinaId}")]
+        [HttpPost]
+        public async Task DispatchContratosUpdateAsync([FromRoute]Guid rotinaId)
+        {
+            CancellationTokenSource source = new CancellationTokenSource();
+            CancellationToken cToken = source.Token;
+
+            // create rotina event history
+            var rotinaEventHistoryId = Guid.NewGuid();
+            await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
+
+            var updateTask = Task.Run(() => _clienteContratoAppService.UpdateFromTPAsync(rotinaEventHistoryId));
+
+            try
+            {
+                await updateTask;
             }
             catch (OperationCanceledException e)
             {

@@ -86,7 +86,7 @@ namespace BoxBack.Infra.Data.Repository
         {
             await DbSet.AddAsync(obj);
         }
-        public async Task AddRangeAsync(TEntity obj)
+        public async Task AddRangeAsync(IList<TEntity> obj)
         {
             await DbSet.AddRangeAsync(obj);
         }
