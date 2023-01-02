@@ -194,6 +194,164 @@ namespace BoxBack.Domain.Services
             #endregion
         }
         
+        public async Task UpdateFromThirdPartyAsync(Guid rotinaEventHistoryId)
+        {
+            #region Get faturas
+            ClienteContratoFatura[] clientesContratosFaturas;
+            try
+            {
+                clientesContratosFaturas = _clienteContratoFaturaRepository.GetAll().ToArray();
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de obter as faturas de contratos de clientes para seguir com a sincronização das faturas. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(io.Message);
+            }
+
+            if (clientesContratosFaturas == null || clientesContratosFaturas.Count() <= 0)
+            {
+                _logger.LogInformation($"Nenhuma fatura de contrato de cliente encontrada para iniciar a atualização. | {clientesContratosFaturas.Count()}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Nenhuma fatura de contrato de cliente encontrada para iniciar a atualização", rotinaEventHistoryId);
+                throw new ArgumentNullException("Nenhuma fatura de contrato de cliente encontrada para iniciar a atualização.");
+            }
+            #endregion
+
+            #region Chave api resolve - Token
+            String token = string.Empty;
+            try
+            {
+                token = $"ApiKey {await _chaveApiTerceiroService.GetValidKeyByApiTerceiroNome(ApiTerceiroEnum.BOM_CONTROLE)}";
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de obter um token de api de terceiro. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(io.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Falhou tentativa de obter um token de api de terceiro. | {ex.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(ex.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(ex.Message);
+            }
+            #endregion
+
+            #region Get data Bom Controle (Third Party) to map and update faturas
+            BCFaturaModelService faturaThirdParty = new BCFaturaModelService();
+            Int64 totalFaturasAtualizadas = 0;
+            var clienteContratoFaturaMapToUpdateRange = new List<ClienteContratoFatura>();
+            for (var a = 0; a < clientesContratosFaturas.Length; a++)
+            {
+                if (clientesContratosFaturas[a].BomControleContratoId == 0) continue;
+                
+                try
+                {
+                    faturaThirdParty = await _bcServices.FaturaObter(clientesContratosFaturas[a].BomControleContratoId, token);
+                }
+                catch (Exception e) when (e is FormatException or OverflowException) {
+                    _logger.LogInformation($"Falhou tentativa de obter uma fatura a partir da api de terceiro. | {e.Message}");
+                    _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(e.Message, rotinaEventHistoryId); 
+                    throw new Exception(e.Message, e.InnerException);
+                }
+
+                if (faturaThirdParty == null) continue;
+
+                var clienteContratoFaturaMap = new ClienteContratoFatura();
+                try
+                {
+                    clienteContratoFaturaMap = _mapper.Map<BCFaturaModelService, ClienteContratoFatura>(faturaThirdParty, clientesContratosFaturas[a]);
+                }
+                catch (InvalidCastException ic) { 
+                    _logger.LogInformation($"Problemas no mapeamento das faturas de contratos de cliente para seguir com a sincronização. | {ic.Message}");
+                    _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Problemas no mapeamento do cliente para sincronização", rotinaEventHistoryId);
+                    throw new InvalidOperationException(ic.Message); 
+                }
+                catch (InvalidOperationException io) { 
+                    _logger.LogInformation($"Problemas no mapeamento das faturas de contratos de cliente para seguir com a sincronização. | {io.Message}");
+                    _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Problemas no mapeamento do contrato do cliente", rotinaEventHistoryId);
+                    throw new InvalidOperationException(io.Message); 
+                }
+                catch (Exception ex) { 
+                    _logger.LogInformation($"Problemas no mapeamento das faturas de contratos de cliente para seguir com a sincronização. | {ex.Message}");
+                    _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Problemas no mapeamento das faturas de contratos de cliente para seguir com a sincronização.", rotinaEventHistoryId);
+                    throw new InvalidOperationException(ex.Message); 
+                }
+
+                try
+                {
+                    clienteContratoFaturaMapToUpdateRange.Add(clienteContratoFaturaMap);    
+                }
+                catch (OperationCanceledException oc) { 
+                    _logger.LogInformation($"Problemas ao criar uma lista de faturas para atualizar e seguir com a sincronização. | {oc.Message}");
+                    _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Problemas ao criar uma lista de faturas para atualizar e seguir com a sincronização", rotinaEventHistoryId);
+                    throw new OperationCanceledException(oc.Message); 
+                }
+                catch (InvalidOperationException io) { 
+                    _logger.LogInformation($"Problemas ao criar uma lista de faturas para atualizar e seguir com a sincronização. | {io.Message}");
+                    _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Problemas ao criar uma lista de faturas para atualizar e seguir com a sincronização", rotinaEventHistoryId);
+                    throw new InvalidOperationException(io.Message); 
+                }
+            }
+
+            // update range faturas
+            try
+            {
+                _clienteContratoFaturaRepository.UpdateRange(clienteContratoFaturaMapToUpdateRange);
+                totalFaturasAtualizadas++;
+            }
+            catch (OperationCanceledException oc) { 
+                _logger.LogInformation($"Problemas ao atualizar fatura de contrato de cliente. | {oc.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Problemas ao atualizar fatura de contrato de cliente", rotinaEventHistoryId);
+                throw new OperationCanceledException(oc.Message); 
+            }
+            catch (InvalidOperationException io) { 
+                _logger.LogInformation($"Problemas ao atualizar fatura de contrato de cliente. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Problemas ao atualizar fatura de contrato cliente", rotinaEventHistoryId);
+                throw new InvalidOperationException(io.Message);
+            }
+            catch (Exception ex) { 
+                _logger.LogInformation($"Problemas ao atualizar fatura de contrato de cliente. | {ex.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Problemas ao atualizar fatura de contrato cliente", rotinaEventHistoryId);
+                throw new InvalidOperationException(ex.Message);
+            }
+            #endregion
+
+            #region Commit
+            try
+            {
+                _unitOfWork.Commit();    
+            }
+            catch (InvalidOperationException io) {
+                _logger.LogInformation($"Problemas ao efetuar commit. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new InvalidOperationException(io.Message); 
+            }
+            #endregion
+
+            #region Create rotina event history of success
+            try
+            {
+                _rotinaEventHistoryService.UpdateWithStatusConcluidaHandle(rotinaEventHistoryId, totalFaturasAtualizadas, 0);
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | {io.Message}");
+                throw new InvalidOperationException(io.Message, io.InnerException);
+            }
+            catch (ArgumentNullException an) 
+            {
+                _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | {an.Message}");
+                throw new InvalidOperationException(an.Message, an.InnerException);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | {ex.Message}");
+                throw new InvalidOperationException(ex.Message, ex.InnerException);
+            }
+            #endregion
+        }
+
         #region Private methods
         private bool AlreadyClienteContratoFaturaAsync(ClienteContratoFatura clienteContratoFatura)
         {

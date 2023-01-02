@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BoxBack.Application.AppServices
 {
-    public class ClienteContratoFaturaAppService : IClienteContratoAppService
+    public class ClienteContratoFaturaAppService : IClienteContratoFaturaAppService
     {
         private readonly ILogger _logger;
         private readonly IClienteContratoFaturaService _clienteContratoFaturaService;
@@ -30,7 +30,7 @@ namespace BoxBack.Application.AppServices
             _chaveApiTerceiroAppService = chaveApiTerceiroAppService;
         }
         
-        public async Task SyncFromTPAsync(Guid rotinaEventHistoryId)
+        public async Task SyncFromThirdPartyAsync(Guid rotinaEventHistoryId)
         {
             #region Sincronization contratos de clientes
             try
@@ -58,7 +58,7 @@ namespace BoxBack.Application.AppServices
             #endregion
         }
 
-        public async Task UpdateFromTPAsync(Guid rotinaEventHistoryId)
+        public async Task UpdateFromThirdPartyAsync(Guid rotinaEventHistoryId)
         {
             #region Update contratos de clientes
             try

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using BoxBack.Domain.InterfacesRepositories;
+using System.Linq.Expressions;
 
 namespace BoxBack.Infra.Data.Repository
 {
@@ -89,6 +90,10 @@ namespace BoxBack.Infra.Data.Repository
         public async Task AddRangeAsync(IList<TEntity> obj)
         {
             await DbSet.AddRangeAsync(obj);
+        }
+        public virtual void UpdateRange(IList<TEntity> obj)
+        {
+            DbSet.UpdateRange(obj);
         }
         public async Task<string> GetIdFromPropertyAnyAsync(string property, string value)
         {

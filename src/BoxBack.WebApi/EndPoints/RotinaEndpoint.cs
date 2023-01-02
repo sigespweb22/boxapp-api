@@ -470,26 +470,41 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para atualizar faturas de contratos de clientes a partir da api de terceiro
         /// </summary>
         /// <param name="rotinaId"></param>
-        /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
-        /// <response code="200">Sucesso do despacho da rotina</response>
-        /// <response code="400">Problemas de validação ou dados nulos</response>
-        /// <response code="404">ROTINA não encontrado</response>
-        /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanRotinaRead, CanRotinaAll")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Produces("application/json")]
+        /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
+        [Authorize(Roles = "Master, CanClienteContratoFaturaUpdate, CanClienteContratoFaturaAll")]
         [Route("dispatch-faturas-update/{rotinaId}")]
         [HttpPost]
-        public async Task<IActionResult> DispatchFaturasUpdateAsync([FromRoute]Guid rotinaId)
+        public async Task DispatchFaturasUpdateAsync([FromRoute]Guid rotinaId)
         {
-            await Task.Delay(50);
-            return CustomResponse(500);
+            CancellationTokenSource source = new CancellationTokenSource();
+            CancellationToken cToken = source.Token;
+
+            // create rotina event history
+            var rotinaEventHistoryId = Guid.NewGuid();
+            await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
+
+            var syncTask = Task.Run(() => _clienteContratoFaturaAppService.UpdateFromThirdPartyAsync(rotinaEventHistoryId));
+
+            try
+            {
+                await syncTask;
+            }
+            catch (OperationCanceledException e)
+            {
+                _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
+                _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(e.Message, rotinaEventHistoryId);
+
+                source.Cancel();
+                source.Dispose();
+            }
+            finally
+            {
+                source.Cancel();
+                source.Dispose();
+            }
         }
     }
 }
