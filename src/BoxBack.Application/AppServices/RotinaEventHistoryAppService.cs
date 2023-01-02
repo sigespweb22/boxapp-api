@@ -39,6 +39,10 @@ namespace BoxBack.Application.AppServices
             }
             catch { throw new ArgumentNullException(nameof(reh)); }
         }
+        public async Task AddWithStatusEmExecucaoHandleAsync(Guid rotinaId, Guid id)
+        {
+            await _rotinaEventHistoryService.AddWithStatusEmExecucaoHandleAsync(rotinaId, id);
+        }
         public void Update(RotinaEventHistoryViewModel reh)
         {
             #region Get data to map and after update
@@ -65,13 +69,9 @@ namespace BoxBack.Application.AppServices
             }
             catch { throw new ArgumentNullException(nameof(reh)); }
         }
-        public async Task AddWithStatusEmExecucaoHandleAsync(Guid rotinaId, Guid id)
-        {
-            await AddWithStatusEmExecucaoHandleAsync(rotinaId, id);
-        }
         public void UpdateWithStatusFalhaExecucaoHandle(string exceptionMessage, Guid rotinaEventoHistoryId)
         {
-            UpdateWithStatusFalhaExecucaoHandle(exceptionMessage, rotinaEventoHistoryId);
+            _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(exceptionMessage, rotinaEventoHistoryId);
         }
     }
 } 

@@ -55,6 +55,33 @@ namespace BoxBack.Domain.Services
             }
             catch (Exception ex){ throw new Exception(ex.InnerException.Message); }
         }
+        public async Task AddWithStatusEmExecucaoHandleAsync(Guid rotinaId, Guid id)
+        {
+            if (rotinaId == Guid.Empty) throw new ArgumentNullException(nameof(rotinaId));
+            
+            // create object to store rotina
+            var rotinaEventHistory = new RotinaEventHistory()
+            {
+                Id = id,
+                DataInicio =  DateTimeOffset.Now,
+                StatusProgresso = RotinaStatusProgressoEnum.EM_EXECUCAO,
+                TotalItensSucesso = 0,
+                TotalItensInsucesso = 0,
+                RotinaId = rotinaId
+            };
+
+            try
+            {
+                await AddAsync(rotinaEventHistory);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Falhou tentativa de adicionar rotina event history | {ex.Message}");
+                throw new OperationCanceledException(ex.Message);
+            }
+
+            await _notificacaoHub.Clients.All.ReceiveMessage("ROTINA_EVENT_HISTORY_CREATED_SUCCESS");
+        }
         public void Update(RotinaEventHistory reh)
         {
             var rotinaEventHistoryDB = _rotinaEventHistoryRepository.GetByIdAsync(reh.Id);
@@ -123,34 +150,6 @@ namespace BoxBack.Domain.Services
             #endregion
 
             _notificacaoHub.Clients.All.ReceiveMessage("ROTINA_EVENT_HISTORY_UPDATED_SUCCESS");
-        }
-
-        public async Task AddWithStatusEmExecucaoHandleAsync(Guid rotinaId, Guid id)
-        {
-            if (rotinaId == Guid.Empty) throw new ArgumentNullException(nameof(rotinaId));
-            
-            // create object to store rotina
-            var rotinaEventHistory = new RotinaEventHistory()
-            {
-                Id = id,
-                DataInicio =  DateTimeOffset.Now,
-                StatusProgresso = RotinaStatusProgressoEnum.EM_EXECUCAO,
-                TotalItensSucesso = 0,
-                TotalItensInsucesso = 0,
-                RotinaId = rotinaId
-            };
-
-            try
-            {
-                await AddAsync(rotinaEventHistory);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation($"Falhou tentativa de adicionar rotina event history | {ex.Message}");
-                throw new OperationCanceledException(ex.Message);
-            }
-
-            await _notificacaoHub.Clients.All.ReceiveMessage("ROTINA_EVENT_HISTORY_CREATED_SUCCESS");
         }
         public void UpdateWithStatusFalhaExecucaoHandle(string exceptionMessage, Guid rotinaEventoHistoryId)
         {

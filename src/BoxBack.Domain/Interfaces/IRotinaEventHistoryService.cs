@@ -9,9 +9,9 @@ namespace BoxBack.Domain.Interfaces
         RotinaEventHistory GetById(Guid id);
         Task<RotinaEventHistory> GetByIdAsync(Guid id);
         Task AddAsync(RotinaEventHistory reh);
+        Task AddWithStatusEmExecucaoHandleAsync(Guid rotinaId, Guid id);
         void Update(RotinaEventHistory reh);
         void UpdateWithStatusConcluidaHandle(Guid id, Int64 totalSuccess, Int64 totalFailures);
-        Task AddWithStatusEmExecucaoHandleAsync(Guid rotinaId, Guid id);
         void UpdateWithStatusFalhaExecucaoHandle(string exceptionMessage, Guid rotinaEventoHistoryId);
     }
 }
