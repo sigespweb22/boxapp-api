@@ -341,7 +341,7 @@ namespace BoxBack.WebApi.EndPoints
             var rotinaEventHistoryId = Guid.NewGuid();
             await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
 
-            var synchronizeTask = Task.Run(() => _clienteAppService.SincronizarFromTPAsync(source, rotinaEventHistoryId)).ConfigureAwait(false);
+            var synchronizeTask = Task.Run(() => _clienteAppService.SincronizarFromTPAsync(source, rotinaEventHistoryId));
 
             try
             {

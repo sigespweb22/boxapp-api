@@ -22,7 +22,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
-using BoxBack.Application.Hubs;
+using BoxBack.Domain.Hubs;
 
 namespace BoxBack.WebApi
 {

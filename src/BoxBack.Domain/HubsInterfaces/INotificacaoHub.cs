@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace BoxBack.Application.HubsInterfaces
+namespace BoxBack.Domain.HubsInterfaces
 {
     public interface INotificacaoHub
     {

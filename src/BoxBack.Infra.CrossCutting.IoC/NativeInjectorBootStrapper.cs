@@ -10,9 +10,6 @@ using Sigesp.Infra.Data.Repository;
 using BoxBack.Domain.InterfacesRepositories;
 using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.Services;
-using BoxBack.Infra.Data.Context;
-using BoxBack.Application.Hubs;
-using BoxBack.Application.HubsInterfaces;
 
 namespace BoxBack.Infra.CrossCutting.IoC
 {

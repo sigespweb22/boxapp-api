@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using BoxBack.Application.Hubs;
-using BoxBack.Application.HubsInterfaces;
+using BoxBack.Domain.Hubs;
+using BoxBack.Domain.HubsInterfaces;
 using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Enums;
@@ -90,7 +90,7 @@ namespace BoxBack.Application.AppServices
                 throw new OperationCanceledException(ex.Message);
             }
 
-            await _notificacaoHub.Clients.All.ReceiveMessage("Deuuuuu certo");
+            await _notificacaoHub.Clients.All.ReceiveMessage("ROTINA_EVENT_HISTORY_CREATED_SUCCESS");
         }
         public void UpdateWithStatusFalhaExecucaoHandle(string exceptionMessage, Guid rotinaEventoHistoryId)
         {

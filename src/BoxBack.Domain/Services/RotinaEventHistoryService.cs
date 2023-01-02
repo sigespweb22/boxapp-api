@@ -6,6 +6,9 @@ using Sigesp.Domain.InterfacesRepositories;
 using BoxBack.Domain.InterfacesRepositories;
 using BoxBack.Domain.Enums;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.SignalR;
+using BoxBack.Domain.Hubs;
+using BoxBack.Domain.HubsInterfaces;
 
 namespace BoxBack.Domain.Services
 {
@@ -14,14 +17,17 @@ namespace BoxBack.Domain.Services
         private readonly ILogger _logger;
         private readonly IRotinaEventHistoryRepository _rotinaEventHistoryRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IHubContext<NotificacaoHub, INotificacaoHub> _notificacaoHub;
         
         public RotinaEventHistoryService(ILogger<RotinaEventHistoryService> logger,
                                          IRotinaEventHistoryRepository rotinaEventHistoryRepository,
-                                         IUnitOfWork unitOfWork)
+                                         IUnitOfWork unitOfWork,
+                                         IHubContext<NotificacaoHub, INotificacaoHub> notificacaoHub)
         {
             _logger = logger;
             _rotinaEventHistoryRepository = rotinaEventHistoryRepository;
             _unitOfWork = unitOfWork;
+            _notificacaoHub = notificacaoHub;
         }
 
         public async Task<RotinaEventHistory> GetByIdAsync(Guid id)
@@ -99,12 +105,12 @@ namespace BoxBack.Domain.Services
                 _rotinaEventHistoryRepository.Update(rotinaEventHistoryDB);
                 _unitOfWork.Commit();
             }
-            catch (InvalidOperationException io) 
+            catch (InvalidOperationException io)
             {
                 _logger.LogInformation($"Operação inválida. | {io.Message}");
                 throw new InvalidOperationException(io.Message, io.InnerException);
             }
-            catch (ArgumentNullException an) 
+            catch (ArgumentNullException an)
             {
                 _logger.LogInformation($"Argumento nulo. | {an.Message}");
                 throw new ArgumentException(an.Message, an.InnerException);
@@ -115,6 +121,8 @@ namespace BoxBack.Domain.Services
                 throw new Exception(ex.Message, ex.InnerException);
             }
             #endregion
+
+            _notificacaoHub.Clients.All.ReceiveMessage("ROTINA_EVENT_HISTORY_UPDATED_SUCCESS");
         }
 
         public void Dispose()
