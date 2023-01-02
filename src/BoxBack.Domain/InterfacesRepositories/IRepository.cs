@@ -20,6 +20,7 @@ namespace BoxBack.Domain.InterfacesRepositories
         IQueryable<TEntity> GetAllSoftDeleted();
         void Update(TEntity obj);
         void Remove(Guid id);
+        bool Any();
 
         //Interfaces assíncronas
         Task AddAsync(TEntity obj);

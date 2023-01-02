@@ -30,6 +30,7 @@ namespace BoxBack.WebApi.EndPoints
         private readonly IClienteAppService _clienteAppService;
         private readonly IClienteContratoAppService _clienteContratoAppService;
         private readonly IRotinaEventHistoryAppService _rotinaEventHistoryAppService;
+        private readonly IClienteContratoFaturaAppService _clienteContratoFaturaAppService;
 
         public RotinaEndpoint(ILogger<RotinaEndpoint> logger,
                               BoxAppDbContext context,
@@ -37,7 +38,8 @@ namespace BoxBack.WebApi.EndPoints
                               IMapper mapper,
                               IClienteAppService clienteAppService,
                               IRotinaEventHistoryAppService rotinaEventHistoryAppService,
-                              IClienteContratoAppService clienteContratoAppService)
+                              IClienteContratoAppService clienteContratoAppService,
+                              IClienteContratoFaturaAppService clienteContratoFaturaAppService)
         {
             _logger = logger;
             _context = context;
@@ -46,6 +48,7 @@ namespace BoxBack.WebApi.EndPoints
             _clienteAppService = clienteAppService;
             _rotinaEventHistoryAppService = rotinaEventHistoryAppService;
             _clienteContratoAppService = clienteContratoAppService;
+            _clienteContratoFaturaAppService = clienteContratoFaturaAppService;
         }
 
         /// <summary>
@@ -430,26 +433,40 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para criar faturas de contratos de clientes a partir da api de terceiro
         /// </summary>
         /// <param name="rotinaId"></param>
-        /// <returns>Um objeto com o status único relacionado ao sucesso ou não do despacho e início da rotina</returns>
-        /// <response code="200">Sucesso do despacho da rotina</response>
-        /// <response code="400">Problemas de validação ou dados nulos</response>
-        /// <response code="404">ROTINA não encontrado</response>
-        /// <response code="500">Erro desconhecido</response>
-        [Authorize(Roles = "Master, CanRotinaRead, CanRotinaAll")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Produces("application/json")]
+        /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
+        [Authorize(Roles = "Master, CanClienteContratoFaturaCreate, CanClienteContratoFaturaAll")]
         [Route("dispatch-faturas-sync/{rotinaId}")]
         [HttpPost]
-        public async Task<IActionResult> DispatchFaturasSyncAsync([FromRoute]Guid rotinaId)
+        public async Task DispatchFaturasSyncAsync([FromRoute]Guid rotinaId)
         {
-            await Task.Delay(50);
-            return CustomResponse(500);
+            CancellationTokenSource source = new CancellationTokenSource();
+            CancellationToken cToken = source.Token;
+
+            // create rotina event history
+            var rotinaEventHistoryId = Guid.NewGuid();
+            await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
+
+            var syncTask = Task.Run(() => _clienteContratoFaturaAppService.SyncFromThirdPartyAsync(rotinaEventHistoryId));
+
+            try
+            {
+                await syncTask;
+            }
+            catch (OperationCanceledException e)
+            {
+                _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
+                
+                source.Cancel();
+                source.Dispose();
+            }
+            finally
+            {
+                source.Cancel();
+                source.Dispose();
+            }
         }
 
         /// <summary>
