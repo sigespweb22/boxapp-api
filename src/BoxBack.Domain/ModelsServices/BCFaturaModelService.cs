@@ -4,7 +4,7 @@ namespace BoxBack.Domain.ModelsServices
 {
     public class BCFaturaModelService
     {
-        public Int32 Id { get; set; }
+        public Int32? Id { get; set; }
         public Guid IdParcela { get; set; }
         public Guid IdMovimentacaoFinanceira { get; set; }
         public Int32 TipoFatura { get; set; }

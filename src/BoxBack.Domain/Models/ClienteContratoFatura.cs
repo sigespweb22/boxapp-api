@@ -35,6 +35,6 @@ namespace BoxBack.Domain.Models
 
 
         // Id do registro da fatura no sistema de terceiro - Atualmente o Bom Controle
-        public Int64 BomControleContratoId { get; set; }
+        public Int64 BomControleFaturaId { get; set; }
     }
 }

@@ -243,11 +243,11 @@ namespace BoxBack.Domain.Services
             var clienteContratoFaturaMapToUpdateRange = new List<ClienteContratoFatura>();
             for (var a = 0; a < clientesContratosFaturas.Length; a++)
             {
-                if (clientesContratosFaturas[a].BomControleContratoId == 0) continue;
+                if (clientesContratosFaturas[a].BomControleFaturaId == 0) continue;
                 
                 try
                 {
-                    faturaThirdParty = await _bcServices.FaturaObter(clientesContratosFaturas[a].BomControleContratoId, token);
+                    faturaThirdParty = await _bcServices.FaturaObter(clientesContratosFaturas[a].BomControleFaturaId, token);
                 }
                 catch (Exception e) when (e is FormatException or OverflowException) {
                     _logger.LogInformation($"Falhou tentativa de obter uma fatura a partir da api de terceiro. | {e.Message}");
@@ -270,9 +270,9 @@ namespace BoxBack.Domain.Services
                 catch (InvalidOperationException io) { 
                     _logger.LogInformation($"Problemas no mapeamento das faturas de contratos de cliente para seguir com a sincronização. | {io.Message}");
                     _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Problemas no mapeamento do contrato do cliente", rotinaEventHistoryId);
-                    throw new InvalidOperationException(io.Message); 
+                    throw new InvalidOperationException(io.Message);
                 }
-                catch (Exception ex) { 
+                catch (Exception ex) {
                     _logger.LogInformation($"Problemas no mapeamento das faturas de contratos de cliente para seguir com a sincronização. | {ex.Message}");
                     _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Problemas no mapeamento das faturas de contratos de cliente para seguir com a sincronização.", rotinaEventHistoryId);
                     throw new InvalidOperationException(ex.Message); 
