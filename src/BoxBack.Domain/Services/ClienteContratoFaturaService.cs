@@ -123,6 +123,7 @@ namespace BoxBack.Domain.Services
                     var clienteContratoFatura = new ClienteContratoFatura();
                     try
                     {
+                        clienteContratoFatura.Id = Guid.NewGuid();
                         clienteContratoFatura = _mapper.Map<ClienteContratoFatura>(clientesContratosFaturasThirdParty[b]);
                         clienteContratoFatura.ClienteContratoId = clientesContratos[a].Id;
                     }

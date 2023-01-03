@@ -90,7 +90,7 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.ValorContrato, src => src.MapFrom(x => x.Valor))
                 .ForMember(dst => dst.Periodicidade, src => src.MapFrom(x => x.Periodicidade));
             CreateMap<BCFaturaModelService, ClienteContratoFatura>()
-                .ForMember(dst => dst.Id, src => src.MapFrom(x => Guid.NewGuid()))
+                .ForMember(dst => dst.Id, src => src.Ignore())
                 .ForMember(dst => dst.BomControleFaturaId, src => src.MapFrom(x => x.Id));
             CreateMap<ProdutoViewModel, Produto>();
             CreateMap<FornecedorProdutoViewModel, FornecedorProduto>();
