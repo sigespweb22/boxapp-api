@@ -63,6 +63,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 vendedores = await _context.Vendedores
                                             .AsNoTracking()
+                                            .Include(x => x.ApplicationUser)
                                             .OrderByDescending(x => x.UpdatedAt)
                                             .ToListAsync();
             }
@@ -320,7 +321,8 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 vendedor = await _context.Vendedores
-                                         .FindAsync(Guid.Parse(id));
+                                         .Include(x => x.ApplicationUser)
+                                         .FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(id)));
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 

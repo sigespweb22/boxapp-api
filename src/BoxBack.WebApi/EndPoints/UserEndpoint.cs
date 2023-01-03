@@ -184,7 +184,7 @@ namespace BoxBack.WebApi.EndPoints
         public async Task<IActionResult> ListToSelectAsync(string q)
         {
             #region Get data
-            var users = new List<Generic3Select2ViewModel>();
+            var users = new List<ApplicationUserSelect2ViewModel>();
             var usersDB = new List<ApplicationUser>();
             try
             {
@@ -203,10 +203,10 @@ namespace BoxBack.WebApi.EndPoints
             {
                 foreach(var user in usersDB)
                 {
-                    var tmp = new Generic3Select2ViewModel()
+                    var tmp = new ApplicationUserSelect2ViewModel()
                     {
                         UserId = user.Id.ToString(),
-                        Name = user.FullName
+                        FullName = user.FullName
                     };
                     users.Add(tmp);
                 }
