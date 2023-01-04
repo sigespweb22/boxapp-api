@@ -1,8 +1,6 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using BoxBack.Application.Interfaces;
-using BoxBack.Domain.Enums;
 using BoxBack.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 

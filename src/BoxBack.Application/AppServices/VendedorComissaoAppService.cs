@@ -10,23 +10,17 @@ namespace BoxBack.Application.AppServices
     public class VendedorComissaoAppService : IVendedorComissaoAppService
     {
         private readonly ILogger _logger;
-        private readonly IClienteContratoFaturaService _clienteContratoFaturaService;
-        private readonly IRotinaAppService _rotinaAppService;
+        private readonly IVendedorComissaoService _vendedorComissaoService;
         private readonly IRotinaEventHistoryAppService _rotinaEventHistoryAppService;
-        private readonly IChaveApiTerceiroAppService _chaveApiTerceiroAppService;
 
 
         public VendedorComissaoAppService(ILogger<ClienteContratoFaturaAppService> logger,
-                                          IClienteContratoFaturaService clienteContratoFaturaService,
-                                          IRotinaAppService rotinaService,
-                                          IRotinaEventHistoryAppService rotinaEventHistoryAppService,
-                                          IChaveApiTerceiroAppService chaveApiTerceiroAppService)
+                                          IVendedorComissaoService vendedorComissaoService,
+                                          IRotinaEventHistoryAppService rotinaEventHistoryAppService)
         {
             _logger = logger;
-            _clienteContratoFaturaService = clienteContratoFaturaService;
-            _rotinaAppService = rotinaService;
+            _vendedorComissaoService = vendedorComissaoService;
             _rotinaEventHistoryAppService = rotinaEventHistoryAppService;
-            _chaveApiTerceiroAppService = chaveApiTerceiroAppService;
         }
 
         public async Task GerarComissoesAsync(Guid rotinaEventHistoryId, DateTimePeriodoRequestModel periodoCompetencia)
@@ -34,7 +28,7 @@ namespace BoxBack.Application.AppServices
             #region Gerar comissões
             try
             {
-                await _clienteContratoFaturaService.AddQuitadasFromThirdPartyAsync(rotinaEventHistoryId);
+                await _vendedorComissaoService.GerarComissoesAsync(rotinaEventHistoryId, periodoCompetencia.DataInicio, periodoCompetencia.DataFim);
             }
             catch (InvalidOperationException io)
             {

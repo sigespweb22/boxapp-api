@@ -5,6 +5,8 @@ using BoxBack.Domain.InterfacesRepositories;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Sigesp.Domain.InterfacesRepositories;
+using BoxBack.Domain.Models;
+using System.Linq;
 
 namespace BoxBack.Domain.Services
 {
@@ -15,43 +17,57 @@ namespace BoxBack.Domain.Services
         private readonly IVendedorContratoService _vendedorContratoService;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IClienteContratoRepository _clienteContratoRepository;
+        private readonly IRotinaEventHistoryService _rotinaEventHistoryService;
+        private readonly IVendedorContratoRepository _vendedorContratoRepository;
+        private readonly IClienteContratoFaturaRepository _clienteContratoFaturaRepository;
         
         public VendedorComissaoService(ILogger<VendedorComissaoService> logger,
                                        IVendedorComissaoRepository vendedorComissaoRepository,
                                        IVendedorContratoService vendedorContratoService,
                                        IMapper mapper,
-                                       IUnitOfWork unitOfWork)
+                                       IUnitOfWork unitOfWork,
+                                       IClienteContratoRepository clienteContratoRepository,
+                                       IRotinaEventHistoryService rotinaEventHistoryService,
+                                       IVendedorContratoRepository vendedorContratoRepository,
+                                       IClienteContratoFaturaRepository clienteContratoFaturaRepository)
         {
             _logger = logger;
             _vendedorComissaoRepository = vendedorComissaoRepository;
             _vendedorContratoService = vendedorContratoService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _clienteContratoRepository = clienteContratoRepository;
+            _rotinaEventHistoryService = rotinaEventHistoryService;
+            _vendedorContratoRepository = vendedorContratoRepository;
+            _clienteContratoFaturaRepository = clienteContratoFaturaRepository;
         }
     
         public async Task GerarComissoesAsync(Guid rotinaEventHistoryId, DateTime dataInicio, DateTime dataFim)
         {
-            await Task.Delay(500);
-            // #region Get contratos
-            // ClienteContrato[] clientesContratos;
-            // try
-            // {
-            //     clientesContratos = _clienteContratoRepository.GetAll().ToArray();
-            // }
-            // catch (InvalidOperationException io)
-            // {
-            //     _logger.LogInformation($"Falhou tentativa de obter os contratos para seguir com a sincronização das faturas. | {io.Message}");
-            //     _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
-            //     throw new OperationCanceledException(io.Message);
-            // }
+            
+            #region Get contratos comissionáveis
+            VendedorContrato[] vendedoresContratos;
+            try
+            {
+                vendedoresContratos = await _clienteContratoFaturaRepository.GetAllContratosComissionaveisByCompetenciaAsync(dataInicio, dataFim);
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de obter os contratos vinculados aos vendedores para seguir com a geração das comissões. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(io.Message);
+            }
 
-            // if (clientesContratos == null || clientesContratos.Count() <= 0)
-            // {
-            //     _logger.LogInformation($"Nenhum contrato de cliente encontrado para iniciar a sincronização. | {clientesContratos.Count()}");
-            //     _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Nenhum contrato de cliente encontrado para iniciar a sincronização", rotinaEventHistoryId);
-            //     throw new ArgumentNullException("Nenhum contrato de cliente encontrato para iniciar a sincronização com api de terceiro.");
-            // }
-            // #endregion
+            if (vendedoresContratos == null || vendedoresContratos.Count() <= 0)
+            {
+                _logger.LogInformation($"Nenhum contrato vinculado a um ou mais vendedores encontrado para iniciar a geração das comissões. | {vendedoresContratos.Count()}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Nenhum contrato de cliente encontrado para iniciar a sincronização.", rotinaEventHistoryId);
+                throw new ArgumentNullException("Nenhum contrato vinculado a um ou mais vendedores encontrado para iniciar a geração das comissões.");
+            }
+            #endregion
+
+            await Task.Delay(500);
 
             // #region Chave api resolve - Token
             // String token = string.Empty;

@@ -10,19 +10,16 @@ namespace BoxBack.Domain.Services
     {
         private readonly ILogger _logger;
         private readonly IVendedorContratoRepository _vendedorContratoRepository;
-        private readonly IVendedorContratoService _vendedorContratoService;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         
         public VendedorContratoService(ILogger<VendedorContratoService> logger,
                                        IVendedorContratoRepository vendedorContratoRepository,
-                                       IVendedorContratoService vendedorContratoService,
                                        IMapper mapper,
                                        IUnitOfWork unitOfWork)
         {
             _logger = logger;
             _vendedorContratoRepository = vendedorContratoRepository;
-            _vendedorContratoService = vendedorContratoService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }

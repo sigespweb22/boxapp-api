@@ -350,9 +350,6 @@ namespace BoxBack.WebApi.EndPoints
             catch (OperationCanceledException e)
             {
                 _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
-                
-                source.Cancel();
-                source.Dispose();
             }
             finally
             {
@@ -387,9 +384,6 @@ namespace BoxBack.WebApi.EndPoints
             catch (OperationCanceledException e)
             {
                 _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
-                
-                source.Cancel();
-                source.Dispose();
             }
             finally
             {
@@ -424,9 +418,6 @@ namespace BoxBack.WebApi.EndPoints
             catch (OperationCanceledException e)
             {
                 _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
-                
-                source.Cancel();
-                source.Dispose();
             }
             finally
             {
@@ -461,9 +452,6 @@ namespace BoxBack.WebApi.EndPoints
             catch (OperationCanceledException e)
             {
                 _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
-                
-                source.Cancel();
-                source.Dispose();
             }
             finally
             {
@@ -498,9 +486,6 @@ namespace BoxBack.WebApi.EndPoints
             catch (OperationCanceledException e)
             {
                 _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
-                
-                source.Cancel();
-                source.Dispose();
             }
             finally
             {
@@ -535,10 +520,6 @@ namespace BoxBack.WebApi.EndPoints
             catch (OperationCanceledException e)
             {
                 _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
-                _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(e.Message, rotinaEventHistoryId);
-
-                source.Cancel();
-                source.Dispose();
             }
             finally
             {
@@ -574,9 +555,6 @@ namespace BoxBack.WebApi.EndPoints
             {
                 _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
                 _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(e.Message, rotinaEventHistoryId);
-
-                source.Cancel();
-                source.Dispose();
             }
             finally
             {

@@ -24,6 +24,8 @@ namespace BoxBack.Infra.CrossCutting.IoC
             services.AddScoped<IRotinaAppService, RotinaAppService>();
             services.AddScoped<IRotinaEventHistoryAppService, RotinaEventHistoryAppService>();
             services.AddScoped<IClienteContratoFaturaAppService, ClienteContratoFaturaAppService>();
+            services.AddScoped<IVendedorComissaoAppService, VendedorComissaoAppService>();
+            services.AddScoped<IVendedorContratoAppService, VendedorContratoAppService>();
 
             // Services
             services.AddScoped<IChaveApiTerceiroService, ChaveApiTerceiroService>();
@@ -32,6 +34,8 @@ namespace BoxBack.Infra.CrossCutting.IoC
             services.AddScoped<IRotinaService, RotinaService>();   
             services.AddScoped<IRotinaEventHistoryService, RotinaEventHistoryService>();
             services.AddScoped<IClienteContratoFaturaService, ClienteContratoFaturaService>();
+            services.AddScoped<IVendedorComissaoService,VendedorComissaoService>();
+            services.AddScoped<IVendedorContratoService,VendedorContratoService>();
 
             // Repositories
             services.AddScoped<IChaveApiTerceiroRepository, ChaveApiTerceiroRepository>();
@@ -40,6 +44,8 @@ namespace BoxBack.Infra.CrossCutting.IoC
             services.AddScoped<IRotinaEventHistoryRepository, RotinaEventHistoryRepository>();
             services.AddScoped<IRotinaRepository, RotinaRepository>();
             services.AddScoped<IClienteContratoFaturaRepository, ClienteContratoFaturaRepository>();
+            services.AddScoped<IVendedorComissaoRepository, VendedorComissaoRepository>();
+            services.AddScoped<IVendedorContratoRepository, VendedorContratoRepository>();
 
             // Transient: Created each time.
             // Scoped: Created only once per request.
