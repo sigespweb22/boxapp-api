@@ -664,10 +664,10 @@ namespace BoxBack.Infra.Data.Migrations
                 keyColumn: "Id",
                 keyValue: new Guid("bf0f551b-4127-4b6d-a4ed-45e4cacdebcd"));
 
-            migrationBuilder.RenameColumn(
-                name: "BomControleContratoId",
-                table: "ClientesContratosFaturas",
-                newName: "BomControleFaturaId");
+            // migrationBuilder.RenameColumn(
+            //     name: "BomControleContratoId",
+            //     table: "ClientesContratosFaturas",
+            //     newName: "BomControleFaturaId");
 
             migrationBuilder.UpdateData(
                 table: "AspNetGroups",
