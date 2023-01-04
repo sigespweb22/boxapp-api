@@ -50,6 +50,7 @@ namespace BoxBack.WebApi.EndPoints
             _clienteAppService = clienteAppService;
             _rotinaEventHistoryAppService = rotinaEventHistoryAppService;
             _clienteContratoAppService = clienteContratoAppService;
+            _clienteContratoFaturaAppService = clienteContratoFaturaAppService;
             _vendedorComissaoAppService = vendedorComissaoAppService;
         }
 

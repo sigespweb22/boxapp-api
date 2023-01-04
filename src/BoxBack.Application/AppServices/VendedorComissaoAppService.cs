@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using BoxBack.Application.ViewModels;
 
-namespace BoxBack.Application.Interfaces
+namespace BoxBack.Application.AppServices
 {
     public interface VendedorComissaoAppService
     {

@@ -1,6 +1,6 @@
-namespace BoxBack.Application.Interfaces
+namespace BoxBack.Application.AppServices
 {
-    public interface VendedorContratoAppService
+    public class VendedorContratoAppService
     {
     }
 }
