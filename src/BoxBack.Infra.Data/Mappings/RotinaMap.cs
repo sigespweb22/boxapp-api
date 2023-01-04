@@ -137,6 +137,7 @@ namespace BoxBack.Infra.Data.Mappings
                 Descricao = "Esta rotina interna gera as comissões de vendedores. As comissões são obtidas a partir dos dados de comissão (Em real ou Porcentagem), parametrizados ao vincular um contrato a um vendedor, bem como são geradas comissões apenas de contratos com faturas pagas (Em dia).",
                 Observacao = "É recomendado que antes de rodar esta rotina, seja rodado a rotina de ChaveSequencial - 2, 3 e 4 -, afim de atualizar os contratos e suas faturas.",
                 ChaveSequencial = 7,
+                DispatcherRoute = "dispatch-vendedores-comissoes-create",
                 CreatedAt = DateTimeOffset.Now,
                 CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                 UpdatedAt = DateTimeOffset.Now,

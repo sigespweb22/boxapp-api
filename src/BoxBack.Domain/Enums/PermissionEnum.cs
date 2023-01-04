@@ -265,62 +265,62 @@ namespace BoxBack.Domain.Enums
         #endregion
 
         #region Vendedor
-        [Description("Pode realizar todas as ações/operações em todos os produtos de fornecedores")]
+        [Description("Pode realizar todas as ações/operações em todos os vendedores")]
         CanVendedorAll = 18001,
-        [Description("Pode listar os dados de todos os produtos de fornecedores")]
+        [Description("Pode listar os dados de todos os vendedores")]
         CanVendedorList = 18002,
-        [Description("Pode listar os dados de um produto de fornecedor")]
+        [Description("Pode listar os dados de um vendedor")]
         CanVendedorRead = 18003,
-        [Description("Pode visualizar um produto de fornecedor")]
+        [Description("Pode visualizar um vendedor")]
         CanVendedorCreate = 18004,
-        [Description("Pode criar um produto de fornecedor")]
+        [Description("Pode criar um vendedor")]
         CanVendedorUpdate = 18005,
-        [Description("Pode deletar um produto de fornecedor")]
+        [Description("Pode deletar um vendedor")]
         CanVendedorDelete = 18006,
         #endregion
 
         #region Vendedor Comissão
-        [Description("Pode realizar todas as ações/operações em todos os produtos de fornecedores")]
+        [Description("Pode realizar todas as ações/operações em todas as comissões de vendedores")]
         CanVendedorComissaoAll = 19001,
-        [Description("Pode listar os dados de todos os produtos de fornecedores")]
+        [Description("Pode listar os dados de comissão de vendedores")]
         CanVendedorComissaoList = 19002,
-        [Description("Pode listar os dados de um produto de fornecedor")]
+        [Description("Pode listar os dados de uma comissão de vendedor")]
         CanVendedorComissaoRead = 19003,
-        [Description("Pode visualizar um produto de fornecedor")]
+        [Description("Pode visualizar uma comissão de vendedor")]
         CanVendedorComissaoCreate = 19004,
-        [Description("Pode criar um produto de fornecedor")]
+        [Description("Pode criar uma comissão de vendedor")]
         CanVendedorComissaoUpdate = 19005,
-        [Description("Pode deletar um produto de fornecedor")]
+        [Description("Pode deletar uma comissão de vendedor")]
         CanVendedorComissaoDelete = 19006,
         #endregion
 
         #region Vendedor Contrato
-        [Description("Pode realizar todas as ações/operações em todos os produtos de fornecedores")]
+        [Description("Pode realizar todas as ações/operações em todos os contratos vinculados a vendedores")]
         CanVendedorContratoAll = 20001,
-        [Description("Pode listar os dados de todos os produtos de fornecedores")]
+        [Description("Pode listar os dados de todos os contratos vinculados a vendedores")]
         CanVendedorContratoList = 20002,
-        [Description("Pode listar os dados de um produto de fornecedor")]
+        [Description("Pode listar os dados de um contrato vinculado a um vendedor")]
         CanVendedorContratoRead = 20003,
-        [Description("Pode visualizar um produto de fornecedor")]
+        [Description("Pode visualizar um contrato vinculado a um ou vários vendedores")]
         CanVendedorContratoCreate = 20004,
-        [Description("Pode criar um produto de fornecedor")]
+        [Description("Pode criar um vínculo de contrato a um vendedor")]
         CanVendedorContratoUpdate = 20005,
-        [Description("Pode deletar um produto de fornecedor")]
+        [Description("Pode deletar um vínculo de contrato com um vendedor")]
         CanVendedorContratoDelete = 20006,
         #endregion
 
         #region Cliente Contrato Fatura
         [Description("Pode realizar todas as ações/operações em todas as faturas de contratos de clientes")]
         CanClienteContratoFaturaAll = 21001,
-        [Description("Pode listar os dados de todos os produtos de fornecedores")]
+        [Description("Pode listar os dados de todas as faturas de contratos de clientes")]
         CanClienteContratoFaturaList = 21002,
-        [Description("Pode listar os dados de um produto de fornecedor")]
+        [Description("Pode listar os dados de uma fatura de contrato de cliente")]
         CanClienteContratoFaturaRead = 21003,
-        [Description("Pode visualizar um produto de fornecedor")]
+        [Description("Pode visualizar uma fatura de contrato de cliente")]
         CanClienteContratoFaturaCreate = 21004,
-        [Description("Pode criar um produto de fornecedor")]
+        [Description("Pode criar uma fatura de contrato de cliente")]
         CanClienteContratoFaturaUpdate = 21005,
-        [Description("Pode deletar um produto de fornecedor")]
+        [Description("Pode deletar uma fatura de contrato de cliente")]
         CanClienteContratoFaturaDelete = 21006,
         #endregion
 

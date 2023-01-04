@@ -31,6 +31,7 @@ namespace BoxBack.WebApi.EndPoints
         private readonly IClienteContratoAppService _clienteContratoAppService;
         private readonly IRotinaEventHistoryAppService _rotinaEventHistoryAppService;
         private readonly IClienteContratoFaturaAppService _clienteContratoFaturaAppService;
+        private readonly IVendedorComissaoAppService _vendedorComissaoAppService;
 
         public RotinaEndpoint(ILogger<RotinaEndpoint> logger,
                               BoxAppDbContext context,
@@ -39,7 +40,8 @@ namespace BoxBack.WebApi.EndPoints
                               IClienteAppService clienteAppService,
                               IRotinaEventHistoryAppService rotinaEventHistoryAppService,
                               IClienteContratoAppService clienteContratoAppService,
-                              IClienteContratoFaturaAppService clienteContratoFaturaAppService)
+                              IClienteContratoFaturaAppService clienteContratoFaturaAppService,
+                              IVendedorComissaoAppService vendedorComissaoAppService)
         {
             _logger = logger;
             _context = context;
@@ -48,7 +50,7 @@ namespace BoxBack.WebApi.EndPoints
             _clienteAppService = clienteAppService;
             _rotinaEventHistoryAppService = rotinaEventHistoryAppService;
             _clienteContratoAppService = clienteContratoAppService;
-            _clienteContratoFaturaAppService = clienteContratoFaturaAppService;
+            _vendedorComissaoAppService = vendedorComissaoAppService;
         }
 
         /// <summary>
@@ -528,6 +530,45 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 await syncTask;
+            }
+            catch (OperationCanceledException e)
+            {
+                _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
+                _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(e.Message, rotinaEventHistoryId);
+
+                source.Cancel();
+                source.Dispose();
+            }
+            finally
+            {
+                source.Cancel();
+                source.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para gerar as comissões de vendedores
+        /// </summary>
+        /// <param name="rotinaId"></param>
+        /// <param name="periodoCompetencia"></param>
+        /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
+        [Authorize(Roles = "Master, CanVendedorComissaoCreate, CanVendedorComissaoAll")]
+        [Route("dispatch-vendedores-comissoes-create")]
+        [HttpPost]
+        public async Task DispatchVendedoresComissoesCreateAsync([FromBody]DateTimePeriodoRequestModel periodoCompetencia)
+        {
+            CancellationTokenSource source = new CancellationTokenSource();
+            CancellationToken cToken = source.Token;
+
+            // create rotina event history
+            var rotinaEventHistoryId = Guid.NewGuid();
+            await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(periodoCompetencia.Id, rotinaEventHistoryId);
+
+            var gerarComissoesTask = Task.Run(() => _vendedorComissaoAppService.GerarComissoesAsync(rotinaEventHistoryId, periodoCompetencia));
+
+            try
+            {
+                await gerarComissoesTask;
             }
             catch (OperationCanceledException e)
             {
