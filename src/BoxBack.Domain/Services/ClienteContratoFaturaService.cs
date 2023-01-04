@@ -194,7 +194,6 @@ namespace BoxBack.Domain.Services
             }
             #endregion
         }
-        
         public async Task UpdateFromThirdPartyAsync(Guid rotinaEventHistoryId)
         {
             #region Get faturas

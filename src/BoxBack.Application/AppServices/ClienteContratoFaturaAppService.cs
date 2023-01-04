@@ -1,10 +1,7 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using BoxBack.Application.Interfaces;
-using BoxBack.Domain.Enums;
 using BoxBack.Domain.Interfaces;
-using BoxBack.Domain.Models;
 using Microsoft.Extensions.Logging;
 
 namespace BoxBack.Application.AppServices
@@ -57,7 +54,6 @@ namespace BoxBack.Application.AppServices
             }
             #endregion
         }
-
         public async Task UpdateFromThirdPartyAsync(Guid rotinaEventHistoryId)
         {
             #region Update contratos de clientes
