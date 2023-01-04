@@ -65,15 +65,16 @@ namespace BoxBack.Domain.ServicesThirdParty
         /// </summary>
         /// <param></param>
         /// <param name="id"></param>
+        /// <param name="quitadas"></param>
         /// <param name="apiKey"></param>
         /// <returns>Retorna um json com os dados do contrato do cliente</returns>
         /// <response code="200">Retorna sucesso com um objeto com o contrato pesquisado.</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
         /// <response code="404">Nenhum contrato encontrado</response>
         /// <response code="500">Erro interno desconhecido</response>
-        [Get("/VendaContrato/Obter/{id}")]
+        [Get("/VendaContrato/Obter/{id}?quitadas: quitadas")]
         [Headers("Content-Type: application/json")]
-        Task<BCContratoModelService> VendaContratoObter(Int64 id, [Header("Authorization")] string apiKey);
+        Task<BCContratoModelService> VendaContratoObter(Int64 id, bool quitadas, [Header("Authorization")] string apiKey);
 
         /// <summary>
         /// Obtém uma fatura de um contrato de cliente pelo id da fatura

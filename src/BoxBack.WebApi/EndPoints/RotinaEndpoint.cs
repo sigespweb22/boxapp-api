@@ -433,14 +433,14 @@ namespace BoxBack.WebApi.EndPoints
         }
 
         /// <summary>
-        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para criar faturas de contratos de clientes a partir da api de terceiro
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para criar faturas não quitadas de contratos de clientes a partir da api de terceiro
         /// </summary>
         /// <param name="rotinaId"></param>
         /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
         [Authorize(Roles = "Master, CanClienteContratoFaturaCreate, CanClienteContratoFaturaAll")]
-        [Route("dispatch-faturas-sync/{rotinaId}")]
+        [Route("dispatch-faturas-nao-quitadas-sync/{rotinaId}")]
         [HttpPost]
-        public async Task DispatchFaturasSyncAsync([FromRoute]Guid rotinaId)
+        public async Task DispatchFaturasNaoQuitadasSyncAsync([FromRoute]Guid rotinaId)
         {
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken cToken = source.Token;
@@ -449,7 +449,44 @@ namespace BoxBack.WebApi.EndPoints
             var rotinaEventHistoryId = Guid.NewGuid();
             await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
 
-            var syncTask = Task.Run(() => _clienteContratoFaturaAppService.SyncFromThirdPartyAsync(rotinaEventHistoryId));
+            var syncTask = Task.Run(() => _clienteContratoFaturaAppService.SyncNaoQuitadasFromThirdPartyAsync(rotinaEventHistoryId));
+
+            try
+            {
+                await syncTask;
+            }
+            catch (OperationCanceledException e)
+            {
+                _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
+                
+                source.Cancel();
+                source.Dispose();
+            }
+            finally
+            {
+                source.Cancel();
+                source.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para criar faturas quitadas de contratos de clientes a partir da api de terceiro
+        /// </summary>
+        /// <param name="rotinaId"></param>
+        /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
+        [Authorize(Roles = "Master, CanClienteContratoFaturaCreate, CanClienteContratoFaturaAll")]
+        [Route("dispatch-faturas-quitadas-sync/{rotinaId}")]
+        [HttpPost]
+        public async Task DispatchFaturasQuitadasSyncAsync([FromRoute]Guid rotinaId)
+        {
+            CancellationTokenSource source = new CancellationTokenSource();
+            CancellationToken cToken = source.Token;
+
+            // create rotina event history
+            var rotinaEventHistoryId = Guid.NewGuid();
+            await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
+
+            var syncTask = Task.Run(() => _clienteContratoFaturaAppService.SyncQuitadasFromThirdPartyAsync(rotinaEventHistoryId));
 
             try
             {

@@ -5,7 +5,8 @@ namespace BoxBack.Domain.Interfaces
 {
     public interface IClienteContratoFaturaService
     {
-        Task AddFromThirdPartyAsync(Guid rotinaEventHistoryId);
+        Task AddQuitadasFromThirdPartyAsync(Guid rotinaEventHistoryId);
+        Task AddNaoQuitadasFromThirdPartyAsync(Guid rotinaEventHistoryId);
         Task UpdateFromThirdPartyAsync(Guid rotinaEventHistoryId);
     }
 }

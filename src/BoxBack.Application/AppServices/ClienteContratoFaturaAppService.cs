@@ -27,12 +27,39 @@ namespace BoxBack.Application.AppServices
             _chaveApiTerceiroAppService = chaveApiTerceiroAppService;
         }
         
-        public async Task SyncFromThirdPartyAsync(Guid rotinaEventHistoryId)
+        public async Task SyncQuitadasFromThirdPartyAsync(Guid rotinaEventHistoryId)
         {
             #region Sincronization contratos de clientes
             try
             {
-                await _clienteContratoFaturaService.AddFromThirdPartyAsync(rotinaEventHistoryId);
+                await _clienteContratoFaturaService.AddQuitadasFromThirdPartyAsync(rotinaEventHistoryId);
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de sincronizar faturas de contratos de clientes a partir da api de terceiro. | {io.Message}");
+                _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(io.Message);
+            }
+            catch (ArgumentNullException an)
+            {
+                _logger.LogInformation($"Argumento nulo. | {an.Message}");
+                _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(an.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(an.Message);
+            }
+            catch (Exception e) when (e is FormatException or OverflowException)
+            {
+                _logger.LogInformation($"Formato do argumento inválido ou problemas ou de casting ou conversões. | {e.Message}");
+                _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(e.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(e.Message);
+            }
+            #endregion
+        }
+        public async Task SyncNaoQuitadasFromThirdPartyAsync(Guid rotinaEventHistoryId)
+        {
+            #region Sincronization contratos de clientes
+            try
+            {
+                await _clienteContratoFaturaService.AddNaoQuitadasFromThirdPartyAsync(rotinaEventHistoryId);
             }
             catch (InvalidOperationException io)
             {

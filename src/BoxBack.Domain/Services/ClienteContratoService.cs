@@ -289,7 +289,7 @@ namespace BoxBack.Domain.Services
                 {
                     try
                     {
-                        contratoFromThirdParty = await _bcServices.VendaContratoObter((long)clientesContratos[i].BomControleContratoId, token);
+                        contratoFromThirdParty = await _bcServices.VendaContratoObter((long)clientesContratos[i].BomControleContratoId, false, token);
                     }
                     catch (Refit.ApiException ex) { 
                         if (ex.HasContent) continue;
