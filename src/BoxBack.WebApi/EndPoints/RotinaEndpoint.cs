@@ -550,7 +550,6 @@ namespace BoxBack.WebApi.EndPoints
         /// <summary>
         /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para gerar as comissões de vendedores
         /// </summary>
-        /// <param name="rotinaId"></param>
         /// <param name="periodoCompetencia"></param>
         /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
         [Authorize(Roles = "Master, CanVendedorComissaoCreate, CanVendedorComissaoAll")]

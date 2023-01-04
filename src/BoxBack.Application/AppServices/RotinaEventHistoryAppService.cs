@@ -5,7 +5,6 @@ using BoxBack.Domain.Hubs;
 using BoxBack.Domain.HubsInterfaces;
 using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels;
-using BoxBack.Domain.Enums;
 using BoxBack.Domain.Interfaces;
 using BoxBack.Domain.Models;
 using Microsoft.AspNetCore.SignalR;

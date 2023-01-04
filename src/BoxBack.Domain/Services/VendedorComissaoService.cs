@@ -1,9 +1,6 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using BoxBack.Domain.Interfaces;
-using BoxBack.Domain.Models;
-using BoxBack.Domain.ModelsServices;
 using BoxBack.Domain.InterfacesRepositories;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
