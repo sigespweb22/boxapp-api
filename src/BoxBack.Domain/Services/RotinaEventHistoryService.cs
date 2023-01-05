@@ -195,6 +195,37 @@ namespace BoxBack.Domain.Services
 
             _notificacaoHub.Clients.All.ReceiveMessage("ROTINA_EVENT_HISTORY_UPDATED_SUCCESS");
         }
+        public async Task<RotinaEventHistory> GetByIdWithIncludeAsync(Guid rotinaEventHistoryId)
+        {
+            #region Arg validation
+            if (rotinaEventHistoryId == Guid.Empty)
+            {
+                _logger.LogInformation($"Id do evento da rotina requerido.");
+                throw new ArgumentNullException(nameof(rotinaEventHistoryId));
+            }
+            #endregion
+
+            #region Get data
+            var rotinaEventHistorys = new RotinaEventHistory();
+            try
+            {
+                rotinaEventHistorys = await _rotinaEventHistoryRepository.GetByIdWithIncludeAsync(rotinaEventHistoryId);
+            }
+            catch (InvalidOperationException io) 
+            {
+                _logger.LogInformation($"Falhou tentativa de obter o registro de rotina event history pelo seu id. | {io.Message}");
+                throw new OperationCanceledException(io.Message);
+            }
+
+            if (rotinaEventHistorys == null)
+            {
+                _logger.LogInformation($"Nenhum evento de rotina encontrado com o id informado.");
+                throw new OperationCanceledException($"Nenhum evento de rotina encontrado com o id informado.");
+            }
+            #endregion
+
+            return rotinaEventHistorys;
+        }
 
         public void Dispose()
         {

@@ -43,9 +43,44 @@ namespace BoxBack.Domain.Services
             _clienteContratoFaturaRepository = clienteContratoFaturaRepository;
         }
     
-        public async Task GerarComissoesAsync(Guid rotinaEventHistoryId, DateTime dataInicio, DateTime dataFim)
+        public async Task GerarComissoesAsync(Guid rotinaEventHistoryId)
         {
-            
+            #region Obter as data de competencia na rotina
+            var rotinaEventHistory = new RotinaEventHistory();
+            try
+            {
+                rotinaEventHistory = await _rotinaEventHistoryService.GetByIdWithIncludeAsync(rotinaEventHistoryId);
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de obter rotina event history para obter as datas de competência início e fim. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(io.Message);
+            }
+            catch (ArgumentNullException an)
+            {
+                _logger.LogInformation($"Argumento nulo. | {an.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(an.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(an.Message);
+            }
+            catch (Exception e) when (e is FormatException or OverflowException)
+            {
+                _logger.LogInformation($"Formato do argumento inválido ou problemas ou de casting ou conversões. | {e.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(e.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(e.Message);
+            }
+
+            if (rotinaEventHistory == null)
+            {
+                _logger.LogInformation($"Nenhum evento de rotina encontrado com o id informado afim de obter obter as datas de competência início e fim.");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle($"Nenhum evento de rotina encontrado com o id informado afim de obter obter as datas de competência início e fim.", rotinaEventHistoryId);
+                throw new OperationCanceledException($"Nenhum evento de rotina encontrado com o id informado afim de obter obter as datas de competência início e fim.");
+            }
+
+            var dataInicio = rotinaEventHistory.Rotina.DataCompetenciaInicio;
+            var dataFim = rotinaEventHistory.Rotina.DataCompetenciaFim;
+            #endregion
+
             #region Get contratos comissionáveis
             VendedorContrato[] vendedoresContratos;
             try

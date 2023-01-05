@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Interfaces;
+using BoxBack.Domain.Models;
 using Microsoft.Extensions.Logging;
 
 namespace BoxBack.Application.AppServices
@@ -12,28 +13,26 @@ namespace BoxBack.Application.AppServices
         private readonly ILogger _logger;
         private readonly IVendedorComissaoService _vendedorComissaoService;
         private readonly IRotinaEventHistoryAppService _rotinaEventHistoryAppService;
+        private readonly IRotinaEventHistoryService _rotinaEventHistoryService;
 
 
         public VendedorComissaoAppService(ILogger<ClienteContratoFaturaAppService> logger,
                                           IVendedorComissaoService vendedorComissaoService,
-                                          IRotinaEventHistoryAppService rotinaEventHistoryAppService)
+                                          IRotinaEventHistoryAppService rotinaEventHistoryAppService,
+                                          IRotinaEventHistoryService rotinaEventHistoryService)
         {
             _logger = logger;
             _vendedorComissaoService = vendedorComissaoService;
             _rotinaEventHistoryAppService = rotinaEventHistoryAppService;
+            _rotinaEventHistoryService = rotinaEventHistoryService;
         }
 
         public async Task GerarComissoesAsync(Guid rotinaEventHistoryId)
         {
-            #region Obter as data de competencia na rotina
-            var dataInicio = DateTime.Now;
-            var dataFim = DateTime.Now;
-            #endregion
-
             #region Gerar comissões
             try
             {
-                await _vendedorComissaoService.GerarComissoesAsync(rotinaEventHistoryId, dataInicio, dataFim);
+                await _vendedorComissaoService.GerarComissoesAsync(rotinaEventHistoryId);
             }
             catch (InvalidOperationException io)
             {

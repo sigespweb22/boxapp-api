@@ -18,7 +18,8 @@ namespace BoxBack.Application.ViewModels
         public string TotalItensInsucessoUltimoEvento { get; set; }
         public string TotalItensSucessoUltimoEvento { get; set; }
         public string ExceptionMessageUltimoEvento { get; set; }
-
+        public string DataCompetenciaInicio { get; set; }
+        public string DataCompetenciaFim { get; set; }
         public string Status { get; set; }
 
         public ICollection<RotinaEventHistoryViewModel> RotinasEventsHistories { get; set; }
