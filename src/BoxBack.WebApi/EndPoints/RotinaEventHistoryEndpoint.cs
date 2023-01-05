@@ -67,7 +67,7 @@ namespace BoxBack.WebApi.EndPoints
                                                         .AsNoTracking()
                                                         .Include(x => x.Rotina)
                                                         .Where(x => x.RotinaId == Guid.Parse(rotinaId))
-                                                        .OrderByDescending(x => x.UpdatedAt)
+                                                        .OrderByDescending(x => x.DataInicio)
                                                         .ToListAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
