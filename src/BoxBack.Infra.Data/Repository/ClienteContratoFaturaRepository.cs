@@ -31,10 +31,12 @@ namespace Sigesp.Infra.Data.Repository
             return await DbSet
                         .Include(x => x.ClienteContrato)
                         .ThenInclude(x => x.VendedoresContratos)
-                        .Where(x => x.DataCompetencia >= dataInicio &&
-                                    x.DataCompetencia <= dataFim &&
+                        .Where(x => x.DataCompetencia.Date >= dataInicio &&
+                                    x.DataCompetencia.Date <= dataFim &&
                                     x.Quitado == true)
                         .SelectMany(x => x.ClienteContrato.VendedoresContratos)
+                        .Include(x => x.ClienteContrato)
+                        .Distinct()
                         .ToArrayAsync();
         }
     }
