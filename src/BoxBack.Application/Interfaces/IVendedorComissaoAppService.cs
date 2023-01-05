@@ -6,6 +6,6 @@ namespace BoxBack.Application.Interfaces
 {
     public interface IVendedorComissaoAppService
     {
-        Task GerarComissoesAsync(Guid rotinaEventHistoryId, DateTimePeriodoRequestModel periodoCompetencia);
+        Task GerarComissoesAsync(Guid rotinaEventHistoryId);
     }
 }

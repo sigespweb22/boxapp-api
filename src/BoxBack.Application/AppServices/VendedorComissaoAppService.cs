@@ -23,12 +23,17 @@ namespace BoxBack.Application.AppServices
             _rotinaEventHistoryAppService = rotinaEventHistoryAppService;
         }
 
-        public async Task GerarComissoesAsync(Guid rotinaEventHistoryId, DateTimePeriodoRequestModel periodoCompetencia)
+        public async Task GerarComissoesAsync(Guid rotinaEventHistoryId)
         {
+            #region Obter as data de competencia na rotina
+            var dataInicio = DateTime.Now;
+            var dataFim = DateTime.Now;
+            #endregion
+
             #region Gerar comissões
             try
             {
-                await _vendedorComissaoService.GerarComissoesAsync(rotinaEventHistoryId, periodoCompetencia.DataInicio, periodoCompetencia.DataFim);
+                await _vendedorComissaoService.GerarComissoesAsync(rotinaEventHistoryId, dataInicio, dataFim);
             }
             catch (InvalidOperationException io)
             {

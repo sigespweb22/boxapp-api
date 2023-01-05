@@ -531,21 +531,21 @@ namespace BoxBack.WebApi.EndPoints
         /// <summary>
         /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para gerar as comissões de vendedores
         /// </summary>
-        /// <param name="periodoCompetencia"></param>
+        /// <param name="rotinaId"></param>
         /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
         [Authorize(Roles = "Master, CanVendedorComissaoCreate, CanVendedorComissaoAll")]
-        [Route("dispatch-vendedores-comissoes-create")]
+        [Route("dispatch-vendedores-comissoes-create/{rotinaId}")]
         [HttpPost]
-        public async Task DispatchVendedoresComissoesCreateAsync([FromBody]DateTimePeriodoRequestModel periodoCompetencia)
+        public async Task DispatchVendedoresComissoesCreateAsync([FromRoute]Guid rotinaId)
         {
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken cToken = source.Token;
 
             // create rotina event history
             var rotinaEventHistoryId = Guid.NewGuid();
-            await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(periodoCompetencia.Id, rotinaEventHistoryId);
+            await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
 
-            var gerarComissoesTask = Task.Run(() => _vendedorComissaoAppService.GerarComissoesAsync(rotinaEventHistoryId, periodoCompetencia));
+            var gerarComissoesTask = Task.Run(() => _vendedorComissaoAppService.GerarComissoesAsync(rotinaEventHistoryId));
 
             try
             {

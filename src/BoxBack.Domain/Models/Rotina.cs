@@ -20,6 +20,8 @@ namespace BoxBack.Domain.Models
         public string Observacao { get; set; }
         public Int32 ChaveSequencial { get; set; }
         public string DispatcherRoute { get; set; }
+        public DateTime DataCompetenciaInicio { get; set; }
+        public DateTime DataCompetenciaFim { get; set; }
 
         // Relationships
         public ICollection<RotinaEventHistory> RotinasEventsHistories { get; set; }
