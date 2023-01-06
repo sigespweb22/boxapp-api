@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Interfaces;
@@ -14,17 +15,20 @@ namespace BoxBack.Application.AppServices
         private readonly IVendedorComissaoService _vendedorComissaoService;
         private readonly IRotinaEventHistoryAppService _rotinaEventHistoryAppService;
         private readonly IRotinaEventHistoryService _rotinaEventHistoryService;
+        private readonly IMapper _mapper;
 
 
         public VendedorComissaoAppService(ILogger<ClienteContratoFaturaAppService> logger,
                                           IVendedorComissaoService vendedorComissaoService,
                                           IRotinaEventHistoryAppService rotinaEventHistoryAppService,
-                                          IRotinaEventHistoryService rotinaEventHistoryService)
+                                          IRotinaEventHistoryService rotinaEventHistoryService,
+                                          IMapper mapper)
         {
             _logger = logger;
             _vendedorComissaoService = vendedorComissaoService;
             _rotinaEventHistoryAppService = rotinaEventHistoryAppService;
             _rotinaEventHistoryService = rotinaEventHistoryService;
+            _mapper = mapper;
         }
 
         public async Task GerarComissoesAsync(Guid rotinaEventHistoryId)
@@ -54,39 +58,43 @@ namespace BoxBack.Application.AppServices
             }
             #endregion
         }
-        // public async Task<IEnumerable<VendedorComissaoViewModel>> GetallAsync()
-        // {
-        //     try
-        //     {
+        public async Task<IEnumerable<VendedorComissaoViewModel>> GetAllWithIncludesByVendedorIdAsync(string vendedorId)
+        {
+            #region Map id vendedor
+            Guid vendedorIdConverted;
+            try
+            {   
+                Guid.TryParse(vendedorId, out vendedorIdConverted);
+            }
+            catch (InvalidCastException ic)
+            {
+                _logger.LogInformation($"Falhou tentativa de mapear o id do vendedor. | {ic.Message}");
+                throw new InvalidCastException($"Falhou tentativa de mapear o id do vendedor. | {ic.Message}");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Falhou tentativa de mapear o id do vendedor.  | {ex.Message}");
+                throw;
+            }
+            #endregion
 
-        //     }
-        //     catch (Invali ic)
-        //     {
-        //         _logger.LogInformation($"Falhou tentativa de mapear as comissões de vendedores. | {ic.Message}");
-        //         throw;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         _logger.LogInformation($"Falhou tentativa de mapear as comissões de vendedores. | {ex.Message}");
-        //         throw;
-        //     }
-
-        //     try
-        //     {
-                
-        //     }
-        //     catch (InvalidCastException ic)
-        //     {
-        //         _logger.LogInformation($"Falhou tentativa de mapear as comissões de vendedores. | {ic.Message}");
-        //         throw;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         _logger.LogInformation($"Falhou tentativa de mapear as comissões de vendedores. | {ex.Message}");
-        //         throw;
-        //     }
-        // }
-
+            #region Get and map data
+            try
+            {
+                return _mapper.Map<IEnumerable<VendedorComissaoViewModel>>(await _vendedorComissaoService.GetAllWithIncludesByVendedorIdAsync(vendedorIdConverted));
+            }
+            catch (InvalidCastException ic)
+            {
+                _logger.LogInformation($"Falhou tentativa de mapear as comissões do vendedor. | {ic.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Falhou tentativa de mapear as comissões do vendedor. | {ex.Message}");
+                throw;
+            }
+            #endregion
+        }
         public async Task<bool> AlterStatusAsync(Guid id)
         {
             return await _vendedorComissaoService.AlterStatusAsync(id);

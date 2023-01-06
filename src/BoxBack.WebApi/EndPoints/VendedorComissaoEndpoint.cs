@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using BoxBack.Infra.Data.Context;
-using BoxBack.Domain.Models;
-using AutoMapper;
-using BoxBack.Domain.InterfacesRepositories;
 using BoxBack.WebApi.Controllers;
-using BoxBack.Domain.ServicesThirdParty;
-using BoxBack.Application.ViewModels;
 using BoxBack.Application.Interfaces;
+using System.Collections.Generic;
+using BoxBack.Application.ViewModels;
+using System.Linq;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -26,6 +20,55 @@ namespace BoxBack.WebApi.EndPoints
         public VendedorComissaoEndpoint(IVendedorComissaoAppService vendedorComissaoAppService)
         {
             _vendedorComissaoAppService = vendedorComissaoAppService;
+        }
+
+        /// <summary>
+        /// Lista de todas as COMISSÕES de um VENDEDOR
+        /// </summary>
+        /// <param name="vendedorId"></param>
+        /// <returns>Um array json com as COMISSÕES de um VENDEDOR</returns>
+        /// <response code="200">Lista de COMISSÕES de um VENDEDOR</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Lista vazia</response>
+        /// <response code="500">Erro desconhecido</response>
+        [Authorize(Roles = "Master, CanVendedorComissaoList, CanVendedorComissaoAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("list-by-vendedor")]
+        [HttpGet]
+        public async Task<IActionResult> ListByVendedorAsync(string vendedorId)
+        {
+            #region Required validations
+            if (string.IsNullOrEmpty(vendedorId))
+            {
+                AddError("Id Vendedor requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            #region Get data
+            IEnumerable<VendedorComissaoViewModel> vendedorComissoesViewModel = new List<VendedorComissaoViewModel>();
+            try
+            {
+                vendedorComissoesViewModel = await _vendedorComissaoAppService.GetAllWithIncludesByVendedorIdAsync(vendedorId);
+            }
+            catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
+
+            if (vendedorComissoesViewModel == null)
+            {
+                AddError("Não encontrado.");
+                return CustomResponse(404);
+            }
+            #endregion
+            
+            return Ok(new {
+                AllData = vendedorComissoesViewModel,
+                VendedoresComissoes = vendedorComissoesViewModel,
+                Total = vendedorComissoesViewModel.Count()
+            });
         }
 
         /// <summary>
@@ -64,7 +107,7 @@ namespace BoxBack.WebApi.EndPoints
             }
             #endregion
 
-            return CustomResponse(200, new { success = await _vendedorComissaoAppService.AlterStatusAsync(id), message = "Status contrato vinculado ao vendedor alterado com sucesso." } );
+            return CustomResponse(200, new { success = await _vendedorComissaoAppService.AlterStatusAsync(id), message = "Status comissão de vendedor alterado com sucesso." } );
         }
     }
 }

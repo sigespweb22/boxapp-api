@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
 using BoxBack.Domain.Interfaces;
@@ -21,7 +22,6 @@ namespace BoxBack.Domain.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IClienteContratoRepository _clienteContratoRepository;
         private readonly IRotinaEventHistoryService _rotinaEventHistoryService;
-        private readonly IVendedorContratoRepository _vendedorContratoRepository;
         private readonly IClienteContratoFaturaRepository _clienteContratoFaturaRepository;
         
         public VendedorComissaoService(ILogger<VendedorComissaoService> logger,
@@ -31,7 +31,6 @@ namespace BoxBack.Domain.Services
                                        IUnitOfWork unitOfWork,
                                        IClienteContratoRepository clienteContratoRepository,
                                        IRotinaEventHistoryService rotinaEventHistoryService,
-                                       IVendedorContratoRepository vendedorContratoRepository,
                                        IClienteContratoFaturaRepository clienteContratoFaturaRepository)
         {
             _logger = logger;
@@ -41,7 +40,6 @@ namespace BoxBack.Domain.Services
             _unitOfWork = unitOfWork;
             _clienteContratoRepository = clienteContratoRepository;
             _rotinaEventHistoryService = rotinaEventHistoryService;
-            _vendedorContratoRepository = vendedorContratoRepository;
             _clienteContratoFaturaRepository = clienteContratoFaturaRepository;
         }
     
@@ -172,7 +170,7 @@ namespace BoxBack.Domain.Services
         {
             #region Generals Validators
             var vendedorComissao = new VendedorComissao();
-            vendedorComissao.Id = id;
+            vendedorComissao.Id = Guid.Empty;
 
             VendedorComissaoAlterStatusValidator validator = new VendedorComissaoAlterStatusValidator();
             validator.ValidateAndThrow(vendedorComissao);
@@ -237,6 +235,31 @@ namespace BoxBack.Domain.Services
             #endregion
 
             return true;
+        }
+        public async Task<IEnumerable<VendedorComissao>> GetAllWithIncludesByVendedorIdAsync(Guid vendedorId)
+        {
+            #region Validators
+            var vendedorComissao = new VendedorComissao();
+            vendedorComissao.VendedorId = vendedorId;
+
+            VendedorComissaoValidator validator = new VendedorComissaoValidator();
+            validator.ValidateAndThrow(vendedorComissao);
+            #endregion
+
+            #region Get data
+            IEnumerable<VendedorComissao> vendedorComissoes = new List<VendedorComissao>();
+            try
+            {
+                vendedorComissoes = await _vendedorComissaoRepository.GetAllWithIncludesByVendedorIdAsync(vendedorId);
+            }
+            catch (InvalidOperationException io)
+            { 
+                _logger.LogInformation($"Problemas ao obter as comissões de vendedores. | {io.Message}");
+                throw;
+            }
+            #endregion
+
+            return vendedorComissoes;
         }
 
         public void Dispose()
