@@ -98,6 +98,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<VendedorContratoViewModel, VendedorContrato>()
                 .ForMember(dst => dst.ComissaoPercentual, src => src.MapFrom(x => x.ComissaoPercentual))
                 .ForMember(dst => dst.ComissaoReais, src => src.MapFrom(x => x.ComissaoReais));
+            CreateMap<VendedorComissaoViewModel, VendedorComissao>();
             CreateMap<RotinaViewModel, Rotina>()
                 .ForMember(dst => dst.DispatcherRoute, src => src.Ignore());
             CreateMap<RotinaEventHistoryViewModel, RotinaEventHistory>();

@@ -1,9 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using BoxBack.Application.Interfaces;
-using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Interfaces;
-using BoxBack.Domain.Models;
 using Microsoft.Extensions.Logging;
 
 namespace BoxBack.Application.AppServices
