@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BoxBack.Application.Interfaces;
+using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -51,6 +53,43 @@ namespace BoxBack.Application.AppServices
                 throw new OperationCanceledException(e.Message);
             }
             #endregion
+        }
+        // public async Task<IEnumerable<VendedorComissaoViewModel>> GetallAsync()
+        // {
+        //     try
+        //     {
+
+        //     }
+        //     catch (Invali ic)
+        //     {
+        //         _logger.LogInformation($"Falhou tentativa de mapear as comissões de vendedores. | {ic.Message}");
+        //         throw;
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         _logger.LogInformation($"Falhou tentativa de mapear as comissões de vendedores. | {ex.Message}");
+        //         throw;
+        //     }
+
+        //     try
+        //     {
+                
+        //     }
+        //     catch (InvalidCastException ic)
+        //     {
+        //         _logger.LogInformation($"Falhou tentativa de mapear as comissões de vendedores. | {ic.Message}");
+        //         throw;
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         _logger.LogInformation($"Falhou tentativa de mapear as comissões de vendedores. | {ex.Message}");
+        //         throw;
+        //     }
+        // }
+
+        public async Task<bool> AlterStatusAsync(Guid id)
+        {
+            return await _vendedorComissaoService.AlterStatusAsync(id);
         }
     }
 }

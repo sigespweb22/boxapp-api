@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using Sigesp.Domain.InterfacesRepositories;
 using BoxBack.Domain.Models;
 using System.Linq;
+using BoxBack.Domain.Validators.VendedorComissaoValidator;
+using FluentValidation;
 
 namespace BoxBack.Domain.Services
 {
@@ -165,6 +167,76 @@ namespace BoxBack.Domain.Services
                 throw new InvalidOperationException(ex.Message, ex.InnerException);
             }
             #endregion
+        }
+        public async Task<bool> AlterStatusAsync(Guid id)
+        {
+            #region Generals Validators
+            var vendedorComissao = new VendedorComissao();
+            vendedorComissao.Id = id;
+
+            VendedorComissaoAlterStatusValidator validator = new VendedorComissaoAlterStatusValidator();
+            validator.ValidateAndThrow(vendedorComissao);
+            #endregion
+
+            #region Get data
+            try
+            {
+                vendedorComissao = await _vendedorComissaoRepository.GetByIdAsync(id);
+            }
+            catch (InvalidOperationException io)
+            { 
+                _logger.LogInformation($"Problemas ao obter a comissão para alterar seu status. | {io.Message}");
+                throw;
+            }
+            
+            validator.ValidateAndThrow(vendedorComissao);
+            #endregion
+
+            #region Map
+            try
+            {
+                switch(vendedorComissao.IsDeleted)
+                {
+                    case true:
+                        vendedorComissao.IsDeleted = false;
+                        break;
+                    case false:
+                        vendedorComissao.IsDeleted = true;
+                        break;
+                }
+            }
+            catch (InvalidCastException ic)
+            { 
+                _logger.LogInformation($"Problemas ao mapear os dados de comissão para alterar seu status. | {ic.Message}");
+                throw;
+            }
+            #endregion
+
+            #region Persistence
+            try
+            {
+                _vendedorComissaoRepository.Update(vendedorComissao);
+            }
+            catch (InvalidOperationException io)
+            { 
+                _logger.LogInformation($"Problemas ao fazer update para alterar status. | {io.Message}");
+                throw;
+            }
+            #endregion
+
+            #region Commit
+            try
+            {
+                _unitOfWork.Commit();
+            }
+            catch (InvalidOperationException io)
+            { 
+                _logger.LogInformation($"Problemas ao obter a comissão para alterar seu status. | {io.Message}");
+                throw;
+            }
+            #endregion
+
+            return true;
         }
 
         public void Dispose()
