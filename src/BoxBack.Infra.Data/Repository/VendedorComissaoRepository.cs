@@ -19,7 +19,11 @@ namespace Sigesp.Infra.Data.Repository
 
         public async Task<IEnumerable<VendedorComissao>> GetAllWithIncludesByVendedorIdAsync(Guid vendedorId)
         {
-            return await DbSet.Where(x => x.VendedorId.Equals(vendedorId)).ToListAsync();
+            return await DbSet
+                            .Include(x => x.Vendedor)
+                            .Include(x => x.ClienteContrato)
+                            .ThenInclude(x => x.Cliente)
+                            .Where(x => x.VendedorId.Equals(vendedorId)).ToListAsync();
         }
     }
 }

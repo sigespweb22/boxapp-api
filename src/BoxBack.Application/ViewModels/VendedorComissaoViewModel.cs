@@ -14,6 +14,6 @@ namespace BoxBack.Application.ViewModels
         public Guid VendedorId { get; set; }
         public VendedorViewModel VendedorViewModel { get; set; }
         public Guid ClienteContratoId { get; set; }
-        public ClienteContrato ClienteContrato { get; set; }
+        public ClienteContrato ClienteContratoViewModel { get; set; }
     }
 }

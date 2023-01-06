@@ -37,9 +37,9 @@ namespace BoxBack.WebApi.EndPoints
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        [Route("list-by-vendedor")]
+        [Route("list-by-vendedor/{vendedorId}")]
         [HttpGet]
-        public async Task<IActionResult> ListByVendedorAsync(string vendedorId)
+        public async Task<IActionResult> ListByVendedorAsync([FromRoute]string vendedorId)
         {
             #region Required validations
             if (string.IsNullOrEmpty(vendedorId))
@@ -57,17 +57,18 @@ namespace BoxBack.WebApi.EndPoints
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
-            if (vendedorComissoesViewModel == null)
+            if (vendedorComissoesViewModel.Count() == 0)
             {
-                AddError("Não encontrado.");
+                AddError("Nenhum registro encontrado.");
                 return CustomResponse(404);
             }
             #endregion
             
             return Ok(new {
-                AllData = vendedorComissoesViewModel,
                 VendedoresComissoes = vendedorComissoesViewModel,
-                Total = vendedorComissoesViewModel.Count()
+                Total = vendedorComissoesViewModel.Count(),
+                Params = vendedorId,
+                AllData = vendedorComissoesViewModel,
             });
         }
 
