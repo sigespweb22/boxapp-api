@@ -81,11 +81,24 @@ namespace BoxBack.Domain.Services
             var dataFim = rotinaEventHistory.Rotina.DataCompetenciaFim;
             #endregion
 
+            #region Get faturas comissionáveis do período de competência informado
+            ClienteContratoFatura[] clientesFaturas;
+            try
+            {
+                clientesFaturas = await _clienteContratoFaturaRepository.GetAllByCompetenciaAsAndQuitadasync(dataInicio, dataFim);
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de obter as faturas de contratos comissionáveis para seguir com a geração das comissões. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(io.Message) ;
+            }
+
             #region Get contratos comissionáveis
             VendedorContrato[] vendedoresContratos;
             try
             {
-                vendedoresContratos = await _clienteContratoFaturaRepository.GetAllContratosComissionaveisByCompetenciaAsync(dataInicio, dataFim);
+                vendedoresContratos = clientesFaturas.SelectMany(x => x.ClienteContrato.VendedoresContratos).Distinct().ToArray();
             }
             catch (InvalidOperationException io)
             {
@@ -93,6 +106,7 @@ namespace BoxBack.Domain.Services
                 _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
                 throw new OperationCanceledException(io.Message);
             }
+            #endregion
 
             if (vendedoresContratos == null || vendedoresContratos.Count() <= 0)
             {

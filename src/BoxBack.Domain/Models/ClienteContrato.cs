@@ -26,6 +26,7 @@ namespace BoxBack.Domain.Models
         public Guid? ClienteId { get; set; }
         public Cliente Cliente { get; set; }
 
+        [InverseProperty(nameof(VendedorComissao.ClienteContrato))]
         public ICollection<VendedorComissao> VendedoresComissoes { get; set; }
         public ICollection<VendedorContrato> VendedoresContratos { get; set; }
         public ICollection<ClienteContratoFatura> ClientesContratosFaturas { get; set; }

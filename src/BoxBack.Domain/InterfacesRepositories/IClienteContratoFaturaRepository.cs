@@ -9,6 +9,6 @@ namespace Sigesp.Domain.InterfacesRepositories
     public interface IClienteContratoFaturaRepository : IRepository<ClienteContratoFatura>
     {
         bool AlreadyByParams(AlreadyModelParam args);
-        Task<VendedorContrato[]> GetAllContratosComissionaveisByCompetenciaAsync(DateTime dataInicio, DateTime dataFim);
+        Task<ClienteContratoFatura[]> GetAllByCompetenciaAsAndQuitadasync(DateTime dataInicio, DateTime dataFim);
     }
 }

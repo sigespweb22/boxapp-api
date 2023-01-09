@@ -26,18 +26,16 @@ namespace Sigesp.Infra.Data.Repository
                                                              x.NumeroParcela.Equals(args.NumeroParcela));
         }
 
-        public async Task<VendedorContrato[]> GetAllContratosComissionaveisByCompetenciaAsync(DateTime dataInicio, DateTime dataFim)
+        public async Task<ClienteContratoFatura[]> GetAllByCompetenciaAsAndQuitadasync(DateTime dataInicio, DateTime dataFim)
         {
             return await DbSet
                         .Include(x => x.ClienteContrato)
                         .ThenInclude(x => x.VendedoresContratos)
                         .Where(x => x.DataCompetencia.Date >= dataInicio &&
                                     x.DataCompetencia.Date <= dataFim &&
-                                    x.Quitado == true)
-                        .SelectMany(x => x.ClienteContrato.VendedoresContratos)
-                        .Include(x => x.ClienteContrato)
-                        .Distinct()
-                        .ToArrayAsync();
+                                    x.Quitado == true &&
+                                    x.ClienteContrato.VendedoresContratos.Any())
+                                    .ToArrayAsync();
         }
     }
 }
