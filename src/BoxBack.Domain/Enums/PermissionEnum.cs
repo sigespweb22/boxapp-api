@@ -341,7 +341,15 @@ namespace BoxBack.Domain.Enums
         [Description("Pode listar todas as rotinas events histories")]
         CanRotinaEventHistoryList = 21201,
         [Description("Pode listar os dados de uma rotina event history")]
-        CanRotinaEventHistoryRead = 21202
+        CanRotinaEventHistoryRead = 21202,
+        #endregion
+
+        #region Vendedor relatórios
+        [Description("Pode realizar todas as ações/operações relacionadas a relatórios de vendedores")]
+        CanVendedorRelatorioComissaoList = 21300,
+
+        [Description("Pode listar todas as rotinas events histories")]
+        CanVendedorRelatorioAll = 21301
         #endregion
     }
 }
