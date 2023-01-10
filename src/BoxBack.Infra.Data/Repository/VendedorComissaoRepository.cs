@@ -25,5 +25,12 @@ namespace Sigesp.Infra.Data.Repository
                             .ThenInclude(x => x.Cliente)
                             .Where(x => x.VendedorId.Equals(vendedorId)).ToListAsync();
         }
+
+        public async Task<bool> AlreadyByFaturaIdAndVendedorId(Guid clienteContratoFaturaId, Guid vendedorId)
+        {
+            return await DbSet
+                            .AnyAsync(x => x.ClienteContratoFaturaId.Equals(clienteContratoFaturaId) && 
+                                           x.VendedorId.Equals(vendedorId));
+        }
     }
 }

@@ -93,51 +93,40 @@ namespace BoxBack.Domain.Services
                 _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
                 throw new OperationCanceledException(io.Message) ;
             }
-
-            #region Get contratos comissionáveis
-            VendedorContrato[] vendedoresContratos;
-            try
-            {
-                vendedoresContratos = clientesFaturas.SelectMany(x => x.ClienteContrato.VendedoresContratos).Distinct().ToArray();
-            }
-            catch (InvalidOperationException io)
-            {
-                _logger.LogInformation($"Falhou tentativa de obter os contratos vinculados aos vendedores para seguir com a geração das comissões. | {io.Message}");
-                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
-                throw new OperationCanceledException(io.Message);
-            }
-            #endregion
-
-            if (vendedoresContratos == null || vendedoresContratos.Count() <= 0)
-            {
-                _logger.LogInformation($"Nenhum contrato vinculado a um ou mais vendedores encontrado para iniciar a geração das comissões. | {vendedoresContratos.Count()}");
-                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle("Nenhum contrato de cliente encontrado para iniciar a sincronização.", rotinaEventHistoryId);
-                throw new ArgumentNullException("Nenhum contrato vinculado a um ou mais vendedores encontrado para iniciar a geração das comissões.");
-            }
             #endregion
 
             #region Calcular valor comissões
             Int64 totalComissoesGeradas = 0;
-            for (var i = 0; i < vendedoresContratos.Length; i++)
+            Int64 totalComissoesNaoGeradas = 0;
+            for (var i = 0; i < clientesFaturas.Length; i++)
             {
-                var vendedorComissao = new VendedorComissao()
+                var vendedoresContrato = clientesFaturas[i].ClienteContrato.VendedoresContratos.ToArray();
+                for (var b = 0; b < vendedoresContrato.Length; b++)
                 {
-                    Id = Guid.NewGuid(),
-                    ClienteContratoId = vendedoresContratos[i].ClienteContratoId,
-                    VendedorId = vendedoresContratos[i].VendedorId
-                };
+                    if (!await AlreadyByFaturaIdAndVendedorId(clientesFaturas[i].Id, vendedoresContrato[b].VendedorId)){
+                        var vendedorComissao = new VendedorComissao()
+                        {
+                            Id = Guid.NewGuid(),
+                            ClienteContratoId = clientesFaturas[i].ClienteContratoId,
+                            VendedorId = vendedoresContrato[b].VendedorId,
+                            ClienteContratoFaturaId = clientesFaturas[i].Id
+                        };
 
-                if (vendedoresContratos[i].ComissaoPercentual != 0)
-                {
-                    vendedorComissao.ValorComissao = vendedoresContratos[i].ClienteContrato.ValorContrato * vendedoresContratos[i].ComissaoPercentual / 100;
-                }
-                else
-                {
-                    vendedorComissao.ValorComissao = vendedoresContratos[i].ComissaoReais;
-                }
+                        if (vendedoresContrato[b].ComissaoPercentual != 0)
+                        {
+                            vendedorComissao.ValorComissao = vendedoresContrato[b].ClienteContrato.ValorContrato * vendedoresContrato[b].ComissaoPercentual / 100;
+                        }
+                        else
+                        {
+                            vendedorComissao.ValorComissao = vendedoresContrato[b].ComissaoReais;
+                        }
 
-                _vendedorComissaoRepository.Add(vendedorComissao);
-                totalComissoesGeradas++;
+                        _vendedorComissaoRepository.Add(vendedorComissao);
+                        totalComissoesGeradas++;
+                    } else {
+                        totalComissoesNaoGeradas++;
+                    }
+                }
             }
             #endregion
 
@@ -161,7 +150,7 @@ namespace BoxBack.Domain.Services
             #region Create rotina event history of success
             try
             {
-                _rotinaEventHistoryService.UpdateWithStatusConcluidaHandle(rotinaEventHistoryId, totalComissoesGeradas, 0);
+                _rotinaEventHistoryService.UpdateWithStatusConcluidaHandle(rotinaEventHistoryId, totalComissoesGeradas, totalComissoesNaoGeradas);
             }
             catch (InvalidOperationException io)
             {
@@ -274,6 +263,36 @@ namespace BoxBack.Domain.Services
             #endregion
 
             return vendedorComissoes;
+        }
+        private async Task<bool> AlreadyByFaturaIdAndVendedorId(Guid clienteContratoFaturaId, Guid vendedorId)
+        {
+            #region Required validations
+            if (clienteContratoFaturaId == Guid.Empty)
+            {
+                throw new ArgumentNullException("Id da fatura requerido.");
+            }
+
+            if (vendedorId == Guid.Empty)
+            {
+                throw new ArgumentNullException("Id do vendedor requerido.");
+            }
+            #endregion
+
+            #region Get contratos comissionáveis
+            bool already;
+            try
+            {
+                already = await _vendedorComissaoRepository
+                                       .AlreadyByFaturaIdAndVendedorId(clienteContratoFaturaId, vendedorId);
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de verificação de existência de registro de comissão para o id da fatura informado. | {io.Message}");
+                throw new OperationCanceledException(io.Message);
+            }
+            #endregion
+
+            return already;
         }
 
         public void Dispose()

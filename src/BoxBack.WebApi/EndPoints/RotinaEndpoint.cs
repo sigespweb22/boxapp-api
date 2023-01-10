@@ -97,7 +97,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 try
                 {
-                    rotinas = rotinas.Where(x => x.Nome.Equals(q)).ToList();  
+                    rotinas = rotinas.Where(x => x.Nome.Equals(q)).ToList();
                 }
                 catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             }
