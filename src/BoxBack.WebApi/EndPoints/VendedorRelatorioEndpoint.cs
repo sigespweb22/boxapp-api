@@ -64,8 +64,6 @@ namespace BoxBack.WebApi.EndPoints
                 Params = vendedorId,
                 AllData = vendedorComissoesViewModel,
             });
-
-            // Retornar no objeto isMultiple
         }
     }
 }
