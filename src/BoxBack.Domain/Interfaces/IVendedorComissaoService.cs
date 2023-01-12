@@ -9,6 +9,7 @@ namespace BoxBack.Domain.Interfaces
     {
         Task GerarComissoesAsync(Guid rotinaEventHistoryId);
         Task<bool> AlterStatusAsync(Guid id);
+        Task<IEnumerable<VendedorComissao>> GetAllWithIncludesByVendedorIdAndaDataCompetenciaFaturaAsync(Guid vendedorId, DateTime dataInicio, DateTime dataFim);
         Task<IEnumerable<VendedorComissao>> GetAllWithIncludesByVendedorIdAsync(Guid vendedorId);
     }
 }

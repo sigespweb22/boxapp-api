@@ -239,6 +239,31 @@ namespace BoxBack.Domain.Services
 
             return true;
         }
+        public async Task<IEnumerable<VendedorComissao>> GetAllWithIncludesByVendedorIdAndaDataCompetenciaFaturaAsync(Guid vendedorId, DateTime dataInicio, DateTime dataFim)
+        {
+            #region Validators
+            var vendedorComissao = new VendedorComissao();
+            vendedorComissao.VendedorId = vendedorId;
+
+            VendedorComissaoValidator validator = new VendedorComissaoValidator();
+            validator.ValidateAndThrow(vendedorComissao);
+            #endregion
+
+            #region Get data
+            IEnumerable<VendedorComissao> vendedorComissoes = new List<VendedorComissao>();
+            try
+            {
+                vendedorComissoes = await _vendedorComissaoRepository.GetAllWithIncludesByVendedorIdAndaDataCompetenciaFaturaAsync(vendedorId, dataInicio, dataFim);
+            }
+            catch (InvalidOperationException io)
+            { 
+                _logger.LogInformation($"Problemas ao obter as comissões de vendedores. | {io.Message}");
+                throw;
+            }
+            #endregion
+
+            return vendedorComissoes;
+        }
         public async Task<IEnumerable<VendedorComissao>> GetAllWithIncludesByVendedorIdAsync(Guid vendedorId)
         {
             #region Validators

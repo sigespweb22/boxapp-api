@@ -47,7 +47,7 @@ namespace BoxBack.WebApi.EndPoints
             IEnumerable<VendedorComissaoViewModel> vendedorComissoesViewModel = new List<VendedorComissaoViewModel>();
             try
             {
-                vendedorComissoesViewModel = await _vendedorComissaoAppService.GetAllWithIncludesByVendedorIdAsync(vendedorId);
+                vendedorComissoesViewModel = await _vendedorComissaoAppService.GetAllWithIncludesByVendedorIdAndaDataCompetenciaFaturaAsync(vendedorId, dataPeriodo);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BoxBack.Application.Interfaces;
 using BoxBack.Application.ViewModels;
+using BoxBack.Application.ViewModels.Date;
 using BoxBack.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -55,6 +56,43 @@ namespace BoxBack.Application.AppServices
                 _logger.LogInformation($"Formato do argumento inválido ou problemas ou de casting ou conversões. | {e.Message}");
                 _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(e.Message, rotinaEventHistoryId);
                 throw new OperationCanceledException(e.Message);
+            }
+            #endregion
+        }
+        public async Task<IEnumerable<VendedorComissaoViewModel>> GetAllWithIncludesByVendedorIdAndaDataCompetenciaFaturaAsync(string vendedorId, DataPeriodoViewModel dataPeriodo)
+        {
+            #region Map id vendedor
+            Guid vendedorIdConverted;
+            try
+            {   
+                Guid.TryParse(vendedorId, out vendedorIdConverted);
+            }
+            catch (InvalidCastException ic)
+            {
+                _logger.LogInformation($"Falhou tentativa de mapear o id do vendedor. | {ic.Message}");
+                throw new InvalidCastException($"Falhou tentativa de mapear o id do vendedor. | {ic.Message}");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Falhou tentativa de mapear o id do vendedor.  | {ex.Message}");
+                throw;
+            }
+            #endregion
+
+            #region Get and map data
+            try
+            {
+                return _mapper.Map<IEnumerable<VendedorComissaoViewModel>>(await _vendedorComissaoService.GetAllWithIncludesByVendedorIdAndaDataCompetenciaFaturaAsync(vendedorIdConverted, Convert.ToDateTime(dataPeriodo.DataInicio), Convert.ToDateTime(dataPeriodo.DataFim)));
+            }
+            catch (InvalidCastException ic)
+            {
+                _logger.LogInformation($"Falhou tentativa de mapear as comissões do vendedor. | {ic.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Falhou tentativa de mapear as comissões do vendedor. | {ex.Message}");
+                throw;
             }
             #endregion
         }
