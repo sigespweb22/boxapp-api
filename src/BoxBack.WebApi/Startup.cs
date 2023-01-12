@@ -67,32 +67,13 @@ namespace BoxBack.WebApi
                 loggingBuilder.AddDebug();
             });
 
-            // Add service and create Policy with options 
-            // services.AddCors(options => {
-            //     options.AddDefaultPolicy(
-            //         options => 
-            //         { 
-            //             options.WithOrigins("http://localhost:3000",
-            //                                 "http://localhost:80",
-            //                                 "http://localhost:80/",
-            //                                 "http://localhost",
-            //                                  "http://177.93.105.56",
-            //                                 "http://177.93.105.56/",
-            //                                 "http://177.93.105.56:80/",
-            //                                 "http://177.93.105.56:80",
-            //                                 "http://177.93.105.56:5000")
-            //                                         .AllowAnyMethod() 
-            //                                         .AllowAnyHeader();
-            //         });
-            // });
-
             services.AddCors(options => 
             { 
                 options.AddPolicy("ClientPermission", policy => 
                 { policy.AllowAnyHeader( 
                     ) 
                         .AllowAnyMethod() 
-                        .WithOrigins("http://localhost:3000") 
+                        .WithOrigins("http://localhost:3000", "http://177.93.105.56")
                         .AllowCredentials(); 
                 }); 
             });
