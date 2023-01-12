@@ -1,44 +1,28 @@
-﻿using System.CodeDom.Compiler;
-using System.Runtime.InteropServices;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using BoxBack.Infra.Data.Context;
 using BoxBack.WebApi.StartupExtensions;
 using Microsoft.AspNetCore.Authorization;
 using BoxBack.Infra.CrossCutting.IoC;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Dapper;
-using Npgsql;
-using BoxBack.Domain.Enums;
-using System.Globalization;
-using System.Threading;
-using Microsoft.AspNetCore.Localization;
-using System.Collections.Generic;
-using System.Net;
-using Microsoft.AspNetCore.Diagnostics;
 using BoxBack.WebApi.Helpers;
-using BoxBack.WebApi.Hubs;
 using BoxBack.WebApi.Security;
 using BoxBack.Domain.Models;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using System.Text.Json.Serialization;
+using BoxBack.Domain.Hubs;
 
 namespace BoxBack.WebApi
 {
@@ -83,25 +67,34 @@ namespace BoxBack.WebApi
                 loggingBuilder.AddDebug();
             });
 
-            
-
             // Add service and create Policy with options 
-            services.AddCors(options => {
-                options.AddDefaultPolicy(
-                    options => 
-                    { 
-                        options.WithOrigins("http://localhost:3000",
-                                            "http://localhost:80",
-                                            "http://localhost:80/",
-                                            "http://localhost",
-                                             "http://177.93.105.56",
-                                            "http://177.93.105.56/",
-                                            "http://177.93.105.56:80/",
-                                            "http://177.93.105.56:80",
-                                            "http://177.93.105.56:5000")
-                                                    .AllowAnyMethod() 
-                                                    .AllowAnyHeader();
-                    });
+            // services.AddCors(options => {
+            //     options.AddDefaultPolicy(
+            //         options => 
+            //         { 
+            //             options.WithOrigins("http://localhost:3000",
+            //                                 "http://localhost:80",
+            //                                 "http://localhost:80/",
+            //                                 "http://localhost",
+            //                                  "http://177.93.105.56",
+            //                                 "http://177.93.105.56/",
+            //                                 "http://177.93.105.56:80/",
+            //                                 "http://177.93.105.56:80",
+            //                                 "http://177.93.105.56:5000")
+            //                                         .AllowAnyMethod() 
+            //                                         .AllowAnyHeader();
+            //         });
+            // });
+
+            services.AddCors(options => 
+            { 
+                options.AddPolicy("ClientPermission", policy => 
+                { policy.AllowAnyHeader( 
+                    ) 
+                        .AllowAnyMethod() 
+                        .WithOrigins("http://localhost:3000") 
+                        .AllowCredentials(); 
+                }); 
             });
 
             services.AddMvc(config =>
@@ -189,6 +182,9 @@ namespace BoxBack.WebApi
             // ----- Http -----
             services.AddCustomizedHttp(Configuration);
 
+            // ----- SignalR - WebSocket -----
+            services.AddSignalR();
+
             services.AddScoped<GeneratorToken>();
 
             // .NET Native DI Abstraction
@@ -228,7 +224,7 @@ namespace BoxBack.WebApi
             // ----- Auth -----
             app.UseCustomizedAuth();
 
-            app.UseCors();
+            app.UseCors("ClientPermission");
             app.UseSession();
 
             app.UseEndpoints(endpoints =>

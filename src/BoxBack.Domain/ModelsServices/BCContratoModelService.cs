@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 using BoxBack.Domain.Enums;
 
 namespace BoxBack.Domain.ModelsServices
 {
     public class BCContratoModelService
     {
-        public Int64? Id { get; set; }
+        public Int64 Id { get; set; }
         public Int64 IdVenda { get; set; }
         public string Inicio { get; set; }
         public string Termino { get; set; }
@@ -20,5 +21,6 @@ namespace BoxBack.Domain.ModelsServices
         public string NomeIndiceReajuste { get; set; }
         public PeriodoReajusteEnum PeriodoReajuste { get; set; }
         public string NomePeriodoReajuste { get; set; }
+        public ICollection<BCFaturaModelService> Faturas { get; set; }
     }
 }

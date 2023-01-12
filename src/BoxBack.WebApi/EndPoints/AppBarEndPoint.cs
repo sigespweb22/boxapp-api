@@ -8,7 +8,7 @@
 // using Microsoft.AspNetCore.Authorization;
 // using AutoMapper;
 // using BoxBack.Domain.Models;
-// using BoxBack.Domain.Interfaces;
+// using BoxBack.Domain.InterfacesRepositories;
 // using BoxBack.Infra.CrossCutting.Identity.Services;
 // using BoxBack.WebApi.Security;
 // using BoxBack.WebApi.Controllers;

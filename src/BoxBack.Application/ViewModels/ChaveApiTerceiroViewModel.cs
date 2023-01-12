@@ -1,6 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using BoxBack.Domain.Models;
 
 namespace BoxBack.Application.ViewModels
 {

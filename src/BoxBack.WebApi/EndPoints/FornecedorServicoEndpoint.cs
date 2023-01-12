@@ -11,9 +11,9 @@ using BoxBack.Infra.Data.Context;
 using BoxBack.Application.ViewModels;
 using BoxBack.Domain.Models;
 using AutoMapper;
-using BoxBack.Domain.Interfaces;
+using BoxBack.Domain.InterfacesRepositories;
 using BoxBack.WebApi.Controllers;
-using BoxBack.Domain.Services;
+using BoxBack.Domain.ServicesThirdParty;
 using BoxBack.Domain.ModelsServices;
 using BoxBack.Application.ViewModels.Selects;
 

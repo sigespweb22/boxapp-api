@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BoxBack.Infra.Data.Context;
 using AutoMapper;
-using BoxBack.Domain.Interfaces;
+using BoxBack.Domain.InterfacesRepositories;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Models;
 using BoxBack.Application.ViewModels;

@@ -1,3 +1,4 @@
+using System.Collections;
 using System;
 using System.Collections.Generic;
 
@@ -44,5 +45,6 @@ namespace BoxBack.Domain.Models
         public ICollection<Servico> Servicos { get; set; }
         public ICollection<Fornecedor> Fornecedores { get; set; }
         public ICollection<Pipeline> Pipelines { get; set; }
+        public ICollection<Rotina> Rotinas { get; set;}
     }
 }

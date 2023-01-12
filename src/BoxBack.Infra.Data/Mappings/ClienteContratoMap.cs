@@ -25,6 +25,11 @@ namespace BoxBack.Infra.Data.Mappings
                 .WithMany(c => c.ClienteContratos)
                 .HasForeignKey(c => c.ClienteId)
                 .OnDelete(DeleteBehavior.NoAction);
+            
+            builder
+                .HasMany(c => c.ClientesContratosFaturas)
+                .WithOne(c => c.ClienteContrato)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

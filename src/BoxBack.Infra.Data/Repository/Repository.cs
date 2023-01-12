@@ -1,13 +1,11 @@
-using System.ComponentModel;
-using System.Reflection.Emit;
 using System;
 using System.Linq;
-using BoxBack.Domain.Interfaces;
 using BoxBack.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using BoxBack.Infra.Data.Extensions;
+using BoxBack.Domain.InterfacesRepositories;
+using System.Linq.Expressions;
 
 namespace BoxBack.Infra.Data.Repository
 {
@@ -89,9 +87,13 @@ namespace BoxBack.Infra.Data.Repository
         {
             await DbSet.AddAsync(obj);
         }
-        public async Task AddRangeAsync(TEntity obj)
+        public async Task AddRangeAsync(IList<TEntity> obj)
         {
             await DbSet.AddRangeAsync(obj);
+        }
+        public virtual void UpdateRange(IList<TEntity> obj)
+        {
+            DbSet.UpdateRange(obj);
         }
         public async Task<string> GetIdFromPropertyAnyAsync(string property, string value)
         {
