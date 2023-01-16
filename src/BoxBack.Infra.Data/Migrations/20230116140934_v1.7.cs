@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BoxBack.Infra.Data.Migrations
 {
-    public partial class v170 : Migration
+    public partial class v17 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -676,161 +676,170 @@ namespace BoxBack.Infra.Data.Migrations
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
+            migrationBuilder.AddColumn<DateTimeOffset>(
+                name: "DataPagamento",
+                table: "ClientesContratosFaturas",
+                type: "timestamp with time zone",
+                nullable: false,
+                defaultValue: new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+
             migrationBuilder.UpdateData(
                 table: "AspNetGroups",
                 keyColumn: "Id",
                 keyValue: new Guid("23e63d9c-283b-496b-b7d8-7dac2ef7a822"),
                 columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 561, DateTimeKind.Unspecified).AddTicks(5614), new TimeSpan(0, -3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 561, DateTimeKind.Unspecified).AddTicks(5635), new TimeSpan(0, -3, 0, 0, 0)) });
+                values: new object[] { new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 519, DateTimeKind.Unspecified).AddTicks(439), new TimeSpan(0, -3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 519, DateTimeKind.Unspecified).AddTicks(454), new TimeSpan(0, -3, 0, 0, 0)) });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "Actions", "ConcurrencyStamp", "Description", "Name", "NormalizedName", "Subject" },
                 values: new object[,]
                 {
-                    { "021e4e4a-c7dd-4148-8c4b-636d3aa9748b", new[] { 3 }, "4b1cfeef-dd47-4e1e-9a53-f8daa1106f7b", "Pode visualizar uma comissão de vendedor", "CanVendedorComissaoCreate", "CANVENDEDORCOMISSAOCREATE", "ac-vendedorComissao-page" },
-                    { "0300373e-0785-4003-99c8-f4e0c02136fe", new[] { 1 }, "4af61370-c4cc-4abe-ad2c-d942376dda1c", "Pode listar os dados de todos os produtos de fornecedores", "CanFornecedorProdutoList", "CANFORNECEDORPRODUTOLIST", "ac-fornecedorProduto-page" },
-                    { "09cb6229-0b17-4d35-b0c2-7e5b84e3709e", new[] { 1 }, "dc4e32a2-64a5-419c-b9bc-ad3f5fbf0f28", "Pode listar os dados de todos os usuários", "CanUserList", "CANUSERLIST", "ac-user-page" },
-                    { "0b613694-3a6b-4745-8ba3-12ca6e44d795", new[] { 3 }, "7632ad97-6c2c-4621-bb93-537a158ef877", "Pode criar um grupo", "CanGroupCreate", "CANGROUPCREATE", "ac-group-page" },
-                    { "0c13e769-94d0-4668-b10f-70c9d61bbe5b", new[] { 1, 2, 3, 4, 5 }, "513fba84-a520-44ae-ae2f-1d8508bc95b9", "Pode criar uma chave de api de terceiro", "CanChaveApiTerceiroAll", "CANCHAVEAPITERCEIROALL", "ac-chaveApiTerceiro-page" },
-                    { "10ea5f71-889e-4229-a873-1aefc6e612f1", new[] { 2 }, "dc454b9a-17af-45fb-9e6a-4ed138c1a9b5", "Pode listar os dados de uma comissão de vendedor", "CanVendedorComissaoRead", "CANVENDEDORCOMISSAOREAD", "ac-vendedorComissao-page" },
-                    { "11aae703-ebc0-4e33-b300-b3fa4b28d08b", new[] { 1 }, "1933b410-0091-4cb4-929f-381d2bb32862", "Pode criar uma chave de api de terceiro", "CanChaveApiTerceiroList", "CANCHAVEAPITERCEIROLIST", "ac-chaveApiTerceiro-page" },
-                    { "11eba5d3-47cd-4fd5-8215-733589ebbcbf", new[] { 2 }, "c10d2b04-64ad-49d1-9d6d-0cc94ccd58d7", "Pode listar os dados de um produto de cliente", "CanClienteProdutoRead", "CANCLIENTEPRODUTOREAD", "ac-clienteProduto-page" },
-                    { "12921c54-9377-414c-a3cd-63fded1ba8ff", new[] { 1, 2, 3, 4, 5 }, "e9cde316-f7a5-40c5-970d-28f55ce8cb90", "Pode visualizar todas as dashboards de controle de acesso", "CanDashboardControleAcessoAll", "CANDASHBOARDCONTROLEACESSOALL", "ac-dashboardControleAcesso-page" },
-                    { "18d327c0-0f55-4721-998e-dbf255e62b2c", new[] { 3 }, "6b1ce555-d465-4c30-816a-44a65e505653", "Pode criar um serviço para um cliente", "CanClienteServicoCreate", "CANCLIENTESERVICOCREATE", "ac-clienteServico-page" },
-                    { "1a3d2886-8810-483a-a369-8e2c1764955b", new[] { 2 }, "c93cf828-7058-4bc2-be17-8a9f0a11070c", "Pode listar os dados de um produto de fornecedor", "CanFornecedorProdutoRead", "CANFORNECEDORPRODUTOREAD", "ac-fornecedorProduto-page" },
-                    { "1b38072c-b4bf-40a2-b1e4-fc0a21fe8b90", new[] { 5 }, "7c2f6903-f0ca-4a57-94da-e03d4cd891a1", "Pode criar uma chave de api de terceiro", "CanChaveApiTerceiroDelete", "CANCHAVEAPITERCEIRODELETE", "ac-chaveApiTerceiro-page" },
-                    { "1d926534-cb8a-4e20-af45-971e77f1f32a", new[] { 1 }, "ed3ec03e-873c-4e99-a78d-89d9a75c1bcf", "Pode listar os dados de todos os vendedores", "CanVendedorList", "CANVENDEDORLIST", "ac-vendedor-page" },
-                    { "1e0a149d-c2a0-4d16-91f6-63ecfbf40b42", new[] { 1, 2, 3, 4, 5 }, "21409d66-2ab4-46b4-9e3f-0b9796b6e7e7", "Pode realizar todas as ações/operações em todas as comissões de vendedores", "CanVendedorComissaoAll", "CANVENDEDORCOMISSAOALL", "ac-vendedorComissao-page" },
-                    { "1ef75bff-49ff-4f01-81c1-6007c9ab1efb", new[] { 2 }, "005c06bc-3219-4c54-b5c8-7a48c5f72773", "Pode criar uma chave de api de terceiro", "CanChaveApiTerceiroRead", "CANCHAVEAPITERCEIROREAD", "ac-chaveApiTerceiro-page" },
-                    { "1ffe59da-7ad3-483b-b77a-9396c5417996", new[] { 1 }, "4fa7adb0-489b-461c-89b6-ba22f5731f8f", "Pode listar os dados de todos os produtos de clientes", "CanClienteProdutoList", "CANCLIENTEPRODUTOLIST", "ac-clienteProduto-page" },
-                    { "209e5357-6957-4ecb-8f1e-be6ebf234c3d", new[] { 4 }, "f3d00c7b-825b-4001-803b-b3d571151312", "Pode criar um vendedor", "CanVendedorUpdate", "CANVENDEDORUPDATE", "ac-vendedor-page" },
-                    { "223fcad6-8a25-4923-bee9-978e1826f5f5", new[] { 1 }, "d937349c-b1f4-48c7-a35b-e4f71bf2b770", "Pode listar todas as rotinas de sistema", "CanRotinaList", "CANROTINALIST", "ac-rotina-page" },
-                    { "2340c662-1415-488b-a93b-86c46e2c8ea5", new[] { 5 }, "dcc09cae-6581-44ce-b0e5-c9108c2ec688", "Pode deletar um serviço", "CanServicoDelete", "CANSERVICODELETE", "ac-servico-page" },
-                    { "27515bb1-8859-45ec-bff0-f5b720899120", new[] { 1 }, "d2123083-2360-4d62-b26a-082000df8491", "Pode listar os dados de todas as roles/permissões", "CanRoleList", "CANROLELIST", "ac-role-page" },
-                    { "299c5297-49d0-4a72-8896-cfb9c9fc2b8d", new[] { 2 }, "0cf9dd7d-fa1d-48ce-ba7f-629f36c0425b", "Pode listar os dados de um produtos", "CanProdutoRead", "CANPRODUTOREAD", "ac-produto-page" },
-                    { "2d08b7cb-9661-4cba-95f5-c2c45d985367", new[] { 1, 2, 3, 4, 5 }, "5003e799-e044-4dac-ba1c-6c0c0610c68b", "Pode realizar todas as ações/operações em todos os fornecedores", "CanFornecedorAll", "CANFORNECEDORALL", "ac-fornecedor-page" },
-                    { "2e7b1103-5d32-4b61-9f63-3d12886ef581", new[] { 1 }, "0223452c-f3f8-4337-a1ec-10e8f481fecd", "Pode listar os dados de todos os serviços de fornecedores", "CanFornecedorServicoList", "CANFORNECEDORSERVICOLIST", "ac-fornecedorServico-page" },
-                    { "2ea85c59-ffee-4ec6-972e-5fa84f921773", new[] { 1 }, "a88621a4-4d85-4ee6-b154-799651aebc3a", "CanDashboardComercialClienteContratoList", "CanDashboardComercialClienteContratoList", "CANDASHBOARDCOMERCIALCLIENTECONTRATOLIST", "ac-dashboardComercialClienteContrato-page" },
-                    { "34dbeb4c-0aba-4db8-ae69-cb286262fc78", new[] { 3 }, "5721b417-4771-4aa3-bd41-40475076bebe", "Pode criar um fornecedor", "CanFornecedorCreate", "CANFORNECEDORCREATE", "ac-fornecedor-page" },
-                    { "367dd85c-746f-45f1-ba9d-cf3bbb44c743", new[] { 5 }, "e06c1eb8-49a4-40d3-a6b8-0c92be60683e", "Pode deletar um produto de fornecedor", "CanFornecedorProdutoDelete", "CANFORNECEDORPRODUTODELETE", "ac-fornecedorProduto-page" },
-                    { "38559c9d-1940-49b4-b971-8d81f02050d4", new[] { 1 }, "2845d616-1c25-4e4b-8524-43e88d44ad49", "Pode listar o título dos negócios", "CanTitleBussinesList", "CANTITLEBUSSINESLIST", "ac-titleBussines-page" },
-                    { "3d0aa563-7e00-4379-84f2-3b1782c3d9e9", new[] { 4 }, "9436fd10-21a8-464e-9ba5-4121ea4d8da3", "Pode atualizar um pipeline", "CanPipelineUpdate", "CANPIPELINEUPDATE", "ac-pipeline-page" },
-                    { "3d1eb79b-d093-492d-bd68-e78752f33955", new[] { 1, 2, 3, 4, 5 }, "f3f3ee29-1722-4451-bea4-3d45dea34d5a", "Pode realizar todas as ações/operações em todos os serviços de clientes", "CanClienteServicoAll", "CANCLIENTESERVICOALL", "ac-clienteServico-page" },
-                    { "3fdfb1bd-0b10-4f02-bd1b-48b8661ba4f5", new[] { 3 }, "e145ef81-ff9c-4da4-82f3-ff87d3cc4f71", "Pode visualizar um contrato vinculado a um ou vários vendedores", "CanVendedorContratoCreate", "CANVENDEDORCONTRATOCREATE", "ac-vendedorContrato-page" },
-                    { "42ddf3d8-e43f-4e96-861a-c908493c38b7", new[] { 1, 2, 3, 4, 5 }, "6ae602e2-45ed-4cb4-a990-8af40b759dd1", "Pode realizar todas as ações/operações em dashboard comercial", "CanDashboardComercialAll", "CANDASHBOARDCOMERCIALALL", "ac-dashboardComercial-page" },
-                    { "462b26db-5ebc-4911-ac4f-5884958e14db", new[] { 1, 2, 3, 4, 5 }, "53ad975b-f70c-4a6b-9099-5fdde126847d", "Pode visualizar todos os indicadores da dashboard comercial", "CanClienteAll", "CANCLIENTEALL", "ac-cliente-page" },
-                    { "47a0327a-d42e-495f-a6ce-7401502ff190", new[] { 2 }, "6e919ba7-df27-479e-8c34-b825a5b0ca32", "Pode listar os dados de uma rotina", "CanRotinaRead", "CANROTINAREAD", "ac-rotina-page" },
-                    { "47b8c402-4c9f-41fe-9fdb-362767d0dc34", new[] { 1 }, "e5346b64-d2bf-482c-92bb-f78a7070ccd4", "Pode listar os dados de todos os serviços", "CanServicoList", "CANSERVICOLIST", "ac-servico-page" },
-                    { "483f8ae9-9f2a-4a0a-b5ce-b94fd15d79ac", new[] { 5 }, "40faa1b0-8999-4106-9811-2acdf84fa87a", "Pode deletar um produtos", "CanProdutoDelete", "CANPRODUTODELETE", "ac-produto-page" },
-                    { "4df889ed-714c-43ed-9913-c945890cb436", new[] { 1 }, "4fc3ed68-fe4b-4869-95e3-aad1d74384f1", "Pode listar os dados de todos os pipelines", "CanPipelineList", "CANPIPELINELIST", "ac-pipeline-page" },
-                    { "511abf04-0b4f-445a-9dd0-f1df75ca21c9", new[] { 3 }, "6c29b599-1cf2-4d49-afa9-74b98330b172", "Pode criar um contrato de cliente", "CanClienteContratoCreate", "CANCLIENTECONTRATOCREATE", "ac-clienteContrato-page" },
-                    { "549be678-153e-42fb-9103-6f396e4e7eae", new[] { 1, 2, 3, 4, 5 }, "0b6bcf38-11b5-4428-ac23-4d8905076973", "Pode visualizar todas as dashboards do cliente", "CanDashboardClienteAll", "CANDASHBOARDCLIENTEALL", "ac-dashboardCliente-page" },
-                    { "59e15532-7c05-4ae0-a6e7-1cb22714061a", new[] { 4 }, "b44632ae-8aa9-48c7-ae09-3d929fea9806", "Pode atualizar os dados de um usuário", "CanUserUpdate", "CANUSERUPDATE", "ac-user-page" },
-                    { "5aae85df-2881-485d-9876-e5b7f5ae8a0f", new[] { 2 }, "f02cc7bd-41de-42de-81bb-db381c73eb2f", "Pode listar os dados de um usuários", "CanUserRead", "CANUSERREAD", "ac-user-page" },
-                    { "60ee7e52-6a73-46fb-9d13-d45934941a98", new[] { 4 }, "cc719227-8105-4641-8d8e-2e63544f6e31", "Pode criar um vínculo de contrato a um vendedor", "CanVendedorContratoUpdate", "CANVENDEDORCONTRATOUPDATE", "ac-vendedorContrato-page" },
-                    { "62187551-3af5-4cc1-9002-a13c4242586b", new[] { 1 }, "2d9cd9df-31b8-449d-995f-ce297b210c26", "Pode listar os dados de todos os grupos", "CanGroupList", "CANGROUPLIST", "ac-group-page" },
-                    { "63e871d6-254a-4077-8e26-0c8778ecfd60", new[] { 3 }, "ddb16e22-721a-45e0-ade5-3fbfcb5e9fd8", "Pode criar um produtos", "CanProdutoCreate", "CANPRODUTOCREATE", "ac-produto-page" },
-                    { "66b5d88f-dd2f-4f82-9e78-9de49fda1777", new[] { 5 }, "fd37d8a7-ad11-4a45-b4a2-e454eb4db483", "Pode deletar uma comissão de vendedor", "CanVendedorComissaoDelete", "CANVENDEDORCOMISSAODELETE", "ac-vendedorComissao-page" },
-                    { "692eaef7-5566-40eb-935f-6902ec7c1d88", new[] { 5 }, "49c099e5-7b3a-4d7d-b339-96d46568145f", "Pode deletar um vendedor", "CanVendedorDelete", "CANVENDEDORDELETE", "ac-vendedor-page" },
-                    { "6b924891-e69f-4885-b6b9-bf0479c6cd92", new[] { 1 }, "36867eac-0231-422b-a5b4-2a24a48240cc", "Pode listar os dados de todos os contratos vinculados a vendedores", "CanVendedorContratoList", "CANVENDEDORCONTRATOLIST", "ac-vendedorContrato-page" },
-                    { "6ba6f85d-0fac-4d0a-bb2e-e444c9d95c03", new[] { 1, 2, 3, 4, 5 }, "cb4d3057-464e-45fe-9a31-29ddbb37702f", "Pode realizar todas as ações/operações em todos os contratos vinculados a vendedores", "CanVendedorContratoAll", "CANVENDEDORCONTRATOALL", "ac-vendedorContrato-page" },
-                    { "6bb0f31e-add6-4858-b353-b2e08b5e0191", new[] { 1, 2, 3, 4, 5 }, "12db6724-8263-4d27-b64c-06cc21d73d9b", "Pode realizar todas as ações/operações em todos as roles/permissões", "CanRoleAll", "CANROLEALL", "ac-role-page" },
-                    { "6dd5eea1-5265-4970-befa-856dda3923af", new[] { 3 }, "767a364c-0a58-4f98-a1fc-dca4dae10d5b", "Pode criar um cliente", "CanClienteCreate", "CANCLIENTECREATE", "ac-cliente-page" },
-                    { "6f1b4934-4cd5-476b-927d-16d2dfc5c0e4", new[] { 5 }, "d68ca350-ecc9-42f9-9cb4-d167276a4b33", "Pode deletar um fornecedor", "CanForncedorDelete", "CANFORNCEDORDELETE", "ac-forncedor-page" },
-                    { "6fdf6364-ef41-46bd-80a2-4a81645c23e1", new[] { 4 }, "5f08109e-552e-4cc3-8b84-defd8d93f372", "Pode atualizar os dados de rotinas", "CanRotinaUpdate", "CANROTINAUPDATE", "ac-rotina-page" },
-                    { "706a293e-74d0-4bbb-8eac-f6a9c77d84a1", new[] { 3 }, "a76daad0-c76f-4669-8873-e46a4b490589", "Pode criar um pipeline", "CanPipelineCreate", "CANPIPELINECREATE", "ac-pipeline-page" },
-                    { "721d8d5c-65f2-46c0-abd5-f947a2556cfe", new[] { 2 }, "f3581157-a7a1-45a9-a8b5-6d3f6ad8d13e", "Pode listar os dados de um serviço", "CanServicoRead", "CANSERVICOREAD", "ac-servico-page" },
-                    { "741ddda0-1e90-4ac4-9eaa-59d2dd5a04f8", new[] { 1, 2, 3, 4, 5 }, "3d751a1e-7361-491a-95c0-1b8f54820055", "Pode realizar todas as ações/operações em todos os grupos", "CanGroupAll", "CANGROUPALL", "ac-group-page" },
-                    { "765868b6-500d-4a4d-916d-06e75d3e867d", new[] { 2 }, "1d15b3e6-2281-4530-9369-8775415b560f", "Pode listar os dados de um contrato vinculado a um vendedor", "CanVendedorContratoRead", "CANVENDEDORCONTRATOREAD", "ac-vendedorContrato-page" },
-                    { "797bfcb8-934e-4678-b964-7c702405b6d1", new[] { 1 }, "21903654-75e8-4987-a09f-835cfe573518", "Pode listar o título do sistema", "CanTitleSystemList", "CANTITLESYSTEMLIST", "ac-titleSystem-page" },
-                    { "7e21a20f-75ee-4b4a-aa12-6de54c0903cc", new[] { 4 }, "5dd022a5-5243-4ad0-b396-cf2603327354", "Pode atualizar um contrato de cliente", "CanClienteContratoUpdate", "CANCLIENTECONTRATOUPDATE", "ac-clienteContrato-page" },
-                    { "7f29b6e8-1eaf-43cb-ab5b-a3eba5d3557c", new[] { 1 }, "ff354f06-3203-47d2-b6f5-3823f049f09e", "Pode listar os dados de todos os produtos", "CanProdutoList", "CANPRODUTOLIST", "ac-produto-page" },
-                    { "7fbae422-7f18-4767-87d8-9a12cf9efcca", new[] { 5 }, "913ddc4b-a611-4bf3-8171-228d4c922c80", "Pode deletar um serviço de um cliente", "CanClienteServicoDelete", "CANCLIENTESERVICODELETE", "ac-clienteServico-page" },
-                    { "8204eda6-69ea-4894-90fb-9a9cb1b0703f", new[] { 3 }, "aaaa7395-5624-48e4-9d0f-676757d49ac8", "Pode visualizar uma fatura de contrato de cliente", "CanClienteContratoFaturaCreate", "CANCLIENTECONTRATOFATURACREATE", "ac-clienteContratoFatura-page" },
-                    { "82958bb1-5d1a-49d8-a0f4-984fb10b3831", new[] { 4 }, "983f2e77-4db6-4d8d-968b-6b4320a3201c", "Pode atualizar um serviço de um fornecedor", "CanFornecedorServicoUpdate", "CANFORNECEDORSERVICOUPDATE", "ac-fornecedorServico-page" },
-                    { "831461a1-55e4-4f69-87d0-681b951bde81", new[] { 1, 2, 3, 4, 5 }, "8259820c-1bd7-4507-abd3-c3c3bd9815c9", "Pode realizar todas as ações/operações em todas as dashboards", "CanDashboardAll", "CANDASHBOARDALL", "ac-dashboard-page" },
-                    { "845ab5c9-db70-4ec6-829a-60c0bd9da673", new[] { 1 }, "ab48a999-6cc3-4e10-8b02-329fe547889e", "Pode listar os dados de todos os clientes", "CanClienteList", "CANCLIENTELIST", "ac-cliente-page" },
-                    { "885d2942-0188-4e1d-9f76-31095952da9f", new[] { 3 }, "59e39c68-4739-456e-b162-0520dc21a9aa", "Pode visualizar um produto de fornecedor", "CanFornecedorProdutoCreate", "CANFORNECEDORPRODUTOCREATE", "ac-fornecedorProduto-page" },
-                    { "88b4886a-7241-415d-86d9-101430589b1f", new[] { 2 }, "afc478a6-bb95-453f-b3c6-2ad4e05ca26c", "Pode listar os dado de um cliente", "CanClienteRead", "CANCLIENTEREAD", "ac-cliente-page" },
-                    { "8919d26a-93ed-4998-bcc0-780d7aec63c8", new[] { 2 }, "1ac9100d-ebe7-4869-b942-fc8948c7da35", "Pode listar os dados de uma rotina event history", "CanRotinaEventHistoryRead", "CANROTINAEVENTHISTORYREAD", "ac-rotinaEventHistory-page" },
-                    { "8af0c203-735b-49bc-87da-3a7f66770d05", new[] { 1, 2, 3, 4, 5 }, "8b194213-2555-4a18-b9f3-906bb6a621ae", "Pode realizar todas as ações/operações em todos os vendedores", "CanVendedorAll", "CANVENDEDORALL", "ac-vendedor-page" },
-                    { "8e7ab5ab-1d6b-4f7e-9c69-dabe0e547ade", new[] { 1, 2, 3, 4, 5 }, "33b5a09a-7114-432a-94ac-603a4c4a50d2", "Pode realizar todas as ações/operações em todos os produtos de clientes", "CanClienteProdutoAll", "CANCLIENTEPRODUTOALL", "ac-clienteProduto-page" },
-                    { "9104e6b5-b05a-478a-9137-a27a41556044", new[] { 1 }, "09536ca5-0dd9-44f2-9148-c54ca8bf8b1d", "CanDashboardPublicaClienteContratoList", "CanDashboardPublicaClienteContratoList", "CANDASHBOARDPUBLICACLIENTECONTRATOLIST", "ac-dashboardPublicaClienteContrato-page" },
-                    { "93a5482f-def7-45bb-978f-97beece9bf9e", new[] { 1 }, "c10a34a7-84de-4887-b3a1-8d3ff7d2e4a1", "Pode listar os dados de todos os fornecedores", "CanFornecedorList", "CANFORNECEDORLIST", "ac-fornecedor-page" },
-                    { "95edd683-1c16-45d8-b226-80a487caffd9", new[] { 2 }, "bc49f0b1-bf30-466a-ba8a-ebb592b6b8e7", "Pode listar os dado de um grupo", "CanGroupRead", "CANGROUPREAD", "ac-group-page" },
-                    { "973eb5fe-bb3c-48f8-9998-7db9a8043d29", new[] { 5 }, "874704ca-7cb0-479c-a232-4abb8a4bc1d7", "Pode deletar um vínculo de contrato com um vendedor", "CanVendedorContratoDelete", "CANVENDEDORCONTRATODELETE", "ac-vendedorContrato-page" },
-                    { "97b3c6e9-18f4-4978-838b-14753a312c28", new[] { 1, 2, 3, 4, 5 }, "adc222e8-c1ba-4e16-9e1d-644bfa897dbf", "Pode realizar todas as ações/operações relacionadas a entidade de sistema rotina", "CanRotinaAll", "CANROTINAALL", "ac-rotina-page" },
-                    { "9a9c04e8-2090-4046-bd98-c28106154284", new[] { 2 }, "d2cd3dbd-b3f4-4840-a5db-b581a7d17945", "Pode listar os dados de uma roles/permissão", "CanRoleRead", "CANROLEREAD", "ac-role-page" },
-                    { "9c38d1ec-3571-47d5-9cff-7b6036557cbb", new[] { 4 }, "17fe956c-18eb-4984-b302-dfa13549d088", "Pode atualizar os dados de um cliente", "CanClienteUpdate", "CANCLIENTEUPDATE", "ac-cliente-page" },
-                    { "9c5ef886-055e-4474-a185-b210239bc0a8", new[] { 4 }, "8f9c232f-f72c-4cc5-a469-7fab085dd08c", "Pode criar uma chave de api de terceiro", "CanChaveApiTerceiroUpdate", "CANCHAVEAPITERCEIROUPDATE", "ac-chaveApiTerceiro-page" },
-                    { "9d780d8e-f52f-4181-a767-b2a328cd7663", new[] { 1, 2, 3, 4, 5 }, "eaddbee9-70bb-4a29-935c-37332e454fc2", "Pode realizar todas as ações/operações relacionadas a entidade rotina event history", "CanRotinaEventHistoryAll", "CANROTINAEVENTHISTORYALL", "ac-rotinaEventHistory-page" },
-                    { "9d78bcf3-c70c-4fa3-9feb-0f2e7b6b9a16", new[] { 1, 2, 3, 4, 5 }, "2c69b85a-f909-4380-97dc-adb21a7bcb67", "Pode realizar todas as ações/operações em dashboard publica", "CanDashboardPublicaAll", "CANDASHBOARDPUBLICAALL", "ac-dashboardPublica-page" },
-                    { "a19ac33c-e003-4062-b3da-dc9feeef7f5b", new[] { 3 }, "aecd8129-eeca-48ce-bfdb-c9737eb7fcee", "Pode criar uma chave de api de terceiro", "CanChaveApiTerceiroCreate", "CANCHAVEAPITERCEIROCREATE", "ac-chaveApiTerceiro-page" },
-                    { "a1e7d4ea-a5a2-4041-adde-55da5365ae7d", new[] { 5 }, "39119a08-2624-4bc7-b05a-87e50fc44c9c", "Pode deletar um serviço de um fornecedor", "CanFornecedorServicoDelete", "CANFORNECEDORSERVICODELETE", "ac-fornecedorServico-page" },
-                    { "a2dd0f14-3392-44dc-95db-6122690cadf9", new[] { 4 }, "572253fa-bc50-4bc7-a5dc-7c9035463858", "Pode atualizar um produtos", "CanProdutoUpdate", "CANPRODUTOUPDATE", "ac-produto-page" },
-                    { "a325a20e-91ad-43e7-8750-dce55f661453", new[] { 4 }, "62e77e44-0fd7-4e2a-9d36-26bcc0f6de00", "Pode criar um produto de fornecedor", "CanFornecedorProdutoUpdate", "CANFORNECEDORPRODUTOUPDATE", "ac-fornecedorProduto-page" },
-                    { "a8b7ada7-a2f6-4515-b370-eaaed6126c5c", new[] { 1, 2, 3, 4, 5 }, "da0230dc-e93e-4178-a80b-575a9612a08e", "Pode realizar todas as ações/operações em todos os serviços", "CanServicoAll", "CANSERVICOALL", "ac-servico-page" },
-                    { "a9d40957-dd6f-46ef-bcaf-b18854dda069", new[] { 1 }, "8deba770-8ee0-4ac6-b638-0cefd1d7a37e", "Pode listar os dados de todos os contratos de clientes", "CanClienteContratoList", "CANCLIENTECONTRATOLIST", "ac-clienteContrato-page" },
-                    { "ae279a5a-e1a1-402c-a70e-b083006441a0", new[] { 2 }, "2af88ab8-e50f-44f4-88f4-18ab5f1ca6c1", "Pode listar os dados de um pipeline", "CanPipelineRead", "CANPIPELINEREAD", "ac-pipeline-page" },
-                    { "b0d4e07c-cc98-49b9-8c4a-6ffdc5a7a5f1", new[] { 4 }, "e7832481-b910-41d0-a045-45bc75b3bca8", "Pode atualizar os dados de um grupo", "CanGroupUpdate", "CANGROUPUPDATE", "ac-group-page" },
-                    { "b0f5b997-3bf8-435f-8b4d-b6ad652806c6", new[] { 3 }, "e42afc29-2570-4bdb-bb6f-78f8d9fe6503", "Pode criar um produto de cliente", "CanClienteProdutoCreate", "CANCLIENTEPRODUTOCREATE", "ac-clienteProduto-page" },
-                    { "b54ec839-cc72-41fb-ab7e-b1d2c5f2aed6", new[] { 5 }, "1494b7ca-b73c-49c7-80b9-d4bf5c02b668", "Pode deletar um grupo", "CanGroupDelete", "CANGROUPDELETE", "ac-group-page" },
-                    { "b766a27c-38cc-427d-b362-6d6065c88d61", new[] { 5 }, "65379852-ff16-4fc2-9a87-1430f94aba10", "Pode deletar um cliente", "CanClienteDelete", "CANCLIENTEDELETE", "ac-cliente-page" },
-                    { "bda070bd-be6f-48a2-8c17-152d75f2a38a", new[] { 1, 2, 3, 4, 5 }, "8c9ac46c-2dec-4a06-9018-0e3a363225b9", "Pode realizar todas as ações/operações em todas as faturas de contratos de clientes", "CanClienteContratoFaturaAll", "CANCLIENTECONTRATOFATURAALL", "ac-clienteContratoFatura-page" },
-                    { "be90eb40-b5bc-49b7-9efa-6f7a7c5474a5", new[] { 3 }, "6b49ee1a-26d1-40df-82c1-524bae02a5f2", "Pode criar um serviço", "CanServicoCreate", "CANSERVICOCREATE", "ac-servico-page" },
-                    { "bf5b9737-745b-4850-ba67-fec4ab871beb", new[] { 1, 2, 3, 4, 5 }, "e151b0f4-af53-43c8-a7ec-6473234a793a", "Pode realizar todas as ações/operações em todos os pipelines", "CanPipelineAll", "CANPIPELINEALL", "ac-pipeline-page" },
-                    { "c0181ba5-cf55-4527-9106-8acffe0fbfef", new[] { 1 }, "1ac63440-f183-497a-a0f9-c092a10e95c9", "Pode listar todas as rotinas events histories", "CanRotinaEventHistoryList", "CANROTINAEVENTHISTORYLIST", "ac-rotinaEventHistory-page" },
-                    { "c1c253ae-6ef6-478d-8b4d-e86a992c3a0f", new[] { 1, 2, 3, 4, 5 }, "3ac621e1-4799-4e57-980d-0c05291b9088", "Pode realizar todas as ações/operações em todos os usuários", "CanUserAll", "CANUSERALL", "ac-user-page" },
-                    { "c2275201-4c14-4d57-8fb8-6b6d31eb9191", new[] { 3 }, "b461b227-5884-4ae4-8807-01cf45a80c8a", "Pode criar uma role/permissão", "CanRoleCreate", "CANROLECREATE", "ac-role-page" },
-                    { "c23f0169-bfa4-4c19-8c93-e0ca43cc92f0", new[] { 1, 2, 3, 4, 5 }, "29a9a9e1-1d9e-4cf2-99bf-641844b69905", "Pode realizar todas as ações/operações em todos os produtos de fornecedores", "CanFornecedorProdutoAll", "CANFORNECEDORPRODUTOALL", "ac-fornecedorProduto-page" },
-                    { "c3498081-4970-4188-b450-c677a9a7d925", new[] { 5 }, "a27054ae-9a79-4069-aef7-6aaf234c06ae", "Pode deletar uma role/permissão", "CanRoleDelete", "CANROLEDELETE", "ac-role-page" },
-                    { "c4884687-e5da-415c-8abe-c3bd8551ce04", new[] { 5 }, "4dd44927-5be5-456f-b5cc-dff0cd033c1e", "Pode deletar uma fatura de contrato de cliente", "CanClienteContratoFaturaDelete", "CANCLIENTECONTRATOFATURADELETE", "ac-clienteContratoFatura-page" },
-                    { "c4b9c8f0-0cbf-46de-9e4a-6faaf33c0235", new[] { 4 }, "4fe959bb-eb53-4e48-844a-def284575a97", "Pode criar uma comissão de vendedor", "CanVendedorComissaoUpdate", "CANVENDEDORCOMISSAOUPDATE", "ac-vendedorComissao-page" },
-                    { "c8063f08-11d4-4f02-8ede-3699f4de93bf", new[] { 1 }, "3d1affe7-0840-461a-a648-e98147977c34", "Pode listar os dados de todos os serviços de clientes", "CanClienteServicoList", "CANCLIENTESERVICOLIST", "ac-clienteServico-page" },
-                    { "c870105c-f39e-46e1-9976-c2f68aa87b8d", new[] { 3 }, "ac5b02ac-cdac-4fa2-be52-c66d0b6f4acb", "Pode criar um usuário", "CanUserCreate", "CANUSERCREATE", "ac-user-page" },
-                    { "d0327e88-40ce-489a-8b3a-6d92d43be58b", new[] { 4 }, "80104b31-0cd9-46f3-8213-e021b2e5a03a", "Pode atualizar um serviço de um cliente", "CanClienteServicoUpdate", "CANCLIENTESERVICOUPDATE", "ac-clienteServico-page" },
-                    { "d2087cd7-2337-44c0-ba6c-09815030589d", new[] { 2 }, "0f2415d4-26e5-4afd-adf1-a5e48bd8922c", "Pode listar os dados de um vendedor", "CanVendedorRead", "CANVENDEDORREAD", "ac-vendedor-page" },
-                    { "d303a76f-21f2-4856-a6a3-25d2782848e1", new[] { 3 }, "d579518b-60b8-435b-8350-836eb99d1b9c", "Pode visualizar um vendedor", "CanVendedorCreate", "CANVENDEDORCREATE", "ac-vendedor-page" },
-                    { "d3d59b02-003b-40f7-a5c2-860f168ce483", new[] { 5 }, "e9ba3eac-8195-43e1-bf01-30dc828ccf83", "Pode deletar um produto de cliente", "CanClienteProdutoDelete", "CANCLIENTEPRODUTODELETE", "ac-clienteProduto-page" },
-                    { "db356a21-b197-450d-9350-612b3f87ce3e", new[] { 2 }, "2e27296c-4f59-49ff-94fe-238b10596fe7", "Pode listar os dados de um contrato de cliente", "CanClienteContratoRead", "CANCLIENTECONTRATOREAD", "ac-clienteContrato-page" },
-                    { "dd4e9a50-fe2f-47d1-b396-6b85b56acbe9", new[] { 5 }, "642dc923-e328-4b42-80a9-12ebd251ae51", "Pode deletar um pipeline", "CanPipelineDelete", "CANPIPELINEDELETE", "ac-pipeline-page" },
-                    { "de6ebcd3-b82d-417d-94b8-2a1872c8565b", new[] { 1, 2, 3, 4, 5 }, "66032801-3a6c-40eb-b1ea-a1ba915f854d", "Pode realizar todas as ações/operações em todos os serviços de fornecedores", "CanFornecedorServicoAll", "CANFORNECEDORSERVICOALL", "ac-fornecedorServico-page" },
-                    { "dee8fb21-95f4-451c-a48c-108e53f9d7ed", new[] { 5 }, "7fad5179-9694-4528-a69d-08dd3fa5d5a0", "Pode deletar um contrato de cliente", "CanClienteContratoDelete", "CANCLIENTECONTRATODELETE", "ac-clienteContrato-page" },
-                    { "e10eb0d2-5927-4fa9-997a-6426d9028545", new[] { 5 }, "457168b0-514d-4c9d-85bf-a4c0c374a602", "Pode deletar um usuário", "CanUserDelete", "CANUSERDELETE", "ac-user-page" },
-                    { "e643891d-aac1-434e-b774-107971969894", new[] { 2 }, "f7670e12-bcff-45be-817e-70eea1888958", "Pode listar os dados de um fornecedor", "CanFornecedorRead", "CANFORNECEDORREAD", "ac-fornecedor-page" },
-                    { "e7b4911f-6de6-4123-af16-897327dea19a", new[] { 4 }, "02ca6748-35d1-49bf-863b-b575e020d0f6", "Pode atualizar um fornecedor", "CanFornecedorUpdate", "CANFORNECEDORUPDATE", "ac-fornecedor-page" },
-                    { "e8795a2f-4bd6-4cda-bc2b-cde680163e11", new[] { 2 }, "f3294d4b-8c58-4e78-b4ad-914c5e98e021", "Pode listar os dado de um serviço de fornecedor", "CanFornecedorServicoRead", "CANFORNECEDORSERVICOREAD", "ac-fornecedorServico-page" },
-                    { "ea54795d-db56-4294-bfc7-d1f7fa3d0c1c", new[] { 1, 2, 3, 4, 5 }, "5a4de820-7183-4ad0-a778-229e16e5f641", "Pode realizar todas as ações/operações em todos os contratos de clientes", "CanClienteContratoAll", "CANCLIENTECONTRATOALL", "ac-clienteContrato-page" },
-                    { "ef373b30-eda9-46c8-8e3d-4c11b30f99b3", new[] { 4 }, "1e5ee4f4-95df-473f-b8ad-4236dbcd590e", "Pode atualizar um produto de cliente", "CanClienteProdutoUpdate", "CANCLIENTEPRODUTOUPDATE", "ac-clienteProduto-page" },
-                    { "f53bc631-425f-47b7-ab25-bfecfba0bc07", new[] { 3 }, "fe7eb433-3424-4110-847e-c306d33579ed", "Pode criar um serviço para um fornecedor", "CanFornecedorServicoCreate", "CANFORNECEDORSERVICOCREATE", "ac-fornecedorServico-page" },
-                    { "f683647e-a610-44e3-8e3d-4049940abb74", new[] { 4 }, "1905c32c-de1f-4f56-a482-7a37bc0ea3f1", "Pode criar uma fatura de contrato de cliente", "CanClienteContratoFaturaUpdate", "CANCLIENTECONTRATOFATURAUPDATE", "ac-clienteContratoFatura-page" },
-                    { "f9a050ce-83f0-4948-9276-62a3ddeb7e4e", new[] { 2 }, "59415255-b14e-4996-8abb-9522d177f3aa", "Pode listar os dados de uma fatura de contrato de cliente", "CanClienteContratoFaturaRead", "CANCLIENTECONTRATOFATURAREAD", "ac-clienteContratoFatura-page" },
-                    { "fa84da26-ca5d-4090-8ecb-65a4ffe5615a", new[] { 4 }, "cbbc1155-dae6-4af0-bd27-cf6ce09c8115", "Pode atualizar um serviço", "CanServicoUpdate", "CANSERVICOUPDATE", "ac-servico-page" },
-                    { "fc57f4f7-6a63-411e-bc93-d3fdc5a0a968", new[] { 1 }, "c10cc1b5-e872-4ce5-98b4-99546d524670", "Pode listar os dados de todas as faturas de contratos de clientes", "CanClienteContratoFaturaList", "CANCLIENTECONTRATOFATURALIST", "ac-clienteContratoFatura-page" },
-                    { "fcd5fb59-6b75-40d2-882e-9398dc95ab52", new[] { 1, 2, 3, 4, 5 }, "c1d66168-588c-4b8c-944e-25eb9956a1f7", "Pode realizar todas as ações/operações em todos os produtos", "CanProdutoAll", "CANPRODUTOALL", "ac-produto-page" },
-                    { "fdba820a-44fb-4145-829d-ff492df14688", new[] { 1 }, "a5c479bd-b46d-4488-8063-cf0d15128011", "Pode listar os dados de comissão de vendedores", "CanVendedorComissaoList", "CANVENDEDORCOMISSAOLIST", "ac-vendedorComissao-page" },
-                    { "fddd75aa-c3a4-4c6b-b49e-112d68b8f7fb", new[] { 4 }, "8a60efa9-7c0e-4dc1-bcdc-f160c74840d5", "Pode atualizar os dados de uma roles/permissão", "CanRoleUpdate", "CANROLEUPDATE", "ac-role-page" },
-                    { "ff0ae58e-0eea-454f-889e-df3d6a4344b2", new[] { 2 }, "286131a0-4aaa-42e1-b3aa-cff4b7f26e92", "Pode listar os dado de um serviço de cliente", "CanClienteServicoRead", "CANCLIENTESERVICOREAD", "ac-clienteServico-page" }
+                    { "01cb5b35-ac32-49f4-a53b-474290066341", new[] { 1, 2, 3, 4, 5 }, "f580194f-3ca0-4263-8bda-2864cafb985f", "Pode realizar todas as ações/operações em todos os serviços de fornecedores", "CanFornecedorServicoAll", "CANFORNECEDORSERVICOALL", "ac-fornecedorServico-page" },
+                    { "020aac79-58f1-4098-9953-8b51ef499c15", new[] { 2 }, "473f5c90-2622-4605-b422-a28354d7116b", "Pode listar os dado de um grupo", "CanGroupRead", "CANGROUPREAD", "ac-group-page" },
+                    { "032b0f41-9fb7-4c08-a2a2-2462216abe63", new[] { 3 }, "ffb28d7d-c44e-4032-b96c-451f0b42600f", "Pode criar um pipeline", "CanPipelineCreate", "CANPIPELINECREATE", "ac-pipeline-page" },
+                    { "0504e7bd-7781-4613-9a96-196530c36287", new[] { 4 }, "ee1fba5b-6db2-4029-b13c-6d26f199e106", "Pode criar um produto de fornecedor", "CanFornecedorProdutoUpdate", "CANFORNECEDORPRODUTOUPDATE", "ac-fornecedorProduto-page" },
+                    { "08e51725-3c71-4de4-b6fd-4b9b40815ff5", new[] { 3 }, "7a22e29a-e715-4cd0-beb8-3e154eb8e30e", "Pode criar um serviço para um cliente", "CanClienteServicoCreate", "CANCLIENTESERVICOCREATE", "ac-clienteServico-page" },
+                    { "0b44358b-b206-42a8-9d45-9256825d13a0", new[] { 2 }, "608f698f-ef23-49ec-a71b-5a57728f5898", "Pode listar os dados de um pipeline", "CanPipelineRead", "CANPIPELINEREAD", "ac-pipeline-page" },
+                    { "0d5b8ded-8481-445c-9d30-c37d9d3a0b28", new[] { 1, 2, 3, 4, 5 }, "16aea96a-ce95-4db0-9a4c-4a2b2547fb34", "Pode realizar todas as ações/operações em todos os pipelines", "CanPipelineAll", "CANPIPELINEALL", "ac-pipeline-page" },
+                    { "0e4ddc3f-e334-4492-aeb3-8e9f53dd55f1", new[] { 4 }, "41e9d78e-81c6-4c20-8dd7-209eed1353e3", "Pode listar os dados de todas as chaves de api de terceiro", "CanChaveApiTerceiroUpdate", "CANCHAVEAPITERCEIROUPDATE", "ac-chaveApiTerceiro-page" },
+                    { "1155f307-eaba-45bb-8269-017870d4b35b", new[] { 3 }, "058a32e4-2794-451d-9955-63b1f354ebb1", "Pode visualizar uma comissão de vendedor", "CanVendedorComissaoCreate", "CANVENDEDORCOMISSAOCREATE", "ac-vendedorComissao-page" },
+                    { "15732b5b-69a1-4377-ac00-04fc85b51bbf", new[] { 5 }, "7c57458b-f29e-4ae8-9ed9-a6cbdfa2a87c", "Pode deletar um produtos", "CanProdutoDelete", "CANPRODUTODELETE", "ac-produto-page" },
+                    { "175a5db6-725d-4a65-9a6e-e1524926ab2e", new[] { 3 }, "ce2ab1c0-a310-4137-949a-0e9e8c9b3d35", "Pode criar um usuário", "CanUserCreate", "CANUSERCREATE", "ac-user-page" },
+                    { "19f4cb22-74e9-4eee-9b59-cb4c02ece493", new[] { 4 }, "bc160597-2ea5-456f-84e1-01750931e877", "Pode criar um vendedor", "CanVendedorUpdate", "CANVENDEDORUPDATE", "ac-vendedor-page" },
+                    { "1b07d539-c496-413e-ab4a-0367d64f0aba", new[] { 1 }, "4a07850e-85b7-4972-ad58-c61cc97b6b0a", "Pode listar os dados de todos os serviços de clientes", "CanClienteServicoList", "CANCLIENTESERVICOLIST", "ac-clienteServico-page" },
+                    { "1c1006bf-2e42-4ca7-b341-28bbdd0ddd83", new[] { 1, 2, 3, 4, 5 }, "7716e15d-57d6-4664-b0ce-7fb718edb9a9", "Pode realizar todas as ações/operações em todos os serviços", "CanServicoAll", "CANSERVICOALL", "ac-servico-page" },
+                    { "1c9719b0-3e86-4854-97b3-cc537b673c7c", new[] { 5 }, "fdf35eac-30f2-4404-8c01-fc4fd1e51b69", "Pode deletar um contrato de cliente", "CanClienteContratoDelete", "CANCLIENTECONTRATODELETE", "ac-clienteContrato-page" },
+                    { "1cfa5695-571a-4f86-95f9-019157a438d6", new[] { 2 }, "58deceab-46bb-4956-8360-6af724407052", "Pode listar os dado de um serviço de cliente", "CanClienteServicoRead", "CANCLIENTESERVICOREAD", "ac-clienteServico-page" },
+                    { "1fceeb52-d49b-4435-83c5-0df368cf9e02", new[] { 4 }, "8501f487-8663-4cc6-9953-7d87cc5e31f9", "Pode atualizar um serviço de um cliente", "CanClienteServicoUpdate", "CANCLIENTESERVICOUPDATE", "ac-clienteServico-page" },
+                    { "2276e451-0526-4585-9a72-fd4bf035ccf3", new[] { 2 }, "4e03553a-ea7d-4006-91f5-d4dc7b0ea46a", "Pode listar os dados de um produto de cliente", "CanClienteProdutoRead", "CANCLIENTEPRODUTOREAD", "ac-clienteProduto-page" },
+                    { "2312500c-14bf-46cc-9ef5-82197cec6802", new[] { 4 }, "ffff9fd8-1bf4-478e-abd4-a1c868a38c75", "Pode criar um vínculo de contrato a um vendedor", "CanVendedorContratoUpdate", "CANVENDEDORCONTRATOUPDATE", "ac-vendedorContrato-page" },
+                    { "23c5a47d-f6b0-4a2c-8e0a-3ba3e50a597d", new[] { 1, 2, 3, 4, 5 }, "01dae106-331d-4baf-a42f-36655d675d84", "Pode realizar todas as ações/operações em todos os contratos vinculados a vendedores", "CanVendedorContratoAll", "CANVENDEDORCONTRATOALL", "ac-vendedorContrato-page" },
+                    { "23d6b762-8461-4c3f-b9f7-fbef9b94c57f", new[] { 5 }, "54a8979b-b450-4627-b8f0-7fcf2ecce423", "Pode deletar um vendedor", "CanVendedorDelete", "CANVENDEDORDELETE", "ac-vendedor-page" },
+                    { "2552dcb4-da38-4668-bf88-e7df25688317", new[] { 1, 2, 3, 4, 5 }, "6ddb2ef9-f5f8-4b89-b3c4-0e38235ce2ab", "Pode visualizar todos os indicadores da dashboard comercial", "CanClienteAll", "CANCLIENTEALL", "ac-cliente-page" },
+                    { "268fda58-2a65-4d53-840a-9fa1843d1f28", new[] { 1 }, "7f5ed0a2-76b7-4f45-9d23-830260ab89f5", "CanDashboardPublicaClienteContratoList", "CanDashboardPublicaClienteContratoList", "CANDASHBOARDPUBLICACLIENTECONTRATOLIST", "ac-dashboardPublicaClienteContrato-page" },
+                    { "26c4b410-8922-4f8d-b68c-7239ca180876", new[] { 1, 2, 3, 4, 5 }, "5ab9164e-c4b0-4657-9a04-5986f44cb576", "Pode listar os dados de todas as chaves de api de terceiro", "CanChaveApiTerceiroAll", "CANCHAVEAPITERCEIROALL", "ac-chaveApiTerceiro-page" },
+                    { "28b1f836-f7ef-4651-b97d-06fd33107abd", new[] { 2 }, "65c50535-70a8-40b3-b2a0-3b27ed9ca44b", "Pode listar os dados de um vendedor", "CanVendedorRead", "CANVENDEDORREAD", "ac-vendedor-page" },
+                    { "295afcc5-1691-48f9-bcf4-38eb472a3bc5", new[] { 1, 2, 3, 4, 5 }, "014423c3-880a-41b2-a7ab-0a178bff8fe0", "Pode visualizar todas as dashboards do cliente", "CanDashboardClienteAll", "CANDASHBOARDCLIENTEALL", "ac-dashboardCliente-page" },
+                    { "29dd8437-c26d-40e3-ac26-de4923d55326", new[] { 1, 2, 3, 4, 5 }, "d954c7e7-2954-4bfe-a3e7-6e48bab87cca", "Pode realizar todas as ações/operações em todos os grupos", "CanGroupAll", "CANGROUPALL", "ac-group-page" },
+                    { "29fcb479-301c-457e-b9b7-1d870b170884", new[] { 5 }, "fbf42185-d484-4864-a177-8a6901513ba2", "Pode deletar um cliente", "CanClienteDelete", "CANCLIENTEDELETE", "ac-cliente-page" },
+                    { "33721ce6-e228-48ac-850a-ff7588319315", new[] { 1, 2, 3, 4, 5 }, "a7d4897d-1a2a-4832-848d-b82917656f7e", "Pode realizar todas as ações/operações relacionadas a entidade de sistema rotina", "CanRotinaAll", "CANROTINAALL", "ac-rotina-page" },
+                    { "33e48694-c90c-451c-b69b-4723eb88a1b2", new[] { 3 }, "698e9766-d464-4f35-b9c6-49d20e778a46", "Pode criar um fornecedor", "CanFornecedorCreate", "CANFORNECEDORCREATE", "ac-fornecedor-page" },
+                    { "35a55e98-6ecd-4293-9168-9ec783a12c85", new[] { 3 }, "39863957-574d-406d-853c-68c3107a9afc", "Pode criar uma role/permissão", "CanRoleCreate", "CANROLECREATE", "ac-role-page" },
+                    { "38c7c998-d564-4533-b648-cb6cda2a3c2b", new[] { 5 }, "2e9854eb-59f1-414e-a038-dff90e73182b", "Pode deletar uma comissão de vendedor", "CanVendedorComissaoDelete", "CANVENDEDORCOMISSAODELETE", "ac-vendedorComissao-page" },
+                    { "38efb290-228d-4292-92b9-38be763a10a7", new[] { 4 }, "2e765303-b8ee-47d2-ac6c-cac4fb8333fa", "Pode atualizar um serviço", "CanServicoUpdate", "CANSERVICOUPDATE", "ac-servico-page" },
+                    { "3e4bbb05-42d4-4706-9cd8-63cf737b5c76", new[] { 1 }, "8c3eaeb9-ce34-44a2-9b8a-9dd49eb91334", "Pode listar os dados de comissão de vendedores", "CanVendedorComissaoList", "CANVENDEDORCOMISSAOLIST", "ac-vendedorComissao-page" },
+                    { "3e5a5862-c63b-4dd2-8766-6309996b5638", new[] { 1 }, "68a341d1-8bbb-4e4d-9b6f-5276082f38f1", "Pode listar os dados de todos os vendedores", "CanVendedorList", "CANVENDEDORLIST", "ac-vendedor-page" },
+                    { "42260cbe-4ebe-4018-ad51-e9700281029f", new[] { 1 }, "91282840-ff71-48f2-9a3c-1024108295e0", "Pode listar os dados de todas as chaves de api de terceiro", "CanChaveApiTerceiroList", "CANCHAVEAPITERCEIROLIST", "ac-chaveApiTerceiro-page" },
+                    { "43366c38-2876-41c3-b9c5-18f2c0311f66", new[] { 2 }, "d26ba27c-d3a8-46ec-982d-363c1d08bd64", "Pode listar os dados de uma rotina", "CanRotinaRead", "CANROTINAREAD", "ac-rotina-page" },
+                    { "47c7e3af-2291-4309-84b0-7d0fd24059fc", new[] { 4 }, "6594d6ac-0989-472b-b7b8-1d6e47fd1b83", "Pode atualizar os dados de rotinas", "CanRotinaUpdate", "CANROTINAUPDATE", "ac-rotina-page" },
+                    { "4981c700-9fcc-4d4a-b7cb-272c9048fb8a", new[] { 1, 2, 3, 4, 5 }, "4bcc380e-c716-4fd3-bca9-3a7becf5bb98", "Pode realizar todas as ações/operações em todas as comissões de vendedores", "CanVendedorComissaoAll", "CANVENDEDORCOMISSAOALL", "ac-vendedorComissao-page" },
+                    { "49a44459-7b88-4d4b-8cb6-a09e8a03b420", new[] { 4 }, "fe32edb1-b7ae-47da-94ee-bd8b017b3e59", "Pode atualizar um contrato de cliente", "CanClienteContratoUpdate", "CANCLIENTECONTRATOUPDATE", "ac-clienteContrato-page" },
+                    { "4a739549-7512-4329-b2b4-ff6f638ee5a2", new[] { 1, 2, 3, 4, 5 }, "60045624-6af5-42ff-8aa8-fd32a9c07fb8", "Pode realizar todas as ações/operações relacionadas a entidade rotina event history", "CanRotinaEventHistoryAll", "CANROTINAEVENTHISTORYALL", "ac-rotinaEventHistory-page" },
+                    { "511fe119-f53a-47c1-8745-643f8e349c37", new[] { 1 }, "8827c802-ccb9-43ca-a420-d3c213500117", "Pode listar os dados de todos os fornecedores", "CanFornecedorList", "CANFORNECEDORLIST", "ac-fornecedor-page" },
+                    { "5179f2e9-d838-48ba-9ca3-716076d66dca", new[] { 3 }, "5a241cc1-6330-480e-88c0-dad23e955530", "Pode criar um serviço", "CanServicoCreate", "CANSERVICOCREATE", "ac-servico-page" },
+                    { "52c0f0ec-4476-45fe-b114-a8975ee2bc7f", new[] { 4 }, "0c5da865-7b8b-42ce-8974-5a448a18bfdc", "Pode atualizar um pipeline", "CanPipelineUpdate", "CANPIPELINEUPDATE", "ac-pipeline-page" },
+                    { "5324fd04-1bd1-4794-8ab8-efbc5a821c55", new[] { 2 }, "f15b333f-804b-4ed8-ac90-18a33d47b912", "Pode listar os dados de um usuários", "CanUserRead", "CANUSERREAD", "ac-user-page" },
+                    { "569e5883-a0b9-430b-8b63-e68e2602d706", new[] { 3 }, "2c091a25-9544-4b9c-9ed5-d7786c92f694", "Pode criar um serviço para um fornecedor", "CanFornecedorServicoCreate", "CANFORNECEDORSERVICOCREATE", "ac-fornecedorServico-page" },
+                    { "5805bc43-ac33-45b4-a27d-df8386e76d7d", new[] { 4 }, "255fbc19-774f-4beb-ae28-aa841ad3f038", "Pode atualizar um fornecedor", "CanFornecedorUpdate", "CANFORNECEDORUPDATE", "ac-fornecedor-page" },
+                    { "583073cc-a5cb-4a44-a069-ad310547e706", new[] { 2 }, "58ba5e00-c643-4114-ae49-5038b15c8bc1", "Pode listar os dados de uma roles/permissão", "CanRoleRead", "CANROLEREAD", "ac-role-page" },
+                    { "5a9e5e40-e115-461b-9be7-d311b0034dac", new[] { 4 }, "ac227876-01ea-46fe-9022-fe77fa268332", "Pode atualizar os dados de um grupo", "CanGroupUpdate", "CANGROUPUPDATE", "ac-group-page" },
+                    { "5bef938a-f4ba-4b16-b4f4-2378cf552a8e", new[] { 3 }, "7de3d5fb-cfbb-4d01-877a-b1ee85147153", "Pode visualizar uma fatura de contrato de cliente", "CanClienteContratoFaturaCreate", "CANCLIENTECONTRATOFATURACREATE", "ac-clienteContratoFatura-page" },
+                    { "5ebf202c-80ed-4a4b-a4d5-b90a96a7bb41", new[] { 1, 2, 3, 4, 5 }, "2b0e2e2d-d00e-49d9-be1c-df7485c7765e", "Pode listar todas as rotinas events histories", "CanVendedorRelatorioAll", "CANVENDEDORRELATORIOALL", "ac-vendedorRelatorio-page" },
+                    { "62e62a0d-554e-41b3-8ca3-3741b635a110", new[] { 4 }, "42bfd2d4-e9cb-4bbb-bbdb-d67c26eecf4c", "Pode atualizar os dados de uma roles/permissão", "CanRoleUpdate", "CANROLEUPDATE", "ac-role-page" },
+                    { "67c32341-8bb4-46d8-b32a-7fc7936ae3cf", new[] { 4 }, "92481cff-11d2-4ca8-b862-f1619ecb9cf3", "Pode criar uma fatura de contrato de cliente", "CanClienteContratoFaturaUpdate", "CANCLIENTECONTRATOFATURAUPDATE", "ac-clienteContratoFatura-page" },
+                    { "6a6c7633-a368-47d5-8e50-0fbd98d69ca6", new[] { 2 }, "0f7d7152-fc97-4f26-9944-0220c2900e42", "Pode listar os dados de um fornecedor", "CanFornecedorRead", "CANFORNECEDORREAD", "ac-fornecedor-page" },
+                    { "6b2cde43-d01c-4515-a27d-038fedac9d0b", new[] { 5 }, "5dacc7ab-1de6-487b-8cd4-77ec3b8575b8", "Pode deletar um serviço", "CanServicoDelete", "CANSERVICODELETE", "ac-servico-page" },
+                    { "6bf47b91-c240-48b4-831d-73a3d4aa8f8c", new[] { 4 }, "23e19938-518a-49c5-b1a5-7be5c56b7e17", "Pode atualizar os dados de um cliente", "CanClienteUpdate", "CANCLIENTEUPDATE", "ac-cliente-page" },
+                    { "6e2aadd0-f602-4994-8be1-7335841e2833", new[] { 1, 2, 3, 4, 5 }, "45a200f4-dc22-4b44-a3ee-16255f9e32bf", "Pode realizar todas as ações/operações em todas as dashboards", "CanDashboardAll", "CANDASHBOARDALL", "ac-dashboard-page" },
+                    { "6ec1a617-e64f-474d-9919-5ff12fcd3db3", new[] { 2 }, "1eeff1b3-250b-4848-a3da-530d50edf656", "Pode listar os dados de um contrato vinculado a um vendedor", "CanVendedorContratoRead", "CANVENDEDORCONTRATOREAD", "ac-vendedorContrato-page" },
+                    { "7762c29c-54cd-4aee-99c3-ff137477a62f", new[] { 1 }, "6da5b55c-f4e8-4902-8e87-4cc46c4c36f6", "Pode listar os dados de todas as faturas de contratos de clientes", "CanClienteContratoFaturaList", "CANCLIENTECONTRATOFATURALIST", "ac-clienteContratoFatura-page" },
+                    { "77f38da9-6ec3-45b4-8aa0-e5304643bbc5", new[] { 1 }, "2c5df79f-1def-4f0e-b138-94b44e5f3b2a", "Pode listar todas as rotinas de sistema", "CanRotinaList", "CANROTINALIST", "ac-rotina-page" },
+                    { "7dcdf7d4-5893-4852-988f-bdaf2050b72f", new[] { 4 }, "13ca9418-3e4e-45b3-b849-08aa75f5dad1", "Pode atualizar um produto de cliente", "CanClienteProdutoUpdate", "CANCLIENTEPRODUTOUPDATE", "ac-clienteProduto-page" },
+                    { "800e5440-7418-4e7a-a9f9-be1d6b3839ad", new[] { 1, 2, 3, 4, 5 }, "790c421d-07a4-4642-8026-2030aee6825a", "Pode realizar todas as ações/operações em todos os contratos de clientes", "CanClienteContratoAll", "CANCLIENTECONTRATOALL", "ac-clienteContrato-page" },
+                    { "80577342-1614-4f59-950b-c11be1154b68", new[] { 3 }, "54b328c2-0d04-41b0-91ae-9f8c538b5372", "Pode visualizar um contrato vinculado a um ou vários vendedores", "CanVendedorContratoCreate", "CANVENDEDORCONTRATOCREATE", "ac-vendedorContrato-page" },
+                    { "806a3871-9d97-4e61-a256-c4be7f5fd5d7", new[] { 5 }, "09ccb295-81cd-416a-9ff6-d14bc165cd79", "Pode deletar um serviço de um cliente", "CanClienteServicoDelete", "CANCLIENTESERVICODELETE", "ac-clienteServico-page" },
+                    { "80cc9503-68bd-4c00-8b49-79dbee4d5865", new[] { 3 }, "53fe0c43-b7df-477c-b895-cf93fcf1273c", "Pode criar um grupo", "CanGroupCreate", "CANGROUPCREATE", "ac-group-page" },
+                    { "83872a28-bc5d-4cb5-be96-62a383f7591d", new[] { 4 }, "0b7d1a12-fb75-465d-9e9a-82a476f9c92e", "Pode atualizar os dados de um usuário", "CanUserUpdate", "CANUSERUPDATE", "ac-user-page" },
+                    { "8b670ed0-2309-489d-a2d3-303b426ce48a", new[] { 1, 2, 3, 4, 5 }, "22a3b523-0a8c-4480-a57d-906011c5f732", "Pode visualizar todas as dashboards de controle de acesso", "CanDashboardControleAcessoAll", "CANDASHBOARDCONTROLEACESSOALL", "ac-dashboardControleAcesso-page" },
+                    { "8ce77d59-d2ae-42be-95ea-59cf4367c208", new[] { 1, 2, 3, 4, 5 }, "793736e6-c41d-466b-b441-0fccda49c6fb", "Pode realizar todas as ações/operações em todos os vendedores", "CanVendedorAll", "CANVENDEDORALL", "ac-vendedor-page" },
+                    { "8e6dcf1d-2811-450a-9dbc-239bcb5b1206", new[] { 3 }, "de65b5f2-3684-4e5e-a96b-7cab747caa45", "Pode criar um produto de cliente", "CanClienteProdutoCreate", "CANCLIENTEPRODUTOCREATE", "ac-clienteProduto-page" },
+                    { "90e0f385-d4dc-4333-b0d5-db253975fe53", new[] { 5 }, "d33e1b11-c7ca-4edf-8f0b-b3997e3cdef5", "Pode deletar um serviço de um fornecedor", "CanFornecedorServicoDelete", "CANFORNECEDORSERVICODELETE", "ac-fornecedorServico-page" },
+                    { "9232ceeb-750c-4541-b08e-96b4e7098349", new[] { 5 }, "e2d9767d-f42c-41a6-aff3-700bf2f669bd", "Pode deletar um pipeline", "CanPipelineDelete", "CANPIPELINEDELETE", "ac-pipeline-page" },
+                    { "97fab8af-928c-407b-8b22-21621a14f966", new[] { 1, 2, 3, 4, 5 }, "8fa3eeb1-a117-4029-8c07-6dfd61cbbfc1", "Pode realizar todas as ações/operações em todos os produtos", "CanProdutoAll", "CANPRODUTOALL", "ac-produto-page" },
+                    { "98107257-6d0a-476a-a168-b381f35495b0", new[] { 5 }, "1ec38d69-14a1-4e53-bfa5-1f7fcd4930f6", "Pode deletar uma fatura de contrato de cliente", "CanClienteContratoFaturaDelete", "CANCLIENTECONTRATOFATURADELETE", "ac-clienteContratoFatura-page" },
+                    { "9cd9443f-b2ea-4687-825c-8f052a35741a", new[] { 5 }, "9c44cc64-d76f-429a-9078-6b2acdb0b95d", "Pode deletar um grupo", "CanGroupDelete", "CANGROUPDELETE", "ac-group-page" },
+                    { "9d3bbf52-658c-4394-9a0f-58cd89ac5aee", new[] { 2 }, "002e83d1-3107-4cf8-afc5-0116dc4006a6", "Pode listar os dados de todas as chaves de api de terceiro", "CanChaveApiTerceiroRead", "CANCHAVEAPITERCEIROREAD", "ac-chaveApiTerceiro-page" },
+                    { "9f1760d1-01bb-4120-a18c-965d4f5012c8", new[] { 1 }, "45daace2-e691-43d9-a20e-0959f2d0e680", "Pode listar os dados de todos os contratos vinculados a vendedores", "CanVendedorContratoList", "CANVENDEDORCONTRATOLIST", "ac-vendedorContrato-page" },
+                    { "a2bbd3be-b8ce-4321-9741-81c03efc610a", new[] { 2 }, "d892219b-afd7-4ca4-989a-5d653c4171f4", "Pode listar os dados de um produto de fornecedor", "CanFornecedorProdutoRead", "CANFORNECEDORPRODUTOREAD", "ac-fornecedorProduto-page" },
+                    { "a2ce58be-a29f-47c9-bab0-e8a6c06476c2", new[] { 1 }, "587f88de-5b5e-4154-8ba0-7e26867e7c88", "Pode listar todas as rotinas events histories", "CanRotinaEventHistoryList", "CANROTINAEVENTHISTORYLIST", "ac-rotinaEventHistory-page" },
+                    { "a6b939c2-5608-4c79-b4c3-08fa0b429bcf", new[] { 5 }, "b030a681-24b4-46a2-97f9-7c33d25bd24b", "Pode deletar um produto de cliente", "CanClienteProdutoDelete", "CANCLIENTEPRODUTODELETE", "ac-clienteProduto-page" },
+                    { "a71163a1-dc83-4e94-b217-7a97efc0e581", new[] { 1 }, "68165e0e-0f2d-41cb-a0c6-53bf221eeef9", "Pode listar os dados de todos os produtos de fornecedores", "CanFornecedorProdutoList", "CANFORNECEDORPRODUTOLIST", "ac-fornecedorProduto-page" },
+                    { "a77c203d-ac9f-4fca-8ccf-973b4da1b380", new[] { 1 }, "2a30ac8c-ae45-43ee-a02f-59b3062c31cf", "Pode listar os dados de todos os pipelines", "CanPipelineList", "CANPIPELINELIST", "ac-pipeline-page" },
+                    { "a7ea47d8-ddc1-4dfe-9947-9405c908dcdd", new[] { 2 }, "6b4384b2-b508-4331-880e-ce54c2469941", "Pode listar os dados de um contrato de cliente", "CanClienteContratoRead", "CANCLIENTECONTRATOREAD", "ac-clienteContrato-page" },
+                    { "a920cd4f-0348-47b4-a092-3dcee3302321", new[] { 1, 2, 3, 4, 5 }, "0f65d5ba-8f82-4891-9976-d5b2bef3d26c", "Pode realizar todas as ações/operações em dashboard comercial", "CanDashboardComercialAll", "CANDASHBOARDCOMERCIALALL", "ac-dashboardComercial-page" },
+                    { "a9b49c93-b0f3-4f02-b4c6-00eebac46768", new[] { 1 }, "710281b6-7afb-4cce-845c-990c2983a882", "Pode listar os dados de todos os produtos de clientes", "CanClienteProdutoList", "CANCLIENTEPRODUTOLIST", "ac-clienteProduto-page" },
+                    { "aa6b5b30-fb88-4f5d-8d1e-655e8d037a36", new[] { 2 }, "6fa66e30-aab7-487b-a811-91b3a14a805f", "Pode listar os dado de um serviço de fornecedor", "CanFornecedorServicoRead", "CANFORNECEDORSERVICOREAD", "ac-fornecedorServico-page" },
+                    { "ac66de24-7be5-4562-a810-876ef9d51c9d", new[] { 1 }, "648d2a8c-b93e-4794-8b73-a66c922620a1", "Pode listar os dados de todos os contratos de clientes", "CanClienteContratoList", "CANCLIENTECONTRATOLIST", "ac-clienteContrato-page" },
+                    { "b20c4735-935d-4eb6-b52f-5707737feeb5", new[] { 5 }, "e55481be-3be6-4da9-8ec4-6ea0c34ee1e8", "Pode listar os dados de todas as chaves de api de terceiro", "CanChaveApiTerceiroDelete", "CANCHAVEAPITERCEIRODELETE", "ac-chaveApiTerceiro-page" },
+                    { "b359df5a-a976-4968-9c84-f75e9d589748", new[] { 1 }, "4032ebed-8f7c-44b2-bb9d-e8e24da68636", "Pode listar os dados de todos os grupos", "CanGroupList", "CANGROUPLIST", "ac-group-page" },
+                    { "b60fcbca-1396-48d8-bfc6-2ade7d83a0e8", new[] { 5 }, "abadee86-a8b1-4c04-a7da-3ee39bdf7d5f", "Pode deletar um fornecedor", "CanForncedorDelete", "CANFORNCEDORDELETE", "ac-forncedor-page" },
+                    { "b8c257ea-d285-4e2c-b78f-57ca3e94914f", new[] { 1 }, "d71be324-8a91-40c4-868a-e65a54bc9640", "Pode listar os dados de todos os serviços de fornecedores", "CanFornecedorServicoList", "CANFORNECEDORSERVICOLIST", "ac-fornecedorServico-page" },
+                    { "b9e8caea-1efc-43ad-a192-38424750a8be", new[] { 1 }, "e4beb8d5-725b-4bab-a0b9-35b15d0ae74d", "Pode listar os dados de todos os serviços", "CanServicoList", "CANSERVICOLIST", "ac-servico-page" },
+                    { "bdfd8af9-cbaa-45ee-848f-655d0fef94a1", new[] { 1 }, "f5d9ff31-db8a-47dd-ba28-90c9800e5385", "Pode realizar todas as ações/operações relacionadas a relatórios de vendedores", "CanVendedorRelatorioComissaoList", "CANVENDEDORRELATORIOCOMISSAOLIST", "ac-vendedorRelatorioComissao-page" },
+                    { "c0e784a2-0da9-438a-9ab4-03442d1aa406", new[] { 1 }, "d12dc71f-3608-4ce5-84f3-490708e01353", "Pode listar o título do sistema", "CanTitleSystemList", "CANTITLESYSTEMLIST", "ac-titleSystem-page" },
+                    { "c5d14df8-7d4b-44ce-b3cf-c11191c5cef1", new[] { 2 }, "6e0a4c53-93ae-4c37-9cbc-719489144d31", "Pode listar os dados de uma fatura de contrato de cliente", "CanClienteContratoFaturaRead", "CANCLIENTECONTRATOFATURAREAD", "ac-clienteContratoFatura-page" },
+                    { "cf0d1a3f-572b-49fb-b4c7-43fb3a67ecb0", new[] { 1, 2, 3, 4, 5 }, "f5a2d1e7-9da6-4298-83ef-348730dd8f5a", "Pode realizar todas as ações/operações em todos os produtos de fornecedores", "CanFornecedorProdutoAll", "CANFORNECEDORPRODUTOALL", "ac-fornecedorProduto-page" },
+                    { "d0437f3a-01af-4b90-84c1-76ef30302ba0", new[] { 2 }, "2bfbe311-f8d0-45c7-ab03-1cfd85ea8996", "Pode listar os dados de uma comissão de vendedor", "CanVendedorComissaoRead", "CANVENDEDORCOMISSAOREAD", "ac-vendedorComissao-page" },
+                    { "d1caad0b-6144-47c8-990f-440ad8e0d9e6", new[] { 1 }, "140ceab2-fe08-4d91-aa00-90a559dc2cdc", "Pode listar os dados de todos os clientes", "CanClienteList", "CANCLIENTELIST", "ac-cliente-page" },
+                    { "d48df6b3-8980-4307-a18e-e9e62d39220f", new[] { 1, 2, 3, 4, 5 }, "5d85af76-9014-4fc5-8465-213dfc79bbdd", "Pode realizar todas as ações/operações em todos os serviços de clientes", "CanClienteServicoAll", "CANCLIENTESERVICOALL", "ac-clienteServico-page" },
+                    { "d4a88bb1-41ce-4c2b-adf5-981bce86d31c", new[] { 2 }, "c1d67286-b22c-4a7e-9808-fe2487490480", "Pode listar os dados de um produtos", "CanProdutoRead", "CANPRODUTOREAD", "ac-produto-page" },
+                    { "d630b732-d1b5-4eea-a522-24c9b70f646a", new[] { 4 }, "38f9b8d2-ec8f-47c8-ae86-993ba1e3022a", "Pode criar uma comissão de vendedor", "CanVendedorComissaoUpdate", "CANVENDEDORCOMISSAOUPDATE", "ac-vendedorComissao-page" },
+                    { "d641a5dc-9b77-4a5f-be1d-c5a9bc2feca8", new[] { 1, 2, 3, 4, 5 }, "5e0ca3a8-0740-4100-afcd-98c52b83df7f", "Pode realizar todas as ações/operações em dashboard publica", "CanDashboardPublicaAll", "CANDASHBOARDPUBLICAALL", "ac-dashboardPublica-page" },
+                    { "d6693bbb-cebb-447f-8e34-ff2406c6a663", new[] { 4 }, "a5ddb7fb-33c5-4209-a667-4ecac1366905", "Pode atualizar um produtos", "CanProdutoUpdate", "CANPRODUTOUPDATE", "ac-produto-page" },
+                    { "d66b1b10-45e0-42cf-979e-fa7331f188dd", new[] { 2 }, "ca23cadc-8d53-4354-8fb9-d7156b0b7af3", "Pode listar os dados de uma rotina event history", "CanRotinaEventHistoryRead", "CANROTINAEVENTHISTORYREAD", "ac-rotinaEventHistory-page" },
+                    { "d76420b9-679e-4228-9e90-b18f016c892a", new[] { 1, 2, 3, 4, 5 }, "2e615414-663d-450f-80df-1e0c96516f4b", "Pode realizar todas as ações/operações em todos os produtos de clientes", "CanClienteProdutoAll", "CANCLIENTEPRODUTOALL", "ac-clienteProduto-page" },
+                    { "d800fcd5-fa7f-4e74-8609-958252ad2768", new[] { 1 }, "3a12b50e-358b-4316-ad07-61c5179f5214", "Pode listar os dados de todas as roles/permissões", "CanRoleList", "CANROLELIST", "ac-role-page" },
+                    { "d8e6a17e-4a72-405e-8f59-203b7fbda34b", new[] { 3 }, "38cd7d6e-41d7-4d3a-9197-56f18cf24a1d", "Pode criar um contrato de cliente", "CanClienteContratoCreate", "CANCLIENTECONTRATOCREATE", "ac-clienteContrato-page" },
+                    { "dc2b83cf-1288-4f0a-843d-c0c36dd22911", new[] { 1, 2, 3, 4, 5 }, "2103bda1-16e5-4661-be24-6669e2759c02", "Pode realizar todas as ações/operações em todos os usuários", "CanUserAll", "CANUSERALL", "ac-user-page" },
+                    { "dc50cea3-c74c-497f-b1c7-4959950a823c", new[] { 5 }, "81a324ab-e5a4-4b25-bdf7-62b34c2fd074", "Pode deletar um usuário", "CanUserDelete", "CANUSERDELETE", "ac-user-page" },
+                    { "dc85707e-363f-47dc-9dff-be1cbd6b4ecf", new[] { 4 }, "80ae9a07-f23a-4cbe-9d75-537edc6bee96", "Pode atualizar um serviço de um fornecedor", "CanFornecedorServicoUpdate", "CANFORNECEDORSERVICOUPDATE", "ac-fornecedorServico-page" },
+                    { "dcea8d21-44c7-4d29-b175-d5096ebeee2e", new[] { 1, 2, 3, 4, 5 }, "8a1fa1de-8914-4fbb-8249-85569a1cce58", "Pode realizar todas as ações/operações em todas as faturas de contratos de clientes", "CanClienteContratoFaturaAll", "CANCLIENTECONTRATOFATURAALL", "ac-clienteContratoFatura-page" },
+                    { "dd1079f7-f351-4104-96bf-12bf9ded9d89", new[] { 3 }, "ceafbc1c-781a-437f-838f-3f380c2bfd6e", "Pode criar um cliente", "CanClienteCreate", "CANCLIENTECREATE", "ac-cliente-page" },
+                    { "deaa6e06-6135-48a7-b77e-882d62c2998d", new[] { 1, 2, 3, 4, 5 }, "91f3902d-6eb8-4141-bbbe-69e7c4dfbefa", "Pode realizar todas as ações/operações em todos as roles/permissões", "CanRoleAll", "CANROLEALL", "ac-role-page" },
+                    { "df65ac42-b0ab-4655-b53a-2843d74603f2", new[] { 1 }, "23f0619e-10a2-43b8-90ee-5ca5198d75fe", "Pode listar o título dos negócios", "CanTitleBussinesList", "CANTITLEBUSSINESLIST", "ac-titleBussines-page" },
+                    { "e166ac6b-f975-40ff-986f-db41a2228852", new[] { 3 }, "46009bde-3efe-4b95-a8d3-1fde55abebf6", "Pode visualizar um produto de fornecedor", "CanFornecedorProdutoCreate", "CANFORNECEDORPRODUTOCREATE", "ac-fornecedorProduto-page" },
+                    { "e2f9b919-c5ed-451c-8125-693aadb68a49", new[] { 5 }, "9a934f03-8667-4418-bc21-d6cda19cd22f", "Pode deletar um vínculo de contrato com um vendedor", "CanVendedorContratoDelete", "CANVENDEDORCONTRATODELETE", "ac-vendedorContrato-page" },
+                    { "e4ac0a28-d024-48f8-9929-209a058641e9", new[] { 3 }, "279bef26-a315-4805-abf6-b2620ca813eb", "Pode listar os dados de todas as chaves de api de terceiro", "CanChaveApiTerceiroCreate", "CANCHAVEAPITERCEIROCREATE", "ac-chaveApiTerceiro-page" },
+                    { "e6632632-425e-47d7-8dfb-f586c0521015", new[] { 2 }, "47b1f99d-b898-4dbb-a5df-35d6417d0e68", "Pode listar os dado de um cliente", "CanClienteRead", "CANCLIENTEREAD", "ac-cliente-page" },
+                    { "e961cc22-5414-48bb-9de0-b574df4591c3", new[] { 3 }, "ae454476-3602-49b2-b61a-a69302d62180", "Pode visualizar um vendedor", "CanVendedorCreate", "CANVENDEDORCREATE", "ac-vendedor-page" },
+                    { "eb44f73e-0410-4914-be7d-5871f3a2dd9e", new[] { 3 }, "9e5b30f4-70ee-4e94-a9bb-fa8a5132288d", "Pode criar um produtos", "CanProdutoCreate", "CANPRODUTOCREATE", "ac-produto-page" },
+                    { "ed070297-7fff-4ae1-8c75-25168daa85bb", new[] { 5 }, "15c29fa0-d8d9-421c-8e77-46a579f910df", "Pode deletar uma role/permissão", "CanRoleDelete", "CANROLEDELETE", "ac-role-page" },
+                    { "f04e4519-724d-48f7-bbfd-46014478e9b6", new[] { 1 }, "01687413-4997-41f3-b35f-d1f753432b84", "Pode listar os dados de todos os usuários", "CanUserList", "CANUSERLIST", "ac-user-page" },
+                    { "f0f62193-bed7-4040-b438-f9fa025da083", new[] { 1, 2, 3, 4, 5 }, "d5435d7f-7cf2-4f83-b7de-236635838a19", "Pode realizar todas as ações/operações em todos os fornecedores", "CanFornecedorAll", "CANFORNECEDORALL", "ac-fornecedor-page" },
+                    { "f5b28a98-524a-43fa-b650-71e69e2ef7d1", new[] { 1 }, "b528d380-503d-454f-8b66-443a9628d378", "Pode listar os dados de todos os produtos", "CanProdutoList", "CANPRODUTOLIST", "ac-produto-page" },
+                    { "f8384892-39f2-442a-b948-a0f647898e90", new[] { 1 }, "44fdfa29-d89b-444e-abfb-ec92f505d97e", "CanDashboardComercialClienteContratoList", "CanDashboardComercialClienteContratoList", "CANDASHBOARDCOMERCIALCLIENTECONTRATOLIST", "ac-dashboardComercialClienteContrato-page" },
+                    { "f8c89084-01de-4cf7-a297-2f3c1fac8c72", new[] { 2 }, "32b2b9fc-51e2-4f9e-8775-93f45d05f8f5", "Pode listar os dados de um serviço", "CanServicoRead", "CANSERVICOREAD", "ac-servico-page" },
+                    { "f964bc3f-de68-46a9-b1c6-21fd3945fed5", new[] { 5 }, "5e9a4292-a6ff-4e77-9122-29dc229c4680", "Pode deletar um produto de fornecedor", "CanFornecedorProdutoDelete", "CANFORNECEDORPRODUTODELETE", "ac-fornecedorProduto-page" }
                 });
 
             migrationBuilder.InsertData(
                 table: "ChavesApiTerceiro",
                 columns: new[] { "Id", "ApiTerceiro", "CreatedAt", "CreatedBy", "DataValidade", "Descricao", "IsDeleted", "Key", "UpdatedAt", "UpdatedBy" },
-                values: new object[] { new Guid("5ef06643-d760-4539-aece-9731e090a598"), 0, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, false, null, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null });
+                values: new object[] { new Guid("eeeb471a-2d8c-4bd3-b772-974a3d8612e5"), 0, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, false, null, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null });
 
             migrationBuilder.InsertData(
                 table: "Rotinas",
                 columns: new[] { "Id", "ChaveSequencial", "CreatedAt", "CreatedBy", "DataCompetenciaFim", "DataCompetenciaInicio", "Descricao", "DispatcherRoute", "IsDeleted", "Nome", "Observacao", "TenantId", "UpdatedAt", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { new Guid("0283739d-e2da-4f69-a1b4-fff0045f0cef"), 7, new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9748), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina interna gera as comissões de vendedores. As comissões são obtidas a partir dos dados de comissão (Em real ou Porcentagem), parametrizados ao vincular um contrato a um vendedor, bem como são geradas comissões apenas de contratos com faturas pagas (Em dia).", "dispatch-vendedores-comissoes-create", false, "Gerar comissão de vendedores ativos no Boxapp", "É recomendado que antes de rodar esta rotina, seja rodado a rotina de ChaveSequencial - 2, 3 e 4 -, afim de atualizar os contratos e suas faturas.", new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9749), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" },
-                    { new Guid("4229612d-a63d-476e-bd11-2af5c435078c"), 4, new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9731), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina insere automaticamente no boxapp todas as faturas quitadas de contratos de clientes do bom controle", "dispatch-faturas-quitadas-sync", false, "Sincronização de faturas quitadas de contratos de clientes com o sistema Bom Controle", null, new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9733), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" },
-                    { new Guid("45260988-1ec0-4e8c-b708-1bb2f7c3d414"), 2, new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9706), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina insere automaticamente no boxapp os contratos de clientes ainda não existente, a partir do sistema Bom Controle.", "dispatch-contratos-sync", false, "Sincronização de contratos de clientes com o sistema Bom Controle", "", new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9707), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" },
-                    { new Guid("519471fa-0f42-46d9-b585-bc7bbd9d7fee"), 5, new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9736), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina insere automaticamente no boxapp todas as faturas não quitadas de contratos de clientes do bom controle", "dispatch-faturas-nao-quitadas-sync", false, "Sincronização de faturas não quitadas de contratos de clientes com o sistema Bom Controle", null, new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9738), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" },
-                    { new Guid("669a9b45-772f-46bf-bf45-da355eab6e96"), 3, new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9726), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina atualiza a periodicidade dos novos contratos sincronizados a partir da rotina 2.", "dispatch-contratos-update", false, "Atualização de contratos de clientes com o sistema Bom Controle", "A atualização de periodicidade que ocorre logo após a importação dos contratos só se faz necessária uma vez que, o método da api do sistema Bom Controle que retorna os contratos não traz este dado. Portanto, se faz necessário buscá-lo em um outro método da api do Bom Controle.", new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9727), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" },
-                    { new Guid("e6bc9551-b3f3-4357-b87a-d3f9101177e7"), 6, new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9743), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina atualiza automaticamente no boxapp os dados de faturas a partir de informações do sistema Bom Controle.", "dispatch-faturas-update", false, "Atualização dos dados de faturas de contratos de clientes com o sistema Bom Controle", null, new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9744), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" },
-                    { new Guid("e7225157-5691-4785-9ef2-31bba714e293"), 1, new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9676), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina insere automaticamente no boxapp os clientes ativos do sistema Bom Controle", "dispatch-clientes-sync", false, "Sincronização de clientes com o sistema Bom Controle", null, new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 569, DateTimeKind.Unspecified).AddTicks(9688), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" }
+                    { new Guid("06cbc6d5-216a-45f9-8496-d0d2fe93bcf3"), 7, new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2492), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina interna gera as comissões de vendedores. As comissões são obtidas a partir dos dados de comissão (Em real ou Porcentagem), parametrizados ao vincular um contrato a um vendedor, bem como são geradas comissões apenas de contratos com faturas pagas (Em dia).", "dispatch-vendedores-comissoes-create", false, "Gerar comissão de vendedores ativos no Boxapp", "É recomendado que antes de rodar esta rotina, seja rodado a rotina de ChaveSequencial - 2, 3 e 4 -, afim de atualizar os contratos e suas faturas.", new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2494), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" },
+                    { new Guid("2556044d-dcdc-4355-9e57-d1fa336a5363"), 5, new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2478), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina insere automaticamente no boxapp todas as faturas não quitadas de contratos de clientes do bom controle", "dispatch-faturas-nao-quitadas-sync", false, "Sincronização de faturas não quitadas de contratos de clientes com o sistema Bom Controle", null, new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2479), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" },
+                    { new Guid("52538e24-79c2-4eca-823c-e124a8b4a213"), 2, new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2450), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina insere automaticamente no boxapp os contratos de clientes ainda não existente, a partir do sistema Bom Controle.", "dispatch-contratos-sync", false, "Sincronização de contratos de clientes com o sistema Bom Controle", "", new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2452), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" },
+                    { new Guid("587a5f91-37ec-42ce-a79f-229d6a4d43a8"), 4, new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2472), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina insere automaticamente no boxapp todas as faturas quitadas de contratos de clientes do bom controle", "dispatch-faturas-quitadas-sync", false, "Sincronização de faturas quitadas de contratos de clientes com o sistema Bom Controle", null, new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2474), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" },
+                    { new Guid("6c0ff275-2dd5-42a0-b488-e0665616fd24"), 3, new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2466), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina atualiza a periodicidade dos novos contratos sincronizados a partir da rotina 2.", "dispatch-contratos-update", false, "Atualização de contratos de clientes com o sistema Bom Controle", "A atualização de periodicidade que ocorre logo após a importação dos contratos só se faz necessária uma vez que, o método da api do sistema Bom Controle que retorna os contratos não traz este dado. Portanto, se faz necessário buscá-lo em um outro método da api do Bom Controle.", new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2468), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" },
+                    { new Guid("85611459-4fa5-422a-b6ac-1a5bd5a83d9a"), 6, new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2486), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina atualiza automaticamente no boxapp os dados de faturas a partir de informações do sistema Bom Controle.", "dispatch-faturas-update", false, "Atualização dos dados de faturas de contratos de clientes com o sistema Bom Controle", null, new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2487), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" },
+                    { new Guid("ac9faa63-bdff-4c0a-8469-b188f710cae7"), 1, new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2411), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Esta rotina insere automaticamente no boxapp os clientes ativos do sistema Bom Controle", "dispatch-clientes-sync", false, "Sincronização de clientes com o sistema Bom Controle", null, new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"), new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 528, DateTimeKind.Unspecified).AddTicks(2429), new TimeSpan(0, -3, 0, 0, 0)), "8e445865-a24d-4543-a6c6-9443d048cdb9" }
                 });
 
             migrationBuilder.UpdateData(
@@ -838,7 +847,7 @@ namespace BoxBack.Infra.Data.Migrations
                 keyColumn: "Id",
                 keyValue: new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
                 columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 555, DateTimeKind.Unspecified).AddTicks(9041), new TimeSpan(0, -3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 1, 10, 10, 36, 10, 555, DateTimeKind.Unspecified).AddTicks(9064), new TimeSpan(0, -3, 0, 0, 0)) });
+                values: new object[] { new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 513, DateTimeKind.Unspecified).AddTicks(4848), new TimeSpan(0, -3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 513, DateTimeKind.Unspecified).AddTicks(4873), new TimeSpan(0, -3, 0, 0, 0)) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_VendedoresComissoes_ClienteContratoFaturaId",
@@ -867,666 +876,680 @@ namespace BoxBack.Infra.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "021e4e4a-c7dd-4148-8c4b-636d3aa9748b");
+                keyValue: "01cb5b35-ac32-49f4-a53b-474290066341");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "0300373e-0785-4003-99c8-f4e0c02136fe");
+                keyValue: "020aac79-58f1-4098-9953-8b51ef499c15");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "09cb6229-0b17-4d35-b0c2-7e5b84e3709e");
+                keyValue: "032b0f41-9fb7-4c08-a2a2-2462216abe63");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "0b613694-3a6b-4745-8ba3-12ca6e44d795");
+                keyValue: "0504e7bd-7781-4613-9a96-196530c36287");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "0c13e769-94d0-4668-b10f-70c9d61bbe5b");
+                keyValue: "08e51725-3c71-4de4-b6fd-4b9b40815ff5");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "10ea5f71-889e-4229-a873-1aefc6e612f1");
+                keyValue: "0b44358b-b206-42a8-9d45-9256825d13a0");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "11aae703-ebc0-4e33-b300-b3fa4b28d08b");
+                keyValue: "0d5b8ded-8481-445c-9d30-c37d9d3a0b28");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "11eba5d3-47cd-4fd5-8215-733589ebbcbf");
+                keyValue: "0e4ddc3f-e334-4492-aeb3-8e9f53dd55f1");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "12921c54-9377-414c-a3cd-63fded1ba8ff");
+                keyValue: "1155f307-eaba-45bb-8269-017870d4b35b");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "18d327c0-0f55-4721-998e-dbf255e62b2c");
+                keyValue: "15732b5b-69a1-4377-ac00-04fc85b51bbf");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "1a3d2886-8810-483a-a369-8e2c1764955b");
+                keyValue: "175a5db6-725d-4a65-9a6e-e1524926ab2e");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "1b38072c-b4bf-40a2-b1e4-fc0a21fe8b90");
+                keyValue: "19f4cb22-74e9-4eee-9b59-cb4c02ece493");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "1d926534-cb8a-4e20-af45-971e77f1f32a");
+                keyValue: "1b07d539-c496-413e-ab4a-0367d64f0aba");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "1e0a149d-c2a0-4d16-91f6-63ecfbf40b42");
+                keyValue: "1c1006bf-2e42-4ca7-b341-28bbdd0ddd83");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "1ef75bff-49ff-4f01-81c1-6007c9ab1efb");
+                keyValue: "1c9719b0-3e86-4854-97b3-cc537b673c7c");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "1ffe59da-7ad3-483b-b77a-9396c5417996");
+                keyValue: "1cfa5695-571a-4f86-95f9-019157a438d6");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "209e5357-6957-4ecb-8f1e-be6ebf234c3d");
+                keyValue: "1fceeb52-d49b-4435-83c5-0df368cf9e02");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "223fcad6-8a25-4923-bee9-978e1826f5f5");
+                keyValue: "2276e451-0526-4585-9a72-fd4bf035ccf3");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "2340c662-1415-488b-a93b-86c46e2c8ea5");
+                keyValue: "2312500c-14bf-46cc-9ef5-82197cec6802");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "27515bb1-8859-45ec-bff0-f5b720899120");
+                keyValue: "23c5a47d-f6b0-4a2c-8e0a-3ba3e50a597d");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "299c5297-49d0-4a72-8896-cfb9c9fc2b8d");
+                keyValue: "23d6b762-8461-4c3f-b9f7-fbef9b94c57f");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "2d08b7cb-9661-4cba-95f5-c2c45d985367");
+                keyValue: "2552dcb4-da38-4668-bf88-e7df25688317");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "2e7b1103-5d32-4b61-9f63-3d12886ef581");
+                keyValue: "268fda58-2a65-4d53-840a-9fa1843d1f28");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "2ea85c59-ffee-4ec6-972e-5fa84f921773");
+                keyValue: "26c4b410-8922-4f8d-b68c-7239ca180876");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "34dbeb4c-0aba-4db8-ae69-cb286262fc78");
+                keyValue: "28b1f836-f7ef-4651-b97d-06fd33107abd");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "367dd85c-746f-45f1-ba9d-cf3bbb44c743");
+                keyValue: "295afcc5-1691-48f9-bcf4-38eb472a3bc5");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "38559c9d-1940-49b4-b971-8d81f02050d4");
+                keyValue: "29dd8437-c26d-40e3-ac26-de4923d55326");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "3d0aa563-7e00-4379-84f2-3b1782c3d9e9");
+                keyValue: "29fcb479-301c-457e-b9b7-1d870b170884");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "3d1eb79b-d093-492d-bd68-e78752f33955");
+                keyValue: "33721ce6-e228-48ac-850a-ff7588319315");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "3fdfb1bd-0b10-4f02-bd1b-48b8661ba4f5");
+                keyValue: "33e48694-c90c-451c-b69b-4723eb88a1b2");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "42ddf3d8-e43f-4e96-861a-c908493c38b7");
+                keyValue: "35a55e98-6ecd-4293-9168-9ec783a12c85");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "462b26db-5ebc-4911-ac4f-5884958e14db");
+                keyValue: "38c7c998-d564-4533-b648-cb6cda2a3c2b");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "47a0327a-d42e-495f-a6ce-7401502ff190");
+                keyValue: "38efb290-228d-4292-92b9-38be763a10a7");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "47b8c402-4c9f-41fe-9fdb-362767d0dc34");
+                keyValue: "3e4bbb05-42d4-4706-9cd8-63cf737b5c76");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "483f8ae9-9f2a-4a0a-b5ce-b94fd15d79ac");
+                keyValue: "3e5a5862-c63b-4dd2-8766-6309996b5638");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "4df889ed-714c-43ed-9913-c945890cb436");
+                keyValue: "42260cbe-4ebe-4018-ad51-e9700281029f");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "511abf04-0b4f-445a-9dd0-f1df75ca21c9");
+                keyValue: "43366c38-2876-41c3-b9c5-18f2c0311f66");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "549be678-153e-42fb-9103-6f396e4e7eae");
+                keyValue: "47c7e3af-2291-4309-84b0-7d0fd24059fc");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "59e15532-7c05-4ae0-a6e7-1cb22714061a");
+                keyValue: "4981c700-9fcc-4d4a-b7cb-272c9048fb8a");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "5aae85df-2881-485d-9876-e5b7f5ae8a0f");
+                keyValue: "49a44459-7b88-4d4b-8cb6-a09e8a03b420");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "60ee7e52-6a73-46fb-9d13-d45934941a98");
+                keyValue: "4a739549-7512-4329-b2b4-ff6f638ee5a2");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "62187551-3af5-4cc1-9002-a13c4242586b");
+                keyValue: "511fe119-f53a-47c1-8745-643f8e349c37");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "63e871d6-254a-4077-8e26-0c8778ecfd60");
+                keyValue: "5179f2e9-d838-48ba-9ca3-716076d66dca");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "66b5d88f-dd2f-4f82-9e78-9de49fda1777");
+                keyValue: "52c0f0ec-4476-45fe-b114-a8975ee2bc7f");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "692eaef7-5566-40eb-935f-6902ec7c1d88");
+                keyValue: "5324fd04-1bd1-4794-8ab8-efbc5a821c55");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "6b924891-e69f-4885-b6b9-bf0479c6cd92");
+                keyValue: "569e5883-a0b9-430b-8b63-e68e2602d706");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "6ba6f85d-0fac-4d0a-bb2e-e444c9d95c03");
+                keyValue: "5805bc43-ac33-45b4-a27d-df8386e76d7d");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "6bb0f31e-add6-4858-b353-b2e08b5e0191");
+                keyValue: "583073cc-a5cb-4a44-a069-ad310547e706");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "6dd5eea1-5265-4970-befa-856dda3923af");
+                keyValue: "5a9e5e40-e115-461b-9be7-d311b0034dac");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "6f1b4934-4cd5-476b-927d-16d2dfc5c0e4");
+                keyValue: "5bef938a-f4ba-4b16-b4f4-2378cf552a8e");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "6fdf6364-ef41-46bd-80a2-4a81645c23e1");
+                keyValue: "5ebf202c-80ed-4a4b-a4d5-b90a96a7bb41");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "706a293e-74d0-4bbb-8eac-f6a9c77d84a1");
+                keyValue: "62e62a0d-554e-41b3-8ca3-3741b635a110");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "721d8d5c-65f2-46c0-abd5-f947a2556cfe");
+                keyValue: "67c32341-8bb4-46d8-b32a-7fc7936ae3cf");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "741ddda0-1e90-4ac4-9eaa-59d2dd5a04f8");
+                keyValue: "6a6c7633-a368-47d5-8e50-0fbd98d69ca6");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "765868b6-500d-4a4d-916d-06e75d3e867d");
+                keyValue: "6b2cde43-d01c-4515-a27d-038fedac9d0b");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "797bfcb8-934e-4678-b964-7c702405b6d1");
+                keyValue: "6bf47b91-c240-48b4-831d-73a3d4aa8f8c");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "7e21a20f-75ee-4b4a-aa12-6de54c0903cc");
+                keyValue: "6e2aadd0-f602-4994-8be1-7335841e2833");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "7f29b6e8-1eaf-43cb-ab5b-a3eba5d3557c");
+                keyValue: "6ec1a617-e64f-474d-9919-5ff12fcd3db3");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "7fbae422-7f18-4767-87d8-9a12cf9efcca");
+                keyValue: "7762c29c-54cd-4aee-99c3-ff137477a62f");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "8204eda6-69ea-4894-90fb-9a9cb1b0703f");
+                keyValue: "77f38da9-6ec3-45b4-8aa0-e5304643bbc5");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "82958bb1-5d1a-49d8-a0f4-984fb10b3831");
+                keyValue: "7dcdf7d4-5893-4852-988f-bdaf2050b72f");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "831461a1-55e4-4f69-87d0-681b951bde81");
+                keyValue: "800e5440-7418-4e7a-a9f9-be1d6b3839ad");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "845ab5c9-db70-4ec6-829a-60c0bd9da673");
+                keyValue: "80577342-1614-4f59-950b-c11be1154b68");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "885d2942-0188-4e1d-9f76-31095952da9f");
+                keyValue: "806a3871-9d97-4e61-a256-c4be7f5fd5d7");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "88b4886a-7241-415d-86d9-101430589b1f");
+                keyValue: "80cc9503-68bd-4c00-8b49-79dbee4d5865");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "8919d26a-93ed-4998-bcc0-780d7aec63c8");
+                keyValue: "83872a28-bc5d-4cb5-be96-62a383f7591d");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "8af0c203-735b-49bc-87da-3a7f66770d05");
+                keyValue: "8b670ed0-2309-489d-a2d3-303b426ce48a");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "8e7ab5ab-1d6b-4f7e-9c69-dabe0e547ade");
+                keyValue: "8ce77d59-d2ae-42be-95ea-59cf4367c208");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "9104e6b5-b05a-478a-9137-a27a41556044");
+                keyValue: "8e6dcf1d-2811-450a-9dbc-239bcb5b1206");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "93a5482f-def7-45bb-978f-97beece9bf9e");
+                keyValue: "90e0f385-d4dc-4333-b0d5-db253975fe53");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "95edd683-1c16-45d8-b226-80a487caffd9");
+                keyValue: "9232ceeb-750c-4541-b08e-96b4e7098349");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "973eb5fe-bb3c-48f8-9998-7db9a8043d29");
+                keyValue: "97fab8af-928c-407b-8b22-21621a14f966");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "97b3c6e9-18f4-4978-838b-14753a312c28");
+                keyValue: "98107257-6d0a-476a-a168-b381f35495b0");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "9a9c04e8-2090-4046-bd98-c28106154284");
+                keyValue: "9cd9443f-b2ea-4687-825c-8f052a35741a");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "9c38d1ec-3571-47d5-9cff-7b6036557cbb");
+                keyValue: "9d3bbf52-658c-4394-9a0f-58cd89ac5aee");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "9c5ef886-055e-4474-a185-b210239bc0a8");
+                keyValue: "9f1760d1-01bb-4120-a18c-965d4f5012c8");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "9d780d8e-f52f-4181-a767-b2a328cd7663");
+                keyValue: "a2bbd3be-b8ce-4321-9741-81c03efc610a");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "9d78bcf3-c70c-4fa3-9feb-0f2e7b6b9a16");
+                keyValue: "a2ce58be-a29f-47c9-bab0-e8a6c06476c2");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "a19ac33c-e003-4062-b3da-dc9feeef7f5b");
+                keyValue: "a6b939c2-5608-4c79-b4c3-08fa0b429bcf");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "a1e7d4ea-a5a2-4041-adde-55da5365ae7d");
+                keyValue: "a71163a1-dc83-4e94-b217-7a97efc0e581");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "a2dd0f14-3392-44dc-95db-6122690cadf9");
+                keyValue: "a77c203d-ac9f-4fca-8ccf-973b4da1b380");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "a325a20e-91ad-43e7-8750-dce55f661453");
+                keyValue: "a7ea47d8-ddc1-4dfe-9947-9405c908dcdd");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "a8b7ada7-a2f6-4515-b370-eaaed6126c5c");
+                keyValue: "a920cd4f-0348-47b4-a092-3dcee3302321");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "a9d40957-dd6f-46ef-bcaf-b18854dda069");
+                keyValue: "a9b49c93-b0f3-4f02-b4c6-00eebac46768");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "ae279a5a-e1a1-402c-a70e-b083006441a0");
+                keyValue: "aa6b5b30-fb88-4f5d-8d1e-655e8d037a36");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "b0d4e07c-cc98-49b9-8c4a-6ffdc5a7a5f1");
+                keyValue: "ac66de24-7be5-4562-a810-876ef9d51c9d");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "b0f5b997-3bf8-435f-8b4d-b6ad652806c6");
+                keyValue: "b20c4735-935d-4eb6-b52f-5707737feeb5");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "b54ec839-cc72-41fb-ab7e-b1d2c5f2aed6");
+                keyValue: "b359df5a-a976-4968-9c84-f75e9d589748");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "b766a27c-38cc-427d-b362-6d6065c88d61");
+                keyValue: "b60fcbca-1396-48d8-bfc6-2ade7d83a0e8");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "bda070bd-be6f-48a2-8c17-152d75f2a38a");
+                keyValue: "b8c257ea-d285-4e2c-b78f-57ca3e94914f");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "be90eb40-b5bc-49b7-9efa-6f7a7c5474a5");
+                keyValue: "b9e8caea-1efc-43ad-a192-38424750a8be");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "bf5b9737-745b-4850-ba67-fec4ab871beb");
+                keyValue: "bdfd8af9-cbaa-45ee-848f-655d0fef94a1");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "c0181ba5-cf55-4527-9106-8acffe0fbfef");
+                keyValue: "c0e784a2-0da9-438a-9ab4-03442d1aa406");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "c1c253ae-6ef6-478d-8b4d-e86a992c3a0f");
+                keyValue: "c5d14df8-7d4b-44ce-b3cf-c11191c5cef1");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "c2275201-4c14-4d57-8fb8-6b6d31eb9191");
+                keyValue: "cf0d1a3f-572b-49fb-b4c7-43fb3a67ecb0");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "c23f0169-bfa4-4c19-8c93-e0ca43cc92f0");
+                keyValue: "d0437f3a-01af-4b90-84c1-76ef30302ba0");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "c3498081-4970-4188-b450-c677a9a7d925");
+                keyValue: "d1caad0b-6144-47c8-990f-440ad8e0d9e6");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "c4884687-e5da-415c-8abe-c3bd8551ce04");
+                keyValue: "d48df6b3-8980-4307-a18e-e9e62d39220f");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "c4b9c8f0-0cbf-46de-9e4a-6faaf33c0235");
+                keyValue: "d4a88bb1-41ce-4c2b-adf5-981bce86d31c");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "c8063f08-11d4-4f02-8ede-3699f4de93bf");
+                keyValue: "d630b732-d1b5-4eea-a522-24c9b70f646a");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "c870105c-f39e-46e1-9976-c2f68aa87b8d");
+                keyValue: "d641a5dc-9b77-4a5f-be1d-c5a9bc2feca8");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "d0327e88-40ce-489a-8b3a-6d92d43be58b");
+                keyValue: "d6693bbb-cebb-447f-8e34-ff2406c6a663");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "d2087cd7-2337-44c0-ba6c-09815030589d");
+                keyValue: "d66b1b10-45e0-42cf-979e-fa7331f188dd");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "d303a76f-21f2-4856-a6a3-25d2782848e1");
+                keyValue: "d76420b9-679e-4228-9e90-b18f016c892a");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "d3d59b02-003b-40f7-a5c2-860f168ce483");
+                keyValue: "d800fcd5-fa7f-4e74-8609-958252ad2768");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "db356a21-b197-450d-9350-612b3f87ce3e");
+                keyValue: "d8e6a17e-4a72-405e-8f59-203b7fbda34b");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "dd4e9a50-fe2f-47d1-b396-6b85b56acbe9");
+                keyValue: "dc2b83cf-1288-4f0a-843d-c0c36dd22911");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "de6ebcd3-b82d-417d-94b8-2a1872c8565b");
+                keyValue: "dc50cea3-c74c-497f-b1c7-4959950a823c");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "dee8fb21-95f4-451c-a48c-108e53f9d7ed");
+                keyValue: "dc85707e-363f-47dc-9dff-be1cbd6b4ecf");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "e10eb0d2-5927-4fa9-997a-6426d9028545");
+                keyValue: "dcea8d21-44c7-4d29-b175-d5096ebeee2e");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "e643891d-aac1-434e-b774-107971969894");
+                keyValue: "dd1079f7-f351-4104-96bf-12bf9ded9d89");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "e7b4911f-6de6-4123-af16-897327dea19a");
+                keyValue: "deaa6e06-6135-48a7-b77e-882d62c2998d");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "e8795a2f-4bd6-4cda-bc2b-cde680163e11");
+                keyValue: "df65ac42-b0ab-4655-b53a-2843d74603f2");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "ea54795d-db56-4294-bfc7-d1f7fa3d0c1c");
+                keyValue: "e166ac6b-f975-40ff-986f-db41a2228852");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "ef373b30-eda9-46c8-8e3d-4c11b30f99b3");
+                keyValue: "e2f9b919-c5ed-451c-8125-693aadb68a49");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "f53bc631-425f-47b7-ab25-bfecfba0bc07");
+                keyValue: "e4ac0a28-d024-48f8-9929-209a058641e9");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "f683647e-a610-44e3-8e3d-4049940abb74");
+                keyValue: "e6632632-425e-47d7-8dfb-f586c0521015");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "f9a050ce-83f0-4948-9276-62a3ddeb7e4e");
+                keyValue: "e961cc22-5414-48bb-9de0-b574df4591c3");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "fa84da26-ca5d-4090-8ecb-65a4ffe5615a");
+                keyValue: "eb44f73e-0410-4914-be7d-5871f3a2dd9e");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "fc57f4f7-6a63-411e-bc93-d3fdc5a0a968");
+                keyValue: "ed070297-7fff-4ae1-8c75-25168daa85bb");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "fcd5fb59-6b75-40d2-882e-9398dc95ab52");
+                keyValue: "f04e4519-724d-48f7-bbfd-46014478e9b6");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "fdba820a-44fb-4145-829d-ff492df14688");
+                keyValue: "f0f62193-bed7-4040-b438-f9fa025da083");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "fddd75aa-c3a4-4c6b-b49e-112d68b8f7fb");
+                keyValue: "f5b28a98-524a-43fa-b650-71e69e2ef7d1");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "ff0ae58e-0eea-454f-889e-df3d6a4344b2");
+                keyValue: "f8384892-39f2-442a-b948-a0f647898e90");
+
+            migrationBuilder.DeleteData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "f8c89084-01de-4cf7-a297-2f3c1fac8c72");
+
+            migrationBuilder.DeleteData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "f964bc3f-de68-46a9-b1c6-21fd3945fed5");
 
             migrationBuilder.DeleteData(
                 table: "ChavesApiTerceiro",
                 keyColumn: "Id",
-                keyValue: new Guid("5ef06643-d760-4539-aece-9731e090a598"));
+                keyValue: new Guid("eeeb471a-2d8c-4bd3-b772-974a3d8612e5"));
 
             migrationBuilder.DeleteData(
                 table: "Rotinas",
                 keyColumn: "Id",
-                keyValue: new Guid("0283739d-e2da-4f69-a1b4-fff0045f0cef"));
+                keyValue: new Guid("06cbc6d5-216a-45f9-8496-d0d2fe93bcf3"));
 
             migrationBuilder.DeleteData(
                 table: "Rotinas",
                 keyColumn: "Id",
-                keyValue: new Guid("4229612d-a63d-476e-bd11-2af5c435078c"));
+                keyValue: new Guid("2556044d-dcdc-4355-9e57-d1fa336a5363"));
 
             migrationBuilder.DeleteData(
                 table: "Rotinas",
                 keyColumn: "Id",
-                keyValue: new Guid("45260988-1ec0-4e8c-b708-1bb2f7c3d414"));
+                keyValue: new Guid("52538e24-79c2-4eca-823c-e124a8b4a213"));
 
             migrationBuilder.DeleteData(
                 table: "Rotinas",
                 keyColumn: "Id",
-                keyValue: new Guid("519471fa-0f42-46d9-b585-bc7bbd9d7fee"));
+                keyValue: new Guid("587a5f91-37ec-42ce-a79f-229d6a4d43a8"));
 
             migrationBuilder.DeleteData(
                 table: "Rotinas",
                 keyColumn: "Id",
-                keyValue: new Guid("669a9b45-772f-46bf-bf45-da355eab6e96"));
+                keyValue: new Guid("6c0ff275-2dd5-42a0-b488-e0665616fd24"));
 
             migrationBuilder.DeleteData(
                 table: "Rotinas",
                 keyColumn: "Id",
-                keyValue: new Guid("e6bc9551-b3f3-4357-b87a-d3f9101177e7"));
+                keyValue: new Guid("85611459-4fa5-422a-b6ac-1a5bd5a83d9a"));
 
             migrationBuilder.DeleteData(
                 table: "Rotinas",
                 keyColumn: "Id",
-                keyValue: new Guid("e7225157-5691-4785-9ef2-31bba714e293"));
+                keyValue: new Guid("ac9faa63-bdff-4c0a-8469-b188f710cae7"));
 
             migrationBuilder.DropColumn(
                 name: "ClienteContratoFaturaId",
                 table: "VendedoresComissoes");
+
+            migrationBuilder.DropColumn(
+                name: "DataPagamento",
+                table: "ClientesContratosFaturas");
 
             migrationBuilder.UpdateData(
                 table: "AspNetGroups",

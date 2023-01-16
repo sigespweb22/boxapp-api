@@ -6,10 +6,12 @@ namespace BoxBack.Domain.Models
     public class ClienteContratoFatura : EntityAudit
     {
         public ClienteContratoFatura(DateTimeOffset dataVencimento, DateTimeOffset dataCompetencia,
-                                     decimal valor, decimal desconto, Int32 numeroParcela, bool quitado)
+                                     DateTimeOffset dataPagamento, decimal valor, decimal desconto,
+                                     Int32 numeroParcela, bool quitado)
         {
             DataVencimento = dataVencimento;
             DataCompetencia = dataCompetencia;
+            DataPagamento = dataPagamento;
             Valor = valor;
             Desconto = desconto;
             NumeroParcela = numeroParcela;
@@ -21,6 +23,7 @@ namespace BoxBack.Domain.Models
 
         public DateTimeOffset DataVencimento { get; set; }
         public DateTimeOffset DataCompetencia { get; set; }
+        public DateTimeOffset DataPagamento { get; set; }
         public decimal Valor { get; set; }
         public decimal Desconto { get; set; }
         public Int32 NumeroParcela { get; set; }
