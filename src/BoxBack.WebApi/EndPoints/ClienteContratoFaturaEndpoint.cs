@@ -12,8 +12,6 @@ using AutoMapper;
 using BoxBack.Domain.InterfacesRepositories;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.ServicesThirdParty;
-using BoxBack.Domain.ModelsServices;
-using BoxBack.Domain.Enums;
 using BoxBack.Application.ViewModels;
 
 namespace BoxBack.WebApi.EndPoints
@@ -44,6 +42,7 @@ namespace BoxBack.WebApi.EndPoints
         /// </summary>
         /// <param name="q"></param>
         /// <param name="clienteContratoId"></param>
+        /// <param name="quitadas"></param>
         /// <returns>Um array json com as FATURAS do contrato do cliente</returns>
         /// <response code="200">Lista de FATURAS do contrato do cliente</response>
         /// <response code="400">Problemas de validação ou dados nulos</response>
@@ -57,7 +56,7 @@ namespace BoxBack.WebApi.EndPoints
         [Produces("application/json")]
         [Route("list")]
         [HttpGet]
-        public async Task<IActionResult> ListAsync(string q, string clienteContratoId)
+        public async Task<IActionResult> ListAsync(string q, string clienteContratoId, bool quitadas = false)
         {
             #region Generals validations
             if (string.IsNullOrEmpty(clienteContratoId))
@@ -75,7 +74,8 @@ namespace BoxBack.WebApi.EndPoints
                                                         .AsNoTracking()
                                                         .Include(x => x.ClienteContrato)
                                                         .ThenInclude(x => x.Cliente)
-                                                        .Where(x => x.ClienteContratoId == Guid.Parse(clienteContratoId))
+                                                        .Where(x => x.ClienteContratoId == Guid.Parse(clienteContratoId) &&
+                                                               x.Quitado.Equals(quitadas))
                                                         .OrderBy(x => x.NumeroParcela)
                                                         .ToListAsync();
             }
