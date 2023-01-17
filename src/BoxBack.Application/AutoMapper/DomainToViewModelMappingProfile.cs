@@ -94,11 +94,15 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<VendedorComissao, VendedorComissaoViewModel>()
                 .ForMember(dst => dst.VendedorViewModel, src => src.MapFrom(x => x.Vendedor))
                 .ForMember(dst => dst.ClienteContratoViewModel, src => src.MapFrom(x => x.ClienteContrato))
+                .ForMember(dst => dst.ClienteContratoFaturaViewModel, src => src.MapFrom(x => x.ClienteContratoFatura))
+                .ForPath(dst => dst.ClienteContratoFaturaViewModel.DataCompetencia, src => src.MapFrom(x => x.ClienteContratoFatura.DataCompetencia.ToString("dd/MM/yyyy")))
+                .ForPath(dst => dst.ClienteContratoFaturaViewModel.DataPagamento, src => src.MapFrom(x => x.ClienteContratoFatura.DataPagamento.ToString("dd/MM/yyyy")))
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
             CreateMap<Vendedor, VendedorSelect2ViewModel>();
             CreateMap<ClienteContratoFatura, ClienteContratoFaturaViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.Quitado ? "YES" : "NO"))
-                .ForMember(dst => dst.DataCompetencia, src => src.MapFrom(x => x.DataCompetencia.ToString("dd/MM/yyyy")));
+                .ForMember(dst => dst.DataCompetencia, src => src.MapFrom(x => x.DataCompetencia.ToString("dd/MM/yyyy")))
+                .ForMember(dst => dst.DataPagamento, src => src.MapFrom(x => x.DataPagamento.ToString("dd/MM/yyyy")));
             CreateMap<Rotina, RotinaViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"))
                 .ForMember(dst => dst.DataCriacaoUltimoEvento, src => src.MapFrom(x => x.RotinasEventsHistories.OrderByDescending(x => x.CreatedAt).Select(x => x.CreatedAt).FirstOrDefault().ToString("dd/MM/yyyy hh:mm:ss")))

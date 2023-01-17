@@ -45,6 +45,7 @@ namespace Sigesp.Infra.Data.Repository
         {
             return await DbSet
                             .Include(x => x.Vendedor)
+                            .Include(x => x.ClienteContratoFatura)
                             .Include(x => x.ClienteContrato)
                             .ThenInclude(x => x.Cliente)
                             .Where(x => x.VendedorId.Equals(vendedorId)).ToListAsync();

@@ -7,6 +7,7 @@ namespace BoxBack.Application.ViewModels
         public Guid? Id { get; set; }
         public string DataVencimento { get; set; }
         public string DataCompetencia { get; set; }
+        public string DataPagamento { get; set; }
         public decimal Valor { get; set; }
         public decimal Desconto { get; set; }
         public Int32 NumeroParcela { get; set; }
