@@ -40,7 +40,6 @@ namespace Sigesp.Infra.Data.Repository
                                    x.ClienteContratoFatura.DataCompetencia <= dataFim).ToListAsync();
             }
         }
-
         public async Task<IEnumerable<VendedorComissao>> GetAllWithIncludesByVendedorIdAsync(Guid vendedorId)
         {
             return await DbSet
@@ -50,12 +49,17 @@ namespace Sigesp.Infra.Data.Repository
                             .ThenInclude(x => x.Cliente)
                             .Where(x => x.VendedorId.Equals(vendedorId)).ToListAsync();
         }
-
         public async Task<bool> AlreadyByFaturaIdAndVendedorId(Guid clienteContratoFaturaId, Guid vendedorId)
         {
             return await DbSet
                             .AnyAsync(x => x.ClienteContratoFaturaId.Equals(clienteContratoFaturaId) && 
                                            x.VendedorId.Equals(vendedorId));
+        }
+
+        public void DeletePermanentlyAsync(VendedorComissao vendedorComissao)
+        {
+            DbSet.Remove(vendedorComissao);
+            Db.SaveChanges();
         }
     }
 }

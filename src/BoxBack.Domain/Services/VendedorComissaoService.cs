@@ -289,6 +289,54 @@ namespace BoxBack.Domain.Services
 
             return vendedorComissoes;
         }
+        public async Task DeletePermanentlyAsync(Guid id)
+        {
+            #region Validators
+            var vendedorComissao = new VendedorComissao();
+            vendedorComissao.VendedorId = id;
+
+            VendedorComissaoValidator validator = new VendedorComissaoValidator();
+            validator.ValidateAndThrow(vendedorComissao);
+            #endregion
+
+            #region Get data to delete
+            var vendedorComissaoToDelete = new VendedorComissao();
+            try
+            {
+                vendedorComissaoToDelete = await _vendedorComissaoRepository.GetByIdAsync(id);
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de fazer commit da deleção no banco.| {io.Message}");
+                throw;
+            }
+            catch (ArgumentNullException an)
+            {
+                _logger.LogInformation($"Falhou tentativa de fazer commit da deleção no banco.| {an.Message}");
+                throw;
+            }
+            catch (Exception e)
+            {
+                _logger.LogInformation($"Falhou tentativa de fazer commit da deleção no banco.| {e.Message}");
+                throw;
+            }
+
+            validator.ValidateAndThrow(vendedorComissaoToDelete);
+            #endregion
+
+            #region Delete
+            try
+            {
+                _vendedorComissaoRepository.DeletePermanentlyAsync(vendedorComissaoToDelete);
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de deletar permanentente uma comissão de vendedor.| {io.Message}");
+                throw;
+            }
+            #endregion
+        }
+
         private async Task<bool> AlreadyByFaturaIdAndVendedorId(Guid clienteContratoFaturaId, Guid vendedorId)
         {
             #region Required validations

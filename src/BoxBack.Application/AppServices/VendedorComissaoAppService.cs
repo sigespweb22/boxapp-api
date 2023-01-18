@@ -137,5 +137,9 @@ namespace BoxBack.Application.AppServices
         {
             return await _vendedorComissaoService.AlterStatusAsync(id);
         }
+        public async Task DeletePermanentlyAsync(Guid id)
+        {
+            await _vendedorComissaoService.DeletePermanentlyAsync(id);
+        }
     }
 }

@@ -110,5 +110,50 @@ namespace BoxBack.WebApi.EndPoints
 
             return CustomResponse(200, new { success = await _vendedorComissaoAppService.AlterStatusAsync(id), message = "Status comissão de vendedor alterado com sucesso." } );
         }
+
+        /// <summary>
+        /// Deleta permanentemente uma COMISSÃO de VENDEDOR
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Empty return</returns>
+        /// <response code="204">Deletado com sucesso</response>
+        /// <response code="400">Problemas de validação ou dados nulos</response>
+        /// <response code="404">Not found</response>
+        /// <response code="500">Erro interno desconhecido</response>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /delete-permanently
+        ///     {
+        ///        "id": "f9c7d5a6-1181-4591-948b-5f97088e20a4"
+        ///     }
+        ///
+        /// </remarks>
+        [Authorize(Roles = "Master, CanVendedorComissaoDelete, CanVendedorComissaoAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        [Route("delete-permanently/{id}")]
+        [HttpPut]
+        public async Task<IActionResult> DeletePermanentlyAsync(Guid id)
+        {
+            #region Validations model state
+            if (id == Guid.Empty)
+            {
+                AddError("Id requerido.");
+                return CustomResponse(400);
+            }
+            #endregion
+
+            try
+            {
+                await _vendedorComissaoAppService.DeletePermanentlyAsync(id);
+            }
+            catch  { throw; }
+
+            return CustomResponse(204);
+        }
     }
 }

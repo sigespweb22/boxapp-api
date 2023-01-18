@@ -121,13 +121,11 @@ namespace BoxBack.Infra.Data.Context
             OnBeforeSaving();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
-
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
             OnBeforeSaving();
             return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
-
         private void OnBeforeSaving()
         {
             var entities = ChangeTracker.Entries()
@@ -162,7 +160,6 @@ namespace BoxBack.Infra.Data.Context
                 }
             }
         }
-
         private void UpdateTimestamps(List<EntityEntry> entries)
         {
             var filtered = entries

@@ -11,5 +11,6 @@ namespace Sigesp.Domain.InterfacesRepositories
         Task<IEnumerable<VendedorComissao>> GetAllWithIncludesByVendedorIdAndaDataCompetenciaFaturaAsync(Guid vendedorId, DateTime dataInicio, DateTime dataFim);
         Task<IEnumerable<VendedorComissao>> GetAllWithIncludesByVendedorIdAsync(Guid vendedorId);
         Task<bool> AlreadyByFaturaIdAndVendedorId(Guid clienteContratoFaturaId, Guid vendedorId);
+        void DeletePermanentlyAsync(VendedorComissao vendedorComissao);
     }
 }
