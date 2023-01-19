@@ -57,11 +57,6 @@ namespace BoxBack.WebApi.EndPoints
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
 
-            if (vendedorComissoesViewModel.Count() == 0)
-            {
-                AddError("Nenhum registro encontrado.");
-                return CustomResponse(404);
-            }
             #endregion
             
             return Ok(new {
