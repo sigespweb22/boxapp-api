@@ -173,7 +173,7 @@ namespace BoxBack.Domain.Services
         {
             #region Generals Validators
             var vendedorComissao = new VendedorComissao();
-            vendedorComissao.Id = Guid.Empty;
+            vendedorComissao.Id = id;
 
             VendedorComissaoAlterStatusValidator validator = new VendedorComissaoAlterStatusValidator();
             validator.ValidateAndThrow(vendedorComissao);
@@ -270,7 +270,7 @@ namespace BoxBack.Domain.Services
             var vendedorComissao = new VendedorComissao();
             vendedorComissao.VendedorId = vendedorId;
 
-            VendedorComissaoValidator validator = new VendedorComissaoValidator();
+            VendedorComissaoParamsValidator validator = new VendedorComissaoParamsValidator();
             validator.ValidateAndThrow(vendedorComissao);
             #endregion
 

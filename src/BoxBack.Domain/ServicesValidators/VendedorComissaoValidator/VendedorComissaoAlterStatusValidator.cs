@@ -9,7 +9,7 @@ namespace BoxBack.Domain.Validators.VendedorComissaoValidator
         {
             RuleFor(vendedorComissao => vendedorComissao.Id).NotNull().WithMessage("Id é requerido.");
             RuleFor(vendedorComissao => vendedorComissao.Id).NotEmpty().WithMessage("Id é requerido.");
-            RuleFor(vendedorComissao => vendedorComissao).NotNull().WithMessage("Nenhum comissão de vendedor encontrada com o id informado para atualizar seu status.");
+            RuleFor(vendedorComissao => vendedorComissao).Empty().WithMessage("Nenhum comissão de vendedor encontrada com o id informado para atualizar seu status.");
         }
     }
 }
