@@ -56,7 +56,6 @@ namespace BoxBack.WebApi.EndPoints
                 vendedorComissoesViewModel = await _vendedorComissaoAppService.GetAllWithIncludesByVendedorIdAsync(vendedorId);
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-
             #endregion
             
             return Ok(new {

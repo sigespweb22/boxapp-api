@@ -79,12 +79,6 @@ namespace BoxBack.WebApi.EndPoints
                                                     .ToListAsync();
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
-
-            if (vendedorContratos == null)
-            {
-                AddError("Não encontrado.");
-                return CustomResponse(404);
-            }
             #endregion
             
             #region Filter search 
