@@ -59,7 +59,6 @@ namespace Sigesp.Infra.Data.Repository
         public void DeletePermanentlyAsync(VendedorComissao vendedorComissao)
         {
             DbSet.Remove(vendedorComissao);
-            Db.SaveChanges();
         }
     }
 }

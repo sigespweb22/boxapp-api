@@ -116,6 +116,10 @@ namespace BoxBack.Infra.Data.Context
                         .HasDefaultValueSql("nextval('\"OrderNumbers\"')");
         }
 
+        public override int SaveChanges()
+        {
+            return base.SaveChanges();
+        }
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             OnBeforeSaving();
@@ -137,7 +141,6 @@ namespace BoxBack.Infra.Data.Context
             UpdateSoftDelete(entities);
             UpdateTimestamps(entities);
         }
-
         private void UpdateSoftDelete(List<EntityEntry> entries)
         {
             var filtered = entries

@@ -10,5 +10,6 @@ namespace BoxBack.Domain.InterfacesRepositories
         ValidationResult CommitVR();
         Task<ValidationResult> CommitAsyncVR();
         Task<int> CommitAsync();
+        void CommitWithoutSoftDelete();
     }
 }

@@ -57,6 +57,10 @@ namespace BoxBack.Infra.Data.UoW
         {
             return await _context.SaveChangesAsync();
         }
+        public void CommitWithoutSoftDelete()
+        {
+            _context.SaveChanges();
+        }
 
         public void Dispose()
         {

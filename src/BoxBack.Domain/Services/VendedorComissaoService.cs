@@ -335,6 +335,10 @@ namespace BoxBack.Domain.Services
                 throw;
             }
             #endregion
+
+            #region Commit without soft delete
+            _unitOfWork.CommitWithoutSoftDelete();
+            #endregion
         }
 
         private async Task<bool> AlreadyByFaturaIdAndVendedorId(Guid clienteContratoFaturaId, Guid vendedorId)
