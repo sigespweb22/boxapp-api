@@ -58,7 +58,10 @@ namespace Sigesp.Infra.Data.Repository
 
         public void DeletePermanentlyAsync(VendedorComissao vendedorComissao)
         {
-            DbSet.Remove(vendedorComissao);
+            var vc = DbSet
+                        .Where(x => x.Id.Equals(vendedorComissao.Id)).FirstOrDefault();
+            
+            DbSet.Remove(vc);
         }
     }
 }

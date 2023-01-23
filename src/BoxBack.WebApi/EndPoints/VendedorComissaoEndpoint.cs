@@ -147,7 +147,7 @@ namespace BoxBack.WebApi.EndPoints
             }
             catch  { throw; }
 
-            return CustomResponse(204);
+            return CustomResponse(200, new { message = "Comissão de vendedor deletada com sucesso." });
         }
     }
 }

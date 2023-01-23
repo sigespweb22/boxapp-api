@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using BoxBack.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -31,6 +32,18 @@ namespace BoxBack.Infra.Data.Mappings
                .WithMany(c => c.VendedoresComissoes)
                .HasForeignKey(c => c.ClienteContratoId)
                .OnDelete(DeleteBehavior.NoAction);
+            
+            builder.HasQueryFilter(p => !p.IsDeleted);
+
+            builder
+                .HasIndex(c => c.VendedorId)
+                .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
+                .IsUnique(false);
+            
+            builder
+                .HasIndex(c => c.ClienteContratoId)
+                .HasFilter("\"IsDeleted\"=" + "\'" + 0 + "\'")
+                .IsUnique(false);
         }   
     }
 }
