@@ -562,5 +562,41 @@ namespace BoxBack.WebApi.EndPoints
                 source.Dispose();
             }
         }
+
+        /// <summary>
+        /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para gerar as comissões de um vendedor
+        /// </summary>
+        /// <param name="rotinaId"></param>
+        /// <param name="vendedorId"></param>
+        /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
+        [Authorize(Roles = "Master, CanVendedorComissaoCreate, CanVendedorComissaoAll")]
+        [Route("dispatch-vendedores-comissoes-create-by-vendedorId/{rotinaId}")]
+        [HttpPost]
+        public async Task DispatchVendedoresComissoesCreateByVendedorIdAsync([FromRoute]Guid rotinaId, [FromBody]string vendedorId)
+        {
+            CancellationTokenSource source = new CancellationTokenSource();
+            CancellationToken cToken = source.Token;
+
+            // create rotina event history
+            var rotinaEventHistoryId = Guid.NewGuid();
+            await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
+
+            var gerarComissoesTask = Task.Run(() => _vendedorComissaoAppService.GerarComissoesAsync(rotinaEventHistoryId));
+
+            try
+            {
+                await gerarComissoesTask;
+            }
+            catch (OperationCanceledException e)
+            {
+                _logger.LogInformation($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
+                _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(e.Message, rotinaEventHistoryId);
+            }
+            finally
+            {
+                source.Cancel();
+                source.Dispose();
+            }
+        }
     }
 }

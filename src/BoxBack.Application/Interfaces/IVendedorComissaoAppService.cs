@@ -11,6 +11,7 @@ namespace BoxBack.Application.Interfaces
         // Task<IEnumerable<VendedorComissaoViewModel>> GetAllAsync();
         // Task<VendedorComissaoViewModel> GetByIdAsync();
         Task<bool> AlterStatusAsync(Guid id);
+        Task GerarComissaoAsync(Guid rotinaEventHistoryId, string vendedorId);
         Task GerarComissoesAsync(Guid rotinaEventHistoryId);
         Task<IEnumerable<VendedorComissaoViewModel>> GetAllWithIncludesByVendedorIdAndaDataCompetenciaFaturaAsync(string vendedorId, DataPeriodoViewModel dataPeriodo);
         Task<IEnumerable<VendedorComissaoViewModel>> GetAllWithIncludesByVendedorIdAsync(string vendedorId);
