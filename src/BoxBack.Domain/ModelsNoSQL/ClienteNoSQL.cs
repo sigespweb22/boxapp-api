@@ -10,6 +10,7 @@ namespace BoxBack.Domain.ModelsNoSQL
         public ObjectId InternalId { get; set; }
         public string Id { get; set; }                          
         public string Body { get; set; } = string.Empty;
+        
         [BsonDateTimeOptions]
         public DateTime UpdatedOn { get; set; } = DateTime.Now;
         public int UserId { get; set; } = 0;

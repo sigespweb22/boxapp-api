@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BoxBack.Infra.Data.Context;
 using AutoMapper;
-using BoxBack.Domain.Interfaces;
+using BoxBack.Domain.InterfacesRepositories;
 using BoxBack.WebApi.Controllers;
 using BoxBack.Domain.Models;
 using BoxBack.Application.ViewModels;
@@ -60,6 +60,7 @@ namespace BoxBack.WebApi.EndPoints
             try
             {
                 chavesApiTerceiro = await _context.ChavesApiTerceiro
+                                                    .IgnoreQueryFilters()
                                                     .AsNoTracking()
                                                     .OrderByDescending(x => x.UpdatedAt)
                                                     .ToListAsync();
@@ -298,7 +299,7 @@ namespace BoxBack.WebApi.EndPoints
             var chaveApiTerceiro = new ChaveApiTerceiro();
             try
             {
-                chaveApiTerceiro = await _context.ChavesApiTerceiro.FindAsync(id);
+                chaveApiTerceiro = await _context.ChavesApiTerceiro.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Id.Equals(id));
             }
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             

@@ -1,5 +1,5 @@
 using System.Linq;
-using BoxBack.Domain.Interfaces;
+using BoxBack.Domain.InterfacesRepositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoxBack.Infra.Data.Repository

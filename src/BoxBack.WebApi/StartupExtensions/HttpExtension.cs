@@ -1,5 +1,5 @@
 using System;
-using BoxBack.Domain.Services;
+using BoxBack.Domain.ServicesThirdParty;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;

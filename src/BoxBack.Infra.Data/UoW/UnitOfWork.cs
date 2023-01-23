@@ -1,7 +1,6 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using BoxBack.Domain.Interfaces;
+using BoxBack.Domain.InterfacesRepositories;
 using BoxBack.Infra.Data.Context;
 
 namespace BoxBack.Infra.Data.UoW
@@ -19,7 +18,6 @@ namespace BoxBack.Infra.Data.UoW
         {
             _context.SaveChanges();
         }
-
         public ValidationResult CommitVR()
         {
             var commit = _context.SaveChanges();
@@ -32,7 +30,6 @@ namespace BoxBack.Infra.Data.UoW
                 return new ValidationResult("Error commit.");
             }
         }
-
         public async Task<ValidationResult> CommitAsyncVR()
         {
             int commitAsync;
@@ -56,10 +53,13 @@ namespace BoxBack.Infra.Data.UoW
                 return new ValidationResult("Error commitAsync.");
             }
         }
-
         public async Task<int> CommitAsync()
         {
             return await _context.SaveChangesAsync();
+        }
+        public void CommitWithoutSoftDelete()
+        {
+            _context.SaveChanges();
         }
 
         public void Dispose()
