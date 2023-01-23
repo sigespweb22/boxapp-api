@@ -155,7 +155,11 @@ namespace BoxBack.Domain.Services
             }
             #endregion
         }
-
+        public async Task<IEnumerable<Cliente>> GetAll()
+        {
+            return await _clienteRepository.GetAllAsync();
+        }
+        
         public void Dispose()
         {
             _clienteRepository.Dispose();
