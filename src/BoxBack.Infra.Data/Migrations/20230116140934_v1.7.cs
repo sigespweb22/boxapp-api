@@ -669,13 +669,6 @@ namespace BoxBack.Infra.Data.Migrations
                 keyColumn: "Id",
                 keyValue: new Guid("e0141a8f-ab55-44ad-943a-d81fe1be848f"));
 
-            migrationBuilder.AddColumn<Guid>(
-                name: "ClienteContratoFaturaId",
-                table: "VendedoresComissoes",
-                type: "uuid",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
-
             migrationBuilder.AddColumn<DateTimeOffset>(
                 name: "DataPagamento",
                 table: "ClientesContratosFaturas",
@@ -848,29 +841,12 @@ namespace BoxBack.Infra.Data.Migrations
                 keyValue: new Guid("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
                 columns: new[] { "CreatedAt", "UpdatedAt" },
                 values: new object[] { new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 513, DateTimeKind.Unspecified).AddTicks(4848), new TimeSpan(0, -3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 1, 16, 11, 9, 33, 513, DateTimeKind.Unspecified).AddTicks(4873), new TimeSpan(0, -3, 0, 0, 0)) });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VendedoresComissoes_ClienteContratoFaturaId",
-                table: "VendedoresComissoes",
-                column: "ClienteContratoFaturaId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_VendedoresComissoes_ClientesContratosFaturas_ClienteContrat~",
-                table: "VendedoresComissoes",
-                column: "ClienteContratoFaturaId",
-                principalTable: "ClientesContratosFaturas",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_VendedoresComissoes_ClientesContratosFaturas_ClienteContrat~",
-                table: "VendedoresComissoes");
-
-            migrationBuilder.DropIndex(
-                name: "IX_VendedoresComissoes_ClienteContratoFaturaId",
                 table: "VendedoresComissoes");
 
             migrationBuilder.DeleteData(
@@ -1542,10 +1518,6 @@ namespace BoxBack.Infra.Data.Migrations
                 table: "Rotinas",
                 keyColumn: "Id",
                 keyValue: new Guid("ac9faa63-bdff-4c0a-8469-b188f710cae7"));
-
-            migrationBuilder.DropColumn(
-                name: "ClienteContratoFaturaId",
-                table: "VendedoresComissoes");
 
             migrationBuilder.DropColumn(
                 name: "DataPagamento",
