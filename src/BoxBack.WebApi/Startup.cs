@@ -73,7 +73,7 @@ namespace BoxBack.WebApi
                 { policy.AllowAnyHeader( 
                     ) 
                         .AllowAnyMethod() 
-                        .WithOrigins("http://localhost:3000", "http://177.93.105.56")
+                        .WithOrigins("http://boxapp.boxtecnologia.com.br:3000", "http://boxapp.boxtecnologia.com.br/")
                         .AllowCredentials(); 
                 }); 
             });
