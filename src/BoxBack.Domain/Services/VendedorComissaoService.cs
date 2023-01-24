@@ -43,6 +43,150 @@ namespace BoxBack.Domain.Services
             _clienteContratoFaturaRepository = clienteContratoFaturaRepository;
         }
     
+        public async Task GerarComissoesByVendedorIdAsync(Guid rotinaEventHistoryId, Guid vendedorId)
+        {
+            #region Generals Validators
+            var vendedorComissaoToValidations = new VendedorComissao();
+            vendedorComissaoToValidations.VendedorId = vendedorId;
+
+            VendedorComissaoParamsValidator validator = new VendedorComissaoParamsValidator();
+            var validatorResult = validator.Validate(vendedorComissaoToValidations);
+            if (!validatorResult.IsValid)
+            {
+                foreach (var failure in validatorResult.Errors)
+                {
+                    _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | Property => {failure.PropertyName}, ErrorMessage => {failure.ErrorMessage}");
+                    _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(failure.ErrorMessage, rotinaEventHistoryId);
+                }
+
+                throw new OperationCanceledException(validatorResult.Errors.FirstOrDefault().ErrorMessage);
+            }
+            #endregion
+
+            #region Obter as data de competencia na rotina
+            var rotinaEventHistory = new RotinaEventHistory();
+            try
+            {
+                rotinaEventHistory = await _rotinaEventHistoryService.GetByIdWithIncludeAsync(rotinaEventHistoryId);
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de obter rotina event history para obter as datas de competência início e fim. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(io.Message);
+            }
+            catch (ArgumentNullException an)
+            {
+                _logger.LogInformation($"Argumento nulo. | {an.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(an.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(an.Message);
+            }
+            catch (Exception e) when (e is FormatException or OverflowException)
+            {
+                _logger.LogInformation($"Formato do argumento inválido ou problemas ou de casting ou conversões. | {e.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(e.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(e.Message);
+            }
+
+            if (rotinaEventHistory == null)
+            {
+                _logger.LogInformation($"Nenhum evento de rotina encontrado com o id informado afim de obter obter as datas de competência início e fim.");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle($"Nenhum evento de rotina encontrado com o id informado afim de obter obter as datas de competência início e fim.", rotinaEventHistoryId);
+                throw new OperationCanceledException($"Nenhum evento de rotina encontrado com o id informado afim de obter obter as datas de competência início e fim.");
+            }
+
+            var dataInicio = rotinaEventHistory.Rotina.DataCompetenciaInicio;
+            var dataFim = rotinaEventHistory.Rotina.DataCompetenciaFim;
+            #endregion
+
+            #region Get faturas comissionáveis do período de competência informado
+            ClienteContratoFatura[] clientesFaturas;
+            try
+            {
+                clientesFaturas = await _clienteContratoFaturaRepository.GetAllByCompetenciaAsAndQuitadasync(dataInicio, dataFim);
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de obter as faturas de contratos comissionáveis para seguir com a geração das comissões. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(io.Message) ;
+            }
+            #endregion
+
+            #region Calcular valor comissões
+            Int64 totalComissoesGeradas = 0;
+            Int64 totalComissoesNaoGeradas = 0;
+            for (var i = 0; i < clientesFaturas.Length; i++)
+            {
+                var vendedoresContrato = clientesFaturas[i].ClienteContrato.VendedoresContratos.ToArray();
+                for (var b = 0; b < vendedoresContrato.Length; b++)
+                {
+                    if (!await AlreadyByFaturaIdAndVendedorId(clientesFaturas[i].Id, vendedoresContrato[b].VendedorId)){
+                        var vendedorComissao = new VendedorComissao()
+                        {
+                            Id = Guid.NewGuid(),
+                            ClienteContratoId = clientesFaturas[i].ClienteContratoId,
+                            VendedorId = vendedoresContrato[b].VendedorId,
+                            ClienteContratoFaturaId = clientesFaturas[i].Id
+                        };
+
+                        if (vendedoresContrato[b].ComissaoPercentual != 0)
+                        {
+                            vendedorComissao.ValorComissao = vendedoresContrato[b].ClienteContrato.ValorContrato * vendedoresContrato[b].ComissaoPercentual / 100;
+                        }
+                        else
+                        {
+                            vendedorComissao.ValorComissao = vendedoresContrato[b].ComissaoReais;
+                        }
+
+                        _vendedorComissaoRepository.Add(vendedorComissao);
+                        totalComissoesGeradas++;
+                    } else {
+                        totalComissoesNaoGeradas++;
+                    }
+                }
+            }
+            #endregion
+
+            #region Commit 
+            try
+            {
+                _unitOfWork.Commit();    
+            }
+            catch (InvalidOperationException io) {
+                _logger.LogInformation($"Problemas ao efetuar commit. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new InvalidOperationException(io.Message); 
+            }
+            catch (Exception ex) {
+                _logger.LogInformation($"Problemas ao efetuar commit. | {ex.InnerException.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(ex.InnerException.Message, rotinaEventHistoryId);
+                throw new InvalidOperationException(ex.InnerException.Message); 
+            }
+            #endregion
+
+            #region Create rotina event history of success
+            try
+            {
+                _rotinaEventHistoryService.UpdateWithStatusConcluidaHandle(rotinaEventHistoryId, totalComissoesGeradas, totalComissoesNaoGeradas);
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | {io.Message}");
+                throw new InvalidOperationException(io.Message, io.InnerException);
+            }
+            catch (ArgumentNullException an) 
+            {
+                _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | {an.Message}");
+                throw new InvalidOperationException(an.Message, an.InnerException);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Falhou tentativa de atualizar status da operação como concluída. | {ex.Message}");
+                throw new InvalidOperationException(ex.Message, ex.InnerException);
+            }
+            #endregion
+        }
         public async Task GerarComissoesAsync(Guid rotinaEventHistoryId)
         {
             #region Obter as data de competencia na rotina
@@ -341,6 +485,7 @@ namespace BoxBack.Domain.Services
             #endregion
         }
 
+        #region Private methods
         private async Task<bool> AlreadyByFaturaIdAndVendedorId(Guid clienteContratoFaturaId, Guid vendedorId)
         {
             #region Required validations
@@ -371,6 +516,7 @@ namespace BoxBack.Domain.Services
 
             return already;
         }
+        #endregion
 
         public void Dispose()
         {

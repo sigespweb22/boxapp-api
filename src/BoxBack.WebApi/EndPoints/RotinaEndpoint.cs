@@ -572,7 +572,7 @@ namespace BoxBack.WebApi.EndPoints
         [Authorize(Roles = "Master, CanVendedorComissaoCreate, CanVendedorComissaoAll")]
         [Route("dispatch-vendedores-comissoes-create-by-vendedorId/{rotinaId}")]
         [HttpPost]
-        public async Task DispatchVendedoresComissoesCreateByVendedorIdAsync([FromRoute]Guid rotinaId, [FromBody]string vendedorId)
+        public async Task DispatchVendedoresComissoesCreateByVendedorIdAsync([FromRoute]Guid rotinaId, [FromBody]Guid vendedorId)
         {
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken cToken = source.Token;
@@ -581,7 +581,7 @@ namespace BoxBack.WebApi.EndPoints
             var rotinaEventHistoryId = Guid.NewGuid();
             await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
 
-            var gerarComissoesVendedorTask = Task.Run(() => _vendedorComissaoAppService.GerarComissoesAsync(rotinaEventHistoryId));
+            var gerarComissoesVendedorTask = Task.Run(() => _vendedorComissaoAppService.GerarComissoesByVendedorIdAsync(rotinaEventHistoryId, vendedorId));
 
             try
             {

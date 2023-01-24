@@ -9,7 +9,7 @@ namespace BoxBack.Application.Interfaces
     public interface IVendedorComissaoAppService
     {
         Task<bool> AlterStatusAsync(Guid id);
-        Task GerarComissaoAsync(Guid rotinaEventHistoryId, string vendedorId);
+        Task GerarComissoesByVendedorIdAsync(Guid rotinaEventHistoryId, Guid vendedorId);
         Task GerarComissoesAsync(Guid rotinaEventHistoryId);
         Task<IEnumerable<VendedorComissaoViewModel>> GetAllWithIncludesByVendedorIdAndaDataCompetenciaFaturaAsync(string vendedorId, DataPeriodoViewModel dataPeriodo);
         Task<IEnumerable<VendedorComissaoViewModel>> GetAllWithIncludesByVendedorIdAsync(string vendedorId);

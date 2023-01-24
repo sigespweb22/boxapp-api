@@ -32,16 +32,16 @@ namespace BoxBack.Application.AppServices
             _mapper = mapper;
         }
 
-        public async Task GerarComissaoAsync(Guid rotinaEventHistoryId, string vendedorId)
+        public async Task GerarComissoesByVendedorIdAsync(Guid rotinaEventHistoryId, Guid vendedorId)
         {
             #region Gerar comissões
             try
             {
-                await _vendedorComissaoService.GerarComissoesAsync(rotinaEventHistoryId);
+                await _vendedorComissaoService.GerarComissoesByVendedorIdAsync(rotinaEventHistoryId, vendedorId);
             }
             catch (InvalidOperationException io)
             {
-                _logger.LogInformation($"Falhou tentativa de gerar as comissões de vendedores. | {io.Message}");
+                _logger.LogInformation($"Falhou tentativa de gerar as comissões para o vendedor informado. | {io.Message}");
                 _rotinaEventHistoryAppService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
                 throw new OperationCanceledException(io.Message);
             }
