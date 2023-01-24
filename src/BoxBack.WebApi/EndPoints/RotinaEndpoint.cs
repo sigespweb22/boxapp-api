@@ -581,11 +581,11 @@ namespace BoxBack.WebApi.EndPoints
             var rotinaEventHistoryId = Guid.NewGuid();
             await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
 
-            var gerarComissoesTask = Task.Run(() => _vendedorComissaoAppService.GerarComissoesAsync(rotinaEventHistoryId));
+            var gerarComissoesVendedorTask = Task.Run(() => _vendedorComissaoAppService.GerarComissoesAsync(rotinaEventHistoryId));
 
             try
             {
-                await gerarComissoesTask;
+                await gerarComissoesVendedorTask;
             }
             catch (OperationCanceledException e)
             {
