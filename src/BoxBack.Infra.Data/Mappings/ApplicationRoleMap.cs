@@ -21,43 +21,43 @@ namespace BoxBack.Infra.Data.Mappings
                 .IsRequired();
             
             //Initial seed
-            var roles = EnumHelper.GetNames<PermissionEnum>();
-            foreach (var role in roles)
-            {
-                if (!role.Equals("Master"))
-                {
-                    var tmp = new ApplicationRole()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        Name = role,
-                        NormalizedName = role.ToUpper(),
-                        Subject = CreateSubjectToRole(role),
-                        Actions = GetActionsEnumFromRoleName(role).ToArray(),
-                        ConcurrencyStamp = Guid.NewGuid().ToString(),
-                        Description = EnumHelper.Parse<PermissionEnum>(role).GetDescription()
-                    };
+            // var roles = EnumHelper.GetNames<PermissionEnum>();
+            // foreach (var role in roles)
+            // {
+            //     if (!role.Equals("Master"))
+            //     {
+            //         var tmp = new ApplicationRole()
+            //         {
+            //             Id = Guid.NewGuid().ToString(),
+            //             Name = role,
+            //             NormalizedName = role.ToUpper(),
+            //             Subject = CreateSubjectToRole(role),
+            //             Actions = GetActionsEnumFromRoleName(role).ToArray(),
+            //             ConcurrencyStamp = Guid.NewGuid().ToString(),
+            //             Description = EnumHelper.Parse<PermissionEnum>(role).GetDescription()
+            //         };
 
-                    builder.HasData(tmp);
-                } else {
-                    var actionToRoleMasters = new List<CASLJSActionsEnum>()
-                    {
-                        CASLJSActionsEnum.manage
-                    };
+            //         builder.HasData(tmp);
+            //     } else {
+            //         var actionToRoleMasters = new List<CASLJSActionsEnum>()
+            //         {
+            //             CASLJSActionsEnum.manage
+            //         };
 
-                    var tmp = new ApplicationRole()
-                    {
-                        Id = "b0f96d85-3647-4651-9f78-b7529b577ec0",
-                        Name = "Master",
-                        NormalizedName = "MASTER",
-                        Subject = "all",
-                        Actions = actionToRoleMasters.ToArray(),
-                        ConcurrencyStamp = "4629cea3-3b65-43b9-9c4e-7cc68fe4e4e4",
-                        Description = "Pode realizar todas as ações/operações, bem como ter acesso a todos os dados e funcionalidades"
-                    };
+            //         var tmp = new ApplicationRole()
+            //         {
+            //             Id = "b0f96d85-3647-4651-9f78-b7529b577ec0",
+            //             Name = "Master",
+            //             NormalizedName = "MASTER",
+            //             Subject = "all",
+            //             Actions = actionToRoleMasters.ToArray(),
+            //             ConcurrencyStamp = "4629cea3-3b65-43b9-9c4e-7cc68fe4e4e4",
+            //             Description = "Pode realizar todas as ações/operações, bem como ter acesso a todos os dados e funcionalidades"
+            //         };
 
-                    builder.HasData(tmp);
-                }
-            }
+            //         builder.HasData(tmp);
+            //     }
+            // }
         }
 
         private string CreateSubjectToRole(string roleName)

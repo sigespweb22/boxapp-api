@@ -51,23 +51,23 @@ namespace BoxBack.Infra.Data.Mappings
                 .HasIndex(c => c.ApiKey)
                 .IsUnique();
  
-            //Seed init
-            builder.HasData(
-                new Tenant
-                {
-                    Id = Guid.Parse("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
-                    IsDeleted = false,
-                    CreatedAt = DateTime.Now,
-                    CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                    UpdatedAt = DateTime.Now,
-                    UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                    Cnpj = "12.368.943/0001-50",
-                    Nome = "Box Tecnologia Ltda",
-                    NomeExibicao = "Box Tecnologia",
-                    EmailPrincipal = "rafale@boxtecnologia.com.br",
-                    ApiKey = Guid.Parse("57d390e7-2b87-47fe-9bc8-0bae3a388499")
-                }
-            );
+            // //Seed init
+            // builder.HasData(
+            //     new Tenant
+            //     {
+            //         Id = Guid.Parse("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45"),
+            //         IsDeleted = false,
+            //         CreatedAt = DateTime.Now,
+            //         CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+            //         UpdatedAt = DateTime.Now,
+            //         UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+            //         Cnpj = "12.368.943/0001-50",
+            //         Nome = "Box Tecnologia Ltda",
+            //         NomeExibicao = "Box Tecnologia",
+            //         EmailPrincipal = "rafale@boxtecnologia.com.br",
+            //         ApiKey = Guid.Parse("57d390e7-2b87-47fe-9bc8-0bae3a388499")
+            //     }
+            // );
         }
     }
 }

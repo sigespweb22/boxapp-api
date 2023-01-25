@@ -21,7 +21,14 @@ namespace BoxBack.Application.ViewModels
         public string DataCompetenciaInicio { get; set; }
         public string DataCompetenciaFim { get; set; }
         public string Status { get; set; }
+        public Property Property { get; set; }
 
         public ICollection<RotinaEventHistoryViewModel> RotinasEventsHistories { get; set; }
+    }
+
+    public class Property
+    {
+        public string Id { get; set; }
+        public string Nome { get; set; }
     }
 }

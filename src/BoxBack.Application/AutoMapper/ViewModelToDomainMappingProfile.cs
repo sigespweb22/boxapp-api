@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Reflection.Metadata.Ecma335;
+using System;
 using System.Linq;
 using AutoMapper;
 using BoxBack.Application.ViewModels;
@@ -100,7 +101,8 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.ComissaoReais, src => src.MapFrom(x => x.ComissaoReais));
             CreateMap<VendedorComissaoViewModel, VendedorComissao>();
             CreateMap<RotinaViewModel, Rotina>()
-                .ForMember(dst => dst.DispatcherRoute, src => src.Ignore());
+                .ForMember(dst => dst.DispatcherRoute, src => src.Ignore())
+                .ForMember(dst => dst.PropertyId, src => src.MapFrom(x => x.Property.Id));
             CreateMap<RotinaEventHistoryViewModel, RotinaEventHistory>();
         }
     }

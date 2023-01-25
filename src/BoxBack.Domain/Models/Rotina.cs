@@ -22,6 +22,7 @@ namespace BoxBack.Domain.Models
         public string DispatcherRoute { get; set; }
         public DateTime DataCompetenciaInicio { get; set; }
         public DateTime DataCompetenciaFim { get; set; }
+        public Guid? PropertyId { get; set;}
 
         // Relationships
         public ICollection<RotinaEventHistory> RotinasEventsHistories { get; set; }

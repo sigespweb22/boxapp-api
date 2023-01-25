@@ -37,20 +37,20 @@ namespace BoxBack.Infra.Data.Mappings
             
             builder.HasQueryFilter(p => !p.IsDeleted);
             
-            builder.HasData(
-                new ApplicationGroup
-                {
-                    Id = Guid.Parse("23e63d9c-283b-496b-b7d8-7dac2ef7a822"), // primary key
-                    IsDeleted = false,
-                    CreatedAt = DateTimeOffset.Now,
-                    CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                    UpdatedAt = DateTimeOffset.Now,
-                    UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                    Name = "Master",
-                    UniqueKey = "ors0eAr4DPkvrwhy5gVnQAqRDnJUO43j9HzbkPyZ/7Q=", // generated with secre from name
-                    TenantId = Guid.Parse("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45")
-                }
-            );
+            // builder.HasData(
+            //     new ApplicationGroup
+            //     {
+            //         Id = Guid.Parse("23e63d9c-283b-496b-b7d8-7dac2ef7a822"), // primary key
+            //         IsDeleted = false,
+            //         CreatedAt = DateTimeOffset.Now,
+            //         CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+            //         UpdatedAt = DateTimeOffset.Now,
+            //         UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+            //         Name = "Master",
+            //         UniqueKey = "ors0eAr4DPkvrwhy5gVnQAqRDnJUO43j9HzbkPyZ/7Q=", // generated with secre from name
+            //         TenantId = Guid.Parse("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45")
+            //     }
+            // );
         }
 
         private string ExtractEntityNameFromRoleName(string roleName)

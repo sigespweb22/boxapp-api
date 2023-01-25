@@ -29,13 +29,13 @@ namespace BoxBack.Infra.Data.Mappings
                 .IsRequired();
             
             // initial seed
-            builder.HasData(
-                new ApplicationUserGroup
-                {
-                    UserId = "8e445865-a24d-4543-a6c6-9443d048cdb9", // primary key
-                    GroupId = Guid.Parse("23e63d9c-283b-496b-b7d8-7dac2ef7a822") // primary key
-                }
-            );
+            // builder.HasData(
+            //     new ApplicationUserGroup
+            //     {
+            //         UserId = "8e445865-a24d-4543-a6c6-9443d048cdb9", // primary key
+            //         GroupId = Guid.Parse("23e63d9c-283b-496b-b7d8-7dac2ef7a822") // primary key
+            //     }
+            // );
         }
     }
 }

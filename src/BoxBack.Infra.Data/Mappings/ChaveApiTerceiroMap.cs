@@ -27,13 +27,13 @@ namespace BoxBack.Infra.Data
             
             builder.HasQueryFilter(p => !p.IsDeleted);
             
-            builder.HasData(
-                new ChaveApiTerceiro
-                {
-                    Id = Guid.NewGuid(),
-                    ApiTerceiro = ApiTerceiroEnum.BOM_CONTROLE
-                }
-            );
+            // builder.HasData(
+            //     new ChaveApiTerceiro
+            //     {
+            //         Id = Guid.NewGuid(),
+            //         ApiTerceiro = ApiTerceiroEnum.BOM_CONTROLE
+            //     }
+            // );
         }
     }
 }
