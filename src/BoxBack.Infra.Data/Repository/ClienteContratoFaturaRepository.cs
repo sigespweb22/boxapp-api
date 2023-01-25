@@ -26,7 +26,7 @@ namespace Sigesp.Infra.Data.Repository
                                                              x.NumeroParcela.Equals(args.NumeroParcela));
         }
 
-        public async Task<ClienteContratoFatura[]> GetAllByCompetenciaAsAndQuitadasync(DateTime dataInicio, DateTime dataFim)
+        public async Task<ClienteContratoFatura[]> GetAllQuitadasByCompetenciaAsync(DateTime dataInicio, DateTime dataFim)
         {
             return await DbSet
                         .Include(x => x.ClienteContrato)
@@ -35,6 +35,19 @@ namespace Sigesp.Infra.Data.Repository
                                     x.DataCompetencia.Date <= dataFim &&
                                     x.Quitado == true &&
                                     x.ClienteContrato.VendedoresContratos.Any())
+                                    .ToArrayAsync();
+        }
+
+        public async Task<ClienteContratoFatura[]> GetAllQuitadasByVendedorIdAsync(DateTime dataInicio, DateTime dataFim, Guid vendedorId)
+        {
+            return await DbSet
+                        .Include(x => x.ClienteContrato)
+                        .ThenInclude(x => x.VendedoresContratos)
+                        .Where(x => x.DataCompetencia.Date >= dataInicio &&
+                                    x.DataCompetencia.Date <= dataFim &&
+                                    x.Quitado == true &&
+                                    x.ClienteContrato.VendedoresContratos.Any() &
+                                    x.ClienteContrato.VendedoresComissoes.Any(x => x.VendedorId == vendedorId))
                                     .ToArrayAsync();
         }
     }

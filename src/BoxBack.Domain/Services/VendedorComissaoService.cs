@@ -103,7 +103,7 @@ namespace BoxBack.Domain.Services
             ClienteContratoFatura[] clientesFaturas;
             try
             {
-                clientesFaturas = await _clienteContratoFaturaRepository.GetAllByCompetenciaAsAndQuitadasync(dataInicio, dataFim);
+                clientesFaturas = await _clienteContratoFaturaRepository.GetAllQuitadasByVendedorIdAsync(dataInicio, dataFim, vendedorId);
             }
             catch (InvalidOperationException io)
             {
@@ -229,7 +229,7 @@ namespace BoxBack.Domain.Services
             ClienteContratoFatura[] clientesFaturas;
             try
             {
-                clientesFaturas = await _clienteContratoFaturaRepository.GetAllByCompetenciaAsAndQuitadasync(dataInicio, dataFim);
+                clientesFaturas = await _clienteContratoFaturaRepository.GetAllQuitadasByCompetenciaAsync(dataInicio, dataFim);
             }
             catch (InvalidOperationException io)
             {
