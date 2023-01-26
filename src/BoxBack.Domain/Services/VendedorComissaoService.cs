@@ -16,13 +16,14 @@ namespace BoxBack.Domain.Services
     public class VendedorComissaoService : IVendedorComissaoService
     {
         private readonly ILogger _logger;
-        private readonly IVendedorComissaoRepository _vendedorComissaoRepository;
+        private readonly IVendedorComissaoRepository _vendedorComissaoRepository;        
         private readonly IVendedorContratoService _vendedorContratoService;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IClienteContratoRepository _clienteContratoRepository;
         private readonly IRotinaEventHistoryService _rotinaEventHistoryService;
         private readonly IClienteContratoFaturaRepository _clienteContratoFaturaRepository;
+        private readonly IVendedorContratoRepository _vendedorContratoRepository;
         
         public VendedorComissaoService(ILogger<VendedorComissaoService> logger,
                                        IVendedorComissaoRepository vendedorComissaoRepository,
@@ -31,7 +32,8 @@ namespace BoxBack.Domain.Services
                                        IUnitOfWork unitOfWork,
                                        IClienteContratoRepository clienteContratoRepository,
                                        IRotinaEventHistoryService rotinaEventHistoryService,
-                                       IClienteContratoFaturaRepository clienteContratoFaturaRepository)
+                                       IClienteContratoFaturaRepository clienteContratoFaturaRepository,
+                                       IVendedorContratoRepository vendedorContratoRepository)
         {
             _logger = logger;
             _vendedorComissaoRepository = vendedorComissaoRepository;
@@ -41,6 +43,7 @@ namespace BoxBack.Domain.Services
             _clienteContratoRepository = clienteContratoRepository;
             _rotinaEventHistoryService = rotinaEventHistoryService;
             _clienteContratoFaturaRepository = clienteContratoFaturaRepository;
+            _vendedorContratoRepository = vendedorContratoRepository;
         }
     
         public async Task GerarComissoesByVendedorIdAsync(Guid rotinaEventHistoryId, Guid vendedorId)
@@ -95,39 +98,57 @@ namespace BoxBack.Domain.Services
                 throw new OperationCanceledException($"Nenhum evento de rotina encontrado com o id informado afim de obter obter as datas de competência início e fim.");
             }
 
-            var dataInicio = rotinaEventHistory.Rotina.DataCompetenciaInicio;
-            var dataFim = rotinaEventHistory.Rotina.DataCompetenciaFim;
+            var dataInicio = rotinaEventHistory.Rotina.DataCompetenciaInicio.Date;
+            var dataFim = rotinaEventHistory.Rotina.DataCompetenciaFim.Date;
+            #endregion
+
+            #region Get contratos ativos e por vendedorId
+            VendedorContrato[] vendedorContratos;;
+            try
+            {
+                vendedorContratos = await _vendedorContratoRepository.GetAllAtivosWithIncludesByVendedorIdAsync(vendedorId);
+            }
+            catch (InvalidOperationException io)
+            {
+                _logger.LogInformation($"Falhou tentativa de obter os contratos do vendedor para seguir com a geração das comissões. | {io.Message}");
+                _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
+                throw new OperationCanceledException(io.Message);
+            }
             #endregion
 
             #region Get faturas comissionáveis do período de competência informado
-            ClienteContratoFatura[] clientesFaturas;
+            ClienteContratoFatura[] clienteContratosFaturas;
             try
             {
-                clientesFaturas = await _clienteContratoFaturaRepository.GetAllQuitadasByVendedorIdAsync(dataInicio, dataFim, vendedorId);
+                clienteContratosFaturas = vendedorContratos
+                                            .SelectMany(x => x.ClienteContrato.ClientesContratosFaturas)
+                                            .Where(x => x.Quitado.Equals(true) &&
+                                                   x.DataCompetencia >= dataInicio &&
+                                                   x.DataCompetencia <= dataFim).ToArray();
             }
             catch (InvalidOperationException io)
             {
                 _logger.LogInformation($"Falhou tentativa de obter as faturas de contratos comissionáveis para seguir com a geração das comissões. | {io.Message}");
                 _rotinaEventHistoryService.UpdateWithStatusFalhaExecucaoHandle(io.Message, rotinaEventHistoryId);
-                throw new OperationCanceledException(io.Message) ;
+                throw new OperationCanceledException(io.Message);
             }
             #endregion
 
             #region Calcular valor comissões
             Int64 totalComissoesGeradas = 0;
             Int64 totalComissoesNaoGeradas = 0;
-            for (var i = 0; i < clientesFaturas.Length; i++)
+            for (var i = 0; i < clienteContratosFaturas.Length; i++)
             {
-                var vendedoresContrato = clientesFaturas[i].ClienteContrato.VendedoresContratos.ToArray();
+                var vendedoresContrato = clienteContratosFaturas[i].ClienteContrato.VendedoresContratos.ToArray();
                 for (var b = 0; b < vendedoresContrato.Length; b++)
                 {
-                    if (!await AlreadyByFaturaIdAndVendedorId(clientesFaturas[i].Id, vendedoresContrato[b].VendedorId)){
+                    if (!await AlreadyByFaturaIdAndVendedorId(clienteContratosFaturas[i].Id, vendedoresContrato[b].VendedorId)){
                         var vendedorComissao = new VendedorComissao()
                         {
                             Id = Guid.NewGuid(),
-                            ClienteContratoId = clientesFaturas[i].ClienteContratoId,
+                            ClienteContratoId = clienteContratosFaturas[i].ClienteContratoId,
                             VendedorId = vendedoresContrato[b].VendedorId,
-                            ClienteContratoFaturaId = clientesFaturas[i].Id
+                            ClienteContratoFaturaId = clienteContratosFaturas[i].Id
                         };
 
                         if (vendedoresContrato[b].ComissaoPercentual != 0)

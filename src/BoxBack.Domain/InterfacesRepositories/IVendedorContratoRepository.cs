@@ -8,5 +8,6 @@ namespace Sigesp.Domain.InterfacesRepositories
 {
     public interface IVendedorContratoRepository : IRepository<VendedorContrato>
     {
+        Task<VendedorContrato[]> GetAllAtivosWithIncludesByVendedorIdAsync(Guid vendedorId);
     }
 }

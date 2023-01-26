@@ -102,7 +102,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<VendedorComissaoViewModel, VendedorComissao>();
             CreateMap<RotinaViewModel, Rotina>()
                 .ForMember(dst => dst.DispatcherRoute, src => src.Ignore())
-                .ForMember(dst => dst.PropertyId, src => src.MapFrom(x => x.Property.Id));
+                .ForMember(dst => dst.PropertyId, src => src.Ignore());
             CreateMap<RotinaEventHistoryViewModel, RotinaEventHistory>();
         }
     }

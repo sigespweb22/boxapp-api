@@ -15,6 +15,7 @@ using BoxBack.Application.Interfaces;
 using BoxBack.Domain.InterfacesRepositories;
 using System.Threading;
 using Microsoft.Extensions.Logging;
+using BoxBack.Application.ViewModels.Requests;
 
 namespace BoxBack.WebApi.EndPoints
 {
@@ -567,15 +568,13 @@ namespace BoxBack.WebApi.EndPoints
         /// Uma espécie de hub que centraliza as chamadas para rotinas e as despacha - Rotina para gerar as comissões de um vendedor
         /// </summary>
         /// <param name="rotinaId"></param>
-        /// <param name="vendedorId"></param>
+        /// <param name="rotinaRequestViewModel"></param>
         /// <returns>Sem retorno - As atualizações são via websocket e atualização do objeto de evento histórico da rotina</returns>
         [Authorize(Roles = "Master, CanVendedorComissaoCreate, CanVendedorComissaoAll")]
         [Route("dispatch-vendedores-comissoes-create-by-vendedorId/{rotinaId}")]
         [HttpPost]
-        public async Task DispatchVendedoresComissoesCreateByVendedorIdAsync([FromRoute]Guid rotinaId, [FromBody]string vendedorId)
+        public async Task DispatchVendedoresComissoesCreateByVendedorIdAsync([FromBody]RotinaRequestViewModel rotinaRequestViewModel, [FromRoute]Guid rotinaId)
         {
-            var id = Guid.Empty;
-
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken cToken = source.Token;
 
@@ -583,7 +582,7 @@ namespace BoxBack.WebApi.EndPoints
             var rotinaEventHistoryId = Guid.NewGuid();
             await _rotinaEventHistoryAppService.AddWithStatusEmExecucaoHandleAsync(rotinaId, rotinaEventHistoryId);
 
-            var gerarComissoesVendedorTask = Task.Run(() => _vendedorComissaoAppService.GerarComissoesByVendedorIdAsync(rotinaEventHistoryId, id));
+            var gerarComissoesVendedorTask = Task.Run(() => _vendedorComissaoAppService.GerarComissoesByVendedorIdAsync(rotinaEventHistoryId, rotinaRequestViewModel.VendedorId));
 
             try
             {

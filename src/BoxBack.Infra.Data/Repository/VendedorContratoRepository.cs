@@ -15,5 +15,16 @@ namespace Sigesp.Infra.Data.Repository
             : base(context)
         {
         }
+
+        public async Task<VendedorContrato[]> GetAllAtivosWithIncludesByVendedorIdAsync(Guid vendedorId)
+        {
+            return await DbSet
+                            .Include(x => x.ClienteContrato)
+                            .ThenInclude(x => x.ClientesContratosFaturas)
+                            .Where(x => x.IsDeleted.Equals(false) &&
+                                   x.VendedorId.Equals(vendedorId) &&
+                                   x.ClienteContrato.ClientesContratosFaturas.Any())
+                            .ToArrayAsync();
+        }
     }
 }

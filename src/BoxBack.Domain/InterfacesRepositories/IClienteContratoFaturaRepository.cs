@@ -10,6 +10,5 @@ namespace Sigesp.Domain.InterfacesRepositories
     {
         bool AlreadyByParams(AlreadyModelParam args);
         Task<ClienteContratoFatura[]> GetAllQuitadasByCompetenciaAsync(DateTime dataInicio, DateTime dataFim);
-        Task<ClienteContratoFatura[]> GetAllQuitadasByVendedorIdAsync(DateTime dataInicio, DateTime dataFim, Guid vendedorId);
     }
 }

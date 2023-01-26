@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BoxBack.Application.ViewModels
 {
@@ -22,6 +23,7 @@ namespace BoxBack.Application.ViewModels
         public string DataCompetenciaFim { get; set; }
         public string Status { get; set; }
         public Property Property { get; set; }
+        public Guid? PropertyId { get; set; }
 
         public ICollection<RotinaEventHistoryViewModel> RotinasEventsHistories { get; set; }
     }
