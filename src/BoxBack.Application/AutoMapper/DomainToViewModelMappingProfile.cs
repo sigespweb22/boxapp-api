@@ -109,7 +109,9 @@ namespace BoxBack.Application.AutoMapper
                 .ForMember(dst => dst.StatusUltimoEvento, src => src.MapFrom(x => x.RotinasEventsHistories.OrderByDescending(x => x.CreatedAt).Select(x => x.StatusProgresso).FirstOrDefault()))
                 .ForMember(dst => dst.TotalItensSucessoUltimoEvento, src => src.MapFrom(x => x.RotinasEventsHistories.OrderByDescending(x => x.CreatedAt).Select(x => x.TotalItensSucesso).FirstOrDefault()))
                 .ForMember(dst => dst.TotalItensInsucessoUltimoEvento, src => src.MapFrom(x => x.RotinasEventsHistories.OrderByDescending(x => x.CreatedAt).Select(x => x.TotalItensInsucesso).FirstOrDefault()))
-                .ForMember(dst => dst.ExceptionMessageUltimoEvento, src => src.MapFrom(x => x.RotinasEventsHistories.OrderByDescending(x => x.CreatedAt).Select(x => x.ExceptionMensagem).FirstOrDefault()));
+                .ForMember(dst => dst.ExceptionMessageUltimoEvento, src => src.MapFrom(x => x.RotinasEventsHistories.OrderByDescending(x => x.CreatedAt).Select(x => x.ExceptionMensagem).FirstOrDefault()))
+                .ForMember(dst => dst.DataCompetenciaInicio, src => src.MapFrom(x => x.DataCompetenciaInicio.ToString("yyyy-MM-dd")))
+                .ForMember(dst => dst.DataCompetenciaFim, src => src.MapFrom(x => x.DataCompetenciaFim.ToString("yyyy-MM-dd")));
             CreateMap<RotinaEventHistory, RotinaEventHistoryViewModel>();
         }
     }
