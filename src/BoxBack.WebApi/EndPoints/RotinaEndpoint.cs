@@ -188,6 +188,47 @@ namespace BoxBack.WebApi.EndPoints
             catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             #endregion
 
+            #region Schedule rotina
+            // https://stackoverflow.com/questions/67114563/scheduled-task-on-net-core
+            // public sealed class MyTimedBackgroundService : IHostedService
+            // {
+            //     private Timer _t;
+
+            //     private static int MilliSecondsUntilMidnight()
+            //     {
+            //         return (int)(DateTime.Today.AddDays(1.0) - DateTime.Now).TotalMilliseconds;
+            //     }
+
+            //     public async Task StartAsync(CancellationToken cancellationToken)
+            //     {
+            //         // set up a timer to be non-reentrant
+            //         _t = new Timer(async _ => await OnTimerFiredAsync(cancellationToken),
+            //             null, MilliSecondsUntilMidnight(), Timeout.Infinite);
+            //     }
+
+            //     public Task StopAsync(CancellationToken cancellationToken)
+            //     {
+            //         _t?.Dispose();
+            //         return Task.CompletedTask;
+            //     }
+
+            //     private async Task OnTimerFiredAsync(CancellationToken cancellationToken)
+            //     {
+            //         try
+            //         {
+            //             // do your work here
+            //             Debug.WriteLine("Simulating heavy I/O bound work");
+            //             await Task.Delay(2000, cancellationToken);
+            //         }
+            //         finally
+            //         {
+            //             // set timer to fire off again
+            //             _t?.Change(MilliSecondsUntilMidnight(), Timeout.Infinite);
+            //         }
+            //     }
+            // }
+            #endregion
+
             return CustomResponse(204);
         }
 
