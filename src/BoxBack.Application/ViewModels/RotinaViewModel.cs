@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BoxBack.Application.ViewModels
 {
@@ -12,6 +11,8 @@ namespace BoxBack.Application.ViewModels
         public string Observacao { get; set; }
         public Int32 ChaveSequencial { get; set; }
         public string DispatcherRoute { get; set; }
+        public string Periodicidade { get; set; }
+        public string HoraExecucao { get; set; }
 
         // dados do último evento da rotina
         public string DataCriacaoUltimoEvento { get; set; }

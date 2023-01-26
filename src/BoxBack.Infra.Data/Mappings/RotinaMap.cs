@@ -146,21 +146,21 @@ namespace BoxBack.Infra.Data.Mappings
             // };
             // builder.HasData(rotina7);
 
-            var rotina8 = new Rotina()
-            {
-                Id = Guid.NewGuid(),
-                Nome = "Gerar comissões para um vendedor ativo no Boxapp",
-                Descricao = "Esta rotina interna gera as comissões de um vendedor apenas. As comissões são obtidas a partir dos dados de comissão (Em real ou Porcentagem), parametrizados ao vincular um contrato a um vendedor, bem como são geradas comissões apenas de contratos com faturas pagas (Em dia).",
-                Observacao = "É recomendado que antes de rodar esta rotina, seja rodado a rotina de ChaveSequencial - 2, 3 e 4 -, afim de atualizar os contratos e suas faturas.",
-                ChaveSequencial = 8,
-                DispatcherRoute = "dispatch-vendedores-comissoes-create-by-vendedorId",
-                CreatedAt = DateTimeOffset.Now,
-                CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                UpdatedAt = DateTimeOffset.Now,
-                UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                TenantId = Guid.Parse("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45")
-            };
-            builder.HasData(rotina8);
+            // var rotina8 = new Rotina()
+            // {
+            //     Id = Guid.NewGuid(),
+            //     Nome = "Gerar comissões para um vendedor ativo no Boxapp",
+            //     Descricao = "Esta rotina interna gera as comissões de um vendedor apenas. As comissões são obtidas a partir dos dados de comissão (Em real ou Porcentagem), parametrizados ao vincular um contrato a um vendedor, bem como são geradas comissões apenas de contratos com faturas pagas (Em dia).",
+            //     Observacao = "É recomendado que antes de rodar esta rotina, seja rodado a rotina de ChaveSequencial - 2, 3 e 4 -, afim de atualizar os contratos e suas faturas.",
+            //     ChaveSequencial = 8,
+            //     DispatcherRoute = "dispatch-vendedores-comissoes-create-by-vendedorId",
+            //     CreatedAt = DateTimeOffset.Now,
+            //     CreatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+            //     UpdatedAt = DateTimeOffset.Now,
+            //     UpdatedBy = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+            //     TenantId = Guid.Parse("d8fe3845-3f2e-4b4e-aeb6-53222d60ff45")
+            // };
+            // builder.HasData(rotina8);
         }
     }
 }

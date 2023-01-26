@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using BoxBack.Domain.Enums;
 
 namespace BoxBack.Domain.Models
 {
@@ -23,6 +24,9 @@ namespace BoxBack.Domain.Models
         public DateTime DataCompetenciaInicio { get; set; }
         public DateTime DataCompetenciaFim { get; set; }
         public Guid? PropertyId { get; set;}
+        public PeriodicidadeEnum Periodicidade { get; set; }
+        public DateTime HoraExecucao { get; set; }
+
 
         // Relationships
         public ICollection<RotinaEventHistory> RotinasEventsHistories { get; set; }
