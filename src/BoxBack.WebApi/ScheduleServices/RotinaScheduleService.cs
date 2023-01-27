@@ -67,6 +67,8 @@ namespace BoxBack.WebApi.ScheduleServices
                 #region Executar rotina 1
                 // Vou ter que implementar todas as funcionalidades dos serviços inline,
                 // devido a questões de escopo
+                // ou implementar todas as chamadas internas do serviço principal
+                // diretamente no repositório
                 CancellationTokenSource source = new CancellationTokenSource();
                 CancellationToken cToken = source.Token;
 
