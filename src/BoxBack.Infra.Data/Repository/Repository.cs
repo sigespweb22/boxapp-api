@@ -144,7 +144,7 @@ namespace BoxBack.Infra.Data.Repository
 
         public void Dispose()
         {
-            Db.Dispose();   
+            Db.Dispose();
             GC.SuppressFinalize(this);
         }
     }

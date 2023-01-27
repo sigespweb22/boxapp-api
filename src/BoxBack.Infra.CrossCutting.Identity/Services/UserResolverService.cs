@@ -16,11 +16,11 @@ namespace BoxBack.Infra.CrossCutting.Identity.Services
 
         public string GetUserId()
         {
-            var hasHttpContextUser = _httpContextAccessor.HttpContext.User.Claims.Count();
+            var hasHttpContextUser = _httpContextAccessor?.HttpContext?.User?.Claims.Count();
 
             if (hasHttpContextUser == 0)
                 return string.Empty;
-            return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _httpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
     }
 }

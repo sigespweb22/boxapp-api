@@ -63,7 +63,7 @@ namespace BoxBack.Domain.Services
             var rotinaEventHistory = new RotinaEventHistory()
             {
                 Id = id,
-                DataInicio =  DateTimeOffset.Now,
+                DataInicio =  DateTimeOffset.UtcNow,
                 StatusProgresso = RotinaStatusProgressoEnum.EM_EXECUCAO,
                 TotalItensSucesso = 0,
                 TotalItensInsucesso = 0,
