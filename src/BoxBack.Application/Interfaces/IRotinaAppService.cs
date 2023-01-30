@@ -7,6 +7,5 @@ namespace BoxBack.Application.Interfaces
     public interface IRotinaAppService
     {
         Task<RotinaViewModel> GetByIdAsync(Guid rotinaId);
-        Task<bool> AgendarRotina(RotinaViewModel rotinaViewModel);
     }
 }

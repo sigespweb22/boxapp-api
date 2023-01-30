@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,6 +7,9 @@ using Microsoft.Extensions.Logging;
 using BoxBack.Application.Interfaces;
 using Microsoft.Extensions.Hosting;
 using BoxBack.Domain.Interfaces;
+using Sigesp.Domain.InterfacesRepositories;
+using System.Collections.Generic;
+using BoxBack.Domain.Models;
 
 namespace BoxBack.WebApi.ScheduleServices
 {
@@ -73,11 +77,11 @@ namespace BoxBack.WebApi.ScheduleServices
                 CancellationToken cToken = source.Token;
 
                 var scopeSincronizarFromTPAsync = scope.ServiceProvider.GetService<IClienteService>();
-                var token = "Z0EjZPzTOb-AJb42L6EVYZFO5wPxMFdXtJo6Jv7M-eSC8YwqcGgmfzbcz4sgR3BxynsbTrCaUm0r0iUV-9PrBX73B9hGUu5uHaUUcTkvYNyhbXzYG7zLggKd7MwMR1qwsW16kQFhc94.";
+                var token = "ApiKey Z0EjZPzTOb-AJb42L6EVYZFO5wPxMFdXtJo6Jv7M-eSC8YwqcGgmfzbcz4sgR3BxynsbTrCaUm0r0iUV-9PrBX73B9hGUu5uHaUUcTkvYNyhbXzYG7zLggKd7MwMR1qwsW16kQFhc94.";
 
                 try
                 {
-                    scopeSincronizarFromTPAsync.SincronizarFromTPAsync(token, rotinaEventHistoryId);
+                    scopeSincronizarFromTPAsync.SyncAsync(token, rotinaEventHistoryId, scope);
                 }
                 catch (NullReferenceException nr)
                 {

@@ -125,7 +125,7 @@ namespace BoxBack.Domain.Services
             try
             {
                 rotinaEventHistoryDB.StatusProgresso = RotinaStatusProgressoEnum.CONCLUIDA;
-                rotinaEventHistoryDB.DataFim = DateTimeOffset.Now;
+                rotinaEventHistoryDB.DataFim = DateTimeOffset.UtcNow;
                 rotinaEventHistoryDB.TotalItensSucesso = totalSuccess;
                 rotinaEventHistoryDB.TotalItensInsucesso = totalFailures;
 

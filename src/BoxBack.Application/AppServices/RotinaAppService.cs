@@ -34,9 +34,5 @@ namespace BoxBack.Application.AppServices
             }
             catch { throw new ArgumentNullException(nameof(rotinaId)); }
         }
-        public async Task<bool> AgendarRotina(RotinaViewModel rotinaViewModel)
-        {
-            return true;
-        }
     }
 } 
