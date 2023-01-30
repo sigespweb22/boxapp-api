@@ -169,7 +169,7 @@ namespace BoxBack.WebApi
             services.AddSignalR();
 
             // ----- Scheduler Services -----
-            services.AddHostedService<RotinaScheduleService>();
+            // services.AddHostedService<RotinaScheduleService>();
 
             services.AddScoped<GeneratorToken>();
 
