@@ -52,7 +52,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<ServicoViewModel, Servico>()
                 .ForMember(dst => dst.FornecedorServicoId, src => src.MapFrom(x => x.FornecedorServico.Id));
             CreateMap<PipelineAssinanteViewModel, PipelineAssinante>()
-                .ForMember(dst => dst.FullName, src => src.MapFrom(x => x.Name))
+                .ForMember(dst => dst.FullName, src => src.MapFrom(x => x.FullName))
                 .ForMember(dst => dst.UserId, src => src.MapFrom(x => x.UserId));
             CreateMap<PipelineViewModel, Pipeline>();
             CreateMap<FornecedorViewModel, Fornecedor>();

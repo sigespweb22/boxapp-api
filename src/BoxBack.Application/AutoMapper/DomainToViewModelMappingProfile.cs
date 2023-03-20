@@ -37,7 +37,7 @@ namespace BoxBack.Application.AutoMapper
             CreateMap<Servico, ServicoViewModel>()
                 .ForMember(dst => dst.Status, src => src.MapFrom(x => x.IsDeleted ? "INACTIVE" : "ACTIVE"));
             CreateMap<PipelineAssinante, PipelineAssinanteViewModel>()
-                .ForMember(dst => dst.Name, src => src.MapFrom(x => x.FullName))
+                .ForMember(dst => dst.FullName, src => src.MapFrom(x => x.FullName))
                 .ForMember(dst => dst.UserId, src => src.MapFrom(x => x.UserId));
             CreateMap<Pipeline, PipelineViewModel>()
                 .ForMember(dst => dst.TotalTarefas, src => src.MapFrom(x => x.PipelineEtapas.Select(x => x.PipelineTarefas).Count()))
