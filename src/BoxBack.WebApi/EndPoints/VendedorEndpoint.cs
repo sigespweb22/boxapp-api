@@ -81,7 +81,7 @@ namespace BoxBack.WebApi.EndPoints
             {
                 try
                 {
-                    vendedores = vendedores.Where(x => x.Nome.Equals(q)).ToList();    
+                    vendedores = vendedores.Where(x => x.Nome.ToUpper().Contains(q.ToUpper())).ToList();    
                 }
                 catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             }

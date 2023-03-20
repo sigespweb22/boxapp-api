@@ -105,7 +105,7 @@ namespace BoxBack.WebApi.EndPoints
             
             #region Filter search
             if(!string.IsNullOrEmpty(q))
-                clientes = clientes.Where(x => x.RazaoSocial.Contains(q)).ToList();
+                clientes = clientes.Where(x => x.RazaoSocial.ToUpper().Contains(q.ToUpper())).ToList();
             #endregion
 
             #region Map
