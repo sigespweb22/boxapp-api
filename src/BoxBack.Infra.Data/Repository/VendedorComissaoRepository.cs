@@ -36,8 +36,8 @@ namespace Sigesp.Infra.Data.Repository
                             .Include(x => x.ClienteContrato)
                             .ThenInclude(x => x.Cliente)
                             .Where(x => x.VendedorId.Equals(vendedorId) &&
-                                   x.ClienteContratoFatura.DataCompetencia >= dataInicio &&
-                                   x.ClienteContratoFatura.DataCompetencia <= dataFim).ToListAsync();
+                                   x.ClienteContratoFatura.DataPagamento >= dataInicio &&
+                                   x.ClienteContratoFatura.DataPagamento <= dataFim).ToListAsync();
             }
         }
         public async Task<IEnumerable<VendedorComissao>> GetAllWithIncludesByVendedorIdAsync(Guid vendedorId)
