@@ -94,7 +94,7 @@ namespace BoxBack.WebApi.EndPoints
 
                 try
                 {
-                    clienteContratos = clienteContratos.Where(x => x.Periodicidade.Equals(query)).ToList();    
+                    clienteContratos = clienteContratos.Where(x => x.Periodicidade.Equals(query)).ToList();
                 }
                 catch (Exception ex) { AddErrorToTryCatch(ex); return CustomResponse(500); }
             }
