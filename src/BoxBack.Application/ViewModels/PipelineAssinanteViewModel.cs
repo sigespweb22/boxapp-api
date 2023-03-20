@@ -13,6 +13,6 @@ namespace BoxBack.Application.ViewModels
     public class PipelineAssinanteViewModel
     {
         public string UserId { get; set; }
-        public string Name { get; set; }
+        public string FullName { get; set; }
     }
 }

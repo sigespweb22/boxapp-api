@@ -23,7 +23,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 using BoxBack.Domain.Hubs;
-using BoxBack.WebApi.ScheduleServices;
 
 namespace BoxBack.WebApi
 {
@@ -74,8 +73,7 @@ namespace BoxBack.WebApi
                 { policy.AllowAnyHeader( 
                     ) 
                         .AllowAnyMethod() 
-                        .WithOrigins("http://localhost:3000", "http://boxapp.boxtecnologia.com.br")
-                        .WithOrigins("http://boxapp.boxtecnologia.com.br:3000", "http://boxapp.boxtecnologia.com.br/")
+                        .WithOrigins("http://localhost:3000", "http://177.93.105.56/", "http://boxapp.boxtecnologia.com.br:3000", "http://boxapp.boxtecnologia.com.br/")
                         .AllowCredentials(); 
                 }); 
             });
