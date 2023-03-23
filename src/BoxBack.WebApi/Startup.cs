@@ -69,13 +69,13 @@ namespace BoxBack.WebApi
 
             services.AddCors(options => 
             { 
-                options.AddPolicy("ClientPermission", policy => 
-                { policy.AllowAnyHeader( 
-                    ) 
-                        .AllowAnyMethod() 
-                        .WithOrigins("http://localhost:3000", "http://177.93.105.56/", "http://boxapp.boxtecnologia.com.br:3000", "http://boxapp.boxtecnologia.com.br/")
-                        .AllowCredentials(); 
-                }); 
+                options.AddPolicy("ClientPermission", 
+                    policy => 
+                    {
+                        policy.AllowAnyOrigin();
+                        policy.AllowAnyHeader();
+                        policy.AllowAnyMethod();
+                    });
             });
 
             services.AddMvc(config =>
