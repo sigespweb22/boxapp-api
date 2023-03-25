@@ -67,6 +67,7 @@ namespace BoxBack.WebApi
                 loggingBuilder.AddDebug();
             });
 
+            // ------ Cors service ------
             services.AddCors(options => 
             { 
                 options.AddPolicy("ClientPermission", 
