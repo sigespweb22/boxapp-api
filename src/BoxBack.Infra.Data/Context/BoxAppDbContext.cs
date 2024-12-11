@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -21,7 +20,7 @@ namespace BoxBack.Infra.Data.Context
     {
         private readonly UserResolverService _userResolverService;
 
-        public BoxAppDbContext(DbContextOptions<BoxAppDbContext> options, 
+        public BoxAppDbContext(DbContextOptions<BoxAppDbContext> options,
                                 UserResolverService userResolverService)
             : base(options)
         {
@@ -60,7 +59,7 @@ namespace BoxBack.Infra.Data.Context
         public DbSet<Rotina> Rotinas { get; set; }
         public DbSet<RotinaEventHistory> RotinasEventsHistories { get; set; }
         public DbSet<VerticalNavItem> VerticalNavItems { get; set; }
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             // NpgsqlConnection.GlobalTypeMapper.MapEnum<InstrumentoPrisaoTipoEnum>();
@@ -110,7 +109,7 @@ namespace BoxBack.Infra.Data.Context
             modelBuilder.HasSequence<Int32>("OrderNumbers")
                         .StartsAt(1)
                         .IncrementsBy(1);
-                        
+
             modelBuilder.Entity<Rotina>()
                         .Property(c => c.ChaveSequencial)
                         .HasDefaultValueSql("nextval('\"OrderNumbers\"')");
