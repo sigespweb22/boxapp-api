@@ -2,11 +2,15 @@
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29001.49
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Application\Application.csproj", "{C9F6E4C5-1234-4B6F-8B4B-3B58F0F4A9B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoxBack.Application", "src\BoxBack.Application\BoxBack.Application.csproj", "{C9F6E4C5-1234-4B6F-8B4B-3B58F0F4A9B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Domain\Domain.csproj", "{47F1D43A-5678-45C8-B0C3-AB5D8C5F0F1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoxBack.Domain", "src\BoxBack.Domain\BoxBack.Domain.csproj", "{47F1D43A-5678-45C8-B0C3-AB5D8C5F0F1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{B3C0F1D2-9876-4C5A-8B0F-A0B4C7F9D6E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoxBack.Infra.CrossCutting.Identity", "src\BoxBack.Infra.CrossCutting.Identity\BoxBack.Infra.CrossCutting.Identity.csproj", "{B3C0F1D2-9876-4C5A-8B0F-A0B4C7F9D6E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoxBack.Infra.CrossCutting.IoC", "src\BoxBack.Infra.CrossCutting.IoC\BoxBack.Infra.CrossCutting.IoC.csproj", "{0d0d53e5-a2fc-491e-8568-54b942c74e20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoxBack.Infra.Data", "src\BoxBack.Infra.Data\BoxBack.Infra.Data.csproj", "{394d563e-c091-4b29-aafc-4d7b350eb45a}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoxBack.WebApi", "src\BoxBack.WebApi\BoxBack.WebApi.csproj", "{A1F2B3D4-4321-4E0F-A1B2-C3D4E5F6A7B8}"
 EndProject
@@ -28,6 +32,16 @@ Global
         {B3C0F1D2-9876-4C5A-8B0F-A0B4C7F9D6E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
         {B3C0F1D2-9876-4C5A-8B0F-A0B4C7F9D6E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
         {B3C0F1D2-9876-4C5A-8B0F-A0B4C7F9D6E1}.Release|Any CPU.Build.0 = Release|Any CPU
+        {0d0d53e5-a2fc-491e-8568-54b942c74e20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {0d0d53e5-a2fc-491e-8568-54b942c74e20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {0d0d53e5-a2fc-491e-8568-54b942c74e20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {0d0d53e5-a2fc-491e-8568-54b942c74e20}.Release|Any CPU.Build.0 = Release|Any CPU
+
+        {394d563e-c091-4b29-aafc-4d7b350eb45a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {394d563e-c091-4b29-aafc-4d7b350eb45a}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {394d563e-c091-4b29-aafc-4d7b350eb45a}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {394d563e-c091-4b29-aafc-4d7b350eb45a}.Release|Any CPU.Build.0 = Release|Any CPU
+
         {A1F2B3D4-4321-4E0F-A1B2-C3D4E5F6A7B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
         {A1F2B3D4-4321-4E0F-A1B2-C3D4E5F6A7B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
         {A1F2B3D4-4321-4E0F-A1B2-C3D4E5F6A7B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
